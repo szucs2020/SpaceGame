@@ -1,43 +1,61 @@
 ﻿using UnityEngine;
+using System.Collections;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour
+{
+    /*our speeds*/
+	public int walkSpeed;
+	public int runSpeed;
+	public int jumpSpeed;
+	public int fallingSpeed;
+	public LayerMask detectedLayers;
 
-	private int speed = 10;
-	private int jumpHeight = 10000;
+    private bool isGrounded;
+	private bool facingRight;
 
-	bool facingRight = true;
-	private bool isGrounded = true;
-	private bool secondJump = false;
-    private float distToGround;
-
-    // Use this for initialization
-    void Start () {
-        //distToGround = transform..bounds.extents.y;
+    public void Start(){
+		isGrounded = true;
+		facingRight = true;
     }
-	
-	// Update is called once per frame
-	void Update () {
 
-		float movement = Input.GetAxis("Horizontal");
-		GetComponent<Rigidbody2D>().velocity = new Vector2(movement * speed, GetComponent<Rigidbody2D>().velocity.y);
+    public void Update(){
 
-		//face left or right depending on movement direction
-		if (movement > 0 && !facingRight){
+        /*Check if Right arrow key is pressed and its useable*/
+        transform.Translate(new Vector2(Input.GetAxis("Horizontal") * runSpeed * Time.deltaTime, 0));
+
+		if (Input.GetAxis("Horizontal") > 0 && !facingRight){
 			flip ();
-		} else if (movement < 0 && facingRight){
+		} else if (Input.GetAxis("Horizontal") < 0 && facingRight){
 			flip ();
 		}
 
-		//jump with space, but only if on ground
 		if (Input.GetButtonDown("Jump")){
-            isGrounded = Physics2D.IsTouchingLayers(GetComponent<BoxCollider2D>(), LayerMask.GetMask("Ground"));
-            if (isGrounded == true || secondJump == false) {
-				GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpHeight));
-				isGrounded = false;
-				secondJump = secondJump ? false : true;
+			Debug.Log (isGrounded);
+			if (isGrounded == true) {
+				transform.Translate(Vector3.up * jumpSpeed * Time.deltaTime);
+				StartCoroutine("jump");
 			}
-		}
-	}
+        }
+
+        /*Check if player collides anything under it*/
+		float temp = GetComponent<BoxCollider2D>().bounds.extents.y;
+
+		Debug.Log (GetComponent<BoxCollider2D> ().size.y);
+
+		if (Physics2D.Raycast(transform.position, Vector2.down, (GetComponent<BoxCollider2D>().size.y * transform.lossyScale.y) / 2, detectedLayers)){
+
+			isGrounded = true;
+        } else{
+			isGrounded = false;
+            transform.Translate(Vector2.down * fallingSpeed * Time.deltaTime);
+        }
+
+    }
+    /*Coroutine that we start if we jump. It will wait one millisecond and then it realizes its in air and starts falling down, this is done so it doesn't start to fall down same time as it jumps*/
+    IEnumerator jump(){
+        yield return new WaitForSeconds(0.1f);
+		isGrounded = false;
+    }
 
 	private void flip(){
 		facingRight = !facingRight;
