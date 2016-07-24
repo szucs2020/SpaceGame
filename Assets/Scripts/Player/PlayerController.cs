@@ -30,7 +30,6 @@ public class PlayerController : MonoBehaviour
 		}
 
 		if (Input.GetButtonDown("Jump")){
-			Debug.Log (isGrounded);
 			if (isGrounded == true) {
 				transform.Translate(Vector3.up * jumpSpeed * Time.deltaTime);
 				StartCoroutine("jump");
@@ -39,8 +38,6 @@ public class PlayerController : MonoBehaviour
 
         /*Check if player collides anything under it*/
 		float temp = GetComponent<BoxCollider2D>().bounds.extents.y;
-
-		Debug.Log (GetComponent<BoxCollider2D> ().size.y);
 
 		if (Physics2D.Raycast(transform.position, Vector2.down, (GetComponent<BoxCollider2D>().size.y * transform.lossyScale.y) / 2, detectedLayers)){
 
