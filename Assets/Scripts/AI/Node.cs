@@ -8,23 +8,38 @@ public class Node : MonoBehaviour {
 
 	public Node parent;
 
-	public Node target;
 	public float h;  //Heuristic; Distance to target node
 
+	public bool open;
+	public bool closed;
+	public bool isTarget;
+
 	// Use this for initialization
-	public void Init () {
+	public void Init (Node target) {
+		isTarget = false;
+		parent = null;
+		g = 0;
+		closed = false;
+		open = false;
 		transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.yellow;
-		target = GameObject.Find ("W16").GetComponent<Node>();
+
 		h = Vector2.Distance (target.transform.position, transform.position);
-		for (int i = 0; i < 4; i++) {
+		//Calcualte movement cost of each neighbour
+		/*for (int i = 0; i < 4; i++) {
 			if (neighbour [i] != null) {
-				neighbour[i].g = Vector2.Distance (neighbour [i].transform.position, transform.position); //Movement cost = distance to neighbour
+				g[i] = Vector2.Distance (neighbour [i].transform.position, transform.position); //Movement cost = distance to neighbour
+			} else {
+				break;
 			}
-		}
+		}*/
 	}
 
-	public void CalcH () {
-
+	public void setParents () {
+		for (int i = 0; i < 4; i++) {
+			if (neighbour [i] != null) {
+				neighbour [i].parent = this;
+			}
+		}
 	}
 	
 	// Update is called once per frame

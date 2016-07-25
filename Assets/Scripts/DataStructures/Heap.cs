@@ -118,7 +118,7 @@ public class Heap {
 		length++;
 	}
 
-	Node Extract() {
+	public Node Extract() {
 		int i = 1;
 		float dist;
 		Node t = null;
@@ -173,6 +173,16 @@ public class Heap {
 
 	public int GetLength() {
 		return length;
+	}
+
+	public bool inHeap(Node node) {
+		for(int i = 1; i <= length; i++) {
+			if (minHeap [i] == node) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public void Print() {

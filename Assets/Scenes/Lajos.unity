@@ -134,8 +134,9 @@ MonoBehaviour:
   g: 0
   f: 0
   parent: {fileID: 0}
-  target: {fileID: 0}
   h: 0
+  open: 0
+  closed: 0
 --- !u!1 &212924124
 GameObject:
   m_ObjectHideFlags: 0
@@ -261,8 +262,9 @@ MonoBehaviour:
   g: 0
   f: 0
   parent: {fileID: 0}
-  target: {fileID: 0}
   h: 0
+  open: 0
+  closed: 0
 --- !u!1 &337547247
 GameObject:
   m_ObjectHideFlags: 0
@@ -388,8 +390,9 @@ MonoBehaviour:
   g: 0
   f: 0
   parent: {fileID: 0}
-  target: {fileID: 0}
   h: 0
+  open: 0
+  closed: 0
 --- !u!1 &477003977
 GameObject:
   m_ObjectHideFlags: 0
@@ -692,8 +695,9 @@ MonoBehaviour:
   g: 0
   f: 0
   parent: {fileID: 0}
-  target: {fileID: 0}
   h: 0
+  open: 0
+  closed: 0
 --- !u!1 &546865841
 GameObject:
   m_ObjectHideFlags: 0
@@ -743,8 +747,9 @@ MonoBehaviour:
   g: 0
   f: 0
   parent: {fileID: 0}
-  target: {fileID: 0}
   h: 0
+  open: 0
+  closed: 0
 --- !u!1 &680480045
 GameObject:
   m_ObjectHideFlags: 0
@@ -794,8 +799,9 @@ MonoBehaviour:
   g: 0
   f: 0
   parent: {fileID: 0}
-  target: {fileID: 0}
   h: 0
+  open: 0
+  closed: 0
 --- !u!1 &806680627
 GameObject:
   m_ObjectHideFlags: 0
@@ -931,6 +937,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startNode: {fileID: 258177271}
+  target: {fileID: 0}
+  nodes:
+  - {fileID: 258177271}
+  - {fileID: 1804264001}
+  - {fileID: 1691519243}
+  - {fileID: 1353024016}
+  - {fileID: 546865843}
+  - {fileID: 357777550}
+  - {fileID: 513100499}
+  - {fileID: 1128690039}
+  - {fileID: 1791747771}
+  - {fileID: 1403722957}
+  - {fileID: 1411458531}
+  - {fileID: 102098477}
+  - {fileID: 1066453312}
+  - {fileID: 1795010050}
+  - {fileID: 680480047}
+  - {fileID: 1105136757}
 --- !u!1 &939027677
 GameObject:
   m_ObjectHideFlags: 0
@@ -1056,8 +1080,9 @@ MonoBehaviour:
   g: 0
   f: 0
   parent: {fileID: 0}
-  target: {fileID: 0}
   h: 0
+  open: 0
+  closed: 0
 --- !u!1 &1093295140
 GameObject:
   m_ObjectHideFlags: 0
@@ -1183,8 +1208,9 @@ MonoBehaviour:
   g: 0
   f: 0
   parent: {fileID: 0}
-  target: {fileID: 0}
   h: 0
+  open: 0
+  closed: 0
 --- !u!1 &1128690037
 GameObject:
   m_ObjectHideFlags: 0
@@ -1234,8 +1260,9 @@ MonoBehaviour:
   g: 0
   f: 0
   parent: {fileID: 0}
-  target: {fileID: 0}
   h: 0
+  open: 0
+  closed: 0
 --- !u!1 &1182564115
 GameObject:
   m_ObjectHideFlags: 0
@@ -1591,8 +1618,9 @@ MonoBehaviour:
   g: 0
   f: 0
   parent: {fileID: 0}
-  target: {fileID: 0}
   h: 0
+  open: 0
+  closed: 0
 --- !u!1 &1403722955
 GameObject:
   m_ObjectHideFlags: 0
@@ -1642,8 +1670,9 @@ MonoBehaviour:
   g: 0
   f: 0
   parent: {fileID: 0}
-  target: {fileID: 0}
   h: 0
+  open: 0
+  closed: 0
 --- !u!1 &1411458529
 GameObject:
   m_ObjectHideFlags: 0
@@ -1693,8 +1722,9 @@ MonoBehaviour:
   g: 0
   f: 0
   parent: {fileID: 0}
-  target: {fileID: 0}
   h: 0
+  open: 0
+  closed: 0
 --- !u!1 &1467046506
 GameObject:
   m_ObjectHideFlags: 0
@@ -1972,8 +2002,9 @@ MonoBehaviour:
   g: 0
   f: 0
   parent: {fileID: 0}
-  target: {fileID: 0}
   h: 0
+  open: 0
+  closed: 0
 --- !u!1 &1700788242
 GameObject:
   m_ObjectHideFlags: 0
@@ -2329,8 +2360,9 @@ MonoBehaviour:
   g: 0
   f: 0
   parent: {fileID: 0}
-  target: {fileID: 0}
   h: 0
+  open: 0
+  closed: 0
 --- !u!1 &1795010048
 GameObject:
   m_ObjectHideFlags: 0
@@ -2380,8 +2412,9 @@ MonoBehaviour:
   g: 0
   f: 0
   parent: {fileID: 0}
-  target: {fileID: 0}
   h: 0
+  open: 0
+  closed: 0
 --- !u!1 &1800697956
 GameObject:
   m_ObjectHideFlags: 0
@@ -2509,8 +2542,9 @@ MonoBehaviour:
   g: 0
   f: 0
   parent: {fileID: 0}
-  target: {fileID: 0}
   h: 0
+  open: 0
+  closed: 0
 --- !u!1 &1862863598
 GameObject:
   m_ObjectHideFlags: 0
