@@ -16,7 +16,7 @@ public class AStar : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		//Grab the target element
-		target = GameObject.Find ("W9").GetComponent<Node>();
+		target = GameObject.Find ("W11").GetComponent<Node>();
 
 		//Initialize each node
 		for(int i = 0; i < nodes.Length; i++) {
@@ -29,6 +29,7 @@ public class AStar : MonoBehaviour {
 		open.Init ();
 		startNode.open = true;
 		startNode.g = 0;
+		startNode.parent = null;
 		for (int i = 0; i < 4; i++) {
 			if (startNode.neighbour [i] != null) {
 				//startNode.neighbour [i].Init (target);
@@ -48,7 +49,7 @@ public class AStar : MonoBehaviour {
 		startNode.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.red;
 		open.Print ();
 
-		while(true) {
+		while(open.GetLength() > 0) {
 			currentNode = open.Extract ();
 			closed.Add (currentNode);
 			currentNode.closed = true;
@@ -61,36 +62,42 @@ public class AStar : MonoBehaviour {
 					if (currentNode.neighbour [i].isTarget == true && currentNode.neighbour[i].closed == false) {
 						Debug.Log ("Found Target");
 						Debug.Log (currentNode.neighbour [i]);
+						Debug.Log (currentNode.neighbour [i].parent);
+						currentNode.neighbour [i].parent = currentNode;
+						currentNode.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.blue;
+						ColourPath (currentNode.neighbour [i]);
 						return;
+					} else if (currentNode.neighbour [i].closed == true) {
+						continue;
 					}
 
 					float tentativeG = currentNode.g + Vector2.Distance (currentNode.neighbour [i].transform.position, currentNode.transform.position);
 
-					if (open.inHeap (currentNode.neighbour [i]) == false) {
+					if (currentNode.neighbour [i].open == false) {
 						open.Insert (currentNode.neighbour [i]);
 					} else if (tentativeG >= currentNode.neighbour [i].g) {
 						continue;
 					}
 
+					currentNode.neighbour [i].closed = true;
 					currentNode.neighbour [i].parent = currentNode;
 					currentNode.neighbour [i].g = tentativeG;
 					currentNode.neighbour [i].f = currentNode.neighbour [i].g + currentNode.neighbour [i].h;
 					currentNode.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.blue;
-					open.inHeap (currentNode.neighbour [i]);
-				} else {
-					break;
 				}
 			}
 		}
 
 		Debug.Log ("Extracted");
 		Debug.Log (currentNode);
-		/*Node[] startNeighbours = startNode.neighbour;
-		for (int i = 0; i < startNeighbours.Length; i++) {
-			if (startNeighbours [i] != null) {
-				startNode.f = startNode.h + startNode.g[i];
-			}
-		}*/
+	}
+
+	private void ColourPath(Node target) {
+		Node current = target;
+		while (current.parent != null) {
+			current.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.green;
+			current = current.parent;
+		}
 	}
 	
 	// Update is called once per frame
