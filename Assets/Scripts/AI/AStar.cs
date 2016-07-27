@@ -16,7 +16,7 @@ public class AStar : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		//Grab the target element
-		target = GameObject.Find ("W6 (4)").GetComponent<Node>();
+		target = GameObject.Find ("W3 (5)").GetComponent<Node>();
 
 		//Initialize each node
 		for(int i = 0; i < nodes.Length; i++) {
@@ -35,7 +35,7 @@ public class AStar : MonoBehaviour {
 				//startNode.neighbour [i].Init (target);
 				startNode.neighbour [i].parent = startNode;
 				startNode.neighbour [i].open = true;
-				startNode.neighbour [i].g = Vector2.Distance (startNode.neighbour [i].transform.position, startNode.transform.position) + startNode.g; //Movement cost = distance to neighbour
+				startNode.neighbour [i].g = Mathf.Abs(Vector2.Distance (startNode.neighbour [i].transform.position, startNode.transform.position)) + startNode.g; //Movement cost = distance to neighbour
 				startNode.neighbour [i].f = startNode.neighbour [i].g + startNode.neighbour [i].h;
 				open.Insert (startNode.neighbour [i]);
 			} else {
@@ -76,7 +76,7 @@ public class AStar : MonoBehaviour {
 						continue;
 					}
 
-					float tentativeG = currentNode.g + Vector2.Distance (currentNode.neighbour [i].transform.position, currentNode.transform.position);
+					float tentativeG = currentNode.g + Mathf.Abs(Vector2.Distance (currentNode.neighbour [i].transform.position, currentNode.transform.position));
 
 					if (currentNode.neighbour [i].open == false) {
 						open.Insert (currentNode.neighbour [i]);

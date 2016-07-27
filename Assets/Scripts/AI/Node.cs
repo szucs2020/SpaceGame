@@ -23,7 +23,7 @@ public class Node : MonoBehaviour {
 		open = false;
 		transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.yellow;
 
-		h = Vector2.Distance (target.transform.position, transform.position);
+		h = Mathf.Abs(Vector2.Distance (target.transform.position, transform.position));
 		//Calcualte movement cost of each neighbour
 		/*for (int i = 0; i < 4; i++) {
 			if (neighbour [i] != null) {

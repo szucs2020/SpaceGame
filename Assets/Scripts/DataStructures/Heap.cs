@@ -4,7 +4,7 @@ using System.Collections;
 public class Heap {
 	public Node[] minHeap;
 	private int length;
-	private const int maxLength = 17;
+	private const int maxLength = 100;
 
 	public void Init () {
 		
