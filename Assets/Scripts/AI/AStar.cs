@@ -16,7 +16,7 @@ public class AStar : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		//Grab the target element
-		target = GameObject.Find ("W11").GetComponent<Node>();
+		target = GameObject.Find ("W6 (4)").GetComponent<Node>();
 
 		//Initialize each node
 		for(int i = 0; i < nodes.Length; i++) {
@@ -30,7 +30,7 @@ public class AStar : MonoBehaviour {
 		startNode.open = true;
 		startNode.g = 0;
 		startNode.parent = null;
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 8; i++) {
 			if (startNode.neighbour [i] != null) {
 				//startNode.neighbour [i].Init (target);
 				startNode.neighbour [i].parent = startNode;
@@ -57,8 +57,13 @@ public class AStar : MonoBehaviour {
 			if (currentNode == null) {
 				break;
 			}
-			for (int i = 0; i < 4; i++) {
+			for (int i = 0; i < 8; i++) {
 				if (currentNode.neighbour [i] != null) {
+					if (currentNode.neighbour [i].name == "W5 (1)" || currentNode.neighbour [i].name == "W3 (3)" || currentNode.neighbour [i].name == "W5 (3)" || currentNode.neighbour [i].name == "W6 (3)") {
+						currentNode.neighbour [i].closed = true;
+						currentNode.neighbour [i].h = 999999;
+						currentNode.neighbour [i].transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.white;
+					}
 					if (currentNode.neighbour [i].isTarget == true && currentNode.neighbour[i].closed == false) {
 						Debug.Log ("Found Target");
 						Debug.Log (currentNode.neighbour [i]);
@@ -87,9 +92,6 @@ public class AStar : MonoBehaviour {
 				}
 			}
 		}
-
-		Debug.Log ("Extracted");
-		Debug.Log (currentNode);
 	}
 
 	private void ColourPath(Node target) {
