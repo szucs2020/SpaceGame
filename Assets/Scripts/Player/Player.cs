@@ -10,14 +10,11 @@ public class Player : MonoBehaviour {
 	public float accelerationTimeAirborne = .2f;
 	public float accelerationTimeGrounded = .1f;
 	public float moveSpeed = 6;
+	public float jumpDeceleration = 0.5f;
 
-	public Vector2 wallJumpClimb;
-	public Vector2 wallJumpOff;
-	public Vector2 wallLeap;
-
-	public float wallSlideSpeedMax = 3;
-	public float wallStickTime = .25f;
-	float timeToWallUnstick;
+	public float minJetpackVelocity;
+	public float maxJetpackVelocity;
+	public float jetpackAcceleration;
 
 	float gravity;
 	float maxJumpVelocity;
@@ -25,7 +22,8 @@ public class Player : MonoBehaviour {
 	Vector3 velocity;
 	float velocityXSmoothing;
 
-    private bool facingRight = true;
+    private bool facingRight = false;
+	private bool decelerating = false;
 
     Controller2D controller;
 
@@ -42,6 +40,7 @@ public class Player : MonoBehaviour {
 		Vector2 input = new Vector2 (Input.GetAxisRaw ("Horizontal"), Input.GetAxisRaw ("Vertical"));
 		int wallDirX = (controller.collisions.left) ? -1 : 1;
 
+		//flip sprite
         if (Input.GetAxis("Horizontal") > 0 && !facingRight) {
             flip();
         } else if (Input.GetAxis("Horizontal") < 0 && facingRight) {
@@ -51,64 +50,41 @@ public class Player : MonoBehaviour {
         float targetVelocityX = input.x * moveSpeed;
 		velocity.x = Mathf.SmoothDamp (velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below)?accelerationTimeGrounded:accelerationTimeAirborne);
 
-		bool wallSliding = false;
-		if ((controller.collisions.left || controller.collisions.right) && !controller.collisions.below && velocity.y < 0) {
-			wallSliding = true;
-
-			if (velocity.y < -wallSlideSpeedMax) {
-				velocity.y = -wallSlideSpeedMax;
-			}
-
-			if (timeToWallUnstick > 0) {
-				velocityXSmoothing = 0;
-				velocity.x = 0;
-
-				if (input.x != wallDirX && input.x != 0) {
-					timeToWallUnstick -= Time.deltaTime;
-				}
-				else {
-					timeToWallUnstick = wallStickTime;
-				}
-			}
-			else {
-				timeToWallUnstick = wallStickTime;
-			}
-
-		}
-
+		//jumping
 		if (Input.GetKeyDown (KeyCode.Space)) {
-			if (wallSliding) {
-				if (wallDirX == input.x) {
-					velocity.x = -wallDirX * wallJumpClimb.x;
-					velocity.y = wallJumpClimb.y;
-				}
-				else if (input.x == 0) {
-					velocity.x = -wallDirX * wallJumpOff.x;
-					velocity.y = wallJumpOff.y;
-				}
-				else {
-					velocity.x = -wallDirX * wallLeap.x;
-					velocity.y = wallLeap.y;
-				}
-			}
 			if (controller.collisions.below) {
 				velocity.y = maxJumpVelocity;
 			}
+		} else if (Input.GetKeyUp (KeyCode.Space)) {
+			decelerating = true;
 		}
-		if (Input.GetKeyUp (KeyCode.Space)) {
-			if (velocity.y > minJumpVelocity) {
-				velocity.y = minJumpVelocity;
+
+		//jetpack
+		if (Input.GetKey(KeyCode.Space)){
+			if (!controller.collisions.below) {
+				decelerating = false;
+				if (velocity.y < maxJetpackVelocity){
+					velocity.y += jetpackAcceleration;
+				}
 			}
 		}
 
-	
+		//decelerate after jump
+		if (decelerating && velocity.y > minJumpVelocity) {
+			if (velocity.y - jumpDeceleration > minJumpVelocity) {
+				velocity.y -= jumpDeceleration;
+			} else {
+				velocity.y = minJumpVelocity;
+			}
+		}
+			
 		velocity.y += gravity * Time.deltaTime;
 		controller.Move (velocity * Time.deltaTime, input);
 
 		if (controller.collisions.above || controller.collisions.below) {
 			velocity.y = 0;
+			decelerating = false;
 		}
-
 	}
 
     private void flip() {
