@@ -16,7 +16,7 @@ public class Node : MonoBehaviour {
 
 	// Use this for initialization
 	public void Init (Node target) {
-		isTarget = false;
+
 		parent = null;
 		g = 0;
 		closed = false;
@@ -24,6 +24,16 @@ public class Node : MonoBehaviour {
 		transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.yellow;
 
 		h = Mathf.Abs(Vector2.Distance (target.transform.position, transform.position));
+
+		if (this == target) {
+
+			Debug.Log ("Target Target Tartget");
+			Debug.Log (h);
+			transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.red;
+			isTarget = true;
+		} else {
+			isTarget = false;
+		}
 		//Calcualte movement cost of each neighbour
 		/*for (int i = 0; i < 4; i++) {
 			if (neighbour [i] != null) {

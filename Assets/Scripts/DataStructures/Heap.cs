@@ -187,7 +187,7 @@ public class Heap {
 
 	public void Print() {
 		for(int i = 1; i <= length; i++) {
-			Debug.Log (minHeap[i].f);
+			Debug.Log (minHeap[i].name);
 		}
 	}
 }
