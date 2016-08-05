@@ -17,8 +17,8 @@ public class Heap {
 		Init ();
 		for (int i = 1; i <= 16; i++) {
 			elements [i - 1] = GameObject.Find ("W" + i.ToString ()).GetComponent<Node>();
-			elements [i - 1].f = Random.Range (1, 100);
-			Debug.Log (elements [i - 1].f);
+			elements [i - 1].setF(Random.Range (1, 100));
+			Debug.Log (elements [i - 1].getF());
 			Insert (elements[i - 1]);
 		}
 
@@ -108,7 +108,7 @@ public class Heap {
 			int i = length + 1;
 			Node t = null;
 
-			while (i > 1 && minHeap [i].f < minHeap [i / 2].f) {
+			while (i > 1 && minHeap [i].getF() < minHeap [i / 2].getF()) {
 				t = minHeap [i / 2];
 				minHeap [i / 2] = minHeap[i];
 				minHeap [i] = t;
@@ -134,9 +134,9 @@ public class Heap {
 
 		while (length >= 2 * i) {
 			t = null;
-			if (minHeap [i].f > minHeap [2 * i].f) {
+			if (minHeap [i].getF() > minHeap [2 * i].getF()) {
 				if (length >= 2 * i + 1) {
-					if (minHeap [2 * i + 1].f < minHeap [2 * i].f) {
+					if (minHeap [2 * i + 1].getF() < minHeap [2 * i].getF()) {
 						t = minHeap [2 * i + 1];
 						minHeap [2 * i + 1] = minHeap [i];
 						minHeap [i] = t;
@@ -155,7 +155,7 @@ public class Heap {
 				}
 			} else {
 				if (length >= 2 * i + 1) {
-					if (minHeap [2 * i + 1].f < minHeap [i].f) {
+					if (minHeap [2 * i + 1].getF() < minHeap [i].getF()) {
 						t = minHeap [2 * i + 1];
 						minHeap [2 * i + 1] = minHeap [i];
 						minHeap [i] = t;

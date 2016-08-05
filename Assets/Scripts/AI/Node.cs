@@ -2,16 +2,15 @@
 using System.Collections;
 
 public class Node : MonoBehaviour {
-	public Node[] neighbour = new Node[4];
-	public float g;  //Movement cost to neighbour relative to parent;
+	public Node[] neighbour;
+	public float g;  //Movement cost to neighbour;
+	public float h;  //Heuristic; Distance to target node
 	public float f;  // g + h
 
-	public Node parent;
+	private Node parent;
 
-	public float h;  //Heuristic; Distance to target node
-
-	public bool open;
-	public bool closed;
+	private bool open;
+	private bool closed;
 	public bool isTarget;
 
 	// Use this for initialization
@@ -24,25 +23,15 @@ public class Node : MonoBehaviour {
 		open = false;
 		transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.yellow;
 
-		h = Mathf.Abs(Vector2.Distance (target.transform.position, transform.position));
+		setH(target.transform.position, transform.position);
 
 		if (this == target) {
 
-			Debug.Log ("Target Target Tartget");
-			Debug.Log (h);
 			transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.red;
 			isTarget = true;
 		} else {
 			isTarget = false;
 		}
-		//Calcualte movement cost of each neighbour
-		/*for (int i = 0; i < 4; i++) {
-			if (neighbour [i] != null) {
-				g[i] = Vector2.Distance (neighbour [i].transform.position, transform.position); //Movement cost = distance to neighbour
-			} else {
-				break;
-			}
-		}*/
 	}
 
 	public void setParents () {
@@ -52,9 +41,68 @@ public class Node : MonoBehaviour {
 			}
 		}
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+	public void setF(float f) {
+		this.f = f;
+	}
+
+	public float getF() {
+		return f;
+	}
+
+	public void setG(float g) {
+		this.g = g;
+	}
+
+	public void setG(Vector3 x, Vector3 y) {
+		g = Vector2.Distance (x, y);
+	}
+
+	public float getG() {
+		return g;
+	}
+
+	public void setH(float h) {
+		this.h = h;
+	}
+
+	public void setH(Vector3 x, Vector3 y) {
+		h = Vector2.Distance (x, y);
+	}
+
+	public float getH() {
+		return h;
+	}
+
+	public void setOpen(bool open) {
+		this.open = open;
+	}
+
+	public bool getOpen() {
+		return open;
+	}
+
+	public void setClosed(bool closed) {
+		this.closed = closed;
+	}
+
+	public bool getClosed() {
+		return closed;
+	}
+
+	public void setParent(Node parent) {
+		this.parent =  parent;
+	}
+
+	public Node getParent() {
+		return parent;
+	}
+
+	public void clearParent() {
+		this.parent = null;
+	}
+
+	public void setColour(Color colour) {
+		transform.GetChild (0).GetComponent<MeshRenderer> ().material.color = colour;
 	}
 }

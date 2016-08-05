@@ -198,11 +198,8 @@ MonoBehaviour:
   - {fileID: 1128814088}
   - {fileID: 595556396}
   g: 0
-  f: 0
-  parent: {fileID: 0}
   h: 0
-  open: 0
-  closed: 0
+  f: 0
   isTarget: 0
 --- !u!4 &156667230
 Transform:
@@ -269,11 +266,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   g: 0
-  f: 0
-  parent: {fileID: 0}
   h: 0
-  open: 0
-  closed: 0
+  f: 0
   isTarget: 0
 --- !u!1 &185024987
 GameObject:
@@ -388,11 +382,8 @@ MonoBehaviour:
   - {fileID: 907939738}
   - {fileID: 1425980981}
   g: 0
-  f: 0
-  parent: {fileID: 0}
   h: 0
-  open: 0
-  closed: 0
+  f: 0
   isTarget: 0
 --- !u!4 &194990045
 Transform:
@@ -673,11 +664,8 @@ MonoBehaviour:
   - {fileID: 1172695321}
   - {fileID: 759562328}
   g: 0
-  f: 0
-  parent: {fileID: 0}
   h: 0
-  open: 0
-  closed: 0
+  f: 0
   isTarget: 0
 --- !u!4 &258064022
 Transform:
@@ -744,11 +732,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   g: 0
-  f: 0
-  parent: {fileID: 0}
   h: 0
-  open: 0
-  closed: 0
+  f: 0
   isTarget: 0
 --- !u!1 &272842222
 GameObject:
@@ -787,11 +772,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   g: 0
-  f: 0
-  parent: {fileID: 0}
   h: 0
-  open: 0
-  closed: 0
+  f: 0
   isTarget: 0
 --- !u!4 &272842224
 Transform:
@@ -934,11 +916,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   g: 0
-  f: 0
-  parent: {fileID: 0}
   h: 0
-  open: 0
-  closed: 0
+  f: 0
   isTarget: 0
 --- !u!1 &337547247
 GameObject:
@@ -1143,11 +1122,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   g: 0
-  f: 0
-  parent: {fileID: 0}
   h: 0
-  open: 0
-  closed: 0
+  f: 0
   isTarget: 0
 --- !u!1 &469340833
 GameObject:
@@ -1186,11 +1162,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   g: 0
-  f: 0
-  parent: {fileID: 0}
   h: 0
-  open: 0
-  closed: 0
+  f: 0
   isTarget: 0
 --- !u!4 &469340835
 Transform:
@@ -1257,11 +1230,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   g: 0
-  f: 0
-  parent: {fileID: 0}
   h: 0
-  open: 0
-  closed: 0
+  f: 0
   isTarget: 0
 --- !u!1 &494899139
 GameObject:
@@ -1415,11 +1385,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   g: 0
-  f: 0
-  parent: {fileID: 0}
   h: 0
-  open: 0
-  closed: 0
+  f: 0
   isTarget: 0
 --- !u!1 &537741416
 GameObject:
@@ -1458,11 +1425,8 @@ MonoBehaviour:
   - {fileID: 679495857}
   - {fileID: 2111144619}
   g: 0
-  f: 0
-  parent: {fileID: 0}
   h: 0
-  open: 0
-  closed: 0
+  f: 0
   isTarget: 0
 --- !u!4 &537741418
 Transform:
@@ -1529,11 +1493,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   g: 0
-  f: 0
-  parent: {fileID: 0}
   h: 0
-  open: 0
-  closed: 0
+  f: 0
   isTarget: 0
 --- !u!1 &563845647
 GameObject:
@@ -1648,11 +1609,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   g: 0
-  f: 0
-  parent: {fileID: 0}
   h: 0
-  open: 0
-  closed: 0
+  f: 0
   isTarget: 0
 --- !u!4 &588293410
 Transform:
@@ -1705,11 +1663,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   g: 0
-  f: 0
-  parent: {fileID: 0}
   h: 0
-  open: 0
-  closed: 0
+  f: 0
   isTarget: 0
 --- !u!4 &595556397
 Transform:
@@ -1914,11 +1869,8 @@ MonoBehaviour:
   - {fileID: 1645024200}
   - {fileID: 1675220900}
   g: 0
-  f: 0
-  parent: {fileID: 0}
   h: 0
-  open: 0
-  closed: 0
+  f: 0
   isTarget: 0
 --- !u!4 &679495858
 Transform:
@@ -1971,11 +1923,8 @@ MonoBehaviour:
   - {fileID: 311525485}
   - {fileID: 1724856215}
   g: 0
-  f: 0
-  parent: {fileID: 0}
   h: 0
-  open: 0
-  closed: 0
+  f: 0
   isTarget: 0
 --- !u!4 &759562329
 Transform:
@@ -2073,7 +2022,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0cfbfe05eb545e499d487ab996ed507, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startNode: {fileID: 1187403397}
+  startNode: {fileID: 1434099807}
   target: {fileID: 907939738}
   nodes:
   - {fileID: 258177271}
@@ -2231,11 +2180,8 @@ MonoBehaviour:
   - {fileID: 1724856215}
   - {fileID: 1051277558}
   g: 0
-  f: 0
-  parent: {fileID: 0}
   h: 0
-  open: 0
-  closed: 0
+  f: 0
   isTarget: 0
 --- !u!4 &907939739
 Transform:
@@ -2606,11 +2552,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   g: 0
-  f: 0
-  parent: {fileID: 0}
   h: 0
-  open: 0
-  closed: 0
+  f: 0
   isTarget: 0
 --- !u!1 &1061680353
 GameObject:
@@ -2644,16 +2587,13 @@ MonoBehaviour:
   - {fileID: 595556396}
   - {fileID: 156667229}
   - {fileID: 469340834}
-  - {fileID: 194990044}
+  - {fileID: 1128814088}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   g: 0
-  f: 0
-  parent: {fileID: 0}
   h: 0
-  open: 0
-  closed: 0
+  f: 0
   isTarget: 0
 --- !u!4 &1061680355
 Transform:
@@ -2858,11 +2798,8 @@ MonoBehaviour:
   - {fileID: 1125571436}
   - {fileID: 1172695321}
   g: 0
-  f: 0
-  parent: {fileID: 0}
   h: 0
-  open: 0
-  closed: 0
+  f: 0
   isTarget: 0
 --- !u!4 &1118370953
 Transform:
@@ -2915,11 +2852,8 @@ MonoBehaviour:
   - {fileID: 484582551}
   - {fileID: 159934976}
   g: 0
-  f: 0
-  parent: {fileID: 0}
   h: 0
-  open: 0
-  closed: 0
+  f: 0
   isTarget: 0
 --- !u!4 &1125571437
 Transform:
@@ -2970,13 +2904,10 @@ MonoBehaviour:
   - {fileID: 595556396}
   - {fileID: 1675220900}
   - {fileID: 1545908837}
-  - {fileID: 1419688123}
+  - {fileID: 1424394793}
   g: 0
-  f: 0
-  parent: {fileID: 0}
   h: 0
-  open: 0
-  closed: 0
+  f: 0
   isTarget: 0
 --- !u!4 &1128814089
 Transform:
@@ -3029,11 +2960,8 @@ MonoBehaviour:
   - {fileID: 759562328}
   - {fileID: 907939738}
   g: 0
-  f: 0
-  parent: {fileID: 0}
   h: 0
-  open: 0
-  closed: 0
+  f: 0
   isTarget: 0
 --- !u!4 &1170622303
 Transform:
@@ -3086,11 +3014,8 @@ MonoBehaviour:
   - {fileID: 159934976}
   - {fileID: 311525485}
   g: 0
-  f: 0
-  parent: {fileID: 0}
   h: 0
-  open: 0
-  closed: 0
+  f: 0
   isTarget: 0
 --- !u!4 &1172695322
 Transform:
@@ -3143,11 +3068,8 @@ MonoBehaviour:
   - {fileID: 1259148358}
   - {fileID: 1645024200}
   g: 0
-  f: 0
-  parent: {fileID: 0}
   h: 0
-  open: 0
-  closed: 0
+  f: 0
   isTarget: 0
 --- !u!4 &1187403398
 Transform:
@@ -3352,11 +3274,8 @@ MonoBehaviour:
   - {fileID: 1118370952}
   - {fileID: 258064021}
   g: 0
-  f: 0
-  parent: {fileID: 0}
   h: 0
-  open: 0
-  closed: 0
+  f: 0
   isTarget: 0
 --- !u!4 &1259148359
 Transform:
@@ -3409,11 +3328,8 @@ MonoBehaviour:
   - {fileID: 2111144619}
   - {fileID: 1128814088}
   g: 0
-  f: 0
-  parent: {fileID: 0}
   h: 0
-  open: 0
-  closed: 0
+  f: 0
   isTarget: 0
 --- !u!4 &1276415895
 Transform:
@@ -3708,11 +3624,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   g: 0
-  f: 0
-  parent: {fileID: 0}
   h: 0
-  open: 0
-  closed: 0
+  f: 0
   isTarget: 0
 --- !u!1 &1360966513
 GameObject:
@@ -3979,11 +3892,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   g: 0
-  f: 0
-  parent: {fileID: 0}
   h: 0
-  open: 0
-  closed: 0
+  f: 0
   isTarget: 0
 --- !u!4 &1419688124
 Transform:
@@ -4036,11 +3946,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   g: 0
-  f: 0
-  parent: {fileID: 0}
   h: 0
-  open: 0
-  closed: 0
+  f: 0
   isTarget: 0
 --- !u!4 &1424394794
 Transform:
@@ -4093,11 +4000,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   g: 0
-  f: 0
-  parent: {fileID: 0}
   h: 0
-  open: 0
-  closed: 0
+  f: 0
   isTarget: 0
 --- !u!4 &1425980982
 Transform:
@@ -4150,11 +4054,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   g: 0
-  f: 0
-  parent: {fileID: 0}
   h: 0
-  open: 0
-  closed: 0
+  f: 0
   isTarget: 0
 --- !u!4 &1434099808
 Transform:
@@ -4359,11 +4260,8 @@ MonoBehaviour:
   - {fileID: 194990044}
   - {fileID: 1419688123}
   g: 0
-  f: 0
-  parent: {fileID: 0}
   h: 0
-  open: 0
-  closed: 0
+  f: 0
   isTarget: 0
 --- !u!4 &1545908838
 Transform:
@@ -4492,11 +4390,8 @@ MonoBehaviour:
   - {fileID: 258064021}
   - {fileID: 1170622302}
   g: 0
-  f: 0
-  parent: {fileID: 0}
   h: 0
-  open: 0
-  closed: 0
+  f: 0
   isTarget: 0
 --- !u!4 &1645024201
 Transform:
@@ -4549,11 +4444,8 @@ MonoBehaviour:
   - {fileID: 1170622302}
   - {fileID: 194990044}
   g: 0
-  f: 0
-  parent: {fileID: 0}
   h: 0
-  open: 0
-  closed: 0
+  f: 0
   isTarget: 0
 --- !u!4 &1675220901
 Transform:
@@ -4620,11 +4512,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   g: 0
-  f: 0
-  parent: {fileID: 0}
   h: 0
-  open: 0
-  closed: 0
+  f: 0
   isTarget: 0
 --- !u!1 &1693287522
 GameObject:
@@ -4906,11 +4795,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   g: 0
-  f: 0
-  parent: {fileID: 0}
   h: 0
-  open: 0
-  closed: 0
+  f: 0
   isTarget: 0
 --- !u!114 &1724856216
 MonoBehaviour:
@@ -4929,11 +4815,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   g: 0
-  f: 0
-  parent: {fileID: 0}
   h: 0
-  open: 0
-  closed: 0
+  f: 0
   isTarget: 0
 --- !u!1 &1736761065
 GameObject:
@@ -5048,11 +4931,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   g: 0
-  f: 0
-  parent: {fileID: 0}
   h: 0
-  open: 0
-  closed: 0
+  f: 0
   isTarget: 0
 --- !u!4 &1744875572
 Transform:
@@ -5119,11 +4999,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   g: 0
-  f: 0
-  parent: {fileID: 0}
   h: 0
-  open: 0
-  closed: 0
+  f: 0
   isTarget: 0
 --- !u!1 &1813733382
 GameObject:
@@ -5542,11 +5419,8 @@ MonoBehaviour:
   - {fileID: 1187403397}
   - {fileID: 679495857}
   g: 0
-  f: 0
-  parent: {fileID: 0}
   h: 0
-  open: 0
-  closed: 0
+  f: 0
   isTarget: 0
 --- !u!4 &2004801579
 Transform:
@@ -5827,11 +5701,8 @@ MonoBehaviour:
   - {fileID: 1675220900}
   - {fileID: 1545908837}
   g: 0
-  f: 0
-  parent: {fileID: 0}
   h: 0
-  open: 0
-  closed: 0
+  f: 0
   isTarget: 0
 --- !u!4 &2111144620
 Transform:
