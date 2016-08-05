@@ -18,7 +18,8 @@ public class Node : MonoBehaviour {
 	public void Init (Node target) {
 
 		parent = null;
-		g = 0;
+		g = 999999;
+		f = 999999;
 		closed = false;
 		open = false;
 		transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.yellow;

@@ -18,7 +18,7 @@ public class AStar : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		//Grab the target element
-		target = GameObject.Find ("0,2").GetComponent<Node>();
+		target = GameObject.Find ("1,5").GetComponent<Node>();
 
 		//Initialize each node
 		for(int i = 0; i < nodes.Length; i++) {
@@ -35,9 +35,10 @@ public class AStar : MonoBehaviour {
 		//Initializing First Node
 		currentNode = startNode;
 		currentNode.g = 0;
+		currentNode.f = currentNode.h;
 		currentNode.parent = null;
-		currentNode.closed = true;
-		currentNode.open = false;
+		//currentNode.closed = true;
+		//currentNode.open = false;
 		closed.Add (currentNode);
 		currentNode.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.red;
 		open.Insert (currentNode);
@@ -54,8 +55,6 @@ public class AStar : MonoBehaviour {
 			if (currentNode == null) {
 				break;
 			}
-
-			int j = 0;
 			///
 			///
 			///
@@ -63,13 +62,9 @@ public class AStar : MonoBehaviour {
 			///But also take a look at the wikipedia algorithm, seems more optimized
 			///
 			///
-			for (int i = 0; i < open.GetLength(); i++) {
+			for (int i = 0; i < 8; i++) {
 				
 				if (currentNode.neighbour [i] != null) {
-
-					if (j == 0) {
-						Debug.Log(currentNode.neighbour [i].name);
-					}
 
 					if (currentNode.neighbour [i].isTarget == true && currentNode.neighbour[i].closed == false) {
 						/*Debug.Log ("Found Target");
@@ -84,30 +79,29 @@ public class AStar : MonoBehaviour {
 					}
 
 					currentNode.neighbour [i].g = Mathf.Abs(Vector2.Distance (currentNode.neighbour [i].transform.position, currentNode.transform.position));
-					float tentativeG = currentNode.neighbour [i].g + currentNode.neighbour [i].h;
-
-					if (j == 0) {
-						Debug.Log(currentNode.neighbour [i].g);
-					}
+					float tentativeG = currentNode.neighbour [i].g + currentNode.g;
 
 					if (currentNode.neighbour [i].open == false) {
 						currentNode.neighbour [i].open = true;
 						open.Insert (currentNode.neighbour [i]);
 						Debug.Log ("Printing");
+						currentNode.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.blue;
 						open.Print ();
 						Debug.Log ("Done");
 					} else if (tentativeG >= currentNode.neighbour [i].g) {
 						continue;
-					} else if (tentativeG < currentNode.neighbour [i].g) {
+					}/* else if (tentativeG < currentNode.neighbour [i].g) {
 						currentNode.neighbour [i].parent = currentNode;
 						currentNode.neighbour [i].g = tentativeG;
-					}
+					}*/
 
-					currentNode.neighbour [i].closed = true;
+					//currentNode.neighbour [i].closed = true;
+					currentNode.neighbour [i].parent = currentNode;
 					currentNode.neighbour [i].g = tentativeG;
 					//currentNode.neighbour [i].f = currentNode.neighbour [i].g + currentNode.neighbour [i].h;
+					currentNode.neighbour [i].f = currentNode.neighbour [i].g + currentNode.neighbour [i].h;
 					currentNode.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.blue;
-					currentNode = currentNode.neighbour [i];
+					//currentNode = currentNode.neighbour [i];
 				}
 			}
 		}
@@ -115,10 +109,14 @@ public class AStar : MonoBehaviour {
 
 	private void ColourPath(Node target) {
 		Node current = target;
+		Debug.Log ("Colour");
 		while (current.parent != null) {
 			current.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.green;
 			current = current.parent;
+			Debug.Log (current.name);
 		}
+		startNode.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.red;
+		target.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.red;
 	}
 	
 	// Update is called once per frame
