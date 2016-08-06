@@ -16,6 +16,8 @@ public class Player : MonoBehaviour {
 	public float maxJetpackVelocity;
 	public float jetpackAcceleration;
 
+	public Gun gun;
+
 	float gravity;
 	float maxJumpVelocity;
 	float minJumpVelocity;
@@ -51,7 +53,7 @@ public class Player : MonoBehaviour {
 		velocity.x = Mathf.SmoothDamp (velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below)?accelerationTimeGrounded:accelerationTimeAirborne);
 
 		//jumping
-		if (Input.GetKeyDown (KeyCode.Space)) {
+		if (Input.GetButtonDown("Jump")) {
 			if (controller.collisions.below) {
 				velocity.y = maxJumpVelocity;
 			}
@@ -60,7 +62,7 @@ public class Player : MonoBehaviour {
 		}
 
 		//jetpack
-		if (Input.GetKey(KeyCode.Space)){
+		if (Input.GetButton("Jump")){
 			if (!controller.collisions.below) {
 				decelerating = false;
 				if (velocity.y < maxJetpackVelocity){
@@ -81,9 +83,17 @@ public class Player : MonoBehaviour {
 		velocity.y += gravity * Time.deltaTime;
 		controller.Move (velocity * Time.deltaTime, input);
 
-		if (controller.collisions.above || controller.collisions.below) {
+		if (controller.collisions.above) {
 			velocity.y = 0;
 			decelerating = false;
+		} else if(controller.collisions.below){
+			velocity.y = 0;
+			decelerating = false;
+		}
+
+		//shooting
+		if (Input.GetButton("Shoot") || Input.GetAxis("Shoot") != 0){
+			gun.shootAutomatic();
 		}
 	}
 
@@ -93,4 +103,8 @@ public class Player : MonoBehaviour {
         theScale.x *= -1;
         transform.localScale = theScale;
     }
+
+	public bool isFacingRight(){
+		return facingRight;
+	}
 }
