@@ -94,9 +94,9 @@ public class Heap {
 		Print ();
 	}
 
-	void Start() {
+	/*void Start() {
 		TestMethod ();
-	}
+	}*/
 
 	public void Insert(Node node) {
 		
@@ -108,7 +108,17 @@ public class Heap {
 			int i = length + 1;
 			Node t = null;
 
+			/*if (node.transform.name == "3,3") {
+				Debug.Log (i);
+				Debug.Log (minHeap [i].getF());
+				Debug.Log (minHeap [i / 2].getF());
+				Debug.Log (minHeap [i / 2].transform.name);
+			}*/
+
 			while (i > 1 && minHeap [i].getF() < minHeap [i / 2].getF()) {
+				if (node.transform.name == "3,3") {
+					Debug.Log (i);
+				}
 				t = minHeap [i / 2];
 				minHeap [i / 2] = minHeap[i];
 				minHeap [i] = t;
@@ -120,7 +130,6 @@ public class Heap {
 
 	public Node Extract() {
 		int i = 1;
-		float dist;
 		Node t = null;
 		Node e = minHeap [i];
 
