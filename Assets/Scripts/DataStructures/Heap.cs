@@ -108,9 +108,7 @@ public class Heap {
 			Node t = null;
 
 			while (i > 1 && minHeap [i].getF() < minHeap [i / 2].getF()) {
-				if (node.transform.name == "3,3") {
-					Debug.Log (i);
-				}
+
 				t = minHeap [i / 2];
 				minHeap [i / 2] = minHeap[i];
 				minHeap [i] = t;

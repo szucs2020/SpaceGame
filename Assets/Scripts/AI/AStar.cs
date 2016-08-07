@@ -61,7 +61,6 @@ public class AStar : MonoBehaviour {
 						ColourPath (currentNode.neighbour [i]);
 						return;
 					} else if (currentNode.neighbour [i].getClosed() == true) {
-						
 						continue;
 					}
 
@@ -72,8 +71,6 @@ public class AStar : MonoBehaviour {
 					if (currentNode.neighbour [i].getOpen() == false) {
 						
 						currentNode.neighbour [i].setOpen(true);
-						//open.Insert (currentNode.neighbour [i]);
-						currentNode.neighbour [i].setColour(Color.blue);
 					} else if (tentativeG >= currentNode.neighbour [i].getG()) {
 						continue;
 					}
@@ -81,7 +78,7 @@ public class AStar : MonoBehaviour {
 					currentNode.neighbour [i].setParent(currentNode);
 					currentNode.neighbour [i].setG(tentativeG);
 					currentNode.neighbour [i].setF(currentNode.neighbour [i].getG() + currentNode.neighbour [i].getH());
-					currentNode.setColour(Color.blue);
+					currentNode.neighbour [i].setColour(Color.blue);
 
 					//You have to add it to the Open Heap here because the Fvalue only gets calculated right before this
 					if (open.inHeap(currentNode.neighbour [i]) == false && currentNode.neighbour [i].getOpen () == true && currentNode.neighbour [i].getClosed () == false) {
