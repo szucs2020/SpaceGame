@@ -38,24 +38,13 @@ public class AStar : MonoBehaviour {
 		closed.Add (currentNode);
 		currentNode.setColour(Color.red);
 		open.Insert (currentNode);
-		Debug.Log ("Printing");
-		open.Print ();
-		Debug.Log ("Done");
-
 
 		while(open.GetLength() > 0) {
-
-			Debug.Log ("Heap Start");
-			open.Print ();
-			Debug.Log ("Heap End");
 			
 			currentNode = open.Extract ();
 			closed.Add (currentNode);
 			currentNode.setClosed(true);
 			currentNode.setOpen(false);
-
-			Debug.Log ("Next Parent");
-			Debug.Log (currentNode.name);
 
 			if (currentNode == null) {
 				break;
@@ -80,27 +69,18 @@ public class AStar : MonoBehaviour {
 					//currentNode.neighbour [i].g = Vector2.Distance(currentNode.neighbour [i].transform.position, currentNode.transform.position) + currentNode.g;
 					float tentativeG = Vector2.Distance(currentNode.neighbour [i].transform.position, currentNode.transform.position) + currentNode.getG();
 
-					if (currentNode.neighbour [i].name == "3,3") {
-						Debug.Log ("3,3,3,3,3,3");
-						Debug.Log (tentativeG);
-						Debug.Log (currentNode.neighbour [i].getG());
-					}
-
 					if (currentNode.neighbour [i].getOpen() == false) {
 						
 						currentNode.neighbour [i].setOpen(true);
 						//open.Insert (currentNode.neighbour [i]);
 						currentNode.neighbour [i].setColour(Color.blue);
-						//open.Print ();
 					} else if (tentativeG >= currentNode.neighbour [i].getG()) {
 						continue;
 					}
 
-					Debug.Log (currentNode.neighbour [i].name);
 					currentNode.neighbour [i].setParent(currentNode);
 					currentNode.neighbour [i].setG(tentativeG);
 					currentNode.neighbour [i].setF(currentNode.neighbour [i].getG() + currentNode.neighbour [i].getH());
-					Debug.Log (currentNode.neighbour [i].getF());
 					currentNode.setColour(Color.blue);
 
 					//You have to add it to the Open Heap here because the Fvalue only gets calculated right before this
@@ -119,11 +99,10 @@ public class AStar : MonoBehaviour {
 	//
 	private void ColourPath(Node target) {
 		Node current = target;
-		Debug.Log ("Colour");
+
 		while (current.getParent() != null) {
 			current.setColour(Color.green);
 			current = current.getParent();
-			Debug.Log (current.name);
 		}
 		startNode.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.red;
 		target.setColour(Color.red);

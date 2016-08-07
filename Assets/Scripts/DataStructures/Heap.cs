@@ -18,7 +18,6 @@ public class Heap {
 		for (int i = 1; i <= 16; i++) {
 			elements [i - 1] = GameObject.Find ("W" + i.ToString ()).GetComponent<Node>();
 			elements [i - 1].setF(Random.Range (1, 100));
-			Debug.Log (elements [i - 1].getF());
 			Insert (elements[i - 1]);
 		}
 
@@ -107,13 +106,6 @@ public class Heap {
 
 			int i = length + 1;
 			Node t = null;
-
-			/*if (node.transform.name == "3,3") {
-				Debug.Log (i);
-				Debug.Log (minHeap [i].getF());
-				Debug.Log (minHeap [i / 2].getF());
-				Debug.Log (minHeap [i / 2].transform.name);
-			}*/
 
 			while (i > 1 && minHeap [i].getF() < minHeap [i / 2].getF()) {
 				if (node.transform.name == "3,3") {
