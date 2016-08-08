@@ -26,16 +26,23 @@ public class Player : MonoBehaviour {
 
     private bool facingRight = false;
 	private bool decelerating = false;
+	private int jump;
+	private bool flying;
+	private SpriteRenderer fire;
 
     Controller2D controller;
 
 	void Start() {
 		controller = GetComponent<Controller2D> ();
+		jump = 0;
 
 		gravity = -(2 * maxJumpHeight) / Mathf.Pow (timeToJumpApex, 2);
 		maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
 		minJumpVelocity = Mathf.Sqrt (2 * Mathf.Abs (gravity) * minJumpHeight);
 		print ("Gravity: " + gravity + "  Jump Velocity: " + maxJumpVelocity);
+
+		fire = this.gameObject.transform.GetChild(1).GetComponent<SpriteRenderer>();
+		fire.enabled = false;
 	}
 
 	void Update() {
@@ -57,18 +64,32 @@ public class Player : MonoBehaviour {
 			if (controller.collisions.below) {
 				velocity.y = maxJumpVelocity;
 			}
-		} else if (Input.GetKeyUp (KeyCode.Space)) {
-			decelerating = true;
-		}
+
+			if (jump == 0) {
+				jump = 1;
+			} else if (jump == 1){
+				jump = 2;
+			}
+		} 
 
 		//jetpack
-		if (Input.GetButton("Jump")){
-			if (!controller.collisions.below) {
-				decelerating = false;
-				if (velocity.y < maxJetpackVelocity){
-					velocity.y += jetpackAcceleration;
+		else if (Input.GetButton("Jump")){
+			if (jump == 2 && flying){
+				fire.enabled = true;
+				if (!controller.collisions.below) {
+					decelerating = false;
+					if (velocity.y < maxJetpackVelocity){
+						velocity.y += jetpackAcceleration;
+					}
 				}
 			}
+		} 
+
+		//release jump
+		else if (Input.GetKeyUp (KeyCode.Space)) {
+			decelerating = true;
+			jump = 1;
+			fire.enabled = false;
 		}
 
 		//decelerate after jump
@@ -83,12 +104,18 @@ public class Player : MonoBehaviour {
 		velocity.y += gravity * Time.deltaTime;
 		controller.Move (velocity * Time.deltaTime, input);
 
-		if (controller.collisions.above) {
+		 if(controller.collisions.below){
 			velocity.y = 0;
 			decelerating = false;
-		} else if(controller.collisions.below){
-			velocity.y = 0;
-			decelerating = false;
+			jump = 0;
+			flying = false;
+			fire.enabled = false;
+		} else {
+			flying = true;
+			if (controller.collisions.above) {
+				velocity.y = 0;
+				decelerating = false;
+			}
 		}
 
 		//shooting
