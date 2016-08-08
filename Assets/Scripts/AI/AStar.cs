@@ -15,6 +15,10 @@ public class AStar : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		FindShortestPath ();
+	}
+
+	public Queue FindShortestPath() {
 		//Grab the target element
 		//target = GameObject.Find ("2,6").GetComponent<Node>();
 
@@ -42,7 +46,7 @@ public class AStar : MonoBehaviour {
 		open.Insert (currentNode);
 
 		while(open.GetLength() > 0) {
-			
+
 			currentNode = open.Extract ();
 			currentNode.setClosed(true);
 			currentNode.setOpen(false);
@@ -50,17 +54,23 @@ public class AStar : MonoBehaviour {
 			if (currentNode == null) {
 				break;
 			}
-				
-			for (int i = 0; i < 8; i++) {
+
+			for (int i = 0; i < currentNode.neighbour.Length; i++) {
 				
 				if (currentNode.neighbour [i] != null) {
 
 					if (currentNode.neighbour [i].isTarget == true && currentNode.neighbour[i].getClosed() == false) {
-						
+
 						currentNode.neighbour [i].setParent(currentNode);
 						currentNode.setColour(Color.blue);
 						ColourPath (currentNode.neighbour [i]);
-						return;
+						Queue path = new Queue();
+						path.Init ();
+						while (currentNode.getParent () != null) {
+							path.Enqueue (currentNode.getParent ());
+							currentNode = currentNode.getParent ();
+						}
+						return path;
 					} else if (currentNode.neighbour [i].getClosed() == true) {
 						continue;
 					}
@@ -70,7 +80,7 @@ public class AStar : MonoBehaviour {
 					float tentativeG = Vector2.Distance(currentNode.neighbour [i].transform.position, currentNode.transform.position) + currentNode.getG();
 
 					if (currentNode.neighbour [i].getOpen() == false) {
-						
+
 						currentNode.neighbour [i].setOpen(true);
 					} else if (tentativeG >= currentNode.neighbour [i].getG()) {
 						continue;
@@ -88,8 +98,9 @@ public class AStar : MonoBehaviour {
 				}
 			}
 		}
-	}
 
+		return null;
+	}
 
 	//
 	//Starting with the target node it travels through each parent
