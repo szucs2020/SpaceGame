@@ -9,9 +9,9 @@ public class AStar : MonoBehaviour {
 
 
 	public Node[] nodes;
+	public Node[] closedNodes;
 
 	Heap open;
-	List<Node> closed = new List<Node>();
 
 	// Use this for initialization
 	void Start () {
@@ -21,12 +21,15 @@ public class AStar : MonoBehaviour {
 		//Initialize each node
 		for(int i = 0; i < nodes.Length; i++) {
 			nodes [i].Init (target);
-			if (nodes [i].name == "2,4" || nodes [i].name == "2,5" || nodes [i].name == "4,4" || nodes [i].name == "2,2") {
-				nodes [i].setClosed(true);
-				nodes [i].setH(999999f);
-				nodes [i].setColour(Color.white);
+		}
+
+		for(int i = 0; i < closedNodes.Length; i++) {
+			if (closedNodes [i] != null) {
+				closedNodes [i].setClosed(true);
+				closedNodes [i].setH(999999f);
+				closedNodes [i].setColour(Color.white);
 			}
-		} 
+		}
 
 		open = new Heap ();
 		open.Init ();
@@ -35,14 +38,12 @@ public class AStar : MonoBehaviour {
 		currentNode.setG(0f);
 		currentNode.setF(currentNode.getH());
 		currentNode.clearParent();
-		closed.Add (currentNode);
 		currentNode.setColour(Color.red);
 		open.Insert (currentNode);
 
 		while(open.GetLength() > 0) {
 			
 			currentNode = open.Extract ();
-			closed.Add (currentNode);
 			currentNode.setClosed(true);
 			currentNode.setOpen(false);
 

@@ -2067,6 +2067,19 @@ MonoBehaviour:
   - {fileID: 1419688123}
   - {fileID: 1425980981}
   - {fileID: 1051277558}
+  closedNodes:
+  - {fileID: 469340834}
+  - {fileID: 156667229}
+  - {fileID: 258064021}
+  - {fileID: 1545908837}
+  - {fileID: 194990044}
+  - {fileID: 907939738}
+  - {fileID: 1645024200}
+  - {fileID: 1125571436}
+  - {fileID: 1172695321}
+  - {fileID: 159934976}
+  - {fileID: 2111144619}
+  - {fileID: 1128814088}
 --- !u!1 &890713936
 GameObject:
   m_ObjectHideFlags: 0
