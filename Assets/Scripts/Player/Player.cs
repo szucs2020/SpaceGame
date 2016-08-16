@@ -27,8 +27,15 @@ public class Player : MonoBehaviour {
     private bool facingRight = false;
 	private bool decelerating = false;
 	private int jump;
-	private bool flying;
 	private SpriteRenderer fire;
+
+    //movement flags
+    private Vector2 movementAxis;
+    private bool buttonPressedJump;
+    private bool buttonHeldJump;
+    private bool buttonReleasedJump;
+    private bool buttonPressedShoot;
+    private bool buttonHeldShoot;
 
     Controller2D controller;
 
@@ -36,23 +43,30 @@ public class Player : MonoBehaviour {
 		controller = GetComponent<Controller2D> ();
 		jump = 0;
 
-		gravity = -(2 * maxJumpHeight) / Mathf.Pow (timeToJumpApex, 2);
+		gravity = (2 * maxJumpHeight) / Mathf.Pow (timeToJumpApex, 2);
 		maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
 		minJumpVelocity = Mathf.Sqrt (2 * Mathf.Abs (gravity) * minJumpHeight);
-		print ("Gravity: " + gravity + "  Jump Velocity: " + maxJumpVelocity);
 
 		fire = this.gameObject.transform.GetChild(1).GetComponent<SpriteRenderer>();
 		fire.enabled = false;
-	}
+
+        movementAxis = new Vector2(0, 0);
+        buttonPressedJump = false;
+        buttonHeldJump = false;
+        buttonReleasedJump = false;
+        buttonPressedShoot = false;
+        buttonHeldShoot = false;
+    }
 
 	void Update() {
-		Vector2 input = new Vector2 (Input.GetAxisRaw ("Horizontal"), Input.GetAxisRaw ("Vertical"));
-		int wallDirX = (controller.collisions.left) ? -1 : 1;
+
+        Vector2 input = movementAxis;
+        int wallDirX = (controller.collisions.left) ? -1 : 1;
 
 		//flip sprite
-        if (Input.GetAxis("Horizontal") > 0 && !facingRight) {
+        if (movementAxis.x > 0 && !facingRight) {
             flip();
-        } else if (Input.GetAxis("Horizontal") < 0 && facingRight) {
+        } else if (movementAxis.x < 0 && facingRight) {
             flip();
         }
 
@@ -60,7 +74,7 @@ public class Player : MonoBehaviour {
 		velocity.x = Mathf.SmoothDamp (velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below)?accelerationTimeGrounded:accelerationTimeAirborne);
 
 		//jumping
-		if (Input.GetButtonDown("Jump")) {
+		if (buttonPressedJump) {
 			if (controller.collisions.below) {
 				velocity.y = maxJumpVelocity;
 			}
@@ -73,45 +87,43 @@ public class Player : MonoBehaviour {
 		} 
 
 		//jetpack
-		else if (Input.GetButton("Jump")){
-			if (jump == 2 && flying){
-				fire.enabled = true;
+		else if (buttonHeldJump) {
+            if (jump == 2) {
+                fire.enabled = true;
 				if (!controller.collisions.below) {
 					decelerating = false;
 					if (velocity.y < maxJetpackVelocity){
 						velocity.y += jetpackAcceleration;
 					}
 				}
-			}
-		} 
+            }
+        } 
 
 		//release jump
-		else if (Input.GetKeyUp (KeyCode.Space)) {
+		else if (buttonReleasedJump) {
 			decelerating = true;
 			jump = 1;
 			fire.enabled = false;
 		}
 
-		//decelerate after jump
-		if (decelerating && velocity.y > minJumpVelocity) {
-			if (velocity.y - jumpDeceleration > minJumpVelocity) {
-				velocity.y -= jumpDeceleration;
-			} else {
-				velocity.y = minJumpVelocity;
-			}
-		}
-			
-		velocity.y += gravity * Time.deltaTime;
+        //decelerate after jump
+        if (decelerating && velocity.y > minJumpVelocity) {
+            if (velocity.y - jumpDeceleration > minJumpVelocity) {
+                velocity.y -= jumpDeceleration;
+            } else {
+                velocity.y = minJumpVelocity;
+            }
+        }
+
+        velocity.y -= gravity * Time.deltaTime;
 		controller.Move (velocity * Time.deltaTime, input);
 
 		 if(controller.collisions.below){
 			velocity.y = 0;
 			decelerating = false;
 			jump = 0;
-			flying = false;
 			fire.enabled = false;
 		} else {
-			flying = true;
 			if (controller.collisions.above) {
 				velocity.y = 0;
 				decelerating = false;
@@ -119,7 +131,7 @@ public class Player : MonoBehaviour {
 		}
 
 		//shooting
-		if (Input.GetButton("Shoot") || Input.GetAxis("Shoot") != 0){
+		if (buttonHeldShoot) {
 			gun.shootAutomatic();
 		}
 	}
@@ -134,4 +146,22 @@ public class Player : MonoBehaviour {
 	public bool isFacingRight(){
 		return facingRight;
 	}
+    public void setMovementAxis(Vector2 input) {
+        this.movementAxis = input;
+    }
+    public void setbuttonPressedJump(bool input) {
+        this.buttonPressedJump = input;
+    }
+    public void setbuttonHeldJump(bool input) {
+        this.buttonHeldJump = input;
+    }
+    public void setbuttonReleasedJump(bool input) {
+        this.buttonReleasedJump = input;
+    }
+    public void setbuttonPressedShoot(bool input) {
+        this.buttonPressedShoot = input;
+    }
+    public void setbuttonHeldShoot(bool input) {
+        this.buttonHeldShoot = input;
+    }
 }

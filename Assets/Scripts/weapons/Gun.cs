@@ -60,10 +60,8 @@ public class Gun : MonoBehaviour {
 				Vector2 direction;
 
 				if (player.isFacingRight()){
-					Debug.Log ("facing right ");
 					direction = new Vector2 (1, 0);
 				} else {
-					Debug.Log ("facing left ");
 					direction = new Vector2 (-1, 0);
 				}
 
@@ -71,7 +69,6 @@ public class Gun : MonoBehaviour {
 
 				//returns true if it hits a collider object
 				if (hit.collider) {
-					Debug.Log ("Hit something" + hit.transform.tag);
 					if (hit.transform.tag == "Enemy") {
 //						GameObject otherPlayer = GameObject.FindGameObjectWithTag ("Player");
 					} else if (hit.transform.tag == "Player") {
@@ -86,7 +83,6 @@ public class Gun : MonoBehaviour {
 //				audio.PlayOneShot(shot);
 
 				//Draw tracer to show shot, pass end point location to coroutine
-				Debug.Log("Range: " + currentRange);
 				StartCoroutine("drawTracer", direction * currentRange);
 
 				//remove one from ammo
@@ -142,6 +138,8 @@ public class Gun : MonoBehaviour {
 	//This coroutine allows the program to draw the tracer over multiple frames
 	//This way, it shows up every other frame
 	IEnumerator drawTracer(Vector2 endPoint){
+
+
 
 		tracer.enabled = true;
 
