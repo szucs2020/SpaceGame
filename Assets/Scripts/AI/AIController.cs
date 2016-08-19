@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections;
 using System.Collections.Generic;
 
 public class AIController : MonoBehaviour {
 	AStar pathFinder;
 	Queue path;
 	Node target;
+	Player player;
 
 
 	// Use this for initialization
@@ -16,18 +16,18 @@ public class AIController : MonoBehaviour {
 
 		target = path.Dequeue ();
 
+		player = transform.GetComponent<Player> ();
+
 		Debug.Log (target.name);
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+		Move ();
 	}
 
 	private void Move() {
-		if (target.transform.position.x < transform.position.x) {
-
-		}
+		player.setMovementAxis (new Vector2(-1, 1));
 	}
 }
