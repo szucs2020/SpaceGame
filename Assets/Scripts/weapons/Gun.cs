@@ -14,9 +14,12 @@ public class Gun : MonoBehaviour {
 	public enum FireMode {Semi, Auto};
 	public FireMode gunType;
 	public float rpm;
-	public float range;
+	public float bulletSpeed;
+	public float bulletTime;
 	public float reloadSpeed;
 	public int clipSize;
+	public bool usesAmmo;
+	public GameObject bulletPrefab;
 
 	//components
 	public Transform spawn;
@@ -65,25 +68,13 @@ public class Gun : MonoBehaviour {
 					direction = new Vector2 (-1, 0);
 				}
 
-				RaycastHit2D hit = Physics2D.Raycast (new Vector2(spawn.position.x, spawn.position.y), direction, range, LayerMask.GetMask("Ground"));
-
-				//returns true if it hits a collider object
-				if (hit.collider) {
-					if (hit.transform.tag == "Enemy") {
-//						GameObject otherPlayer = GameObject.FindGameObjectWithTag ("Player");
-					} else if (hit.transform.tag == "Player") {
-						//hitting other players
-					}
-					currentRange = hit.distance;
-				} else {
-					currentRange = range;
-				}
-
 				//play gun shot sound
-//				audio.PlayOneShot(shot);
+				//audio.PlayOneShot(shot);
 
-				//Draw tracer to show shot, pass end point location to coroutine
-				StartCoroutine("drawTracer", direction * currentRange);
+				//instantiate bullet prefab
+				GameObject bullet = (GameObject)Instantiate(bulletPrefab, spawn.position, spawn.rotation);
+				bullet.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
+				Destroy(bullet, bulletTime);
 
 				//remove one from ammo
 				ammoLoaded--;
@@ -133,22 +124,6 @@ public class Gun : MonoBehaviour {
 			canShoot = false;
 		}
 		return canShoot;
-	}
-
-	//This coroutine allows the program to draw the tracer over multiple frames
-	//This way, it shows up every other frame
-	IEnumerator drawTracer(Vector2 endPoint){
-
-
-
-		tracer.enabled = true;
-
-		//give tracer start and endpoint. Starts at gun, ends at range or collision
-		tracer.SetPosition(0,spawn.position);
-		tracer.SetPosition(1, new Vector2(spawn.position.x, spawn.position.y) + endPoint);
-		
-		yield return null;
-		tracer.enabled = false;
 	}
 
 	//Private variable getters and setters

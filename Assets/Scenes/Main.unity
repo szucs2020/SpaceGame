@@ -217,9 +217,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunType: 1
   rpm: 500
-  range: 15
+  bulletSpeed: 50
+  bulletTime: 4
   reloadSpeed: 1
   clipSize: 10
+  usesAmmo: 0
+  bulletPrefab: {fileID: 115582, guid: bf279894d63713b47a453d27c95c68bd, type: 2}
   spawn: {fileID: 1785807807}
   shot: {fileID: 0}
   click: {fileID: 0}
