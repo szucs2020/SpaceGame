@@ -7,19 +7,17 @@ public class AIController : MonoBehaviour {
 	Queue path;
 	Node target;
 	Player player;
-
+	Controller2D controller;
 
 	// Use this for initialization
 	void Start () {
 		pathFinder = this.GetComponent<AStar> ();
 		path = pathFinder.FindShortestPath ();
+		controller = this.GetComponent<Controller2D> ();
 
 		target = path.Dequeue ();
 
 		player = transform.GetComponent<Player> ();
-
-		Debug.Log (target.name);
-
 	}
 	
 	// Update is called once per frame
