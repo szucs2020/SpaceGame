@@ -129,3 +129,25 @@ public class Selector : Composite {
 	//Behaviours::iterator m_Currentchild
 	protected Behaviour m_Currentchild;
 }
+
+/*public class Node {
+	public virtual Task create() { return null; }
+	public virtual void destroy(Task task) {}
+
+	//public virtual ~Node() {}
+	public Node() {}
+}
+
+public class Task {
+	public Task(Node node) {}
+
+	//public virtual ~Task()
+	public Task() {} 
+
+	public virtual Status update() {}
+
+	public virtual void onInitialize() {}
+	public virtual void onTerminate(Status s) {}
+
+	protected Node m_pNode;
+}*/
