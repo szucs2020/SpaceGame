@@ -66,6 +66,9 @@ public class AStar : MonoBehaviour {
 						ColourPath (currentNode.neighbour [i]);
 						Queue path = new Queue();
 						path.Init ();
+						//Add Target and CurrentNode to Queue before traversing backwards
+						path.Enqueue (target);
+						path.Equals (currentNode);
 						while (currentNode.getParent () != null) {
 							path.Enqueue (currentNode.getParent ());
 							currentNode = currentNode.getParent ();

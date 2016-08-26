@@ -9,23 +9,56 @@ public class AIController : MonoBehaviour {
 	Player player;
 	Controller2D controller;
 
+	//Movement
+	bool buttonPressedJumped;
+
 	// Use this for initialization
 	void Start () {
 		pathFinder = this.GetComponent<AStar> ();
 		path = pathFinder.FindShortestPath ();
 		controller = this.GetComponent<Controller2D> ();
 
+		Debug.Log (path.Length());
+		path.Print();
 		target = path.Dequeue ();
 
 		player = transform.GetComponent<Player> ();
+
+		//Movement
+		buttonPressedJumped = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		Move ();
+		if (target != null) {
+			Move ();
+		} else {
+			player.setMovementAxis (new Vector2 (0, 0));
+		}
 	}
 
 	private void Move() {
-		player.setMovementAxis (new Vector2(-1, 1));
+		player.setbuttonPressedJump (false);
+
+		if(Mathf.Abs(target.transform.position.x - transform.position.x) < .5f) {
+			target = path.Dequeue ();
+
+			if (target == null) {
+				return;
+			}
+			Debug.Log (target.transform.position);
+		}
+
+		if(target.transform.position.y > transform.position.y + 5) {
+			player.setbuttonPressedJump (true);
+		}
+		
+		//Debug.Log (Mathf.Abs(target.transform.position.x - transform.position.x));
+		if (target.transform.position.x < transform.position.x) {
+			player.setMovementAxis (new Vector2 (-1, 1));
+		} else {
+			player.setMovementAxis (new Vector2 (1, 1));
+		}
+
 	}
 }

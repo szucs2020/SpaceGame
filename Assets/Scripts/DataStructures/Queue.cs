@@ -49,6 +49,10 @@ public class Queue {
 		return r;
 	}
 
+	public int Length() {
+		return length;
+	}
+
 	private void Test() {
 
 		Node[] elements = new Node[16];
@@ -88,7 +92,7 @@ public class Queue {
 
 	public void Print() {
 		for (int i = 0; i < length; i++) {
-			Debug.Log (queue[i].getF());
+			Debug.Log (queue[i].transform.position.x);
 		}
 	}
 }
