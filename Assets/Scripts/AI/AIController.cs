@@ -40,16 +40,16 @@ public class AIController : MonoBehaviour {
 	private void Move() {
 		player.setbuttonPressedJump (false);
 
-		if(Mathf.Abs(target.transform.position.x - transform.position.x) < .5f) {
+		if(Mathf.Abs(target.transform.position.x - transform.position.x) < .25f) {
 			target = path.Dequeue ();
 
 			if (target == null) {
 				return;
 			}
-			Debug.Log (target.transform.position);
+			Debug.Log (target.transform.position + " " + Mathf.Abs(target.transform.position.x - transform.position.x));
 		}
 
-		if(target.transform.position.y > transform.position.y + 5) {
+		if(target.transform.position.y > transform.position.y + 5 && Mathf.Abs(target.transform.position.x - transform.position.x) < 6f) {
 			player.setbuttonPressedJump (true);
 		}
 		

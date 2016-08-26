@@ -7,7 +7,7 @@ public class Node : MonoBehaviour {
 	public float h;  //Heuristic; Distance to target node
 	public float f;  // g + h
 
-	private Node parent;
+	public Node parent;
 
 	private bool open;
 	private bool closed;
