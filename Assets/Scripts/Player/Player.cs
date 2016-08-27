@@ -73,8 +73,8 @@ public class Player : MonoBehaviour {
         float targetVelocityX = input.x * moveSpeed;
 		velocity.x = Mathf.SmoothDamp (velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below)?accelerationTimeGrounded:accelerationTimeAirborne);
 
-		//jumping
 		if (buttonPressedJump) {
+			//jumping
 			if (controller.collisions.below) {
 				velocity.y = maxJumpVelocity;
 			}
@@ -85,9 +85,8 @@ public class Player : MonoBehaviour {
 				jump = 2;
 			}
 		} 
-
-		//jetpack
 		else if (buttonHeldJump) {
+			//jetpack
             if (jump == 2) {
                 fire.enabled = true;
 				if (!controller.collisions.below) {
@@ -98,9 +97,8 @@ public class Player : MonoBehaviour {
 				}
             }
         } 
-
-		//release jump
 		else if (buttonReleasedJump) {
+			//release jump
 			decelerating = true;
 			jump = 1;
 			fire.enabled = false;
