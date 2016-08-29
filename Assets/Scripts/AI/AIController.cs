@@ -36,7 +36,7 @@ public class AIController : MonoBehaviour {
 		}
 
 		if (target != null) {
-			Fly ();
+			Hover (target);
 		} else {
 			player.setMovementAxis (new Vector2 (0, 0));
 		}
@@ -72,8 +72,6 @@ public class AIController : MonoBehaviour {
 
 	bool step1 = true;
 	bool step2 = false;
-	bool step3 = false;
-	bool step4 = false;
 
 	private void FlyerHelper() {
 
@@ -96,25 +94,6 @@ public class AIController : MonoBehaviour {
 
 			player.setbuttonPressedJump (false);
 			player.setbuttonHeldJump (true);
-
-			//player.setbuttonReleasedJump (true);
-			//step2 = false;
-			//step3 = true;
-		} else if (step3) {
-
-			Debug.Log ("Step 3");
-
-			player.setbuttonHeldJump (true);
-			//player.setbuttonReleasedJump (false);
-
-			//step3 = false;
-			//step4 = true;
-		} else if (step4) {
-
-			//Debug.Log ("Step 4");
-			player.setbuttonPressedJump(false);
-			player.setbuttonHeldJump (true);
-			//player.setbuttonReleasedJump (false);
 		}
 	}
 
@@ -122,6 +101,11 @@ public class AIController : MonoBehaviour {
 
 	private void Fly() {
 
+		if (Mathf.Abs (target.transform.position.x - transform.position.x) < 1f && path.Length() == 0) {
+			player.moveSpeed = 10;
+		} else {
+			player.moveSpeed = 30;
+		}
 
 		if(Mathf.Abs(target.transform.position.x - transform.position.x) < .25f && path.Length() != 0) {
 			target = path.Dequeue ();
@@ -141,7 +125,7 @@ public class AIController : MonoBehaviour {
 
 		if (isFlying) {
 
-			if (!(transform.position.y - target.transform.position.y > 2f)) {
+			if (!(transform.position.y - target.transform.position.y > 3f)) {
 				Debug.Log (transform.position.y - target.transform.position.y);
 				FlyerHelper ();
 			} else {
@@ -156,7 +140,16 @@ public class AIController : MonoBehaviour {
 		} else {
 			player.setMovementAxis (new Vector2 (1, 1));
 		}
+	}
 
+	private void Hover(Node target) {
 
+		if (transform.position.y < target.transform.position.y + 10f) {
+			FlyerHelper ();
+		} else if (transform.position.y > target.transform.position.y + 10.1f) {
+			player.setbuttonHeldJump (false);
+			player.setbuttonReleasedJump (true);
+			step1 = true;
+		}
 	}
 }
