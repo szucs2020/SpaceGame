@@ -79,7 +79,7 @@ public class AIController : MonoBehaviour {
 
 		if (step1) {
 
-			Debug.Log ("Step 1");
+			//Debug.Log ("Step 1");
 
 			player.setbuttonPressedJump (true);
 			//player.setbuttonReleasedJump (false);
@@ -90,7 +90,7 @@ public class AIController : MonoBehaviour {
 			}
 		} else if (step2) {
 
-			Debug.Log ("Step 2");
+			//Debug.Log ("Step 2");
 
 			player.setbuttonPressedJump (false);
 			player.setbuttonHeldJump (true);
@@ -144,12 +144,21 @@ public class AIController : MonoBehaviour {
 
 	private void Hover(Node target) {
 
+		player.moveSpeed = 10;
+
+
 		if (transform.position.y < target.transform.position.y + 10f) {
 			FlyerHelper ();
-		} else if (transform.position.y > target.transform.position.y + 10.1f) {
+		} else if (transform.position.y > target.transform.position.y + 10.05f) {
 			player.setbuttonHeldJump (false);
 			player.setbuttonReleasedJump (true);
 			step1 = true;
+		}
+
+		if (target.transform.position.x < transform.position.x) {
+			player.setMovementAxis (new Vector2 (-1, 1));
+		} else {
+			player.setMovementAxis (new Vector2 (1, 1));
 		}
 	}
 }
