@@ -36,7 +36,7 @@ public class AIController : MonoBehaviour {
 		}
 
 		if (target != null) {
-			Hover (target);
+			Fly ();
 		} else {
 			player.setMovementAxis (new Vector2 (0, 0));
 		}
@@ -102,13 +102,17 @@ public class AIController : MonoBehaviour {
 	private void Fly() {
 
 		if (Mathf.Abs (target.transform.position.x - transform.position.x) < 1f && path.Length() == 0) {
-			player.moveSpeed = 10;
+			player.moveSpeed = 1;
 		} else {
 			player.moveSpeed = 30;
 		}
 
 		if(Mathf.Abs(target.transform.position.x - transform.position.x) < .25f && path.Length() != 0) {
 			target = path.Dequeue ();
+			step1 = true;
+			step2 = false;
+			player.setbuttonPressedJump (false);
+			deltaTime = 0;
 
 			if (target == null) {
 				return;
@@ -118,15 +122,14 @@ public class AIController : MonoBehaviour {
 			return;
 		}*/
 
-		if(target.transform.position.y > transform.position.y + 10) {
+		if(target.transform.position.y > transform.position.y + 10 || target.transform.position.x > transform.position.x + 10) {
 
 			isFlying = true;
 		}
 
 		if (isFlying) {
 
-			if (!(transform.position.y - target.transform.position.y > 3f)) {
-				Debug.Log (transform.position.y - target.transform.position.y);
+			if (!(transform.position.y - target.transform.position.y > 3f) || target.transform.position.x > transform.position.x + 10) {
 				FlyerHelper ();
 			} else {
 				isFlying = false;
