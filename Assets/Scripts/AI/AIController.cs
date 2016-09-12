@@ -27,7 +27,6 @@ public class AIController : MonoBehaviour {
 		AI = transform.GetComponent<Player> ();
 
 		player = GameObject.Find ("Player");
-		Debug.Log (player.transform.position);
 
 		//Movement
 		buttonPressedJumped = false;
@@ -36,7 +35,33 @@ public class AIController : MonoBehaviour {
 	private void getClosestNodeToPlayer() {
 		Node closestNode = null;
 
-		if (path.Count == 0) {
+		if (path.Count == 0 && player != null) {
+			Node closestToAI = null;
+			Node closestToPlayer = null;
+			float dist = float.MaxValue;
+			float smallestDist = float.MaxValue;
+
+			for (int i = 0; i < pathFinder.nodes.Length; i++) {
+				dist = (AI.transform.position - pathFinder.nodes[i].transform.position).sqrMagnitude;
+				if (dist < smallestDist) {
+					smallestDist = dist;
+					closestToAI = pathFinder.nodes [i];
+				}
+			} pathFinder.startNode = closestToAI;
+
+			dist = float.MaxValue;
+			smallestDist = float.MaxValue;
+
+			for (int i = 0; i < pathFinder.nodes.Length; i++) {
+				dist = (player.transform.position - pathFinder.nodes[i].transform.position).sqrMagnitude;
+				if (dist < smallestDist) {
+					smallestDist = dist;
+					closestToPlayer = pathFinder.nodes [i];
+				}
+			} pathFinder.target = closestToPlayer;
+
+			path = pathFinder.FindShortestPath ();
+			target = path [0];
 			return;
 		}
 
@@ -45,16 +70,10 @@ public class AIController : MonoBehaviour {
 
 		for (int i = 0; i < path [path.Count - 1].neighbour.Length; i++) {
 			float dist = (player.transform.position - path [path.Count - 1].neighbour [i].transform.position).sqrMagnitude;
-			Debug.Log ("dist:" + dist + " target:" + distToTarget);
+			
 			if(dist < distToTarget ) {
-
-				//if (!path [path.Count - 1].neighbour [i].getInPath ()) {
-					distToTarget = dist;
-					closestNode = path [path.Count - 1].neighbour [i];
-					Debug.Log (closestNode.name);
-				//} else {
-
-				//}
+				distToTarget = dist;
+				closestNode = path [path.Count - 1].neighbour [i];
 			}
 		}
 

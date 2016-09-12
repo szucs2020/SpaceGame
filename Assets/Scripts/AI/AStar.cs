@@ -14,8 +14,6 @@ public class AStar : MonoBehaviour {
 	Heap open;
 
 	public List<Node> FindShortestPath() {
-		//Grab the target element
-		//target = GameObject.Find ("2,6").GetComponent<Node>();
 
 		//Initialize each node
 		for(int i = 0; i < nodes.Length; i++) {
@@ -25,7 +23,7 @@ public class AStar : MonoBehaviour {
 		for(int i = 0; i < closedNodes.Length; i++) {
 			if (closedNodes [i] != null) {
 				closedNodes [i].setClosed(true);
-				closedNodes [i].setH(999999f);
+				closedNodes [i].setH(float.MaxValue);
 				closedNodes [i].setColour(Color.white);
 			}
 		}
@@ -100,7 +98,9 @@ public class AStar : MonoBehaviour {
 			}
 		}
 
-		return null;
+		List<Node> backupPath = new List<Node> ();
+		backupPath.Insert (0, startNode);
+		return backupPath;
 	}
 
 	//

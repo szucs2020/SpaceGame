@@ -18,8 +18,8 @@ public class Node : MonoBehaviour {
 	public void Init (Node target) {
 
 		parent = null;
-		g = 999999;
-		f = 999999;
+		g = float.MaxValue;
+		f = float.MaxValue;
 		closed = false;
 		open = false;
 		inPath = false;
