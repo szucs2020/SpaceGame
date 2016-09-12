@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
+
 using System.Collections;
 using System.Collections.Generic;
 
 public class AIController : MonoBehaviour {
 	AStar pathFinder;
-	Queue path;
+	List<Node> path;
 	Node target;
-	Player player;
+	Player AI;
+	GameObject player;
 	Controller2D controller;
 
 	//Movement
@@ -18,51 +20,106 @@ public class AIController : MonoBehaviour {
 		path = pathFinder.FindShortestPath ();
 		controller = this.GetComponent<Controller2D> ();
 
-		path.Print();
-		target = path.Dequeue ();
+		//path.Print();
+		target = path [0];
+		path.RemoveAt (0);
 
-		player = transform.GetComponent<Player> ();
+		AI = transform.GetComponent<Player> ();
+
+		player = GameObject.Find ("Player");
+		Debug.Log (player.transform.position);
 
 		//Movement
 		buttonPressedJumped = false;
 	}
 
+	private void getClosestNodeToPlayer() {
+		Node closestNode = null;
+
+		if (path.Count == 0) {
+			return;
+		}
+
+		float distToTarget = (player.transform.position - path [path.Count - 1].transform.position).sqrMagnitude;
+		//Debug.Log(path [path.Count - 1].name);
+
+		for (int i = 0; i < path [path.Count - 1].neighbour.Length; i++) {
+			float dist = (player.transform.position - path [path.Count - 1].neighbour [i].transform.position).sqrMagnitude;
+			Debug.Log ("dist:" + dist + " target:" + distToTarget);
+			if(dist < distToTarget ) {
+
+				//if (!path [path.Count - 1].neighbour [i].getInPath ()) {
+					distToTarget = dist;
+					closestNode = path [path.Count - 1].neighbour [i];
+					Debug.Log (closestNode.name);
+				//} else {
+
+				//}
+			}
+		}
+
+		if (closestNode != null && !closestNode.getInPath ()) {
+			closestNode.setInPath (true);
+			path [path.Count - 1].setColour (Color.yellow);
+			path.Add (closestNode);
+			path [path.Count - 1].setColour (Color.red);
+		} else if (closestNode != null && closestNode.getInPath ()) {
+			closestNode.setColour (Color.red);
+			closestNode.setInPath (false);
+			path.RemoveAt (path.Count - 1);
+		}
+	}
+
 	double timedelta = 0;
 	// Update is called once per frame
 	void Update () {
+
+		/********This Needs Work***************/
+		getClosestNodeToPlayer ();
+		//pathFinder.target = newTarget;
+		//path = pathFinder.FindShortestPath ();
+		/**************************************/
+
 		timedelta += Time.deltaTime;
 		if (timedelta < 2) {
 			return;
 		}
 
 		if (target != null) {
-			Fly ();
+			Walk ();
 		} else {
-			player.setMovementAxis (new Vector2 (0, 0));
+			AI.setMovementAxis (new Vector2 (0, 0));
 		}
 	}
 
 	private void Walk() {
-		player.setbuttonPressedJump (false);
+		AI.setbuttonPressedJump (false);
 
 		if(Mathf.Abs(target.transform.position.x - transform.position.x) < .25f) {
-			target = path.Dequeue ();
+
+			try {
+				target = path [0];
+				path.RemoveAt (0);
+			} catch {
+
+			}
+
 
 			if (target == null) {
 				return;
 			}
-			Debug.Log (target.transform.position + " " + Mathf.Abs(target.transform.position.x - transform.position.x));
+			//Debug.Log (target.transform.position + " " + Mathf.Abs(target.transform.position.x - transform.position.x));
 		}
 
-		if(target.transform.position.y > transform.position.y + 5 && Mathf.Abs(target.transform.position.x - transform.position.x) < 6f) {
-			player.setbuttonPressedJump (true);
+		if(target.transform.position.y > transform.position.y + 3 && Mathf.Abs(target.transform.position.x - transform.position.x) < 6f) {
+			AI.setbuttonPressedJump (true);
 		}
 		
 		//Debug.Log (Mathf.Abs(target.transform.position.x - transform.position.x));
 		if (target.transform.position.x < transform.position.x) {
-			player.setMovementAxis (new Vector2 (-1, 1));
+			AI.setMovementAxis (new Vector2 (-1, 1));
 		} else {
-			player.setMovementAxis (new Vector2 (1, 1));
+			AI.setMovementAxis (new Vector2 (1, 1));
 		}
 
 	}
@@ -81,8 +138,8 @@ public class AIController : MonoBehaviour {
 
 			//Debug.Log ("Step 1");
 
-			player.setbuttonPressedJump (true);
-			//player.setbuttonReleasedJump (false);
+			AI.setbuttonPressedJump (true);
+			//AI.setbuttonReleasedJump (false);
 
 			if (deltaTime > 0.3f) {
 				step1 = false;
@@ -92,8 +149,8 @@ public class AIController : MonoBehaviour {
 
 			//Debug.Log ("Step 2");
 
-			player.setbuttonPressedJump (false);
-			player.setbuttonHeldJump (true);
+			AI.setbuttonPressedJump (false);
+			AI.setbuttonHeldJump (true);
 		}
 	}
 
@@ -101,17 +158,18 @@ public class AIController : MonoBehaviour {
 
 	private void Fly() {
 
-		if (Mathf.Abs (target.transform.position.x - transform.position.x) < 1f && path.Length() == 0) {
-			player.moveSpeed = 1;
+		if (Mathf.Abs (target.transform.position.x - transform.position.x) < 1f && path.Count == 0) {
+			AI.moveSpeed = 1;
 		} else {
-			player.moveSpeed = 30;
+			AI.moveSpeed = 30;
 		}
 
-		if(Mathf.Abs(target.transform.position.x - transform.position.x) < .25f && path.Length() != 0) {
-			target = path.Dequeue ();
+		if(Mathf.Abs(target.transform.position.x - transform.position.x) < .25f && path.Count != 0) {
+			target = path [0];
+			path.RemoveAt (0);
 			step1 = true;
 			step2 = false;
-			player.setbuttonPressedJump (false);
+			AI.setbuttonPressedJump (false);
 			deltaTime = 0;
 
 			if (target == null) {
@@ -133,35 +191,35 @@ public class AIController : MonoBehaviour {
 				FlyerHelper ();
 			} else {
 				isFlying = false;
-				player.setbuttonHeldJump (false);
-				player.setbuttonReleasedJump (true);
+				AI.setbuttonHeldJump (false);
+				AI.setbuttonReleasedJump (true);
 			}
 		}
 		//Debug.Log (Mathf.Abs(target.transform.position.x - transform.position.x));
 		if (target.transform.position.x < transform.position.x) {
-			player.setMovementAxis (new Vector2 (-1, 1));
+			AI.setMovementAxis (new Vector2 (-1, 1));
 		} else {
-			player.setMovementAxis (new Vector2 (1, 1));
+			AI.setMovementAxis (new Vector2 (1, 1));
 		}
 	}
 
 	private void Hover(Node target) {
 
-		player.moveSpeed = 10;
+		AI.moveSpeed = 10;
 
 
 		if (transform.position.y < target.transform.position.y + 10f) {
 			FlyerHelper ();
 		} else if (transform.position.y > target.transform.position.y + 10.05f) {
-			player.setbuttonHeldJump (false);
-			player.setbuttonReleasedJump (true);
+			AI.setbuttonHeldJump (false);
+			AI.setbuttonReleasedJump (true);
 			step1 = true;
 		}
 
 		if (target.transform.position.x < transform.position.x) {
-			player.setMovementAxis (new Vector2 (-1, 1));
+			AI.setMovementAxis (new Vector2 (-1, 1));
 		} else {
-			player.setMovementAxis (new Vector2 (1, 1));
+			AI.setMovementAxis (new Vector2 (1, 1));
 		}
 	}
 }

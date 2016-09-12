@@ -12,6 +12,7 @@ public class Node : MonoBehaviour {
 	private bool open;
 	private bool closed;
 	public bool isTarget;
+	public bool inPath;
 
 	// Use this for initialization
 	public void Init (Node target) {
@@ -21,6 +22,7 @@ public class Node : MonoBehaviour {
 		f = 999999;
 		closed = false;
 		open = false;
+		inPath = false;
 		transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.yellow;
 
 		setH(target.transform.position, transform.position);
@@ -100,6 +102,14 @@ public class Node : MonoBehaviour {
 
 	public void clearParent() {
 		this.parent = null;
+	}
+
+	public bool getInPath() {
+		return inPath;
+	}
+
+	public void setInPath(bool inPath) {
+		this.inPath =  inPath;
 	}
 
 	public void setColour(Color colour) {

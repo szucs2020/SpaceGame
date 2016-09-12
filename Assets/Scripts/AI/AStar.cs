@@ -13,12 +13,7 @@ public class AStar : MonoBehaviour {
 
 	Heap open;
 
-	// Use this for initialization
-	void Start () {
-		FindShortestPath ();
-	}
-
-	public Queue FindShortestPath() {
+	public List<Node> FindShortestPath() {
 		//Grab the target element
 		//target = GameObject.Find ("2,6").GetComponent<Node>();
 
@@ -64,14 +59,17 @@ public class AStar : MonoBehaviour {
 						currentNode.neighbour [i].setParent(currentNode);
 						currentNode.setColour(Color.blue);
 						ColourPath (currentNode.neighbour [i]);
-						Queue path = new Queue();
-						path.Init ();
+						List<Node> path = new List<Node>();
+						//path.Init ();
 						//Add Target and CurrentNode to Queue before traversing backwards
-						path.Enqueue (target);
-						path.Enqueue (currentNode);
+						path.Insert (0, target);
+						target.inPath = true;
+						path.Insert (0, currentNode);
+						currentNode.inPath = true;
 						while (currentNode.getParent () != null) {
-							path.Enqueue (currentNode.getParent ());
+							path.Insert (0, currentNode.getParent ());
 							currentNode = currentNode.getParent ();
+							currentNode.inPath = true;
 						}
 						return path;
 					} else if (currentNode.neighbour [i].getClosed() == true) {
