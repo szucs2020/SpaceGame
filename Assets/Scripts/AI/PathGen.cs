@@ -16,9 +16,12 @@ public class PathGen : MonoBehaviour {
 			Debug.Log ("Child");
 			MeshRenderer renderer = child.GetComponent<MeshRenderer> ();
 			int length = (int)renderer.bounds.size.x;
+			GameObject instance;
 			//Debug.Log ( (int)child.transform.position.x + length / 2);
 			for (int i = (int)child.transform.position.x + length / 2; i > (int)child.transform.position.x - length / 2; i = i - 2) {
-				ObjectList.Add((GameObject)Instantiate (Node, new Vector3(child.transform.position.x - i, -1, 0), Quaternion.identity));
+				instance = (GameObject)Instantiate (Node, new Vector3 (child.transform.position.x - i, -1, 0), Quaternion.identity);
+				instance.transform.SetParent (child);
+				ObjectList.Add(instance);
 			}
 
 			List<Node> objectNode;
@@ -31,7 +34,6 @@ public class PathGen : MonoBehaviour {
 				if (i == 0) {
 					objectNode.Add (ObjectList [i + 1].GetComponent<Node>());
 				} else if(i != 0 && i != ObjectList.Count - 1) {
-					Debug.Log ("Not 0 Nor Count - 1");
 					objectNode.Add (ObjectList [i + 1].GetComponent<Node>());
 					objectNode.Add (ObjectList [i - 1].GetComponent<Node>());
 				} else if(i != ObjectList.Count - 1) {

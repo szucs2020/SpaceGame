@@ -115,7 +115,7 @@ public class AIController : MonoBehaviour {
 
 		AI.setbuttonPressedJump (false);
 
-		if(Mathf.Abs(target.transform.position.x - transform.position.x) < .25f) {
+		if(Mathf.Abs(target.transform.position.x - transform.position.x) < .5f) {
 
 			try {
 				target = path [0];
