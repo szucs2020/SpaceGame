@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Node : MonoBehaviour {
-	public Node[] neighbour;
+	public List<Node> neighbour;
 	public float g;  //Movement cost to neighbour;
 	public float h;  //Heuristic; Distance to target node
 	public float f;  // g + h

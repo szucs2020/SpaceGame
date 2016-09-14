@@ -41,7 +41,7 @@ public class AIController : MonoBehaviour {
 			float dist = float.MaxValue;
 			float smallestDist = float.MaxValue;
 
-			for (int i = 0; i < pathFinder.nodes.Length; i++) {
+			for (int i = 0; i < pathFinder.nodes.Count; i++) {
 				dist = (AI.transform.position - pathFinder.nodes[i].transform.position).sqrMagnitude;
 				if (dist < smallestDist) {
 					smallestDist = dist;
@@ -52,7 +52,7 @@ public class AIController : MonoBehaviour {
 			dist = float.MaxValue;
 			smallestDist = float.MaxValue;
 
-			for (int i = 0; i < pathFinder.nodes.Length; i++) {
+			for (int i = 0; i < pathFinder.nodes.Count; i++) {
 				dist = (player.transform.position - pathFinder.nodes[i].transform.position).sqrMagnitude;
 				if (dist < smallestDist) {
 					smallestDist = dist;
@@ -68,7 +68,7 @@ public class AIController : MonoBehaviour {
 		float distToTarget = (player.transform.position - path [path.Count - 1].transform.position).sqrMagnitude;
 		//Debug.Log(path [path.Count - 1].name);
 
-		for (int i = 0; i < path [path.Count - 1].neighbour.Length; i++) {
+		for (int i = 0; i < path [path.Count - 1].neighbour.Count; i++) {
 			float dist = (player.transform.position - path [path.Count - 1].neighbour [i].transform.position).sqrMagnitude;
 			
 			if(dist < distToTarget ) {
@@ -112,6 +112,7 @@ public class AIController : MonoBehaviour {
 	}
 
 	private void Walk() {
+
 		AI.setbuttonPressedJump (false);
 
 		if(Mathf.Abs(target.transform.position.x - transform.position.x) < .25f) {

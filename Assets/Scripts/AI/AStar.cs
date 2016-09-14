@@ -8,15 +8,27 @@ public class AStar : MonoBehaviour {
 	public Node target;
 
 
-	public Node[] nodes;
+	public List<Node> nodes;
 	public Node[] closedNodes;
 
+
 	Heap open;
+
+	void Start() {
+		nodes = new List<Node> ();
+		List<GameObject> objectList = GameObject.Find ("Platforms").GetComponent<PathGen> ().ObjectList;
+
+		for (int i = 0; i < objectList.Count; i++) {
+			nodes.Add (objectList[i].GetComponent<Node> ());
+		}
+
+		startNode = GameObject.Find ("1").GetComponent<Node> ();
+	}
 
 	public List<Node> FindShortestPath() {
 
 		//Initialize each node
-		for(int i = 0; i < nodes.Length; i++) {
+		for(int i = 0; i < nodes.Count; i++) {
 			nodes [i].Init (target);
 		}
 
@@ -48,7 +60,7 @@ public class AStar : MonoBehaviour {
 				break;
 			}
 
-			for (int i = 0; i < currentNode.neighbour.Length; i++) {
+			for (int i = 0; i < currentNode.neighbour.Count; i++) {
 				
 				if (currentNode.neighbour [i] != null) {
 
@@ -97,7 +109,7 @@ public class AStar : MonoBehaviour {
 				}
 			}
 		}
-
+			
 		List<Node> backupPath = new List<Node> ();
 		backupPath.Insert (0, startNode);
 		return backupPath;
