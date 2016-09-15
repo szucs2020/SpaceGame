@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.Networking;
 
 [RequireComponent (typeof (Controller2D))]
-
-public class Player : NetworkBehaviour {
+public class Player : MonoBehaviour {
 
 	public float maxJumpHeight = 4;
 	public float minJumpHeight = 1;
@@ -30,7 +28,6 @@ public class Player : NetworkBehaviour {
 	private bool decelerating = false;
 	private int jump;
 	private SpriteRenderer fire;
-    AudioSource audio;
 
     //movement flags
     private Vector2 movementAxis;
@@ -43,15 +40,9 @@ public class Player : NetworkBehaviour {
     Controller2D controller;
 
 	void Start() {
+		controller = GetComponent<Controller2D> ();
+		jump = 0;
 
-        if (!isLocalPlayer) {
-            return;
-        }
-
-        controller = GetComponent<Controller2D> ();
-        audio = GetComponent<AudioSource>();
-
-        jump = 0;
 		gravity = (2 * maxJumpHeight) / Mathf.Pow (timeToJumpApex, 2);
 		maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
 		minJumpVelocity = Mathf.Sqrt (2 * Mathf.Abs (gravity) * minJumpHeight);
@@ -68,10 +59,6 @@ public class Player : NetworkBehaviour {
     }
 
 	void Update() {
-
-        if (!isLocalPlayer) {
-            return;
-        }
 
         Vector2 input = movementAxis;
         int wallDirX = (controller.collisions.left) ? -1 : 1;
