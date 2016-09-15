@@ -28,9 +28,10 @@ public class Gun : MonoBehaviour {
 	public AudioClip reload;
 	private LineRenderer tracer;
 	private float spawnRotation;
+    AudioSource audio;
 
-	//external objects
-	private Player player;
+    //external objects
+    private Player player;
 
 	//system variables
 	private float timeBetweenShots;
@@ -40,9 +41,12 @@ public class Gun : MonoBehaviour {
 	private float currentRange;
 	
 	void Start(){
-		timeBetweenShots = 60/rpm;
+		
 		tracer = GetComponent<LineRenderer>();
-		ammoLoaded = clipSize;
+        audio = GetComponent<AudioSource>();
+
+        timeBetweenShots = 60 / rpm;
+        ammoLoaded = clipSize;
 		ammo = 5 * clipSize;
 		spawnRotation = spawn.localEulerAngles.y;
 		player = (Player) transform.parent.gameObject.GetComponent(typeof(Player));
@@ -52,7 +56,7 @@ public class Gun : MonoBehaviour {
 
 		if (canShoot ()) {
 
-			if (ammoLoaded == 0) {
+			if (usesAmmo && ammoLoaded == 0) {
 				Reload ();
 			}
 
@@ -68,8 +72,8 @@ public class Gun : MonoBehaviour {
 					direction = new Vector2 (-1, 0);
 				}
 
-				//play gun shot sound
-				//audio.PlayOneShot(shot);
+                //play gun shot sound
+                audio.PlayOneShot(shot);
 
 				//instantiate bullet prefab
 				GameObject bullet = (GameObject)Instantiate(bulletPrefab, spawn.position, spawn.rotation);
@@ -77,7 +81,9 @@ public class Gun : MonoBehaviour {
 				Destroy(bullet, bulletTime);
 
 				//remove one from ammo
-				ammoLoaded--;
+                if (usesAmmo) {
+                    ammoLoaded--;
+                }
 
 				//set next shot time
 				nextShot = Time.time + timeBetweenShots;

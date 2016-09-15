@@ -154,7 +154,7 @@ MonoBehaviour:
   usesAmmo: 0
   bulletPrefab: {fileID: 0}
   spawn: {fileID: 401644}
-  shot: {fileID: 0}
+  shot: {fileID: 8300000, guid: 31ce3f64934441c44876b648d5941486, type: 3}
   click: {fileID: 0}
   reload: {fileID: 0}
 --- !u!120 &12034782
