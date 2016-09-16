@@ -20,7 +20,6 @@ public class AIController : MonoBehaviour {
 		path = pathFinder.FindShortestPath ();
 		controller = this.GetComponent<Controller2D> ();
 
-		//path.Print();
 		target = path [0];
 		path.RemoveAt (0);
 
@@ -35,6 +34,8 @@ public class AIController : MonoBehaviour {
 	private void getClosestNodeToPlayer() {
 		Node closestNode = null;
 
+		/*If path is empty of Player can't be found find closest nodes to AI and Player
+		 * and run AStar again*/
 		if (path.Count == 0 && player != null) {
 			Node closestToAI = null;
 			Node closestToPlayer = null;
@@ -70,6 +71,26 @@ public class AIController : MonoBehaviour {
 		for (int i = 0; i < path [path.Count - 1].neighbour.Count; i++) {
 			float dist = (player.transform.position - path [path.Count - 1].neighbour [i].transform.position).sqrMagnitude;
 
+			Vector3 nodeToNeighbour = path [path.Count - 1].neighbour [i].transform.position - path [path.Count - 1].transform.position;
+			Vector3 nodeToPlayer = player.transform.position - path [path.Count - 1].transform.position;
+
+			float nodeToNeighDirX = (nodeToNeighbour / nodeToPlayer.magnitude).x;
+			float nodeToPlayDirX = (nodeToPlayer / nodeToPlayer.magnitude).x;
+			float nodeToNeighDirY = (nodeToNeighbour / nodeToPlayer.magnitude).y;
+			float nodeToPlayDirY = (nodeToPlayer / nodeToPlayer.magnitude).y;
+
+			/*This is mostly used if the AI is jumping up or down a platform
+			 * because the neighbouring node on the platform above/below will
+			 * always be further then the neighbour right beside it so instead
+			 * if the neighbouring node is in the same direction as the player
+			 * then it will instead choose that node*/
+			if ((nodeToNeighDirX > 0 && nodeToPlayDirX > 0) || (nodeToNeighDirX < 0 && nodeToPlayDirX < 0)) {
+
+				if ((nodeToNeighDirY > 0 && nodeToPlayDirY > 0) || (nodeToNeighDirY < 0 && nodeToPlayDirY < 0)) {
+					dist = 0;
+				}
+			}
+
 			if(dist < distToTarget ) {
 				distToTarget = dist;
 				closestNode = path [path.Count - 1].neighbour [i];
@@ -92,11 +113,7 @@ public class AIController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		/********This Needs Work***************/
 		getClosestNodeToPlayer ();
-		//pathFinder.target = newTarget;
-		//path = pathFinder.FindShortestPath ();
-		/**************************************/
 
 		timedelta += Time.deltaTime;
 		if (timedelta < 2) {
@@ -127,14 +144,12 @@ public class AIController : MonoBehaviour {
 			if (target == null) {
 				return;
 			}
-			//Debug.Log (target.transform.position + " " + Mathf.Abs(target.transform.position.x - transform.position.x));
 		}
 
 		if(target.transform.position.y > transform.position.y + 2 && Mathf.Abs(target.transform.position.x - transform.position.x) < 6f) {
 			AI.setbuttonPressedJump (true);
 		}
-		
-		//Debug.Log (Mathf.Abs(target.transform.position.x - transform.position.x));
+
 		if (target.transform.position.x < transform.position.x) {
 			AI.setMovementAxis (new Vector2 (-1, 1));
 		} else {
@@ -155,18 +170,13 @@ public class AIController : MonoBehaviour {
 
 		if (step1) {
 
-			//Debug.Log ("Step 1");
-
 			AI.setbuttonPressedJump (true);
-			//AI.setbuttonReleasedJump (false);
 
 			if (deltaTime > 0.3f) {
 				step1 = false;
 				step2 = true;
 			}
 		} else if (step2) {
-
-			//Debug.Log ("Step 2");
 
 			AI.setbuttonPressedJump (false);
 			AI.setbuttonHeldJump (true);
@@ -194,10 +204,7 @@ public class AIController : MonoBehaviour {
 			if (target == null) {
 				return;
 			}
-			//Debug.Log (target.transform.position + " " + Mathf.Abs(target.transform.position.x - transform.position.x));
-		} /*else if(path.Length() == 0 && Mathf.Abs(target.transform.position.x - transform.position.x) < 1f && Mathf.Abs(target.transform.position.y - transform.position.y) < 2f) {
-			return;
-		}*/
+		}
 
 		if(target.transform.position.y > transform.position.y + 10 || target.transform.position.x > transform.position.x + 10) {
 
@@ -214,7 +221,7 @@ public class AIController : MonoBehaviour {
 				AI.setbuttonReleasedJump (true);
 			}
 		}
-		//Debug.Log (Mathf.Abs(target.transform.position.x - transform.position.x));
+
 		if (target.transform.position.x < transform.position.x) {
 			AI.setMovementAxis (new Vector2 (-1, 1));
 		} else {

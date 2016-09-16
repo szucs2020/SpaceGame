@@ -32,6 +32,7 @@ public class AStar : MonoBehaviour {
 			nodes [i].Init (target);
 		}
 
+		//Closed nodes were used for testing purposes but they might have use later
 		for(int i = 0; i < closedNodes.Length; i++) {
 			if (closedNodes [i] != null) {
 				closedNodes [i].setClosed(true);
@@ -70,7 +71,7 @@ public class AStar : MonoBehaviour {
 						currentNode.setColour(Color.blue);
 						ColourPath (currentNode.neighbour [i]);
 						List<Node> path = new List<Node>();
-						//path.Init ();
+
 						//Add Target and CurrentNode to Queue before traversing backwards
 						path.Insert (0, target);
 						target.inPath = true;
@@ -86,14 +87,13 @@ public class AStar : MonoBehaviour {
 						continue;
 					}
 
-					//Watch out for this................
-					//currentNode.neighbour [i].g = Vector2.Distance(currentNode.neighbour [i].transform.position, currentNode.transform.position) + currentNode.g;
 					float tentativeG = Vector2.Distance(currentNode.neighbour [i].transform.position, currentNode.transform.position) + currentNode.getG();
 
 					if (currentNode.neighbour [i].getOpen() == false) {
 
 						currentNode.neighbour [i].setOpen(true);
 					} else if (tentativeG >= currentNode.neighbour [i].getG()) {
+						//This node neighbours a closer node
 						continue;
 					}
 
@@ -115,10 +115,9 @@ public class AStar : MonoBehaviour {
 		return backupPath;
 	}
 
-	//
-	//Starting with the target node it travels through each parent
-	//and colours it until it reaches the start node
-	//
+
+	/*Starting with the target node it travels through each parent
+	 * and colours it until it reaches the start node*/
 	private void ColourPath(Node target) {
 		Node current = target;
 

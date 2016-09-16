@@ -20,9 +20,11 @@ public class PathGen : MonoBehaviour {
 			platform.nodes = new List<Transform> ();
 			int length = (int)renderer.bounds.size.x;
 
-			//Generates Nodes for Each Platform
+			//Generates nodes for each individual platform
 			for (int i = length; i > 0; i = i - 4) {
 
+				/*If the node is too close to the edge of the platform it will generate it 1 unity closer to the centre
+				 * so the AI can't fall off the platform*/
 				if (length - i < 3) {
 					instance = (GameObject)Instantiate (Node, new Vector3 ((int)child.position.x - i + 1 + length / 2 + 1, (int)child.position.y - 1, 0), Quaternion.identity);
 				} else if (length - i > length - 3) {
@@ -36,6 +38,8 @@ public class PathGen : MonoBehaviour {
 				ObjectList.Add(instance);
 			}
 
+
+			//Each node in each platform neighbours its nodes next to it
 			List<Node> objectNode;
 			for (int i = 0; i < platform.nodes.Count; i++) {
 				
@@ -54,7 +58,7 @@ public class PathGen : MonoBehaviour {
 			}
 		}
 
-		//Connects the platforms
+		//Connects the neighbourng platforms
 		foreach (Transform child in transform) {
 
 			MeshRenderer renderer = child.GetComponent<MeshRenderer> ();
@@ -66,32 +70,15 @@ public class PathGen : MonoBehaviour {
 				Platform neighbourPlatform = neighour.GetComponent<Platform> ();
 				int neighbourLength = (int)neighbourRenderer.bounds.size.x;
 
-
+				//If the platform is to the right or left of its neighbout connect its respective nodes
 				if (child.position.x + length / 2 < neighour.position.x - neighbourLength / 2) {
 					
 					platform.nodes [platform.nodes.Count - 1].GetComponent<Node> ().neighbour.Add(neighbourPlatform.nodes [0].GetComponent<Node> ());
 				} else if (child.position.x - length / 2 > neighour.position.x + neighbourLength / 2) {
-					Debug.Log ((child.position.x - length / 2) + " " + (neighour.position.x + neighbourLength / 2));
-					Debug.Log ("Node to the left");
+
 					platform.nodes [0].GetComponent<Node> ().neighbour.Add(neighbourPlatform.nodes [neighbourPlatform.nodes.Count - 1].GetComponent<Node> ());
 				}
 			}
 		}
-	}
-	
+	}	
 }
-
-
-
-/*
- * 
- * for (int i = (int)child.transform.position.x + length / 2; i > (int)child.transform.position.x - length / 2; i = i - 2) {
-				Debug.Log (i + " " + (child.transform.position.x - i) + " " + child.transform.position.x);
-				instance = (GameObject)Instantiate (Node, new Vector3 ((int)child.transform.position.x - i, (int)child.transform.position.y - 1, 0), Quaternion.identity);
-				//instance.transform.SetParent (child, true);
-				//instance.transform.position = new Vector3 ((int)child.transform.localPosition.x - i, (int)child.transform.localPosition.y - 1, 0);
-				ObjectList.Add(instance);
-			}
- * 
- * 
- * */
