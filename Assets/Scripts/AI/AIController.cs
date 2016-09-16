@@ -146,7 +146,7 @@ public class AIController : MonoBehaviour {
 			}
 		}
 
-		if(target.transform.position.y > transform.position.y + 2 && Mathf.Abs(target.transform.position.x - transform.position.x) < 6f) {
+		if(target.transform.position.y > transform.position.y + 2 /*&& Mathf.Abs(target.transform.position.x - transform.position.x) < 15f*/) {
 			AI.setbuttonPressedJump (true);
 		}
 

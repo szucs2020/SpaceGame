@@ -21,21 +21,26 @@ public class PathGen : MonoBehaviour {
 			int length = (int)renderer.bounds.size.x;
 
 			//Generates nodes for each individual platform
-			for (int i = length; i > 0; i = i - 4) {
+			for (int i = length; i > 0; i = i - 5) {
 
 				/*If the node is too close to the edge of the platform it will generate it 1 unity closer to the centre
 				 * so the AI can't fall off the platform*/
-				if (length - i < 3) {
+				/*if (length - i < 3) {
 					instance = (GameObject)Instantiate (Node, new Vector3 ((int)child.position.x - i + 1 + length / 2 + 1, (int)child.position.y - 1, 0), Quaternion.identity);
 				} else if (length - i > length - 3) {
 					instance = (GameObject)Instantiate (Node, new Vector3 ((int)child.position.x - i + 1 + length / 2 - 1, (int)child.position.y - 1, 0), Quaternion.identity);
 				} else {
 					instance = (GameObject)Instantiate (Node, new Vector3 ((int)child.position.x - i + 1 + length / 2, (int)child.position.y - 1, 0), Quaternion.identity);
+				}*/
+
+				if(!(length - i < 3) && !(length - i > length - 3)) {
+					instance = (GameObject)Instantiate (Node, new Vector3 ((int)child.position.x - i + 1 + length / 2, (int)child.position.y - 1, 0), Quaternion.identity);
+					instance.transform.SetParent (child, true);
+					platform.nodes.Add (instance.transform);
+					ObjectList.Add(instance);
 				}
 
-				instance.transform.SetParent (child, true);
-				platform.nodes.Add (instance.transform);
-				ObjectList.Add(instance);
+				
 			}
 
 
