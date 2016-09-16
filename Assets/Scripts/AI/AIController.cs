@@ -66,11 +66,10 @@ public class AIController : MonoBehaviour {
 		}
 
 		float distToTarget = (player.transform.position - path [path.Count - 1].transform.position).sqrMagnitude;
-		//Debug.Log(path [path.Count - 1].name);
 
 		for (int i = 0; i < path [path.Count - 1].neighbour.Count; i++) {
 			float dist = (player.transform.position - path [path.Count - 1].neighbour [i].transform.position).sqrMagnitude;
-			
+
 			if(dist < distToTarget ) {
 				distToTarget = dist;
 				closestNode = path [path.Count - 1].neighbour [i];

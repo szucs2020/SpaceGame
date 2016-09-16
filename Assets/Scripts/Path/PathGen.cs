@@ -21,8 +21,16 @@ public class PathGen : MonoBehaviour {
 			int length = (int)renderer.bounds.size.x;
 
 			//Generates Nodes for Each Platform
-			for (int i = length; i > 0; i = i - 2) {
-				instance = (GameObject)Instantiate (Node, new Vector3 ((int)child.position.x - i + 1 + length / 2, (int)child.position.y - 1, 0), Quaternion.identity);
+			for (int i = length; i > 0; i = i - 4) {
+
+				if (length - i < 3) {
+					instance = (GameObject)Instantiate (Node, new Vector3 ((int)child.position.x - i + 1 + length / 2 + 1, (int)child.position.y - 1, 0), Quaternion.identity);
+				} else if (length - i > length - 3) {
+					instance = (GameObject)Instantiate (Node, new Vector3 ((int)child.position.x - i + 1 + length / 2 - 1, (int)child.position.y - 1, 0), Quaternion.identity);
+				} else {
+					instance = (GameObject)Instantiate (Node, new Vector3 ((int)child.position.x - i + 1 + length / 2, (int)child.position.y - 1, 0), Quaternion.identity);
+				}
+
 				instance.transform.SetParent (child, true);
 				platform.nodes.Add (instance.transform);
 				ObjectList.Add(instance);
