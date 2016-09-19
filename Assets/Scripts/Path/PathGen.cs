@@ -76,6 +76,7 @@ public class PathGen : MonoBehaviour {
 				}
 
 				//If you can go through the platform then connect respective nodes
+				if (child.tag == "Through" || neighour.tag == "Through") {
 					for (int i = 0; i < platform.nodes.Count; i++) {
 						for (int j = 0; j < neighbourPlatform.nodes.Count; j++) {
 							if (platform.nodes[i].transform.position.x - 3f <= neighbourPlatform.nodes[j].transform.position.x && neighbourPlatform.nodes[j].transform.position.x <= platform.nodes[i].transform.position.x + 3f) {
@@ -83,6 +84,7 @@ public class PathGen : MonoBehaviour {
 							}
 						}
 					}
+				}
 			}
 		}
 	}	
