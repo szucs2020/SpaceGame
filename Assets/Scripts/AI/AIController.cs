@@ -34,9 +34,9 @@ public class AIController : MonoBehaviour {
 	private void getClosestNodeToPlayer() {
 		Node closestNode = null;
 
-		/*If path is empty of Player can't be found find closest nodes to AI and Player
+		/*If path is empty if Player can't be found find closest nodes to AI and Player
 		 * and run AStar again*/
-		if (path.Count == 0 && player != null) {
+		if ((path.Count == 0 && player != null) && (player.GetComponent<Player>().getJump() == 0)) {
 			Node closestToAI = null;
 			Node closestToPlayer = null;
 			float dist = float.MaxValue;
@@ -53,8 +53,9 @@ public class AIController : MonoBehaviour {
 			dist = float.MaxValue;
 			smallestDist = float.MaxValue;
 
+			Vector3 playerPos = player.transform.position - new Vector3 (0, player.transform.position.y / 2, 0);
 			for (int i = 0; i < pathFinder.nodes.Count; i++) {
-				dist = (player.transform.position - pathFinder.nodes[i].transform.position).sqrMagnitude;
+				dist = (playerPos - pathFinder.nodes[i].transform.position).sqrMagnitude;
 				if (dist < smallestDist) {
 					smallestDist = dist;
 					closestToPlayer = pathFinder.nodes [i];
@@ -63,6 +64,11 @@ public class AIController : MonoBehaviour {
 
 			path = pathFinder.FindShortestPath ();
 			target = path [0];
+			path.RemoveAt (0);
+			return;
+		}
+
+		if (player.GetComponent<Player>().getDecelerating() || player.GetComponent<Player>().getJump() == 1 || player.GetComponent<Player>().getJump() == 2) {
 			return;
 		}
 

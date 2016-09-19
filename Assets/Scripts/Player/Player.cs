@@ -39,6 +39,9 @@ public class Player : MonoBehaviour {
 
     Controller2D controller;
 
+	//For PathGeneration
+	public Transform currentPlatform;
+
 	void Start() {
 		controller = GetComponent<Controller2D> ();
 		jump = 0;
@@ -56,6 +59,8 @@ public class Player : MonoBehaviour {
         buttonReleasedJump = false;
         buttonPressedShoot = false;
         buttonHeldShoot = false;
+
+		currentPlatform = null;
     }
 
 	void Update() {
@@ -117,6 +122,7 @@ public class Player : MonoBehaviour {
 		controller.Move (velocity * Time.deltaTime, input);
 
 		 if(controller.collisions.below){
+			currentPlatform = controller.collisions.platform;
 			velocity.y = 0;
 			decelerating = false;
 			jump = 0;
@@ -162,4 +168,13 @@ public class Player : MonoBehaviour {
     public void setbuttonHeldShoot(bool input) {
         this.buttonHeldShoot = input;
     }
+
+
+	public bool getDecelerating() {
+		return this.decelerating;
+	}
+
+	public int getJump() {
+		return this.jump;
+	}
 }

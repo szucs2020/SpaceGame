@@ -23,16 +23,7 @@ public class PathGen : MonoBehaviour {
 			//Generates nodes for each individual platform
 			for (int i = length; i > 0; i = i - 5) {
 
-				/*If the node is too close to the edge of the platform it will generate it 1 unity closer to the centre
-				 * so the AI can't fall off the platform*/
-				/*if (length - i < 3) {
-					instance = (GameObject)Instantiate (Node, new Vector3 ((int)child.position.x - i + 1 + length / 2 + 1, (int)child.position.y - 1, 0), Quaternion.identity);
-				} else if (length - i > length - 3) {
-					instance = (GameObject)Instantiate (Node, new Vector3 ((int)child.position.x - i + 1 + length / 2 - 1, (int)child.position.y - 1, 0), Quaternion.identity);
-				} else {
-					instance = (GameObject)Instantiate (Node, new Vector3 ((int)child.position.x - i + 1 + length / 2, (int)child.position.y - 1, 0), Quaternion.identity);
-				}*/
-
+				//If the node is too close to the edge of the platform it will not get generated
 				if(!(length - i < 3) && !(length - i > length - 3)) {
 					instance = (GameObject)Instantiate (Node, new Vector3 ((int)child.position.x - i + 1 + length / 2, (int)child.position.y - 1, 0), Quaternion.identity);
 					instance.transform.SetParent (child, true);
@@ -44,7 +35,7 @@ public class PathGen : MonoBehaviour {
 			}
 
 
-			//Each node in each platform neighbours its nodes next to it
+			//Each node in each platform neighbours the nodes next to it
 			List<Node> objectNode;
 			for (int i = 0; i < platform.nodes.Count; i++) {
 				
@@ -75,7 +66,7 @@ public class PathGen : MonoBehaviour {
 				Platform neighbourPlatform = neighour.GetComponent<Platform> ();
 				int neighbourLength = (int)neighbourRenderer.bounds.size.x;
 
-				//If the platform is to the right or left of its neighbout connect its respective nodes
+				//If the platform is to the right or left of its neighbour connect its respective nodes
 				if (child.position.x + length / 2 < neighour.position.x - neighbourLength / 2) {
 					
 					platform.nodes [platform.nodes.Count - 1].GetComponent<Node> ().neighbour.Add(neighbourPlatform.nodes [0].GetComponent<Node> ());
@@ -83,6 +74,15 @@ public class PathGen : MonoBehaviour {
 
 					platform.nodes [0].GetComponent<Node> ().neighbour.Add(neighbourPlatform.nodes [neighbourPlatform.nodes.Count - 1].GetComponent<Node> ());
 				}
+
+				//If you can go through the platform then connect respective nodes
+					for (int i = 0; i < platform.nodes.Count; i++) {
+						for (int j = 0; j < neighbourPlatform.nodes.Count; j++) {
+							if (platform.nodes[i].transform.position.x - 3f <= neighbourPlatform.nodes[j].transform.position.x && neighbourPlatform.nodes[j].transform.position.x <= platform.nodes[i].transform.position.x + 3f) {
+								platform.nodes [i].GetComponent<Node> ().neighbour.Add (neighbourPlatform.nodes[j].GetComponent<Node> ());
+							}
+						}
+					}
 			}
 		}
 	}	

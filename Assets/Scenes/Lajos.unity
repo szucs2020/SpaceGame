@@ -9256,6 +9256,7 @@ MonoBehaviour:
   neighbours:
   - {fileID: 926410217}
   - {fileID: 1455975389}
+  - {fileID: 2116840462}
   nodes: []
 --- !u!1 &1804263999
 GameObject:
@@ -9723,6 +9724,7 @@ MonoBehaviour:
   maxJetpackVelocity: 40
   jetpackAcceleration: 7
   gun: {fileID: 0}
+  currentPlatform: {fileID: 0}
 --- !u!114 &1862863602
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10951,7 +10953,7 @@ GameObject:
   - 114: {fileID: 2116840463}
   m_Layer: 8
   m_Name: Cube (3)
-  m_TagString: Untagged
+  m_TagString: Through
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -10982,6 +10984,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   neighbours:
   - {fileID: 926410217}
+  - {fileID: 1800697960}
   nodes: []
 --- !u!61 &2116840464
 BoxCollider2D:

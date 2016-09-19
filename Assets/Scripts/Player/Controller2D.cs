@@ -125,6 +125,11 @@ public class Controller2D : RaycastController {
 					}
 				}
 
+				//Allows us to know the platform a player is on
+				if (directionY == -1 && hit.distance < 0.015f) {
+					collisions.platform = hit.collider.transform;
+				}
+
 				velocity.y = (hit.distance - skinWidth) * directionY;
 				rayLength = hit.distance;
 
@@ -204,6 +209,9 @@ public class Controller2D : RaycastController {
 		public Vector3 velocityOld;
 		public int faceDir;
 		public bool fallingThroughPlatform;
+
+		//For PathGen
+		public Transform platform;
 
 		public void Reset() {
 			above = below = false;
