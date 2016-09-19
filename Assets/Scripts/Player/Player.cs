@@ -13,12 +13,10 @@ public class Player : NetworkBehaviour {
 	public float accelerationTimeGrounded = .1f;
 	public float moveSpeed = 6;
 	public float jumpDeceleration = 0.5f;
-
-	public float minJetpackVelocity;
-	public float maxJetpackVelocity;
-	public float jetpackAcceleration;
+	public float maxFallSpeed = -110f;
 
 	public Gun gun;
+	private SyncFlip syncFlip;
 
 	float gravity;
 	float maxJumpVelocity;
@@ -41,6 +39,10 @@ public class Player : NetworkBehaviour {
     private bool buttonHeldShoot;
 
     Controller2D controller;
+
+	void Awake(){
+		syncFlip = GetComponent<SyncFlip>();
+	}
 
 	void Start() {
 
@@ -87,9 +89,12 @@ public class Player : NetworkBehaviour {
 		velocity.x = Mathf.SmoothDamp (velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below)?accelerationTimeGrounded:accelerationTimeAirborne);
 
 		if (buttonPressedJump) {
-			//jumping
-			if (controller.collisions.below) {
+			if (controller.collisions.below || jump == 1) {
 				velocity.y = maxJumpVelocity;
+				decelerating = false;
+				if (jump == 1){
+					fire.enabled = true;
+				}
 			}
 
 			if (jump == 0) {
@@ -98,22 +103,13 @@ public class Player : NetworkBehaviour {
 				jump = 2;
 			}
 		} 
-		else if (buttonHeldJump) {
-			//jetpack
-            if (jump == 2) {
-                fire.enabled = true;
-				if (!controller.collisions.below) {
-					decelerating = false;
-					if (velocity.y < maxJetpackVelocity){
-						velocity.y += jetpackAcceleration;
-					}
-				}
-            }
-        } 
+
 		else if (buttonReleasedJump) {
-			//release jump
 			decelerating = true;
-			jump = 1;
+			fire.enabled = false;
+		}
+
+		if (velocity.y < 0){
 			fire.enabled = false;
 		}
 
@@ -126,7 +122,15 @@ public class Player : NetworkBehaviour {
             }
         }
 
-        velocity.y -= gravity * Time.deltaTime;
+		//gravity, with max fall speed
+		if (velocity.y > maxFallSpeed){
+			if (velocity.y - (gravity * Time.deltaTime) > maxFallSpeed){
+				velocity.y -= gravity * Time.deltaTime;
+			} else {
+				velocity.y = maxFallSpeed;
+			}
+		}
+		
 		controller.Move (velocity * Time.deltaTime, input);
 
 		 if(controller.collisions.below){
@@ -142,17 +146,20 @@ public class Player : NetworkBehaviour {
 		}
 
 		//shooting
-		if (buttonHeldShoot) {
-			gun.shootAutomatic();
+		if (buttonPressedShoot) {
+			gun.shoot();
 		}
 	}
 
     private void flip() {
         facingRight = !facingRight;
-        Vector3 theScale = transform.localScale;
-        theScale.x *= -1;
-        transform.localScale = theScale;
+		syncFlip.CmdSyncFlip(facingRight);
     }
+
+	[Command]
+	public void CmdSpawn(GameObject obj){
+		NetworkServer.Spawn(obj);
+	}
 
 	public bool isFacingRight(){
 		return facingRight;
