@@ -65,53 +65,38 @@ public class AIController : MonoBehaviour {
 			path = pathFinder.FindShortestPath ();
 			target = path [0];
 			path.RemoveAt (0);
-			return;
-		}
+			//return;
+		} else if (!(player.GetComponent<Player>().getDecelerating() || player.GetComponent<Player>().getJump() == 1 || player.GetComponent<Player>().getJump() == 2)) {
+			float distToTarget = (player.transform.position - path [path.Count - 1].transform.position).sqrMagnitude;
 
-		if (player.GetComponent<Player>().getDecelerating() || player.GetComponent<Player>().getJump() == 1 || player.GetComponent<Player>().getJump() == 2) {
-			return;
-		}
+			for (int i = 0; i < path [path.Count - 1].neighbour.Count; i++) {
+				float dist = (player.transform.position - path [path.Count - 1].neighbour [i].transform.position).sqrMagnitude;
 
-		float distToTarget = (player.transform.position - path [path.Count - 1].transform.position).sqrMagnitude;
 
-		for (int i = 0; i < path [path.Count - 1].neighbour.Count; i++) {
-			float dist = (player.transform.position - path [path.Count - 1].neighbour [i].transform.position).sqrMagnitude;
+				Vector3 nodeToNeighbour = path [path.Count - 1].neighbour [i].transform.position - path [path.Count - 1].transform.position;
+				Vector3 nodeToPlayer = player.transform.position - path [path.Count - 1].transform.position;
 
-			Vector3 nodeToNeighbour = path [path.Count - 1].neighbour [i].transform.position - path [path.Count - 1].transform.position;
-			Vector3 nodeToPlayer = player.transform.position - path [path.Count - 1].transform.position;
+				float nodeToNeighDirX = (nodeToNeighbour / nodeToPlayer.magnitude).x;
+				float nodeToPlayDirX = (nodeToPlayer / nodeToPlayer.magnitude).x;
+				float nodeToNeighDirY = (nodeToNeighbour / nodeToPlayer.magnitude).y;
+				float nodeToPlayDirY = (nodeToPlayer / nodeToPlayer.magnitude).y;
 
-			float nodeToNeighDirX = (nodeToNeighbour / nodeToPlayer.magnitude).x;
-			float nodeToPlayDirX = (nodeToPlayer / nodeToPlayer.magnitude).x;
-			float nodeToNeighDirY = (nodeToNeighbour / nodeToPlayer.magnitude).y;
-			float nodeToPlayDirY = (nodeToPlayer / nodeToPlayer.magnitude).y;
-
-			/*This is mostly used if the AI is jumping up or down a platform
-			 * because the neighbouring node on the platform above/below will
-			 * always be further then the neighbour right beside it so instead
-			 * if the neighbouring node is in the same direction as the player
-			 * then it will instead choose that node*/
-			if ((nodeToNeighDirX > 0 && nodeToPlayDirX > 0) || (nodeToNeighDirX < 0 && nodeToPlayDirX < 0)) {
-
-				if ((nodeToNeighDirY > 0 && nodeToPlayDirY > 0) || (nodeToNeighDirY < 0 && nodeToPlayDirY < 0)) {
-					dist = 0;
+				if(dist < distToTarget ) {
+					distToTarget = dist;
+					closestNode = path [path.Count - 1].neighbour [i];
 				}
 			}
 
-			if(dist < distToTarget ) {
-				distToTarget = dist;
-				closestNode = path [path.Count - 1].neighbour [i];
+			if (closestNode != null && !closestNode.getInPath ()) {
+				closestNode.setInPath (true);
+				path [path.Count - 1].setColour (Color.yellow);
+				path.Add (closestNode);
+				path [path.Count - 1].setColour (Color.red);
+			} else if (closestNode != null && closestNode.getInPath ()) {
+				closestNode.setColour (Color.magenta);
+				closestNode.setInPath (false);
+				path.RemoveAt (path.Count - 1);
 			}
-		}
-
-		if (closestNode != null && !closestNode.getInPath ()) {
-			closestNode.setInPath (true);
-			path [path.Count - 1].setColour (Color.yellow);
-			path.Add (closestNode);
-			path [path.Count - 1].setColour (Color.red);
-		} else if (closestNode != null && closestNode.getInPath ()) {
-			closestNode.setColour (Color.red);
-			closestNode.setInPath (false);
-			path.RemoveAt (path.Count - 1);
 		}
 	}
 
