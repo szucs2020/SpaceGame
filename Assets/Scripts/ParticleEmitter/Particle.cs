@@ -2,25 +2,70 @@
 using System.Collections;
 
 public class Particle : MonoBehaviour {
-
-    private float speed;
-    private float angle;
+    
+    //  Time related factors
     private float lifeSpan;
     private float tAlive;
+    float startTime;
+
+    //  Phisical size
     private float minSize;
     private float maxSize;
-    float startTime;
-    Vector3 prevSize = new Vector3(0.3f, 0.3f, 1f);
+    private float deltaSizeRate;  //  Rate/Sec to change size
+    Vector3 prevSize = new Vector3(0.3f, 0.3f, 1f);  // original starting size
     private bool shrink = false;
 
+    //  Rotation
+    private float radius;
+    private float speed;
+    private float axis;
+    private float angle;
+
+    //  Colour and such
+    private int colour;
+    private int colourRange;
+    private float minRed;
+    private float maxRed;
+    private float minBlue;
+    private float maxBlue;
+    private float minGreen;
+    private float maxGreen;
+    private float deltaTC;           // delta time colour
+    Color a;
+    Color b;
+
+    //Sprite Renderer
+    Renderer sprite;
+    //  Type
+    private ParticleTypes type;
+    
+
+    void Start()
+    {
+        //print("particle script " + this.transform.name);
+        if (this.transform.name == "PlasmaBall(Clone)")
+        {
+            initialize(ParticleTypes.Plasma);
+            sprite = this.GetComponent<SpriteRenderer>();
+        } 
+    }
 
     void Update()
     {
-        flickerFlame();
+        if (this.type == ParticleTypes.Fire)
+        {
+            flickerFlame();
+        }
+        else if (this.type == ParticleTypes.Plasma)
+        {
+            controlPlasma();
+        }
+
     }
 
     public void initialize(ParticleTypes type)
     {
+        this.type = type;
         if (type == ParticleTypes.Water)
         {
             speed = 10;
@@ -33,48 +78,95 @@ public class Particle : MonoBehaviour {
             angle = 90 * Mathf.PI / 180;
             lifeSpan = 5f;
             tAlive = 0;
-            minSize = 0.3f;
-            maxSize = 0.2f;
+            minSize = 0.6f;
+            maxSize = 0.4f;
+
+            deltaSizeRate = 0.6f;
             startTime = Time.time;
+        }
+        else if(type == ParticleTypes.Plasma)
+        {
+            speed = 0;
+            angle = 90 * Mathf.PI / 180;
+            lifeSpan = 5f;
+            tAlive = 0;
+            minSize = Random.Range(0.01f, 0.02f);
+            maxSize = Random.Range(minSize+0.01f, minSize+0.03f);
+            deltaSizeRate = 0.02f;
+            startTime = Time.time;
+            minRed = 0;
+            maxRed = 200;
+            minBlue = 200;
+            maxBlue = 255;
+            minGreen = 50;
+            maxGreen = 150;
+            deltaTC = Random.Range(0.5f, 2f);
+            Color a = Color.cyan;
+            Color b = Color.blue;
+            radius = 1;
         }
     }
 
     private void flickerFlame()
     {
+        changeParticleSize();
+    }
+
+    private void controlPlasma()
+    {
+        changeParticleSize();
+        changeParticleColour();
+        //rotateParticle();
+    }
+
+    private void rotateParticle()
+    {
+        Vector3 newPosition = Quaternion.AngleAxis(Mathf.Acos(2 * Mathf.PI * Time.deltaTime), transform.localPosition)
+                                     * new Vector3(Random.Range(-radius, radius), Random.Range(-radius, radius), 0f);
+    }
+
+    private void changeParticleColour()
+    {
+
+        if (Time.time - startTime > deltaTC)
+        {
+            a = b;
+            b = new Color(Random.Range(minRed / 255f, maxRed / 255f),
+                          Random.Range(minGreen / 255f, maxGreen / 255f),
+                          Random.Range(minBlue / 255f, maxBlue / 255f));
+
+            startTime = Time.time;
+        }
+
+        Color newColour = Color.Lerp(a, b, Mathf.PingPong(Time.time, deltaTC));
+        sprite.material.SetColor("_Color", newColour);
+    }
+
+    private void changeParticleSize()
+    {
         if (shrink == false)
         {
-            transform.localScale += new Vector3(0.6f * Time.deltaTime, 0.6f * Time.deltaTime, 0f);
+            transform.localScale += new Vector3(deltaSizeRate * Time.deltaTime, deltaSizeRate * Time.deltaTime, 0f);
 
-            if (this.transform.localScale.x >= 0.6f)
+            if (this.transform.localScale.x >= maxSize)
             {
                 shrink = true;
             }
         }
         else if (shrink == true)
         {
-            transform.localScale -= new Vector3(0.6f * Time.deltaTime, 0.6f * Time.deltaTime, 0f);
+            transform.localScale -= new Vector3(deltaSizeRate * Time.deltaTime, deltaSizeRate * Time.deltaTime, 0f);
 
-            if (this.transform.localScale.x <= 0.4f)
+            if (this.transform.localScale.x <= minSize)
             {
                 shrink = false;
             }
         }
     }
-
     public void Reset()
     {
-        this.transform.localPosition = new Vector3(0, 0, 0);
+        //this.transform.localPosition = new Vector3(0, 0, 0);
         return;
-    }
-
-    public void SetSpeed(float speed)
-    {
-        this.speed = speed;
-    }
-
-    public void SetAngle(float angle)
-    {
-        this.angle = angle;
     }
 
     public void SetLifeSpan(float lifeSpan)
@@ -85,16 +177,6 @@ public class Particle : MonoBehaviour {
     public void SettAlive(float tAlive)
     {
         this.tAlive = tAlive;
-    }
-
-    public float GetSpeed()
-    {
-        return this.speed;
-    }
-
-    public float GetAngle()
-    {
-        return this.angle;
     }
 
     public float GetLifespan()
@@ -117,6 +199,11 @@ public class Particle : MonoBehaviour {
         return this.maxSize;
     }
 
+    public ParticleTypes getType()
+    {
+        return this.type;
+    }
+
     public enum ParticleTypes
     {
         Water,
@@ -124,6 +211,7 @@ public class Particle : MonoBehaviour {
         Bullet,
         Blood,
         Fire,
-        Flame
+        Flame,
+        Plasma
     }
 }
