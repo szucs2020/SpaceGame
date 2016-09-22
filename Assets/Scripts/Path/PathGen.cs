@@ -21,18 +21,23 @@ public class PathGen : MonoBehaviour {
 			int length = (int)renderer.bounds.size.x;
 
 			//Generates nodes for each individual platform
-			for (int i = length; i > 0; i = i - 5) {
+			//for (int i = length; i > 0; i = i - 5) {
 
 				//If the node is too close to the edge of the platform it will not get generated
-				if(!(length - i < 2) && !(length - i > length - 2)) {
-					instance = (GameObject)Instantiate (Node, new Vector3 ((int)child.position.x - i + 1 + length / 2, (int)child.position.y + 3, 0), Quaternion.identity);
-					instance.transform.SetParent (child, true);
-					platform.nodes.Add (instance.transform);
-					ObjectList.Add(instance);
-				}
+				//if(!(length - i < 2) && !(length - i > length - 2)) {
+			instance = (GameObject)Instantiate (Node, new Vector3 ((int)child.position.x + 5 - length / 2, (int)child.position.y + 3, 0), Quaternion.identity);
+			instance.transform.SetParent (child, true);
+			platform.nodes.Add (instance.transform);
+			ObjectList.Add(instance);
+
+			instance = (GameObject)Instantiate (Node, new Vector3 ((int)child.position.x - 5 + length / 2, (int)child.position.y + 3, 0), Quaternion.identity);
+			instance.transform.SetParent (child, true);
+			platform.nodes.Add (instance.transform);
+			ObjectList.Add(instance);
+				//}
 
 				
-			}
+			//}
 
 
 			//Each node in each platform neighbours the nodes next to it
@@ -45,10 +50,10 @@ public class PathGen : MonoBehaviour {
 
 				if (i == 0) {
 					objectNode.Add (platform.nodes [i + 1].GetComponent<Node>());
-				} else if(i != 0 && i != platform.nodes.Count - 1) {
+				} /*else if(i != 0 && i != platform.nodes.Count - 1) {  //When whole platform has nodes on it
 					objectNode.Add (platform.nodes [i + 1].GetComponent<Node>());
 					objectNode.Add (platform.nodes [i - 1].GetComponent<Node>());
-				} else if(i == platform.nodes.Count - 1) {
+				} */else if(i == platform.nodes.Count - 1) {
 					objectNode.Add (platform.nodes [i - 1].GetComponent<Node>());
 				}
 			}
