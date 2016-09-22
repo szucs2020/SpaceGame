@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 460426}
   - 212: {fileID: 21236766}
   - 114: {fileID: 11476616}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PlasmaBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}

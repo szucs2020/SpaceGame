@@ -47,6 +47,10 @@ public class Particle : MonoBehaviour {
         {
             initialize(ParticleTypes.Plasma);
             sprite = this.GetComponent<SpriteRenderer>();
+
+            //Physics2D.IgnoreLayerCollision(11, 11);
+            ////this.transform.GetComponent<Collider2D>().enabled = false;
+            //this.transform.GetComponent<Collider2D>().enabled = true;
         } 
     }
 
@@ -116,13 +120,37 @@ public class Particle : MonoBehaviour {
     {
         changeParticleSize();
         changeParticleColour();
-        //rotateParticle();
+        rotateParticle();
     }
 
     private void rotateParticle()
     {
-        Vector3 newPosition = Quaternion.AngleAxis(Mathf.Acos(2 * Mathf.PI * Time.deltaTime), transform.localPosition)
-                                     * new Vector3(Random.Range(-radius, radius), Random.Range(-radius, radius), 0f);
+        int randRot = Random.Range(1, 4);
+        Vector3 rotAxis;
+
+        if (randRot == 1)
+        {
+            rotAxis = new Vector3(1, 1, 1);
+        }
+        else if (randRot == 2)
+        {
+            rotAxis = new Vector3(-1, -1, -1);
+        }
+        else if (randRot == 3)
+        {
+            rotAxis = new Vector3(-1, 1, -1);
+        }
+        else
+        {
+            rotAxis = new Vector3(1, -1, 1);
+        }
+
+        if (this.transform.parent != null)
+        {
+            this.transform.RotateAround(-(this.transform.localPosition - this.transform.parent.position), rotAxis * Time.deltaTime, 2);
+            this.transform.Rotate(-rotAxis * Time.deltaTime, 2);
+
+        }
     }
 
     private void changeParticleColour()

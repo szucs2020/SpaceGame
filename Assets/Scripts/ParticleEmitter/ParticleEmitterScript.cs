@@ -16,6 +16,7 @@ public class ParticleEmitterScript : MonoBehaviour {
     int amountExists;
     Particle.ParticleTypes particleType;
     GameObject centrePoint;
+    CircleCollider2D particleCollider;
 
     List<Particle> particles;
 
@@ -24,12 +25,14 @@ public class ParticleEmitterScript : MonoBehaviour {
     // Use this for initialization
     void Start () {
         //Initialze Particle
-        //particle.initialize(Particle.ParticleTypes.Plasma);
+        particle.initialize(Particle.ParticleTypes.Plasma);
         particleType = particle.getType();
         //print("Emmiter " + particleType);
 
         centrePoint = new GameObject();
         centrePoint.transform.position = this.transform.position;
+        particleCollider = centrePoint.AddComponent<CircleCollider2D>();
+        particleCollider.radius = 2.5f;
 
         // fire... refactor later
         if (particleType == Particle.ParticleTypes.Fire)
@@ -56,7 +59,7 @@ public class ParticleEmitterScript : MonoBehaviour {
             prevTime = Time.time;
 
             angle = 360 * Mathf.PI / 180; ;
-            speed = 0.1f;
+            speed = 20f;
 
             particle.initialize(particle.getType());
 
@@ -112,15 +115,14 @@ public class ParticleEmitterScript : MonoBehaviour {
         }
         else if (particleType == Particle.ParticleTypes.Plasma)
         {
-            for (int i = 0; i < amount - 1; i++)
-            {
 
-                particles[i].SettAlive(particles[i].GettAlive() + dt);
 
-                if (particles[i].GetLifespan() >= particles[i].GettAlive())
-                {
-                    particles[i].Reset();
-                }
+                //particles[i].SettAlive(particles[i].GettAlive() + dt);
+
+                //if (particles[i].GetLifespan() >= particles[i].GettAlive())
+                //{
+                //    particles[i].Reset();
+                //}
 
                 velocityx = speed * Mathf.Cos(angle);
                 velocityy = speed * Mathf.Sin(angle);
@@ -132,9 +134,7 @@ public class ParticleEmitterScript : MonoBehaviour {
                 centrePoint.transform.Translate(velocityx * Time.deltaTime, velocityy * Time.deltaTime, 0);
 
                 //Particle Rotation along an axis
-                particles[i].transform.RotateAround(-(particles[i].transform.localPosition - centrePoint.transform.position), Vector3.back, 2);
-            }
-
+                //particles[i].transform.RotateAround(-(particles[i].transform.localPosition - centrePoint.transform.position), Vector3.back * Time.deltaTime, 2);
             //transform.Rotate(Vector3.back * Time.deltaTime * 180);
         }
         
@@ -152,7 +152,7 @@ public class ParticleEmitterScript : MonoBehaviour {
             particles[i].transform.SetParent(centrePoint.transform, false);
             particles[i].transform.localPosition = new Vector3(0, 0, 0);
 
-            particles[i].initialize(type);
+            //particles[i].initialize(type);
         }
     }
 
@@ -167,4 +167,10 @@ public class ParticleEmitterScript : MonoBehaviour {
             //particles[i].transform.localPosition.Set(newPosition.x, newPosition.y, newPosition.z);
         }
     }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        print(collision.collider);
+    }
+
 }

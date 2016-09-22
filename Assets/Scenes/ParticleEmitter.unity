@@ -122,7 +122,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 473102, guid: 68c2c0b46529bf749ba17d285c3131f5, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 68c2c0b46529bf749ba17d285c3131f5, type: 2}
@@ -251,7 +251,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 426760, guid: 6ef9c3c6eae2b0849a687bcc2387ef46, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2364030, guid: 6ef9c3c6eae2b0849a687bcc2387ef46, type: 2}
       propertyPath: m_UseLightProbes
