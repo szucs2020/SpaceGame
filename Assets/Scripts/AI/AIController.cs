@@ -114,7 +114,15 @@ public class AIController : MonoBehaviour {
 			return;
 		}
 
-		if (target != null) {
+		if (AI.currentPlatform == player.GetComponent<Player> ().currentPlatform) {
+			Debug.Log (Mathf.Abs(player.transform.position.x - transform.position.x) );
+
+			if (player.transform.position.x > transform.position.x && player.transform.position.x - transform.position.x < 30f) {
+				path.Clear ();
+				target = player.GetComponent<Node> ();
+				MoveToPlayersPlatform ();
+			}
+		} else if (target != null) {
 			MoveToPlayersPlatform ();
 		} else {
 			print ("Set Movement Axis");
