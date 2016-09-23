@@ -15,18 +15,47 @@ public class AStar : MonoBehaviour {
 	Heap open;
 
 	void Start() {
-		nodes = new List<Node> ();
-		List<GameObject> objectList = GameObject.Find ("Platforms").GetComponent<PathGen> ().ObjectList;
-
-		for (int i = 0; i < objectList.Count; i++) {
-			nodes.Add (objectList[i].GetComponent<Node> ());
-		}
-
-		startNode = GameObject.Find ("1").GetComponent<Node> ();
+		//StartHelper ();
 	}
 
-	public List<Node> FindShortestPath() {
+	private void StartHelper () {
+		List<GameObject> nodeList = GameObject.Find ("Platforms").GetComponent<PathGen> ().ObjectList;
 
+		nodes = new List<Node> ();
+		for (int i = 0; i < nodeList.Count; i++) {
+			nodes.Add (nodeList[i].GetComponent<Node> ());
+		}
+
+		//startNode = GameObject.Find ("1").GetComponent<Node> ();
+
+		float shortestDist = float.MaxValue;
+		float dist = float.MaxValue;
+		for (int i = 0; i < nodes.Count; i++) {
+			dist = (nodes [i].transform.position - transform.position).sqrMagnitude;
+
+			if (dist < shortestDist) {
+				shortestDist = dist;
+				startNode = nodes [i];
+			}
+		}
+	}
+
+	public List<Node> FindShortestPath(Vector3 targetPosition) {
+
+		if (nodes.Count == 0) {
+			StartHelper ();
+		}
+
+		float shortestDist = float.MaxValue;
+		float dist = float.MaxValue;
+
+		for (int i = 0; i < nodes.Count; i++) {
+			dist = (nodes [i].transform.position - targetPosition).sqrMagnitude;
+			if (dist < shortestDist) {
+				shortestDist = dist;
+				target = nodes [i];
+			}
+		}
 		//Initialize each node
 		for(int i = 0; i < nodes.Count; i++) {
 			nodes [i].Init (target);

@@ -17,15 +17,18 @@ public class AIController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		pathFinder = this.GetComponent<AStar> ();
-		path = pathFinder.FindShortestPath ();
+		//path = pathFinder.FindShortestPath ();
 		controller = this.GetComponent<Controller2D> ();
 
-		target = path [0];
-		path.RemoveAt (0);
+		//target = path [0];
+		//path.RemoveAt (0);
 
 		AI = transform.GetComponent<Player> ();
 
 		player = GameObject.Find ("Player");
+		path = pathFinder.FindShortestPath (player.transform.position);
+		target = path [0];
+		path.RemoveAt (0);
 
 		//Movement
 		buttonPressedJumped = false;
@@ -63,7 +66,7 @@ public class AIController : MonoBehaviour {
 				}
 			} pathFinder.target = closestToPlayer;
 
-			path = pathFinder.FindShortestPath ();
+			path = pathFinder.FindShortestPath (player.transform.position);
 			target = path [0];
 			path.RemoveAt (0);
 			return;
@@ -134,6 +137,9 @@ public class AIController : MonoBehaviour {
 				target = null;
 				return;
 			}
+
+			target = path [0];
+			path.RemoveAt (0);
 		}
 
 		if(target.transform.position.y > transform.position.y + 2 /*&& Mathf.Abs(target.transform.position.x - transform.position.x) < 15f*/) {

@@ -44,7 +44,7 @@ public class PathGen : MonoBehaviour {
 			List<Node> objectNode;
 			for (int i = 0; i < platform.nodes.Count; i++) {
 				
-				platform.nodes [i].name = i.ToString();
+				platform.nodes [i].name = platform.name + " " + i.ToString();
 				platform.nodes [i].GetComponent<Node> ().neighbour = new List<Node> ();
 				objectNode = platform.nodes [i].GetComponent<Node> ().neighbour;
 
