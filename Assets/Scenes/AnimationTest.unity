@@ -94,6 +94,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 64918389}
   - 212: {fileID: 64918390}
+  - 95: {fileID: 64918391}
   m_Layer: 0
   m_Name: Legs
   m_TagString: Untagged
@@ -144,6 +145,23 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!95 &64918391
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 64918388}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 04032e1a81b00ae4a8131cb3b8224a3f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &910024664
 GameObject:
   m_ObjectHideFlags: 0
@@ -239,6 +257,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 967657453}
+  - 114: {fileID: 967657454}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -262,6 +281,17 @@ Transform:
   - {fileID: 64918389}
   m_Father: {fileID: 0}
   m_RootOrder: 1
+--- !u!114 &967657454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 967657452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6774433997237be4099379959d24b0ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1482568337
 GameObject:
   m_ObjectHideFlags: 0
@@ -271,6 +301,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1482568338}
   - 212: {fileID: 1482568339}
+  - 95: {fileID: 1482568340}
   m_Layer: 0
   m_Name: Torso
   m_TagString: Untagged
@@ -321,6 +352,23 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!95 &1482568340
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1482568337}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4ccdc3e3e5e5a564aad536923ea0729e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &1814695448
 GameObject:
   m_ObjectHideFlags: 0
@@ -330,6 +378,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1814695449}
   - 212: {fileID: 1814695450}
+  - 95: {fileID: 1814695451}
   m_Layer: 0
   m_Name: Head
   m_TagString: Untagged
@@ -380,3 +429,20 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!95 &1814695451
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1814695448}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: dda22be1e5848a445808ac19f50a9bc0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
