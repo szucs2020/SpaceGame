@@ -4,10 +4,11 @@
 ********************************************************/
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
 
 [RequireComponent(typeof(AudioSource))]
 
-public class Gun : MonoBehaviour {
+public class Gun : NetworkBehaviour {
 
 	//public variables
 	public float rpm;
@@ -34,10 +35,17 @@ public class Gun : MonoBehaviour {
 
         timeBetweenShots = 60 / rpm;
 		spawnRotation = spawn.localEulerAngles.y;
-		player = (Player) transform.parent.gameObject.GetComponent(typeof(Player));
-	}
-	
-	public void shoot() {
+		player = GetComponent<Player>();
+    }
+
+    [Command]
+    public void CmdShoot(Vector3 direction) {
+        GameObject bullet = (GameObject)Instantiate(bulletPrefab, spawn.position, spawn.rotation);
+        bullet.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
+        NetworkServer.Spawn(bullet);
+    }
+
+    public void shoot() {
 
 		if (canShoot ()) {
 
@@ -55,13 +63,11 @@ public class Gun : MonoBehaviour {
             //play gun shot sound
             audio.PlayOneShot(shot);
 
-			//instantiate bullet prefab
-			GameObject bullet = (GameObject)Instantiate(bulletPrefab, spawn.position, spawn.rotation);
-			bullet.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
-			GetComponentInParent<Player>().CmdSpawn(bullet);
+            //create bullet on all clients
+            CmdShoot(direction);
 
-			//set next shot time
-			nextShot = Time.time + timeBetweenShots;
+            //set next shot time
+            nextShot = Time.time + timeBetweenShots;
 		}
 	}
 

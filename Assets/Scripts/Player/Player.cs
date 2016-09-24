@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.Networking;
 
 [RequireComponent (typeof (Controller2D))]
+[RequireComponent(typeof(SyncPlayer))]
 
 public class Player : NetworkBehaviour {
 
@@ -15,8 +16,8 @@ public class Player : NetworkBehaviour {
 	public float jumpDeceleration = 0.5f;
 	public float maxFallSpeed = -110f;
 
-	public Gun gun;
-	private SyncFlip syncFlip;
+	private Gun gun;
+	private SyncPlayer syncPlayer;
 
 	float gravity;
 	float maxJumpVelocity;
@@ -27,7 +28,7 @@ public class Player : NetworkBehaviour {
     private bool facingRight = false;
 	private bool decelerating = false;
 	private int jump;
-	private SpriteRenderer fire;
+	//private SpriteRenderer fire;
     AudioSource audio;
 
     //movement flags
@@ -39,10 +40,12 @@ public class Player : NetworkBehaviour {
     private bool buttonHeldShoot;
 
     Controller2D controller;
+    NetworkManager networkManager;
 
 	void Awake(){
-		syncFlip = GetComponent<SyncFlip>();
-	}
+		syncPlayer = GetComponent<SyncPlayer>();
+        networkManager = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<NetworkManager>();
+    }
 
 	void Start() {
 
@@ -52,14 +55,14 @@ public class Player : NetworkBehaviour {
 
         controller = GetComponent<Controller2D> ();
         audio = GetComponent<AudioSource>();
+        gun = GetComponent<Gun>();
 
         jump = 0;
 		gravity = (2 * maxJumpHeight) / Mathf.Pow (timeToJumpApex, 2);
 		maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
 		minJumpVelocity = Mathf.Sqrt (2 * Mathf.Abs (gravity) * minJumpHeight);
 
-		fire = this.gameObject.transform.GetChild(1).GetComponent<SpriteRenderer>();
-		fire.enabled = false;
+        syncPlayer.CmdSyncJetpack(false);
 
         movementAxis = new Vector2(0, 0);
         buttonPressedJump = false;
@@ -93,8 +96,8 @@ public class Player : NetworkBehaviour {
 				velocity.y = maxJumpVelocity;
 				decelerating = false;
 				if (jump == 1){
-					fire.enabled = true;
-				}
+                    syncPlayer.CmdSyncJetpack(true);
+                }
 			}
 
 			if (jump == 0) {
@@ -106,12 +109,12 @@ public class Player : NetworkBehaviour {
 
 		else if (buttonReleasedJump) {
 			decelerating = true;
-			fire.enabled = false;
-		}
+            syncPlayer.CmdSyncJetpack(false);
+        }
 
 		if (velocity.y < 0){
-			fire.enabled = false;
-		}
+            syncPlayer.CmdSyncJetpack(false);
+        }
 
         //decelerate after jump
         if (decelerating && velocity.y > minJumpVelocity) {
@@ -137,8 +140,8 @@ public class Player : NetworkBehaviour {
 			velocity.y = 0;
 			decelerating = false;
 			jump = 0;
-			fire.enabled = false;
-		} else {
+            syncPlayer.CmdSyncJetpack(false);
+        } else {
 			if (controller.collisions.above) {
 				velocity.y = 0;
 				decelerating = false;
@@ -153,13 +156,8 @@ public class Player : NetworkBehaviour {
 
     private void flip() {
         facingRight = !facingRight;
-		syncFlip.CmdSyncFlip(facingRight);
+		syncPlayer.CmdSyncFlip(facingRight);
     }
-
-	[Command]
-	public void CmdSpawn(GameObject obj){
-		NetworkServer.Spawn(obj);
-	}
 
 	public bool isFacingRight(){
 		return facingRight;

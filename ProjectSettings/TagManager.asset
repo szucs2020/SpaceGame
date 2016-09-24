@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - AI
+  - player
+  - NetworkManager
   layers:
   - Default
   - TransparentFX
