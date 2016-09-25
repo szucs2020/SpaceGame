@@ -1,52 +1,29 @@
-Initialize engine version: 5.3.6f1 (29055738eb78)
+Initialize engine version: 5.3.5f1 (960ebf59018a)
 GfxDevice: creating device client; threaded=1
 Direct3D:
     Version:  Direct3D 11.0 [level 11.0]
-    Renderer: NVIDIA GeForce GT 740M    (ID=0xfdf)
+    Renderer: NVIDIA GeForce GTX 1070 (ID=0x1b81)
     Vendor:   NVIDIA
-    VRAM:     1992 MB
+    VRAM:     3072 MB
 Begin MonoManager ReloadAssembly
-Platform assembly: C:\Users\Christian\Documents\Unity Projects\SpaceGame\test_Data\Managed\UnityEngine.dll (this message is harmless)
-Loading C:\Users\Christian\Documents\Unity Projects\SpaceGame\test_Data\Managed\UnityEngine.dll into Unity Child Domain
-Platform assembly: C:\Users\Christian\Documents\Unity Projects\SpaceGame\test_Data\Managed\Assembly-CSharp.dll (this message is harmless)
-Loading C:\Users\Christian\Documents\Unity Projects\SpaceGame\test_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
-Platform assembly: C:\Users\Christian\Documents\Unity Projects\SpaceGame\test_Data\Managed\UnityEngine.UI.dll (this message is harmless)
-Loading C:\Users\Christian\Documents\Unity Projects\SpaceGame\test_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
-Platform assembly: C:\Users\Christian\Documents\Unity Projects\SpaceGame\test_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
-Loading C:\Users\Christian\Documents\Unity Projects\SpaceGame\test_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
-- Completed reload, in  0.064 seconds
-Platform assembly: C:\Users\Christian\Documents\Unity Projects\SpaceGame\test_Data\Managed\System.Core.dll (this message is harmless)
-Platform assembly: C:\Users\Christian\Documents\Unity Projects\SpaceGame\test_Data\Managed\System.dll (this message is harmless)
-desktop: 1366x768 60Hz; virtual: 1366x768 at 0,0
-<RI> Initializing input.
-<RI> Input initialized.
-Initialize engine version: 5.3.6f1 (29055738eb78)
-GfxDevice: creating device client; threaded=1
-Direct3D:
-    Version:  Direct3D 11.0 [level 11.0]
-    Renderer: NVIDIA GeForce GT 740M    (ID=0xfdf)
-    Vendor:   NVIDIA
-    VRAM:     1992 MB
-Begin MonoManager ReloadAssembly
-Platform assembly: C:\Users\Christian\Documents\Unity Projects\SpaceGame\test_Data\Managed\UnityEngine.dll (this message is harmless)
-Loading C:\Users\Christian\Documents\Unity Projects\SpaceGame\test_Data\Managed\UnityEngine.dll into Unity Child Domain
-Platform assembly: C:\Users\Christian\Documents\Unity Projects\SpaceGame\test_Data\Managed\Assembly-CSharp.dll (this message is harmless)
-Loading C:\Users\Christian\Documents\Unity Projects\SpaceGame\test_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
-Platform assembly: C:\Users\Christian\Documents\Unity Projects\SpaceGame\test_Data\Managed\UnityEngine.UI.dll (this message is harmless)
-Loading C:\Users\Christian\Documents\Unity Projects\SpaceGame\test_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
-Platform assembly: C:\Users\Christian\Documents\Unity Projects\SpaceGame\test_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
-Loading C:\Users\Christian\Documents\Unity Projects\SpaceGame\test_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
-- Completed reload, in  0.051 seconds
-Platform assembly: C:\Users\Christian\Documents\Unity Projects\SpaceGame\test_Data\Managed\System.Core.dll (this message is harmless)
-Platform assembly: C:\Users\Christian\Documents\Unity Projects\SpaceGame\test_Data\Managed\System.dll (this message is harmless)
-desktop: 1366x768 60Hz; virtual: 1366x768 at 0,0
+Platform assembly: D:\Projects\SpaceGame\test_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading D:\Projects\SpaceGame\test_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: D:\Projects\SpaceGame\test_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading D:\Projects\SpaceGame\test_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: D:\Projects\SpaceGame\test_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading D:\Projects\SpaceGame\test_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: D:\Projects\SpaceGame\test_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading D:\Projects\SpaceGame\test_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: D:\Projects\SpaceGame\test_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading D:\Projects\SpaceGame\test_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+- Completed reload, in  0.049 seconds
+Platform assembly: D:\Projects\SpaceGame\test_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: D:\Projects\SpaceGame\test_Data\Managed\System.dll (this message is harmless)
+desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
 <RI> Initialized touch support.
-<RI> Initialized touch support.
-UnloadTime: 1.087894 ms
-UnloadTime: 0.900694 ms
-Setting up 1 worker threads for Enlighten.
-  Thread -> id: f20 -> priority: 1 
-Setting up 1 worker threads for Enlighten.
-  Thread -> id: 52c -> priority: 1 
+UnloadTime: 0.457043 ms
+Setting up 2 worker threads for Enlighten.
+  Thread -> id: 2690 -> priority: 1 
+  Thread -> id: bf0 -> priority: 1 

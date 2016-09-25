@@ -16,9 +16,9 @@ public class Player : NetworkBehaviour {
 	public float maxFallSpeed = -110f;
 
 	private Gun gun;
-//	private SyncPlayer syncPlayer;
+    private SyncPlayer syncPlayer;
 
-	float gravity;
+    float gravity;
 	float maxJumpVelocity;
 	float minJumpVelocity;
 	Vector3 velocity;
@@ -42,7 +42,7 @@ public class Player : NetworkBehaviour {
     NetworkManager networkManager;
 
 	void Awake(){
-//		syncPlayer = GetComponent<SyncPlayer>();
+        syncPlayer = GetComponent<SyncPlayer>();
         networkManager = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<NetworkManager>();
     }
 
@@ -61,7 +61,7 @@ public class Player : NetworkBehaviour {
 		maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
 		minJumpVelocity = Mathf.Sqrt (2 * Mathf.Abs (gravity) * minJumpHeight);
 
-//        syncPlayer.CmdSyncJetpack(false);
+        syncPlayer.CmdSyncJetpack(false);
 
         movementAxis = new Vector2(0, 0);
         buttonPressedJump = false;
@@ -95,7 +95,7 @@ public class Player : NetworkBehaviour {
 				velocity.y = maxJumpVelocity;
 				decelerating = false;
 				if (jump == 1){
-//                    syncPlayer.CmdSyncJetpack(true);
+                    syncPlayer.CmdSyncJetpack(true);
                 }
 			}
 
@@ -108,11 +108,11 @@ public class Player : NetworkBehaviour {
 
 		else if (buttonReleasedJump) {
 			decelerating = true;
-//            syncPlayer.CmdSyncJetpack(false);
+            syncPlayer.CmdSyncJetpack(false);
         }
 
 		if (velocity.y < 0){
-//            syncPlayer.CmdSyncJetpack(false);
+            syncPlayer.CmdSyncJetpack(false);
         }
 
         //decelerate after jump
@@ -139,7 +139,7 @@ public class Player : NetworkBehaviour {
 			velocity.y = 0;
 			decelerating = false;
 			jump = 0;
-//            syncPlayer.CmdSyncJetpack(false);
+            syncPlayer.CmdSyncJetpack(false);
         } else {
 			if (controller.collisions.above) {
 				velocity.y = 0;
@@ -155,7 +155,7 @@ public class Player : NetworkBehaviour {
 
     private void flip() {
         facingRight = !facingRight;
-//		syncPlayer.CmdSyncFlip(facingRight);
+        syncPlayer.CmdSyncFlip(facingRight);
     }
 
 	public bool isFacingRight(){

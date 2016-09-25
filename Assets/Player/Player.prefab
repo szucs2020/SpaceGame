@@ -30,9 +30,10 @@ GameObject:
   - 114: {fileID: 11486660}
   - 114: {fileID: 11460778}
   - 114: {fileID: 11411558}
-  - 114: {fileID: 11427508}
-  - 114: {fileID: 11442348}
   - 114: {fileID: 11426592}
+  - 114: {fileID: 11442348}
+  - 114: {fileID: 11499618}
+  - 114: {fileID: 11467846}
   m_Layer: 9
   m_Name: Player
   m_TagString: player
@@ -214,25 +215,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b8634365f0291544ac4f90744530ff6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rpm: 350
+  rpm: 450
   bulletSpeed: 45
   bulletPrefab: {fileID: 115582, guid: bf279894d63713b47a453d27c95c68bd, type: 2}
   spawn: {fileID: 466364}
   shot: {fileID: 8300000, guid: 31ce3f64934441c44876b648d5941486, type: 3}
---- !u!114 &11427508
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 133596}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87b71df98c00bf447af1fb7b558cc767, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  smoothRate: 0.1
-  movementThreshold: 0.2
-  syncRate: 9
 --- !u!114 &11442348
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -276,6 +263,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36ae1539bfbc38b43adabd385c49fceb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11467846
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 133596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 1
+  m_SendInterval: 0.083333336
+  m_SyncRotationAxis: 0
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 0.8
 --- !u!114 &11486660
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -296,6 +303,17 @@ MonoBehaviour:
   verticalRaySpacing: 0
   boxCollider: {fileID: 0}
   playerInput: {x: 0, y: 0}
+--- !u!114 &11499618
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 133596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87b71df98c00bf447af1fb7b558cc767, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &21279766
 SpriteRenderer:
   m_ObjectHideFlags: 1
