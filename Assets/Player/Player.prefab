@@ -30,7 +30,7 @@ GameObject:
   - 114: {fileID: 11486660}
   - 114: {fileID: 11460778}
   - 114: {fileID: 11411558}
-  - 114: {fileID: 11455604}
+  - 114: {fileID: 11427508}
   - 114: {fileID: 11442348}
   - 114: {fileID: 11426592}
   m_Layer: 9
@@ -219,6 +219,20 @@ MonoBehaviour:
   bulletPrefab: {fileID: 115582, guid: bf279894d63713b47a453d27c95c68bd, type: 2}
   spawn: {fileID: 466364}
   shot: {fileID: 8300000, guid: 31ce3f64934441c44876b648d5941486, type: 3}
+--- !u!114 &11427508
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 133596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87b71df98c00bf447af1fb7b558cc767, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothRate: 0.1
+  movementThreshold: 0.2
+  syncRate: 9
 --- !u!114 &11442348
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -251,20 +265,6 @@ MonoBehaviour:
     i15: 245
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
---- !u!114 &11455604
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 133596}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87b71df98c00bf447af1fb7b558cc767, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 473102}
-  smoothRate: 30
-  movementThreshold: 0.2
 --- !u!114 &11460778
 MonoBehaviour:
   m_ObjectHideFlags: 1

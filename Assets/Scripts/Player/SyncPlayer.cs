@@ -16,29 +16,36 @@ public class SyncPlayer : NetworkBehaviour {
     //position syncing
     [SyncVar]
     private Vector3 syncPos;
-    [SerializeField] Transform player;
     [SerializeField] float smoothRate;
 
     private Vector3 lastPosition;
     public float movementThreshold;
 
+	public int syncRate;
+	private float divSync;
+	private float updateInterval = 0;
+
     void Awake() {
         jetpack = this.gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>();
+		divSync = 1 / syncRate;
     }
 
-    void FixedUpdate() {
+    void Update() {
         UpdatePosition();
         if (!isLocalPlayer) {
-            player.position = Vector3.Lerp(player.position, syncPos, Time.deltaTime * smoothRate);
-            //player.position = syncPos;
+			updateInterval += Time.deltaTime;
+			if (updateInterval > divSync){
+				transform.position = Vector3.Lerp(transform.position, syncPos, smoothRate);
+				transform.position = syncPos;
+			}
         }
     }
 
     [ClientCallback]
     void UpdatePosition() {
-        if (isLocalPlayer && Vector3.Distance(player.position, lastPosition) > movementThreshold) {
-            CmdUpdatePosOnServer(player.position);
-            lastPosition = player.position;
+		if (isLocalPlayer && Vector3.Distance(transform.position, lastPosition) > movementThreshold) {
+			CmdUpdatePosOnServer(transform.position);
+			lastPosition = transform.position;
         }
     }
 
