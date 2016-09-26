@@ -11,14 +11,12 @@ public class Player : MonoBehaviour {
 	public float accelerationTimeGrounded = .1f;
 	public float moveSpeed = 6;
 	public float jumpDeceleration = 0.5f;
+	public float maxFallSpeed = -110f;
 
-	public float minJetpackVelocity;
-	public float maxJetpackVelocity;
-	public float jetpackAcceleration;
+	private Gun gun;
+    private SyncPlayer syncPlayer;
 
-	public Gun gun;
-
-	float gravity;
+    float gravity;
 	float maxJumpVelocity;
 	float minJumpVelocity;
 	Vector3 velocity;
@@ -27,7 +25,8 @@ public class Player : MonoBehaviour {
     private bool facingRight = false;
 	private bool decelerating = false;
 	private int jump;
-	private SpriteRenderer fire;
+	//private SpriteRenderer fire;
+    AudioSource audio;
 
     //movement flags
     private Vector2 movementAxis;
@@ -38,20 +37,25 @@ public class Player : MonoBehaviour {
     private bool buttonHeldShoot;
 
     Controller2D controller;
+    NetworkManager networkManager;
+
+	void Awake(){
+        syncPlayer = GetComponent<SyncPlayer>();
+        networkManager = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<NetworkManager>();
+    }
 
 	//For PathGeneration
 	public Transform currentPlatform;
 
-	void Start() {
-		controller = GetComponent<Controller2D> ();
-		jump = 0;
+        controller = GetComponent<Controller2D> ();
+        audio = GetComponent<AudioSource>();
+        gun = GetComponent<Gun>();
 
 		gravity = (2 * maxJumpHeight) / Mathf.Pow (timeToJumpApex, 2);
 		maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
 		minJumpVelocity = Mathf.Sqrt (2 * Mathf.Abs (gravity) * minJumpHeight);
 
-		fire = this.gameObject.transform.GetChild(1).GetComponent<SpriteRenderer>();
-		fire.enabled = false;
+        syncPlayer.CmdSyncJetpack(false);
 
         movementAxis = new Vector2(0, 0);
         buttonPressedJump = false;
@@ -79,9 +83,12 @@ public class Player : MonoBehaviour {
 		velocity.x = Mathf.SmoothDamp (velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below)?accelerationTimeGrounded:accelerationTimeAirborne);
 
 		if (buttonPressedJump) {
-			//jumping
-			if (controller.collisions.below) {
+			if (controller.collisions.below || jump == 1) {
 				velocity.y = maxJumpVelocity;
+				decelerating = false;
+				if (jump == 1){
+                    syncPlayer.CmdSyncJetpack(true);
+                }
 			}
 
 			if (jump == 0) {
@@ -90,24 +97,15 @@ public class Player : MonoBehaviour {
 				jump = 2;
 			}
 		} 
-		else if (buttonHeldJump) {
-			//jetpack
-            if (jump == 2) {
-                fire.enabled = true;
-				if (!controller.collisions.below) {
-					decelerating = false;
-					if (velocity.y < maxJetpackVelocity){
-						velocity.y += jetpackAcceleration;
-					}
-				}
-            }
-        } 
+
 		else if (buttonReleasedJump) {
-			//release jump
 			decelerating = true;
-			jump = 1;
-			fire.enabled = false;
-		}
+            syncPlayer.CmdSyncJetpack(false);
+        }
+
+		if (velocity.y < 0){
+            syncPlayer.CmdSyncJetpack(false);
+        }
 
         //decelerate after jump
         if (decelerating && velocity.y > minJumpVelocity) {
@@ -118,7 +116,15 @@ public class Player : MonoBehaviour {
             }
         }
 
-        velocity.y -= gravity * Time.deltaTime;
+		//gravity, with max fall speed
+		if (velocity.y > maxFallSpeed){
+			if (velocity.y - (gravity * Time.deltaTime) > maxFallSpeed){
+				velocity.y -= gravity * Time.deltaTime;
+			} else {
+				velocity.y = maxFallSpeed;
+			}
+		}
+		
 		controller.Move (velocity * Time.deltaTime, input);
 
 		 if(controller.collisions.below){
@@ -126,8 +132,8 @@ public class Player : MonoBehaviour {
 			velocity.y = 0;
 			decelerating = false;
 			jump = 0;
-			fire.enabled = false;
-		} else {
+            syncPlayer.CmdSyncJetpack(false);
+        } else {
 			if (controller.collisions.above) {
 				velocity.y = 0;
 				decelerating = false;
@@ -135,16 +141,14 @@ public class Player : MonoBehaviour {
 		}
 
 		//shooting
-		if (buttonHeldShoot) {
-			gun.shootAutomatic();
+		if (buttonPressedShoot) {
+			gun.shoot();
 		}
 	}
 
     private void flip() {
         facingRight = !facingRight;
-        Vector3 theScale = transform.localScale;
-        theScale.x *= -1;
-        transform.localScale = theScale;
+        syncPlayer.CmdSyncFlip(facingRight);
     }
 
 	public bool isFacingRight(){

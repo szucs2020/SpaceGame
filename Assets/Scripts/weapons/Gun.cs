@@ -4,29 +4,20 @@
 ********************************************************/
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
 
 [RequireComponent(typeof(AudioSource))]
-[RequireComponent(typeof(LineRenderer))]
 
-public class Gun : MonoBehaviour {
+public class Gun : NetworkBehaviour {
 
 	//public variables
-	public enum FireMode {Semi, Auto};
-	public FireMode gunType;
 	public float rpm;
 	public float bulletSpeed;
-	public float bulletTime;
-	public float reloadSpeed;
-	public int clipSize;
-	public bool usesAmmo;
 	public GameObject bulletPrefab;
 
 	//components
 	public Transform spawn;
 	public AudioClip shot;
-	public AudioClip click;
-	public AudioClip reload;
-	private LineRenderer tracer;
 	private float spawnRotation;
 
 	//external objects
@@ -35,84 +26,47 @@ public class Gun : MonoBehaviour {
 	//system variables
 	private float timeBetweenShots;
 	private float nextShot;
-	private int ammo;
-	private int ammoLoaded;
 	private float currentRange;
 	
 	void Start(){
-		timeBetweenShots = 60/rpm;
-		tracer = GetComponent<LineRenderer>();
-		ammoLoaded = clipSize;
-		ammo = 5 * clipSize;
-		spawnRotation = spawn.localEulerAngles.y;
-		player = (Player) transform.parent.gameObject.GetComponent(typeof(Player));
-	}
+		
+        audio = GetComponent<AudioSource>();
 
-	public void shoot() {
+        timeBetweenShots = 60 / rpm;
+		spawnRotation = spawn.localEulerAngles.y;
+		player = GetComponent<Player>();
+    }
+
+    [Command]
+    public void CmdShoot(Vector3 direction) {
+        GameObject bullet = (GameObject)Instantiate(bulletPrefab, spawn.position, spawn.rotation);
+        bullet.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
+        NetworkServer.Spawn(bullet);
+    }
+
+    public void shoot() {
 
 		if (canShoot ()) {
 
-			if (ammoLoaded == 0) {
-				Reload ();
+			spawn.localEulerAngles = new Vector3(0f, spawnRotation, 0f);
+
+			//get direction and create ray
+			Vector2 direction;
+
+			if (player.isFacingRight()){
+				direction = new Vector2 (1, 0);
+			} else {
+				direction = new Vector2 (-1, 0);
 			}
 
-			else {	
-				spawn.localEulerAngles = new Vector3(0f, spawnRotation, 0f);
+            //play gun shot sound
+            audio.PlayOneShot(shot);
 
-				//get direction and create ray
-				Vector2 direction;
+            //create bullet on all clients
+            CmdShoot(direction);
 
-				if (player.isFacingRight()){
-					direction = new Vector2 (1, 0);
-				} else {
-					direction = new Vector2 (-1, 0);
-				}
-
-				//play gun shot sound
-				//audio.PlayOneShot(shot);
-
-				//instantiate bullet prefab
-				GameObject bullet = (GameObject)Instantiate(bulletPrefab, spawn.position, spawn.rotation);
-				bullet.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
-				Destroy(bullet, bulletTime);
-
-				//remove one from ammo
-				ammoLoaded--;
-
-				//set next shot time
-				nextShot = Time.time + timeBetweenShots;
-			}
-		}
-	}
-
-	//support for automatic weapons
-	public void shootAutomatic() {
-		if (gunType == FireMode.Auto) {
-			shoot ();
-		}
-	}
-
-	public void Reload(){
-
-		int diff;
-
-		if (ammo > 0 && ammoLoaded < clipSize){
-
-			nextShot = Time.time + reloadSpeed;
-			diff = clipSize - ammoLoaded;
-
-			if (ammo < diff){
-				ammoLoaded += ammo;
-				ammo = 0;
-			} else{
-				ammoLoaded += diff;
-				ammo -= diff;
-			}
-//			audio.PlayOneShot(reload);
-
-		} else if (ammo == 0 && ammoLoaded == 0){
-//			audio.PlayOneShot (click);
-			nextShot = Time.time + timeBetweenShots;
+            //set next shot time
+            nextShot = Time.time + timeBetweenShots;
 		}
 	}
 
@@ -124,17 +78,6 @@ public class Gun : MonoBehaviour {
 			canShoot = false;
 		}
 		return canShoot;
-	}
-
-	//Private variable getters and setters
-	public int getAmmoLeft(){
-		return this.ammo;
-	}
-	public int getAmmoInGun(){
-		return this.ammoLoaded;
-	}
-	public void addAmmoToGun(){
-		this.ammo = clipSize * 5;
 	}
 }
 

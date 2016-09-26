@@ -13,7 +13,7 @@ GameObject:
   - 114: {fileID: 11453538}
   - 58: {fileID: 5878642}
   m_Layer: 2
-  m_Name: basicbullet
+  m_Name: BulletPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -63,6 +63,26 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 2.4
+--- !u!114 &11430510
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 115582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 2
+  m_SendInterval: 0
+  m_SyncRotationAxis: 3
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
 --- !u!114 &11453538
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -74,6 +94,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 859faf14764e9134886d8e9197d5f5cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flightTime: 1
+--- !u!114 &11476648
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 115582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 191
+    i1: 39
+    i2: 152
+    i3: 148
+    i4: 214
+    i5: 55
+    i6: 19
+    i7: 180
+    i8: 122
+    i9: 69
+    i10: 61
+    i11: 39
+    i12: 201
+    i13: 92
+    i14: 104
+    i15: 189
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!212 &21248524
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -100,7 +153,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 0c28c47e64c8657449bb984e344b4c04, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d02f8323675d379499d3430f71bf55c7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
