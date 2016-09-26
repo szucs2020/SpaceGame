@@ -12,6 +12,8 @@ GameObject:
   - 50: {fileID: 5000396}
   - 114: {fileID: 11453538}
   - 58: {fileID: 5878642}
+  - 114: {fileID: 11430510}
+  - 114: {fileID: 11476648}
   m_Layer: 2
   m_Name: BulletPrefab
   m_TagString: Untagged
@@ -65,7 +67,7 @@ CircleCollider2D:
   m_Radius: 2.4
 --- !u!114 &11430510
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 115582}
@@ -97,7 +99,7 @@ MonoBehaviour:
   flightTime: 1
 --- !u!114 &11476648
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 115582}

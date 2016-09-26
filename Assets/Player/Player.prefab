@@ -204,6 +204,7 @@ MonoBehaviour:
   moveSpeed: 30
   jumpDeceleration: 5
   maxFallSpeed: -110
+  currentPlatform: {fileID: 0}
 --- !u!114 &11426592
 MonoBehaviour:
   m_ObjectHideFlags: 1

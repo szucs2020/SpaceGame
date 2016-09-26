@@ -18,12 +18,13 @@ public class Gun : NetworkBehaviour {
 	//components
 	public Transform spawn;
 	public AudioClip shot;
-	private float spawnRotation;
+	private AudioSource audio;
 
 	//external objects
 	private Player player;
 
 	//system variables
+	private float spawnRotation;
 	private float timeBetweenShots;
 	private float nextShot;
 	private float currentRange;

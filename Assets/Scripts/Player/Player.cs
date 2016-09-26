@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
 
 [RequireComponent (typeof (Controller2D))]
-public class Player : MonoBehaviour {
+public class Player : NetworkBehaviour {
 
 	public float maxJumpHeight = 4;
 	public float minJumpHeight = 1;
@@ -12,6 +13,9 @@ public class Player : MonoBehaviour {
 	public float moveSpeed = 6;
 	public float jumpDeceleration = 0.5f;
 	public float maxFallSpeed = -110f;
+
+	//For PathGeneration
+	public Transform currentPlatform;
 
 	private Gun gun;
     private SyncPlayer syncPlayer;
@@ -37,15 +41,12 @@ public class Player : MonoBehaviour {
     private bool buttonHeldShoot;
 
     Controller2D controller;
-    NetworkManager networkManager;
 
 	void Awake(){
         syncPlayer = GetComponent<SyncPlayer>();
-        networkManager = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<NetworkManager>();
     }
 
-	//For PathGeneration
-	public Transform currentPlatform;
+	void Start(){
 
         controller = GetComponent<Controller2D> ();
         audio = GetComponent<AudioSource>();
@@ -172,12 +173,9 @@ public class Player : MonoBehaviour {
     public void setbuttonHeldShoot(bool input) {
         this.buttonHeldShoot = input;
     }
-
-
 	public bool getDecelerating() {
 		return this.decelerating;
 	}
-
 	public int getJump() {
 		return this.jump;
 	}
