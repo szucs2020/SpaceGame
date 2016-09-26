@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.Networking;
 
 [RequireComponent (typeof (Controller2D))]
+
 public class Player : NetworkBehaviour {
 
 	public float maxJumpHeight = 4;
@@ -13,9 +14,6 @@ public class Player : NetworkBehaviour {
 	public float moveSpeed = 6;
 	public float jumpDeceleration = 0.5f;
 	public float maxFallSpeed = -110f;
-
-	//For PathGeneration
-	public Transform currentPlatform;
 
 	private Gun gun;
     private SyncPlayer syncPlayer;
@@ -41,17 +39,24 @@ public class Player : NetworkBehaviour {
     private bool buttonHeldShoot;
 
     Controller2D controller;
+    NetworkManager networkManager;
 
 	void Awake(){
         syncPlayer = GetComponent<SyncPlayer>();
+        networkManager = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<NetworkManager>();
     }
 
-	void Start(){
+	void Start() {
+
+        if (!isLocalPlayer) {
+            return;
+        }
 
         controller = GetComponent<Controller2D> ();
         audio = GetComponent<AudioSource>();
         gun = GetComponent<Gun>();
 
+        jump = 0;
 		gravity = (2 * maxJumpHeight) / Mathf.Pow (timeToJumpApex, 2);
 		maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
 		minJumpVelocity = Mathf.Sqrt (2 * Mathf.Abs (gravity) * minJumpHeight);
@@ -64,11 +69,13 @@ public class Player : NetworkBehaviour {
         buttonReleasedJump = false;
         buttonPressedShoot = false;
         buttonHeldShoot = false;
-
-		currentPlatform = null;
     }
 
 	void Update() {
+
+        if (!isLocalPlayer) {
+            return;
+        }
 
         Vector2 input = movementAxis;
         int wallDirX = (controller.collisions.left) ? -1 : 1;
@@ -129,7 +136,6 @@ public class Player : NetworkBehaviour {
 		controller.Move (velocity * Time.deltaTime, input);
 
 		 if(controller.collisions.below){
-			currentPlatform = controller.collisions.platform;
 			velocity.y = 0;
 			decelerating = false;
 			jump = 0;
@@ -173,10 +179,4 @@ public class Player : NetworkBehaviour {
     public void setbuttonHeldShoot(bool input) {
         this.buttonHeldShoot = input;
     }
-	public bool getDecelerating() {
-		return this.decelerating;
-	}
-	public int getJump() {
-		return this.jump;
-	}
 }
