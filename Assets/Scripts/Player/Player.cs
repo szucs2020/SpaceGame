@@ -27,8 +27,10 @@ public class Player : NetworkBehaviour {
     private bool facingRight = false;
 	private bool decelerating = false;
 	private int jump;
+
 	//private SpriteRenderer fire;
     AudioSource audio;
+    private AnimationManager animator;
 
     //movement flags
     private Vector2 movementAxis;
@@ -55,13 +57,14 @@ public class Player : NetworkBehaviour {
         controller = GetComponent<Controller2D> ();
         audio = GetComponent<AudioSource>();
         gun = GetComponent<Gun>();
+        animator = GetComponent<AnimationManager>();
 
         jump = 0;
 		gravity = (2 * maxJumpHeight) / Mathf.Pow (timeToJumpApex, 2);
 		maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
 		minJumpVelocity = Mathf.Sqrt (2 * Mathf.Abs (gravity) * minJumpHeight);
 
-        syncPlayer.CmdSyncJetpack(false);
+        //syncPlayer.CmdSyncJetpack(false);
 
         movementAxis = new Vector2(0, 0);
         buttonPressedJump = false;
@@ -90,12 +93,33 @@ public class Player : NetworkBehaviour {
         float targetVelocityX = input.x * moveSpeed;
 		velocity.x = Mathf.SmoothDamp (velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below)?accelerationTimeGrounded:accelerationTimeAirborne);
 
-		if (buttonPressedJump) {
+        //walking
+        if (controller.collisions.below) {
+            if (targetVelocityX < 0) {
+                if (facingRight) {
+                    animator.setWalkBackward();
+                } else {
+                    animator.setWalkForward();
+                }
+            } else if (targetVelocityX > 0) {
+                if (!facingRight) {
+                    animator.setWalkBackward();
+                } else {
+                    animator.setWalkForward();
+                }
+            } else {
+                animator.setIdle();
+            }
+        }
+
+
+        //jumping
+        if (buttonPressedJump) {
 			if (controller.collisions.below || jump == 1) {
 				velocity.y = maxJumpVelocity;
 				decelerating = false;
-				if (jump == 1){
-                    syncPlayer.CmdSyncJetpack(true);
+                if (jump == 1){
+                    //syncPlayer.CmdSyncJetpack(true);
                 }
 			}
 
@@ -108,11 +132,14 @@ public class Player : NetworkBehaviour {
 
 		else if (buttonReleasedJump) {
 			decelerating = true;
-            syncPlayer.CmdSyncJetpack(false);
+            //syncPlayer.CmdSyncJetpack(false);
         }
 
 		if (velocity.y < 0){
-            syncPlayer.CmdSyncJetpack(false);
+            animator.setFall();
+            //syncPlayer.CmdSyncJetpack(false);
+        } else if (velocity.y > 0) {
+            animator.setJump();
         }
 
         //decelerate after jump
@@ -132,14 +159,19 @@ public class Player : NetworkBehaviour {
 				velocity.y = maxFallSpeed;
 			}
 		}
-		
-		controller.Move (velocity * Time.deltaTime, input);
+
+        //if (jump != 0 && controller.collisions.below) {
+        //    Debug.Log("landing");
+        //    animator.setIdle();
+        //}
+
+        controller.Move (velocity * Time.deltaTime, input);
 
 		 if(controller.collisions.below){
 			velocity.y = 0;
 			decelerating = false;
 			jump = 0;
-            syncPlayer.CmdSyncJetpack(false);
+            //syncPlayer.CmdSyncJetpack(false);
         } else {
 			if (controller.collisions.above) {
 				velocity.y = 0;

@@ -8,14 +8,14 @@ public class SyncPlayer : NetworkBehaviour {
 	[SyncVar(hook="FlipHook")]
 	private bool facingRight = false;
 
-    //jetpack syncing
-    [SyncVar(hook = "JetpackHook")]
-    private bool jetpackOn = false;
-    private SpriteRenderer jetpack;
+    ////jetpack syncing
+    //[SyncVar(hook = "JetpackHook")]
+    //private bool jetpackOn = false;
+    //private SpriteRenderer jetpack;
 
-    void Awake() {
-        jetpack = this.gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>();
-    }
+    //void Awake() {
+    //    jetpack = this.gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>();
+    //}
 
     [Command]
 	public void CmdSyncFlip(bool direction){
@@ -42,14 +42,14 @@ public class SyncPlayer : NetworkBehaviour {
 		transform.localScale = temp;
 	}
 
-    [Command]
-    public void CmdSyncJetpack(bool jet) {
-        jetpackOn = jet;
-        jetpack.enabled = jetpackOn;
-    }
+    //[Command]
+    //public void CmdSyncJetpack(bool jet) {
+    //    jetpackOn = jet;
+    //    jetpack.enabled = jetpackOn;
+    //}
 
-    void JetpackHook(bool jet) {
-        jetpackOn = jet;
-        jetpack.enabled = jetpackOn;
-    }
+    //void JetpackHook(bool jet) {
+    //    jetpackOn = jet;
+    //    jetpack.enabled = jetpackOn;
+    //}
 }
