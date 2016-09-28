@@ -7,7 +7,7 @@ public class AIController : MonoBehaviour {
 	AStar pathFinder;
 	List<Node> path;
 	Node target;
-	Player AI;
+	AIPlayer AI;
 	GameObject player;
 	Player playerComponent;
 	Controller2D controller;
@@ -24,9 +24,9 @@ public class AIController : MonoBehaviour {
 		//target = path [0];
 		//path.RemoveAt (0);
 
-		AI = transform.GetComponent<Player> ();
+		AI = transform.GetComponent<AIPlayer> ();
 
-		player = GameObject.FindGameObjectWithTag ("player");
+		player = GameObject.Find ("Player(Clone)");
 		path = pathFinder.FindShortestPath (player.transform.position);
 		target = path [0];
 		path.RemoveAt (0);
@@ -49,9 +49,6 @@ public class AIController : MonoBehaviour {
 
 		if (AI.currentPlatform == playerComponent.currentPlatform) {
 
-            print("current: " + AI.currentPlatform);
-            print("player: " + playerComponent.transform.position);
-
             float variablePos = Random.Range(-5f, 5f);
 
 			if (player.transform.position.x < transform.position.x && transform.position.x - player.transform.position.x < 30f) {
@@ -64,10 +61,8 @@ public class AIController : MonoBehaviour {
 				Move (player.transform.position - new Vector3 (variablePos + 20f, 0, 0));
 			}
 		} else if (target != null) {
-            print("move to players plat");
 			MoveToPlayersPlatform ();
 		} else {
-			print ("Set Movement Axis");
 			ReCalcPath ();
 			AI.setMovementAxis (new Vector2 (0, 0));
 		}
@@ -103,11 +98,9 @@ public class AIController : MonoBehaviour {
 		}
 
 		if (target.x < transform.position.x) {
-            print("move left");
-            AI.setMovementAxis (new Vector2 (-1000, 1));
+            AI.setMovementAxis (new Vector2 (-10, 1));
 		} else {
-			print ("move right");
-			AI.setMovementAxis (new Vector2 (1000000, 1));
+			AI.setMovementAxis (new Vector2 (10, 1));
 		}
 	}
 
