@@ -12,6 +12,8 @@ public class AIController : MonoBehaviour {
 	Player playerComponent;
 	Controller2D controller;
 
+	float heightOverTwo;
+
 	//Movement
 	bool buttonPressedJumped;
 
@@ -34,6 +36,9 @@ public class AIController : MonoBehaviour {
 		//Movement
 		buttonPressedJumped = false;
 		playerComponent = player.GetComponent<Player> ();
+
+		// I calculated the players height to be 16
+		heightOverTwo = 8f;
 	}
 
 	double timedelta = 0;
@@ -73,9 +78,15 @@ public class AIController : MonoBehaviour {
 	 * the else of line 119 so code isn't duplicated
 	 * I guess just separate the firs if
 	 */
+	float holdJumpButtom = 0f;
 	private void MoveToPlayersPlatform () {
 
-		AI.setbuttonPressedJump (false);
+		if (Time.time - holdJumpButtom > 1f || holdJumpButtom == 0f) {
+			AI.setbuttonPressedJump (false);
+		} else {
+			holdJumpButtom += Time.deltaTime;
+		}
+
 
 		if(Mathf.Abs(target.transform.position.x - transform.position.x) < .5f) {
 
@@ -93,14 +104,15 @@ public class AIController : MonoBehaviour {
 
 	void Move(Vector3 target) {
         
-		if(target.y > transform.position.y + 2 /*&& Mathf.Abs(target.x - transform.position.x) < 15f*/) {
+		if(target.y > transform.position.y - heightOverTwo /*&& Mathf.Abs(target.x - transform.position.x) < 15f*/) {
+			holdJumpButtom = Time.time;
 			AI.setbuttonPressedJump (true);
 		}
 
 		if (target.x < transform.position.x) {
-            AI.setMovementAxis (new Vector2 (-10, 1));
+            AI.setMovementAxis (new Vector2 (-5, 1));
 		} else {
-			AI.setMovementAxis (new Vector2 (10, 1));
+			AI.setMovementAxis (new Vector2 (5, 1));
 		}
 	}
 
