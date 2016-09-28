@@ -85,6 +85,7 @@ GameObject:
   - 114: {fileID: 11432752}
   - 114: {fileID: 11449724}
   - 114: {fileID: 11426658}
+  - 114: {fileID: 11462394}
   m_Layer: 9
   m_Name: AI
   m_TagString: player
@@ -368,7 +369,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 196414}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2d81c33012cbb3b47978e9fa2615c801, type: 3}
   m_Name: 
@@ -398,6 +399,27 @@ MonoBehaviour:
   target: {fileID: 0}
   nodes: []
   closedNodes: []
+--- !u!114 &11462394
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 196414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c942e50fa8c96943b72d1c099ede168, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxJumpHeight: 4
+  minJumpHeight: 1
+  timeToJumpApex: 0.4
+  accelerationTimeAirborne: 0.2
+  accelerationTimeGrounded: 0.1
+  moveSpeed: 6
+  jumpDeceleration: 0.5
+  maxFallSpeed: -110
+  AI: {fileID: 0}
+  currentPlatform: {fileID: 0}
 --- !u!114 &11465166
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -440,7 +462,7 @@ MonoBehaviour:
     i14: 199
     i15: 149
   m_ServerOnly: 0
-  m_LocalPlayerAuthority: 1
+  m_LocalPlayerAuthority: 0
 --- !u!114 &11487240
 MonoBehaviour:
   m_ObjectHideFlags: 1

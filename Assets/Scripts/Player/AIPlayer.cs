@@ -2,33 +2,33 @@
 using System.Collections;
 using UnityEngine.Networking;
 
-[RequireComponent (typeof (Controller2D))]
+[RequireComponent(typeof(Controller2D))]
 
-public class Player : NetworkBehaviour {
+public class AIPlayer : NetworkBehaviour {
 
-	public float maxJumpHeight = 4;
-	public float minJumpHeight = 1;
-	public float timeToJumpApex = .4f;
-	public float accelerationTimeAirborne = .2f;
-	public float accelerationTimeGrounded = .1f;
-	public float moveSpeed = 6;
-	public float jumpDeceleration = 0.5f;
-	public float maxFallSpeed = -110f;
+    public float maxJumpHeight = 4;
+    public float minJumpHeight = 1;
+    public float timeToJumpApex = .4f;
+    public float accelerationTimeAirborne = .2f;
+    public float accelerationTimeGrounded = .1f;
+    public float moveSpeed = 6;
+    public float jumpDeceleration = 0.5f;
+    public float maxFallSpeed = -110f;
 
-	private Gun gun;
+    private Gun gun;
     private SyncPlayer syncPlayer;
 
     float gravity;
-	float maxJumpVelocity;
-	float minJumpVelocity;
-	Vector3 velocity;
-	float velocityXSmoothing;
+    float maxJumpVelocity;
+    float minJumpVelocity;
+    Vector3 velocity;
+    float velocityXSmoothing;
 
     private bool facingRight = false;
-	private bool decelerating = false;
-	private int jump;
+    private bool decelerating = false;
+    private int jump;
 
-	//private SpriteRenderer fire;
+    //private SpriteRenderer fire;
     AudioSource audio;
     private AnimationManager animator;
 
@@ -44,32 +44,36 @@ public class Player : NetworkBehaviour {
     NetworkManager networkManager;
 
 
-	//Temp AI Spawning
-	public GameObject AI;
+    //Temp AI Spawning
+    public GameObject AI;
 
-	//For PathGeneration
-	public Transform currentPlatform;
+    //For PathGeneration
+    public Transform currentPlatform;
 
-	void Awake(){
+    void Awake() {
         syncPlayer = GetComponent<SyncPlayer>();
         networkManager = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<NetworkManager>();
     }
 
-	void Start() {
+    void Start() {
 
-        if (!isLocalPlayer) {
+        //Debug.Log("is server: " + isServer);
+        //Debug.Log("is local player: " + isLocalPlayer);
+        //Debug.Log("is client: " + isClient);
+
+        if (!isServer) {
             return;
         }
 
-        controller = GetComponent<Controller2D> ();
+        controller = GetComponent<Controller2D>();
         audio = GetComponent<AudioSource>();
         gun = GetComponent<Gun>();
         animator = GetComponent<AnimationManager>();
 
         jump = 0;
-		gravity = (2 * maxJumpHeight) / Mathf.Pow (timeToJumpApex, 2);
-		maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
-		minJumpVelocity = Mathf.Sqrt (2 * Mathf.Abs (gravity) * minJumpHeight);
+        gravity = (2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2);
+        maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
+        minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight);
 
         //syncPlayer.CmdSyncJetpack(false);
 
@@ -83,16 +87,16 @@ public class Player : NetworkBehaviour {
         currentPlatform = null;
     }
 
-	void Update() {
+    void Update() {
 
-        if (!isLocalPlayer) {
+        if (!isServer) {
             return;
         }
 
         Vector2 input = movementAxis;
         int wallDirX = (controller.collisions.left) ? -1 : 1;
 
-		//flip sprite
+        //flip sprite
         if (movementAxis.x > 0 && !facingRight) {
             flip();
         } else if (movementAxis.x < 0 && facingRight) {
@@ -100,11 +104,11 @@ public class Player : NetworkBehaviour {
         }
 
         float targetVelocityX = input.x * moveSpeed;
-		velocity.x = Mathf.SmoothDamp (velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below)?accelerationTimeGrounded:accelerationTimeAirborne);
+        velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
 
         //walking
         if (controller.collisions.below) {
-			currentPlatform = controller.collisions.platform;
+            currentPlatform = controller.collisions.platform;
             if (targetVelocityX < 0) {
                 if (facingRight) {
                     animator.setWalkBackward();
@@ -125,27 +129,25 @@ public class Player : NetworkBehaviour {
 
         //jumping
         if (buttonPressedJump) {
-			if (controller.collisions.below || jump == 1) {
-				velocity.y = maxJumpVelocity;
-				decelerating = false;
-                if (jump == 1){
+            if (controller.collisions.below || jump == 1) {
+                velocity.y = maxJumpVelocity;
+                decelerating = false;
+                if (jump == 1) {
                     //syncPlayer.CmdSyncJetpack(true);
                 }
-			}
+            }
 
-			if (jump == 0) {
-				jump = 1;
-			} else if (jump == 1){
-				jump = 2;
-			}
-		} 
-
-		else if (buttonReleasedJump) {
-			decelerating = true;
+            if (jump == 0) {
+                jump = 1;
+            } else if (jump == 1) {
+                jump = 2;
+            }
+        } else if (buttonReleasedJump) {
+            decelerating = true;
             //syncPlayer.CmdSyncJetpack(false);
         }
 
-		if (velocity.y < 0){
+        if (velocity.y < 0) {
             animator.setFall();
             //syncPlayer.CmdSyncJetpack(false);
         } else if (velocity.y > 0) {
@@ -161,47 +163,47 @@ public class Player : NetworkBehaviour {
             }
         }
 
-		//gravity, with max fall speed
-		if (velocity.y > maxFallSpeed){
-			if (velocity.y - (gravity * Time.deltaTime) > maxFallSpeed){
-				velocity.y -= gravity * Time.deltaTime;
-			} else {
-				velocity.y = maxFallSpeed;
-			}
-		}
+        //gravity, with max fall speed
+        if (velocity.y > maxFallSpeed) {
+            if (velocity.y - (gravity * Time.deltaTime) > maxFallSpeed) {
+                velocity.y -= gravity * Time.deltaTime;
+            } else {
+                velocity.y = maxFallSpeed;
+            }
+        }
 
         //if (jump != 0 && controller.collisions.below) {
         //    Debug.Log("landing");
         //    animator.setIdle();
         //}
 
-        controller.Move (velocity * Time.deltaTime, input);
+        controller.Move(velocity * Time.deltaTime, input);
 
-		 if(controller.collisions.below){
-			velocity.y = 0;
-			decelerating = false;
-			jump = 0;
+        if (controller.collisions.below) {
+            velocity.y = 0;
+            decelerating = false;
+            jump = 0;
         } else {
-			if (controller.collisions.above) {
-				velocity.y = 0;
-				decelerating = false;
-			}
-		}
+            if (controller.collisions.above) {
+                velocity.y = 0;
+                decelerating = false;
+            }
+        }
 
-		//shooting
-		if (buttonPressedShoot) {
-			gun.shoot();
-		}
-	}
+        //shooting
+        if (buttonPressedShoot) {
+            gun.shoot();
+        }
+    }
 
     private void flip() {
         facingRight = !facingRight;
         syncPlayer.CmdSyncFlip(facingRight);
     }
 
-	public bool isFacingRight(){
-		return facingRight;
-	}
+    public bool isFacingRight() {
+        return facingRight;
+    }
     public void setMovementAxis(Vector2 input) {
         this.movementAxis = input;
     }

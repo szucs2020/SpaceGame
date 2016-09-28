@@ -40,16 +40,19 @@ public class AIController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		//getClosestNodeToPlayer ();
+        //getClosestNodeToPlayer ();
 
-		timedelta += Time.deltaTime;
+        timedelta += Time.deltaTime;
 		if (timedelta < 2) {
 			return;
 		}
 
 		if (AI.currentPlatform == playerComponent.currentPlatform) {
 
-			float variablePos = Random.Range(-5f, 5f);
+            print("current: " + AI.currentPlatform);
+            print("player: " + playerComponent.transform.position);
+
+            float variablePos = Random.Range(-5f, 5f);
 
 			if (player.transform.position.x < transform.position.x && transform.position.x - player.transform.position.x < 30f) {
 				path.Clear ();
@@ -61,6 +64,7 @@ public class AIController : MonoBehaviour {
 				Move (player.transform.position - new Vector3 (variablePos + 20f, 0, 0));
 			}
 		} else if (target != null) {
+            print("move to players plat");
 			MoveToPlayersPlatform ();
 		} else {
 			print ("Set Movement Axis");
@@ -93,13 +97,14 @@ public class AIController : MonoBehaviour {
 	}
 
 	void Move(Vector3 target) {
+        
 		if(target.y > transform.position.y + 2 /*&& Mathf.Abs(target.x - transform.position.x) < 15f*/) {
 			AI.setbuttonPressedJump (true);
 		}
 
 		if (target.x < transform.position.x) {
-			//print ("move left");
-			AI.setMovementAxis (new Vector2 (-1000, 1));
+            print("move left");
+            AI.setMovementAxis (new Vector2 (-1000, 1));
 		} else {
 			print ("move right");
 			AI.setMovementAxis (new Vector2 (1000000, 1));
