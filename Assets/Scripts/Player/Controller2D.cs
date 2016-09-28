@@ -36,6 +36,7 @@ public class Controller2D : RaycastController {
 
 		HorizontalCollisions (ref velocity);
 		if (velocity.y != 0) {
+			print (velocity.y);
 			VerticalCollisions (ref velocity);
 		}
 
@@ -110,6 +111,7 @@ public class Controller2D : RaycastController {
 
 			Debug.DrawRay(rayOrigin, Vector2.up * directionY * rayLength,Color.red);
 
+			print (hit);
 			if (hit) {
 				if (hit.collider.tag == "Through") {
 					if (directionY == 1 || hit.distance == 0) {
@@ -123,6 +125,12 @@ public class Controller2D : RaycastController {
 						Invoke("ResetFallingThroughPlatform",.5f);
 						continue;
 					}
+				}
+
+				//Allows us to know the platform a player is on
+				print(hit.distance);
+				if (directionY == -1 && hit.distance < 0.020f) {
+					collisions.platform = hit.collider.transform;
 				}
 
 				velocity.y = (hit.distance - skinWidth) * directionY;
@@ -204,6 +212,9 @@ public class Controller2D : RaycastController {
 		public Vector3 velocityOld;
 		public int faceDir;
 		public bool fallingThroughPlatform;
+
+		//For PathGen
+		public Transform platform;
 
 		public void Reset() {
 			above = below = false;

@@ -9,6 +9,7 @@ public class AIController : MonoBehaviour {
 	Node target;
 	Player AI;
 	GameObject player;
+	Player playerComponent;
 	Controller2D controller;
 
 	//Movement
@@ -25,13 +26,14 @@ public class AIController : MonoBehaviour {
 
 		AI = transform.GetComponent<Player> ();
 
-		player = GameObject.Find ("Player");
+		player = GameObject.FindGameObjectWithTag ("player");
 		path = pathFinder.FindShortestPath (player.transform.position);
 		target = path [0];
 		path.RemoveAt (0);
 
 		//Movement
 		buttonPressedJumped = false;
+		playerComponent = player.GetComponent<Player> ();
 	}
 
 	double timedelta = 0;
@@ -45,26 +47,26 @@ public class AIController : MonoBehaviour {
 			return;
 		}
 
-		//if (AI.currentPlatform == player.GetComponent<Player> ().currentPlatform) {
+		if (AI.currentPlatform == playerComponent.currentPlatform) {
 
-		//	float variablePos = Random.Range(-5f, 5f);
+			float variablePos = Random.Range(-5f, 5f);
 
-		//	if (player.transform.position.x < transform.position.x && transform.position.x - player.transform.position.x < 30f) {
-		//		path.Clear ();
-		//		target = player.GetComponent<Node> ();
-		//		Move (player.transform.position + new Vector3 (variablePos + 20f, 0, 0));
-		//	} else if (player.transform.position.x > transform.position.x && player.transform.position.x - transform.position.x < 30f) {
-		//		path.Clear ();
-		//		target = player.GetComponent<Node> ();
-		//		Move (player.transform.position - new Vector3 (variablePos + 20f, 0, 0));
-		//	}
-		//} else if (target != null) {
-		//	MoveToPlayersPlatform ();
-		//} else {
-		//	print ("Set Movement Axis");
-		//	ReCalcPath ();
-		//	AI.setMovementAxis (new Vector2 (0, 0));
-		//}
+			if (player.transform.position.x < transform.position.x && transform.position.x - player.transform.position.x < 30f) {
+				path.Clear ();
+				target = player.GetComponent<Node> ();
+				Move (player.transform.position + new Vector3 (variablePos + 20f, 0, 0));
+			} else if (player.transform.position.x > transform.position.x && player.transform.position.x - transform.position.x < 30f) {
+				path.Clear ();
+				target = player.GetComponent<Node> ();
+				Move (player.transform.position - new Vector3 (variablePos + 20f, 0, 0));
+			}
+		} else if (target != null) {
+			MoveToPlayersPlatform ();
+		} else {
+			print ("Set Movement Axis");
+			ReCalcPath ();
+			AI.setMovementAxis (new Vector2 (0, 0));
+		}
 	}
 
 
@@ -96,9 +98,11 @@ public class AIController : MonoBehaviour {
 		}
 
 		if (target.x < transform.position.x) {
-			AI.setMovementAxis (new Vector2 (-1, 1));
+			//print ("move left");
+			AI.setMovementAxis (new Vector2 (-1000, 1));
 		} else {
-			AI.setMovementAxis (new Vector2 (1, 1));
+			print ("move right");
+			AI.setMovementAxis (new Vector2 (1000000, 1));
 		}
 	}
 

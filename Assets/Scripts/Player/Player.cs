@@ -43,6 +43,13 @@ public class Player : NetworkBehaviour {
     Controller2D controller;
     NetworkManager networkManager;
 
+
+	//Temp AI Spawning
+	public GameObject AI;
+
+	//For PathGeneration
+	public Transform currentPlatform;
+
 	void Awake(){
         syncPlayer = GetComponent<SyncPlayer>();
         networkManager = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<NetworkManager>();
@@ -72,6 +79,9 @@ public class Player : NetworkBehaviour {
         buttonReleasedJump = false;
         buttonPressedShoot = false;
         buttonHeldShoot = false;
+
+		Instantiate (AI, new Vector2(7, 30), Quaternion.identity);
+		currentPlatform = null;
     }
 
 	void Update() {
@@ -81,6 +91,7 @@ public class Player : NetworkBehaviour {
         }
 
         Vector2 input = movementAxis;
+		print (input);
         int wallDirX = (controller.collisions.left) ? -1 : 1;
 
 		//flip sprite
@@ -95,6 +106,7 @@ public class Player : NetworkBehaviour {
 
         //walking
         if (controller.collisions.below) {
+			currentPlatform = controller.collisions.platform;
             if (targetVelocityX < 0) {
                 if (facingRight) {
                     animator.setWalkBackward();
