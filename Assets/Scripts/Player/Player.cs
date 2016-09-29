@@ -92,12 +92,37 @@ public class Player : NetworkBehaviour {
         Vector2 input = movementAxis;
         int wallDirX = (controller.collisions.left) ? -1 : 1;
 
-		//flip sprite
-        if (movementAxis.x > 0 && !facingRight) {
-            flip();
-        } else if (movementAxis.x < 0 && facingRight) {
-            flip();
+        //Aiming - TEMPORARY: This will probably change into a function that checks if the player is using controller or keyboard.
+        //Flip if J or L are pressed.
+        if(Input.GetKey(KeyCode.J)){
+            if(facingRight) {
+                flip();
+            }
+        } else if (Input.GetKey(KeyCode.L)) {
+            if (!facingRight) {
+                flip();
+            }
         }
+        //Change aiming angle based on which keys are pressed.
+        if(Input.GetKey(KeyCode.I) && Input.GetKey(KeyCode.J) || Input.GetKey(KeyCode.I) && Input.GetKey(KeyCode.L)) {
+            animator.setUpTilt();
+        } else if (Input.GetKey(KeyCode.K) && Input.GetKey(KeyCode.J) || Input.GetKey(KeyCode.K) && Input.GetKey(KeyCode.L)) {
+            animator.setDownTilt();
+        } else if (Input.GetKey(KeyCode.I)) {
+            animator.setUp();
+        } else if (Input.GetKey(KeyCode.K)) {
+            animator.setDown();
+        } else if (Input.GetKey(KeyCode.J) || Input.GetKey(KeyCode.L)){
+            animator.setNeutral();
+        }
+
+        //OLD CODE: Flipping based on movement. Will probably still need this for sprint.
+        ////flip sprite
+        //if (movementAxis.x > 0 && !facingRight) {
+        //    flip();
+        //} else if (movementAxis.x < 0 && facingRight) {
+        //    flip();
+        //}
 
         float targetVelocityX = input.x * moveSpeed;
 		velocity.x = Mathf.SmoothDamp (velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below)?accelerationTimeGrounded:accelerationTimeAirborne);
@@ -169,11 +194,6 @@ public class Player : NetworkBehaviour {
 				velocity.y = maxFallSpeed;
 			}
 		}
-
-        //if (jump != 0 && controller.collisions.below) {
-        //    Debug.Log("landing");
-        //    animator.setIdle();
-        //}
 
         controller.Move (velocity * Time.deltaTime, input);
 
