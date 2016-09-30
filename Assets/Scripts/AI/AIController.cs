@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-
 using System.Collections;
 using System.Collections.Generic;
 
@@ -14,8 +13,7 @@ public class AIController : MonoBehaviour {
 
 	float heightOverTwo;
 
-	//Movement
-	bool buttonPressedJumped;
+	MoveBehaviour MoveTheAI;
 
 	// Use this for initialization
 	void Start () {
@@ -34,11 +32,13 @@ public class AIController : MonoBehaviour {
 		path.RemoveAt (0);
 
 		//Movement
-		buttonPressedJumped = false;
 		playerComponent = player.GetComponent<Player> ();
 
 		// I calculated the players height to be 16
 		heightOverTwo = 8f;
+
+		MoveTheAI = new MoveBehaviour (transform, pathFinder, path, target, AI, player, playerComponent, controller);
+		MoveTheAI.onInitialize ();
 	}
 
 	double timedelta = 0;
@@ -52,7 +52,7 @@ public class AIController : MonoBehaviour {
 			return;
 		}
 
-		if (AI.currentPlatform == playerComponent.currentPlatform) {
+		/*if (AI.currentPlatform == playerComponent.currentPlatform) {
 
             float variablePos = Random.Range(-5f, 5f);
 
@@ -70,7 +70,9 @@ public class AIController : MonoBehaviour {
 		} else {
 			ReCalcPath ();
 			AI.setMovementAxis (new Vector2 (0, 0));
-		}
+		}*/
+
+		MoveTheAI.update ();
 	}
 
 
@@ -117,7 +119,6 @@ public class AIController : MonoBehaviour {
 	}
 
 	void ReCalcPath() {
-		Node closestNode = null;
 
 		/*If path is empty if Player can't be found find closest nodes to AI and Player
 		 * and run AStar again*/
@@ -184,8 +185,6 @@ public class AIController : MonoBehaviour {
  * Previous Implementation
  * 
  */
-
-	bool inAir = false;
 	double deltaTime = 0;
 
 	bool step1 = true;
@@ -317,15 +316,6 @@ public class AIController : MonoBehaviour {
 
 		for (int i = 0; i < path [path.Count - 1].neighbour.Count; i++) {
 			float dist = (player.transform.position - path [path.Count - 1].neighbour [i].transform.position).sqrMagnitude;
-
-
-			Vector3 nodeToNeighbour = path [path.Count - 1].neighbour [i].transform.position - path [path.Count - 1].transform.position;
-			Vector3 nodeToPlayer = player.transform.position - path [path.Count - 1].transform.position;
-
-			float nodeToNeighDirX = (nodeToNeighbour / nodeToPlayer.magnitude).x;
-			float nodeToPlayDirX = (nodeToPlayer / nodeToPlayer.magnitude).x;
-			float nodeToNeighDirY = (nodeToNeighbour / nodeToPlayer.magnitude).y;
-			float nodeToPlayDirY = (nodeToPlayer / nodeToPlayer.magnitude).y;
 
 			if(dist < distToTarget ) {
 				distToTarget = dist;

@@ -32,12 +32,12 @@ public enum Status {
 public class Behaviour {
 
 	//Called every framr
-	protected virtual Status update() { return Status.BH_INVALID; }
+	public virtual Status update() { return Status.BH_INVALID; }
 
 	//Called only first time before the call to update
-	protected virtual void onInitialize() {}
+	public virtual void onInitialize() {}
 	//Called once the update is finished
-	protected virtual void onTerminate(Status s) {}
+	public virtual void onTerminate(Status s) {}
 
 
 	public Behaviour() {}
@@ -62,19 +62,21 @@ public class Behaviour {
 
 public class Composite : Behaviour {
 	//typedef vector(Behaviour*) Behaviours;
-	public List<Behaviour> Behaviours; //In example this is a List of Behaviour*
+	//public List<Behaviour> Behaviours; //In example this is a List of Behaviour*
 
 	//Behaviours m_children;
 	public List<Behaviour> m_children; // Assume this and line above are equivalent
 }
 
 public class Sequence : Composite {
-	protected virtual void onInitialize() {
+	public override void onInitialize() {
+		Debug.Log ("Sequence onInitialize");
 		//get first child
 		m_Currentchild = m_children[0];
 	}
 
-	protected virtual Status update() {
+	public override Status update() {
+		int i = 0;
 		//Keep going until a chid behaviour says it's Running
 		while (true) {
 			Status s = m_Currentchild.tick ();
@@ -85,12 +87,14 @@ public class Sequence : Composite {
 			}
 
 			//Hit the end of the array, done
+			//++m_Currentchild == m_children.end() //C++ iterator method
 			if (m_Currentchild == m_children[m_children.Count - 1]) {
 				return Status.BH_SUCCESS;
 			}
+			m_Currentchild = m_children[++i];
 		}
 
-		return Status.BH_INVALID;
+		//return Status.BH_INVALID;
 	}
 
 
@@ -101,12 +105,13 @@ public class Sequence : Composite {
 
 
 public class Selector : Composite {
-	protected virtual void onInitialize() {
+	public override void onInitialize() {
 		//get first child
 		m_Currentchild = (Behaviour)m_children[0];
 	}
 
-	protected virtual Status update() {
+	public override Status update() {
+		int i = 0;
 		//Keep going until a chid behaviour says it's Running
 		while (true) {
 			Status s = m_Currentchild.tick ();
@@ -120,9 +125,10 @@ public class Selector : Composite {
 			if (m_Currentchild == m_children[m_children.Count - 1]) {
 				return Status.BH_FAILURE;
 			}
+			m_Currentchild = m_children[++i];
 		}
 
-		return Status.BH_INVALID;
+		//return Status.BH_INVALID;
 	}
 
 
