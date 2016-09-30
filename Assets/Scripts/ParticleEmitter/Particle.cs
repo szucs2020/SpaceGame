@@ -2,68 +2,65 @@
 using System.Collections;
 
 public class Particle : MonoBehaviour {
-    
+
     //  Time related factors
-    private float lifeSpan;
-    private float tAlive;
-    float startTime;
+    protected float lifeSpan;
+    protected float tAlive;
+    protected float startTime;
 
     //  Phisical size
-    private float minSize;
-    private float maxSize;
-    private float deltaSizeRate;  //  Rate/Sec to change size
-    Vector3 prevSize = new Vector3(0.3f, 0.3f, 1f);  // original starting size
-    private bool shrink = false;
+    protected float minSize;
+    protected float maxSize;
+    protected float deltaSizeRate;  //  Rate/Sec to change size
+    protected Vector3 prevSize = new Vector3(0.3f, 0.3f, 1f);  // original starting size
+    protected bool shrink = false;
 
     //  Rotation
-    private float radius;
-    private float speed;
-    private float axis;
-    private float angle;
+    protected float radius;
+    protected float speed;
+    protected float axis;
+    protected float angle;
 
     //  Colour and such
-    private int colour;
-    private int colourRange;
-    private float minRed;
-    private float maxRed;
-    private float minBlue;
-    private float maxBlue;
-    private float minGreen;
-    private float maxGreen;
-    private float deltaTC;           // delta time colour
-    Color a;
-    Color b;
+    protected int colour;
+    protected int colourRange;
+    protected float minRed;
+    protected float maxRed;
+    protected float minBlue;
+    protected float maxBlue;
+    protected float minGreen;
+    protected float maxGreen;
+    protected float deltaTC;           // delta time colour
+    protected Color a;
+    protected Color b;
 
     //Sprite Renderer
-    Renderer sprite;
+    protected SpriteRenderer sprite;
     //  Type
-    private ParticleTypes type;
+    protected ParticleTypes type;
     
 
     void Start()
     {
         //print("particle script " + this.transform.name);
-        if (this.transform.name == "PlasmaBall(Clone)")
-        {
-            initialize(ParticleTypes.Plasma);
-            sprite = this.GetComponent<SpriteRenderer>();
 
-            //Physics2D.IgnoreLayerCollision(11, 11);
-            ////this.transform.GetComponent<Collider2D>().enabled = false;
-            //this.transform.GetComponent<Collider2D>().enabled = true;
-        } 
+        sprite = this.GetComponent<SpriteRenderer>();
     }
 
     void Update()
     {
-        if (this.type == ParticleTypes.Fire)
-        {
-            flickerFlame();
-        }
-        else if (this.type == ParticleTypes.Plasma)
-        {
-            controlPlasma();
-        }
+        //if (this.type == ParticleTypes.Fire)
+        //{
+        //    flickerFlame();
+        //}
+        //else if (this.type == ParticleTypes.Plasma)
+        //{
+        //    controlPlasma();
+        //}
+        //else if (this.type == ParticleTypes.LaserDot)
+        //{
+        //    changeParticleColour();
+        //}
 
     }
 
@@ -88,14 +85,14 @@ public class Particle : MonoBehaviour {
             deltaSizeRate = 0.6f;
             startTime = Time.time;
         }
-        else if(type == ParticleTypes.Plasma)
+        else if (type == ParticleTypes.Plasma)
         {
             speed = 0;
             angle = 90 * Mathf.PI / 180;
             lifeSpan = 5f;
             tAlive = 0;
             minSize = Random.Range(0.01f, 0.02f);
-            maxSize = Random.Range(minSize+0.01f, minSize+0.03f);
+            maxSize = Random.Range(minSize + 0.01f, minSize + 0.03f);
             deltaSizeRate = 0.02f;
             startTime = Time.time;
             minRed = 0;
@@ -109,6 +106,21 @@ public class Particle : MonoBehaviour {
             Color b = Color.blue;
             radius = 1;
         }
+        else if (type == ParticleTypes.LaserDot)
+        {
+            lifeSpan = 5f;
+            tAlive = 0;
+            startTime = Time.time;
+            minRed = 150;
+            maxRed = 255;
+            minBlue = 0;
+            maxBlue = 50;
+            minGreen = 0;
+            maxGreen = 50;
+            deltaTC = Random.Range(0.5f, 2f);
+            Color a = Color.red;
+            Color b = Color.red;
+        }
     }
 
     private void flickerFlame()
@@ -116,14 +128,7 @@ public class Particle : MonoBehaviour {
         changeParticleSize();
     }
 
-    private void controlPlasma()
-    {
-        changeParticleSize();
-        changeParticleColour();
-        rotateParticle();
-    }
-
-    private void rotateParticle()
+    protected void rotateParticle()
     {
         int randRot = Random.Range(1, 4);
         Vector3 rotAxis;
@@ -147,13 +152,18 @@ public class Particle : MonoBehaviour {
 
         if (this.transform.parent != null)
         {
-            this.transform.RotateAround(-(this.transform.localPosition - this.transform.parent.position), rotAxis * Time.deltaTime, 2);
+            //Statioanry
+            this.transform.RotateAround(this.transform.parent.position, rotAxis * Time.deltaTime, 2);
+
+
+            //Expands circle
+            //this.transform.RotateAround(-(this.transform.localPosition - this.transform.parent.position), rotAxis * Time.deltaTime, 2);
             this.transform.Rotate(-rotAxis * Time.deltaTime, 2);
 
         }
     }
 
-    private void changeParticleColour()
+    protected void changeParticleColour(SpriteRenderer sprite)
     {
 
         if (Time.time - startTime > deltaTC)
@@ -170,7 +180,7 @@ public class Particle : MonoBehaviour {
         sprite.material.SetColor("_Color", newColour);
     }
 
-    private void changeParticleSize()
+    protected void changeParticleSize()
     {
         if (shrink == false)
         {
@@ -240,6 +250,8 @@ public class Particle : MonoBehaviour {
         Blood,
         Fire,
         Flame,
-        Plasma
+        Plasma,
+        LaserDot,
+        LaserLine
     }
 }

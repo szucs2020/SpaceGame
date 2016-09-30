@@ -67,7 +67,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0c2fede26e298540805634aae4fddb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particle: {fileID: 11476616, guid: 2b4f4802906a7e84b9f714b833edf6a9, type: 2}
+  laserDot: {fileID: 11432110, guid: 2b4f4802906a7e84b9f714b833edf6a9, type: 2}
+  plasma: {fileID: 11451478, guid: 3493e1059c7d24843a98bd1e433326ea, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
