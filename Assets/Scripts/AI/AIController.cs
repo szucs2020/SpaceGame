@@ -13,6 +13,8 @@ public class AIController : MonoBehaviour {
 
 	float heightOverTwo;
 
+	Node previousNode;
+
 	MoveBehaviour MoveTheAI;
 
 	// Use this for initialization
@@ -37,7 +39,9 @@ public class AIController : MonoBehaviour {
 		// I calculated the players height to be 16
 		heightOverTwo = 8f;
 
-		MoveTheAI = new MoveBehaviour (transform, pathFinder, path, target, AI, player, playerComponent, controller);
+		previousNode = null;
+
+		MoveTheAI = new MoveBehaviour (transform, pathFinder, path, target, previousNode, AI, player, playerComponent, controller);
 		MoveTheAI.onInitialize ();
 	}
 
@@ -48,7 +52,7 @@ public class AIController : MonoBehaviour {
         //getClosestNodeToPlayer ();
 
         timedelta += Time.deltaTime;
-		if (timedelta < 2) {
+		if (timedelta < 1) {
 			return;
 		}
 
