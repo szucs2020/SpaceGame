@@ -7,9 +7,12 @@ public class AIController : MonoBehaviour {
 	AStar pathFinder;
 	List<Node> path;
 	Node target;
-	Player AI;
+	AIPlayer AI;
 	GameObject player;
+	Player playerComponent;
 	Controller2D controller;
+
+	float heightOverTwo;
 
 	//Movement
 	bool buttonPressedJumped;
@@ -23,48 +26,51 @@ public class AIController : MonoBehaviour {
 		//target = path [0];
 		//path.RemoveAt (0);
 
-		AI = transform.GetComponent<Player> ();
+		AI = transform.GetComponent<AIPlayer> ();
 
-		player = GameObject.Find ("Player");
+		player = GameObject.Find ("Player(Clone)");
 		path = pathFinder.FindShortestPath (player.transform.position);
 		target = path [0];
 		path.RemoveAt (0);
 
 		//Movement
 		buttonPressedJumped = false;
+		playerComponent = player.GetComponent<Player> ();
+
+		// I calculated the players height to be 16
+		heightOverTwo = 8f;
 	}
 
 	double timedelta = 0;
 	// Update is called once per frame
 	void Update () {
 
-		//getClosestNodeToPlayer ();
+        //getClosestNodeToPlayer ();
 
-		timedelta += Time.deltaTime;
+        timedelta += Time.deltaTime;
 		if (timedelta < 2) {
 			return;
 		}
 
-		//if (AI.currentPlatform == player.GetComponent<Player> ().currentPlatform) {
+		if (AI.currentPlatform == playerComponent.currentPlatform) {
 
-		//	float variablePos = Random.Range(-5f, 5f);
+            float variablePos = Random.Range(-5f, 5f);
 
-		//	if (player.transform.position.x < transform.position.x && transform.position.x - player.transform.position.x < 30f) {
-		//		path.Clear ();
-		//		target = player.GetComponent<Node> ();
-		//		Move (player.transform.position + new Vector3 (variablePos + 20f, 0, 0));
-		//	} else if (player.transform.position.x > transform.position.x && player.transform.position.x - transform.position.x < 30f) {
-		//		path.Clear ();
-		//		target = player.GetComponent<Node> ();
-		//		Move (player.transform.position - new Vector3 (variablePos + 20f, 0, 0));
-		//	}
-		//} else if (target != null) {
-		//	MoveToPlayersPlatform ();
-		//} else {
-		//	print ("Set Movement Axis");
-		//	ReCalcPath ();
-		//	AI.setMovementAxis (new Vector2 (0, 0));
-		//}
+			if (player.transform.position.x < transform.position.x && transform.position.x - player.transform.position.x < 30f) {
+				path.Clear ();
+				target = player.GetComponent<Node> ();
+				Move (player.transform.position + new Vector3 (variablePos + 20f, 0, 0));
+			} else if (player.transform.position.x > transform.position.x && player.transform.position.x - transform.position.x < 30f) {
+				path.Clear ();
+				target = player.GetComponent<Node> ();
+				Move (player.transform.position - new Vector3 (variablePos + 20f, 0, 0));
+			}
+		} else if (target != null) {
+			MoveToPlayersPlatform ();
+		} else {
+			ReCalcPath ();
+			AI.setMovementAxis (new Vector2 (0, 0));
+		}
 	}
 
 
@@ -72,9 +78,15 @@ public class AIController : MonoBehaviour {
 	 * the else of line 119 so code isn't duplicated
 	 * I guess just separate the firs if
 	 */
+	float holdJumpButtom = 0f;
 	private void MoveToPlayersPlatform () {
 
-		AI.setbuttonPressedJump (false);
+		if (Time.time - holdJumpButtom > 1f || holdJumpButtom == 0f) {
+			AI.setbuttonPressedJump (false);
+		} else {
+			holdJumpButtom += Time.deltaTime;
+		}
+
 
 		if(Mathf.Abs(target.transform.position.x - transform.position.x) < .5f) {
 
@@ -91,14 +103,16 @@ public class AIController : MonoBehaviour {
 	}
 
 	void Move(Vector3 target) {
-		if(target.y > transform.position.y + 2 /*&& Mathf.Abs(target.x - transform.position.x) < 15f*/) {
+        
+		if(target.y > transform.position.y - heightOverTwo /*&& Mathf.Abs(target.x - transform.position.x) < 15f*/) {
+			holdJumpButtom = Time.time;
 			AI.setbuttonPressedJump (true);
 		}
 
 		if (target.x < transform.position.x) {
-			AI.setMovementAxis (new Vector2 (-1, 1));
+            AI.setMovementAxis (new Vector2 (-5, 1));
 		} else {
-			AI.setMovementAxis (new Vector2 (1, 1));
+			AI.setMovementAxis (new Vector2 (5, 1));
 		}
 	}
 

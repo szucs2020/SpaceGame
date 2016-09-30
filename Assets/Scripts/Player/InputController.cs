@@ -37,11 +37,13 @@ public class InputController : NetworkBehaviour {
         player.setbuttonHeldJump(Input.GetButton("Jump"));
         player.setbuttonReleasedJump(Input.GetButtonUp("Jump"));
 
-		player.setbuttonPressedShoot(Input.GetButtonDown("ShootButton"));
-		player.setbuttonHeldShoot(Input.GetButton("ShootButton"));
+        player.setbuttonHeldAimLeft(Input.GetButton("AimLeft"));
+        player.setbuttonHeldAimRight(Input.GetButton("AimRight"));
+        player.setbuttonHeldAimUp(Input.GetButton("AimUp"));
+        player.setbuttonHeldAimDown(Input.GetButton("AimDown"));
 
-		//fix button pressed/held for the xbox controller
-		if (usingGamepad){
+        //fix button pressed/held for the xbox controller
+        if (usingGamepad){
 			if (Input.GetAxis("Shoot") != 0) {
 				player.setbuttonHeldShoot(true);
 				if (released){
@@ -54,6 +56,9 @@ public class InputController : NetworkBehaviour {
 				player.setbuttonPressedShoot(false);
 				released = true;
 			}
-		}
+		} else {
+            player.setbuttonPressedShoot(Input.GetButtonDown("ShootButton"));
+            player.setbuttonHeldShoot(Input.GetButton("ShootButton"));
+        }
     }
 }

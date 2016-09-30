@@ -27,21 +27,35 @@ public class Player : NetworkBehaviour {
     private bool facingRight = false;
 	private bool decelerating = false;
 	private int jump;
+    private int currentPosition;
 
-	//private SpriteRenderer fire;
+    //private SpriteRenderer fire;
     AudioSource audio;
     private AnimationManager animator;
 
     //movement flags
     private Vector2 movementAxis;
+
     private bool buttonPressedJump;
     private bool buttonHeldJump;
     private bool buttonReleasedJump;
+
     private bool buttonPressedShoot;
     private bool buttonHeldShoot;
 
+    private bool buttonHeldAimLeft;
+    private bool buttonHeldAimRight;
+    private bool buttonHeldAimUp;
+    private bool buttonHeldAimDown;
+
     Controller2D controller;
     NetworkManager networkManager;
+
+	//Temp AI Spawning
+	public GameObject AI;
+
+	//For PathGeneration
+	public Transform currentPlatform;
 
 	void Awake(){
         syncPlayer = GetComponent<SyncPlayer>();
@@ -72,6 +86,10 @@ public class Player : NetworkBehaviour {
         buttonReleasedJump = false;
         buttonPressedShoot = false;
         buttonHeldShoot = false;
+
+        currentPlatform = null;
+
+        currentPosition = 2;
     }
 
 	void Update() {
@@ -83,18 +101,45 @@ public class Player : NetworkBehaviour {
         Vector2 input = movementAxis;
         int wallDirX = (controller.collisions.left) ? -1 : 1;
 
-		//flip sprite
-        if (movementAxis.x > 0 && !facingRight) {
-            flip();
-        } else if (movementAxis.x < 0 && facingRight) {
-            flip();
+        //Aiming - TEMPORARY: This will probably change into a function that checks if the player is using controller or keyboard.
+        //Flip if J or L are pressed.
+        if(buttonHeldAimLeft) {
+            if(facingRight) {
+                flip();
+            }
+        } else if (buttonHeldAimRight) {
+            if (!facingRight) {
+                flip();
+            }
         }
+
+        //Change aiming angle based on which keys are pressed.
+        if(buttonHeldAimUp && buttonHeldAimLeft || buttonHeldAimUp && buttonHeldAimRight) {
+            animator.setUpTilt();
+        } else if (buttonHeldAimDown && buttonHeldAimLeft || buttonHeldAimDown && buttonHeldAimRight) {
+            animator.setDownTilt();
+        } else if (buttonHeldAimUp) {
+            animator.setUp();
+        } else if (buttonHeldAimDown) {
+            animator.setDown();
+        } else if (buttonHeldAimLeft || buttonHeldAimRight) {
+            animator.setNeutral();
+        }
+
+        //OLD CODE: Flipping based on movement. Will probably still need this for sprint.
+        ////flip sprite
+        //if (movementAxis.x > 0 && !facingRight) {
+        //    flip();
+        //} else if (movementAxis.x < 0 && facingRight) {
+        //    flip();
+        //}
 
         float targetVelocityX = input.x * moveSpeed;
 		velocity.x = Mathf.SmoothDamp (velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below)?accelerationTimeGrounded:accelerationTimeAirborne);
 
         //walking
         if (controller.collisions.below) {
+			currentPlatform = controller.collisions.platform;
             if (targetVelocityX < 0) {
                 if (facingRight) {
                     animator.setWalkBackward();
@@ -111,7 +156,6 @@ public class Player : NetworkBehaviour {
                 animator.setIdle();
             }
         }
-
 
         //jumping
         if (buttonPressedJump) {
@@ -160,18 +204,12 @@ public class Player : NetworkBehaviour {
 			}
 		}
 
-        //if (jump != 0 && controller.collisions.below) {
-        //    Debug.Log("landing");
-        //    animator.setIdle();
-        //}
-
         controller.Move (velocity * Time.deltaTime, input);
 
 		 if(controller.collisions.below){
 			velocity.y = 0;
 			decelerating = false;
 			jump = 0;
-            //syncPlayer.CmdSyncJetpack(false);
         } else {
 			if (controller.collisions.above) {
 				velocity.y = 0;
@@ -210,5 +248,27 @@ public class Player : NetworkBehaviour {
     }
     public void setbuttonHeldShoot(bool input) {
         this.buttonHeldShoot = input;
+    }
+
+    //right stick / right hand aiming
+    public void setbuttonHeldAimLeft(bool input) {
+        this.buttonHeldAimLeft = input;
+    }
+    public void setbuttonHeldAimRight(bool input) {
+        this.buttonHeldAimRight = input;
+    }
+    public void setbuttonHeldAimUp(bool input) {
+        this.buttonHeldAimUp = input;
+    }
+    public void setbuttonHeldAimDown(bool input) {
+        this.buttonHeldAimDown = input;
+    }
+
+    //current position
+    public void setCurrentPosition(int currentPosition) {
+        this.currentPosition = currentPosition;
+    }
+    public int getCurrentPosition() {
+        return this.currentPosition;
     }
 }
