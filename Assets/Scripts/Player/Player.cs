@@ -27,22 +27,29 @@ public class Player : NetworkBehaviour {
     private bool facingRight = false;
 	private bool decelerating = false;
 	private int jump;
+    private int currentPosition;
 
-	//private SpriteRenderer fire;
+    //private SpriteRenderer fire;
     AudioSource audio;
     private AnimationManager animator;
 
     //movement flags
     private Vector2 movementAxis;
+
     private bool buttonPressedJump;
     private bool buttonHeldJump;
     private bool buttonReleasedJump;
+
     private bool buttonPressedShoot;
     private bool buttonHeldShoot;
 
+    private bool buttonHeldAimLeft;
+    private bool buttonHeldAimRight;
+    private bool buttonHeldAimUp;
+    private bool buttonHeldAimDown;
+
     Controller2D controller;
     NetworkManager networkManager;
-
 
 	//Temp AI Spawning
 	public GameObject AI;
@@ -81,6 +88,8 @@ public class Player : NetworkBehaviour {
         buttonHeldShoot = false;
 
         currentPlatform = null;
+
+        currentPosition = 2;
     }
 
 	void Update() {
@@ -94,25 +103,26 @@ public class Player : NetworkBehaviour {
 
         //Aiming - TEMPORARY: This will probably change into a function that checks if the player is using controller or keyboard.
         //Flip if J or L are pressed.
-        if(Input.GetKey(KeyCode.J)){
+        if(buttonHeldAimLeft) {
             if(facingRight) {
                 flip();
             }
-        } else if (Input.GetKey(KeyCode.L)) {
+        } else if (buttonHeldAimRight) {
             if (!facingRight) {
                 flip();
             }
         }
+
         //Change aiming angle based on which keys are pressed.
-        if(Input.GetKey(KeyCode.I) && Input.GetKey(KeyCode.J) || Input.GetKey(KeyCode.I) && Input.GetKey(KeyCode.L)) {
+        if(buttonHeldAimUp && buttonHeldAimLeft || buttonHeldAimUp && buttonHeldAimRight) {
             animator.setUpTilt();
-        } else if (Input.GetKey(KeyCode.K) && Input.GetKey(KeyCode.J) || Input.GetKey(KeyCode.K) && Input.GetKey(KeyCode.L)) {
+        } else if (buttonHeldAimDown && buttonHeldAimLeft || buttonHeldAimDown && buttonHeldAimRight) {
             animator.setDownTilt();
-        } else if (Input.GetKey(KeyCode.I)) {
+        } else if (buttonHeldAimUp) {
             animator.setUp();
-        } else if (Input.GetKey(KeyCode.K)) {
+        } else if (buttonHeldAimDown) {
             animator.setDown();
-        } else if (Input.GetKey(KeyCode.J) || Input.GetKey(KeyCode.L)){
+        } else if (buttonHeldAimLeft || buttonHeldAimRight) {
             animator.setNeutral();
         }
 
@@ -146,7 +156,6 @@ public class Player : NetworkBehaviour {
                 animator.setIdle();
             }
         }
-
 
         //jumping
         if (buttonPressedJump) {
@@ -239,5 +248,27 @@ public class Player : NetworkBehaviour {
     }
     public void setbuttonHeldShoot(bool input) {
         this.buttonHeldShoot = input;
+    }
+
+    //right stick / right hand aiming
+    public void setbuttonHeldAimLeft(bool input) {
+        this.buttonHeldAimLeft = input;
+    }
+    public void setbuttonHeldAimRight(bool input) {
+        this.buttonHeldAimRight = input;
+    }
+    public void setbuttonHeldAimUp(bool input) {
+        this.buttonHeldAimUp = input;
+    }
+    public void setbuttonHeldAimDown(bool input) {
+        this.buttonHeldAimDown = input;
+    }
+
+    //current position
+    public void setCurrentPosition(int currentPosition) {
+        this.currentPosition = currentPosition;
+    }
+    public int getCurrentPosition() {
+        return this.currentPosition;
     }
 }

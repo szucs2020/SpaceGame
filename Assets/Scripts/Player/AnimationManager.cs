@@ -6,6 +6,7 @@ public class AnimationManager : MonoBehaviour {
     Transform head;
     Transform torso;
     Transform legs;
+    Player player;
 
     Animator headAnimator;
     Animator torsoAnimator;
@@ -20,28 +21,35 @@ public class AnimationManager : MonoBehaviour {
         headAnimator = head.GetComponent<Animator>();
         torsoAnimator = torso.GetComponent<Animator>();
         legsAnimator = legs.GetComponent<Animator>();
+
+        player = GetComponent<Player>();
     }
 
     //upper body
     public void setNeutral() {
         headAnimator.SetTrigger("Neutral");
         torsoAnimator.SetTrigger("Neutral");
+        player.setCurrentPosition(2);
     }
     public void setUp() {
         headAnimator.SetTrigger("Up");
         torsoAnimator.SetTrigger("Up");
+        player.setCurrentPosition(4);
     }
     public void setUpTilt() {
         headAnimator.SetTrigger("Up Tilt");
         torsoAnimator.SetTrigger("Up Tilt");
+        player.setCurrentPosition(3);
     }
     public void setDown() {
         headAnimator.SetTrigger("Down");
         torsoAnimator.SetTrigger("Down");
+        player.setCurrentPosition(0);
     }
     public void setDownTilt() {
         headAnimator.SetTrigger("Down Tilt");
         torsoAnimator.SetTrigger("Down Tilt");
+        player.setCurrentPosition(1);
     }
 
     //legs
@@ -63,47 +71,4 @@ public class AnimationManager : MonoBehaviour {
     public void setFall() {
         legsAnimator.SetTrigger("Fall");
     }
-
-    //// Update is called once per frame
-    //void Update () {
-    //    //Upper Body Animations
-    //    if (Input.GetKeyDown(KeyCode.Alpha3))
-    //    {
-    //        headAnimator.SetTrigger("Neutral");
-    //        torsoAnimator.SetTrigger("Neutral");
-    //    }
-    //    else if (Input.GetKeyDown(KeyCode.Alpha2))
-    //    {
-    //        headAnimator.SetTrigger("Up Tilt");
-    //        torsoAnimator.SetTrigger("Up Tilt");
-    //    }
-    //    else if (Input.GetKeyDown(KeyCode.Alpha1))
-    //    {
-    //        headAnimator.SetTrigger("Up");
-    //        torsoAnimator.SetTrigger("Up");
-    //    }
-    //    else if (Input.GetKeyDown(KeyCode.Alpha4))
-    //    {
-    //        headAnimator.SetTrigger("Down Tilt");
-    //        torsoAnimator.SetTrigger("Down Tilt");
-    //    }
-    //    else if (Input.GetKeyDown(KeyCode.Alpha5))
-    //    {
-    //        headAnimator.SetTrigger("Down");
-    //        torsoAnimator.SetTrigger("Down");
-    //    }
-
-    //    //Lower Body Animations
-    //    if (Input.GetKeyDown(KeyCode.Q))
-    //        legsAnimator.SetTrigger("Idle");
-    //    else if(Input.GetKeyDown(KeyCode.W))
-    //        legsAnimator.SetTrigger("Jump");
-    //    else if (Input.GetKeyDown(KeyCode.S))
-    //        legsAnimator.SetTrigger("Fall");
-    //    else if (Input.GetKeyDown(KeyCode.A))
-    //        legsAnimator.SetTrigger("Walk Forward");
-    //    else if (Input.GetKeyDown(KeyCode.D))
-    //        legsAnimator.SetTrigger("Walk Backward");
-
-    //}
 }
