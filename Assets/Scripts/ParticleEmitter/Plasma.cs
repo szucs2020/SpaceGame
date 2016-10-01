@@ -7,14 +7,12 @@ public class Plasma : Particle {
 	void Start () {
         this.type = ParticleTypes.Plasma;
 
-        speed = 0;
-        angle = 90 * Mathf.PI / 180;
         lifeSpan = 5f;
         tAlive = 0;
         minSize = Random.Range(0.01f, 0.02f);
         maxSize = Random.Range(minSize + 0.01f, minSize + 0.03f);
         deltaSizeRate = 0.02f;
-        startTime = Time.time;
+        startTime = Time.time - 5;
         minRed = 0;
         maxRed = 200;
         minBlue = 200;
@@ -24,20 +22,33 @@ public class Plasma : Particle {
         deltaTC = Random.Range(0.5f, 2f);
         Color a = Color.cyan;
         Color b = Color.blue;
+
         radius = 1;
 
         sprite = GetComponent<SpriteRenderer>();
+        sprite.material.SetColor("_Color", new Color(0, 0, 0, 0));
+        destroy();
     }
 	
 	// Update is called once per frame
 	void Update () {
-        controlPlasma();
+        this.controlPlasma();
     }
 
     private void controlPlasma()
     {
-        changeParticleSize();
         changeParticleColour(sprite);
+        changeParticleSize();
         rotateParticle();
+    }
+
+    private void destroy()
+    {
+        //Destroy(this.gameObject, lifeSpan);
+
+        if (this.transform.parent != null)
+        {
+            Destroy(this.transform.parent.gameObject, lifeSpan);
+        }
     }
 }

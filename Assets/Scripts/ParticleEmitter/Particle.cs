@@ -17,9 +17,7 @@ public class Particle : MonoBehaviour {
 
     //  Rotation
     protected float radius;
-    protected float speed;
     protected float axis;
-    protected float angle;
 
     //  Colour and such
     protected int colour;
@@ -69,14 +67,10 @@ public class Particle : MonoBehaviour {
         this.type = type;
         if (type == ParticleTypes.Water)
         {
-            speed = 10;
-            angle = 90 * Mathf.PI / 180;
             lifeSpan = 10;
         }
         else if (type == ParticleTypes.Fire)
         {
-            speed = 5;
-            angle = 90 * Mathf.PI / 180;
             lifeSpan = 5f;
             tAlive = 0;
             minSize = 0.6f;
@@ -87,24 +81,22 @@ public class Particle : MonoBehaviour {
         }
         else if (type == ParticleTypes.Plasma)
         {
-            speed = 0;
-            angle = 90 * Mathf.PI / 180;
-            lifeSpan = 5f;
-            tAlive = 0;
-            minSize = Random.Range(0.01f, 0.02f);
-            maxSize = Random.Range(minSize + 0.01f, minSize + 0.03f);
-            deltaSizeRate = 0.02f;
-            startTime = Time.time;
-            minRed = 0;
-            maxRed = 200;
-            minBlue = 200;
-            maxBlue = 255;
-            minGreen = 50;
-            maxGreen = 150;
-            deltaTC = Random.Range(0.5f, 2f);
-            Color a = Color.cyan;
-            Color b = Color.blue;
-            radius = 1;
+            //lifeSpan = 5f;
+            //tAlive = 0;
+            //minSize = Random.Range(0.01f, 0.02f);
+            //maxSize = Random.Range(minSize + 0.01f, minSize + 0.03f);
+            //deltaSizeRate = 0.02f;
+            //startTime = Time.time;
+            //minRed = 0;
+            //maxRed = 200;
+            //minBlue = 200;
+            //maxBlue = 255;
+            //minGreen = 50;
+            //maxGreen = 150;
+            //deltaTC = Random.Range(0.5f, 2f);
+            //Color a = Color.cyan;
+            //Color b = Color.blue;
+            //radius = 1;
         }
         else if (type == ParticleTypes.LaserDot)
         {
@@ -176,7 +168,7 @@ public class Particle : MonoBehaviour {
             startTime = Time.time;
         }
 
-        Color newColour = Color.Lerp(a, b, Mathf.PingPong(Time.time, deltaTC));
+        Color newColour = Color.LerpUnclamped(a, b, Mathf.PingPong(Time.time, deltaTC));
         sprite.material.SetColor("_Color", newColour);
     }
 

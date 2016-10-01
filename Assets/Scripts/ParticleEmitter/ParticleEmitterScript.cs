@@ -31,7 +31,7 @@ public class ParticleEmitterScript : MonoBehaviour {
         //print("Emmiter " + particleType);
 
         //laserDot.initialize(Particle.ParticleTypes.Plasma);
-        plasma.initialize(Particle.ParticleTypes.Plasma);
+        //plasma.initialize(Particle.ParticleTypes.Plasma);
 
         // fire... refactor later
         if (particleType == Particle.ParticleTypes.Fire)
@@ -58,16 +58,16 @@ public class ParticleEmitterScript : MonoBehaviour {
 
             //particle.initialize(particle.getType());
 
-            amount = 50;
-            amountExists = 0;
+            //amount = 50;
+            //amountExists = 0;
 
-            centrePoint = new GameObject();
-            centrePoint.transform.position = this.transform.position;
-            particleCollider = centrePoint.AddComponent<CircleCollider2D>();
-            radius = 2f;
-            particleCollider.radius = radius;
+            //centrePoint = new GameObject();
+            //centrePoint.transform.position = this.transform.position;
+            //particleCollider = centrePoint.AddComponent<CircleCollider2D>();
+            //radius = 2f;
+            //particleCollider.radius = radius;
 
-            centrePoint.AddComponent<Rigidbody2D>();
+            //centrePoint.AddComponent<Rigidbody2D>();
 
             //CreateParticles((int)amount);
             //placeParticles();
@@ -90,83 +90,40 @@ public class ParticleEmitterScript : MonoBehaviour {
     
 	// Update is called once per frame
 	void Update () {
-        ////update particle position and properties
-        //float velocityx;
-        //float velocityy;
-
-        //dt = Time.time - prevTime;
-
-        //if (particleType == Particle.ParticleTypes.Fire)
-        //{
-        //    if (dt >= rate / 60)
-        //    {
-        //        amountExists++;
-
-        //        prevTime = Time.time;
-        //    }
-
-        //    for (int i = 0; i < amountExists && amountExists < amount; i++)
-        //    {
-
-        //        particles[i].SettAlive(particles[i].GettAlive() + dt);
-
-        //        if (particles[i].GetLifespan() >= particles[i].GettAlive())
-        //        {
-        //            particles[i].Reset();
-        //        }
-        //        velocityx = speed * Mathf.Cos(angle);
-        //        velocityy = speed * Mathf.Sin(angle);
-
-        //        //  Old way
-        //        //velocityx = particles[i].GetSpeed() * Mathf.Cos(particles[i].GetAngle());
-        //        //velocityy = particles[i].GetSpeed() * Mathf.Sin(particles[i].GetAngle());
-
-        //        //centrePoint.Set(velocityx * Time.deltaTime, velocityy * Time.deltaTime, 0);
-        //        //particles[i].transform.Translate(centrePoint.x, centrePoint.y, centrePoint.z);
-
-        //    }
-        //}
-        //else if (particleType == Particle.ParticleTypes.Plasma)
-        //{
-
-
-        //        //particles[i].SettAlive(particles[i].GettAlive() + dt);
-
-        //        //if (particles[i].GetLifespan() >= particles[i].GettAlive())
-        //        //{
-        //        //    particles[i].Reset();
-        //        //}
-
-        //        velocityx = speed * Mathf.Cos(angle);
-        //        velocityy = speed * Mathf.Sin(angle);
-
-        //        //velocityx = particles[i].GetSpeed() * Mathf.Cos(particles[i].GetAngle());
-        //        //velocityy = particles[i].GetSpeed() * Mathf.Sin(particles[i].GetAngle());
-
-        //        //Particle Movement left, right, up, down
-        //        centrePoint.transform.Translate(velocityx * Time.deltaTime, velocityy * Time.deltaTime, 0);
-
-        //        //Particle Rotation along an axis
-        //        //particles[i].transform.RotateAround(-(particles[i].transform.localPosition - centrePoint.transform.position), Vector3.back * Time.deltaTime, 2);
-        //    //transform.Rotate(Vector3.back * Time.deltaTime * 180);
-        //}
-        
 
     }
 
-    public void GeneratePlasma(Vector3 direction)
+    public void GenerateShotgunShells(Vector2 direction, Vector2 position)
+    {
+        velocity = 20;
+        LaserDot[] laser = new LaserDot[5];
+        Vector2 newDir;
+
+        //direction = Quaternion.AngleAxis(30, Vector3.back) * direction;
+
+        for (int i = 0; i < 5; i++)
+        {
+            newDir = Quaternion.AngleAxis(Random.Range(-10, 10), Vector3.back) * direction;
+            laser[i] = (LaserDot)CreateParticle((Particle)laserDot, position);
+
+            laser[i].GetComponent<Rigidbody2D>().velocity = velocity * newDir;
+        }
+    }
+
+    public void GeneratePlasma(Vector2 direction, Vector2 position)
     {
         amount = 50;
         amountExists = 0;
         velocity = 20;
 
         centrePoint = new GameObject();
-        centrePoint.transform.position = this.transform.position;
+        centrePoint.transform.position = position;
         particleCollider = centrePoint.AddComponent<CircleCollider2D>();
         radius = 2f;
         particleCollider.radius = radius;
 
         centrePoint.AddComponent<Rigidbody2D>();
+        centrePoint.GetComponent<Rigidbody2D>().gravityScale = 0;
 
         CreateParticles((int)amount);
         placeParticles();
@@ -176,20 +133,19 @@ public class ParticleEmitterScript : MonoBehaviour {
         centrePoint.GetComponent<Rigidbody2D>().velocity = velocity * direction;
     }
 
-    public void GenerateLaserDot(Vector3 direction)
+    public void GenerateLaserDot(Vector2 direction, Vector2 position)
     {
         velocity = 20;
         LaserDot laser;
-        //laserDot.initialize(Particle.ParticleTypes.LaserDot);
-        laser = (LaserDot)CreateParticle((Particle)laserDot);
-        //laser = (LaserDot)Instantiate(laserDot, transform.position, Quaternion.identity);
-        //particle.initialize(particle.getType());
+
+        laser = (LaserDot)CreateParticle((Particle)laserDot, position);
+
         laser.GetComponent<Rigidbody2D>().velocity = velocity * direction;
     }
 
-    private Particle CreateParticle(Particle particle)
+    private Particle CreateParticle(Particle particle, Vector2 position)
     {
-        return (Particle)Instantiate(particle, transform.position, Quaternion.identity);
+        return (Particle)Instantiate(particle, position, Quaternion.identity);
     }
 
     private void CreateParticles(int amount)

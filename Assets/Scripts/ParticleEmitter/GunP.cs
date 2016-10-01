@@ -1,12 +1,9 @@
 ﻿/********************************************************
- * Authors: Christian Szucs (with damage, score and spray done by Lajos and Lorant Polya)
- * This class controls the generi gun behaviour
+ * Authors: 
 ********************************************************/
 using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
-
-[RequireComponent(typeof(AudioSource))]
 
 public class GunP : NetworkBehaviour
 {
@@ -17,9 +14,9 @@ public class GunP : NetworkBehaviour
     public GameObject bulletPrefab;
 
     //components
-    public GameObject spawn;
-    public AudioClip shot;
-    private AudioSource audio;
+    public Transform spawn;
+    private Transform[] spawnPositions;
+    public ParticleEmitterScript pEmitter;
 
     //external objects
     private Player player;
@@ -30,30 +27,33 @@ public class GunP : NetworkBehaviour
     private float nextShot;
     private float currentRange;
 
-    private ParticleEmitterScript pEmitter;
-
     void Start()
     {
 
-        audio = GetComponent<AudioSource>();
-
         timeBetweenShots = 60 / rpm;
-        spawnRotation = spawn.transform.localEulerAngles.y;
         player = GetComponent<Player>();
 
-        pEmitter = spawn.GetComponent<ParticleEmitterScript>();
+        //set spawn positions
+        spawnPositions = new Transform[5];
+
+        for (int i = 0; i < spawnPositions.Length; i++)
+        {
+            spawnPositions[i] = spawn.GetChild(i);
+        }
+    }
+
+    private Transform getSpawn()
+    {
+        return spawnPositions[player.getCurrentPosition()];
     }
 
     [Command]
-    public void CmdShoot(Vector3 direction)
+    public void CmdShoot(Vector2 direction, Vector2 position)
     {
-
-        //pEmitter.GenerateLaserDot(direction);
-        pEmitter.GeneratePlasma(direction);
-        //GameObject bullet = (GameObject)Instantiate(bulletPrefab, spawn.position, spawn.rotation);
+        pEmitter.GenerateShotgunShells(direction, position);
+        //GameObject bullet = (GameObject)Instantiate(bulletPrefab, position, Quaternion.identity);
         //bullet.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
         //NetworkServer.Spawn(bullet);
-
     }
 
     public void shoot()
@@ -62,25 +62,24 @@ public class GunP : NetworkBehaviour
         if (canShoot())
         {
 
-            spawn.transform.localEulerAngles = new Vector3(0f, spawnRotation, 0f);
+            spawn.localEulerAngles = new Vector3(0f, spawn.localEulerAngles.y, 0f);
 
-            //get direction and create ray
+            Vector2 position = getSpawn().transform.position;
             Vector2 direction;
+            Quaternion rotation = getSpawn().transform.rotation;
 
             if (player.isFacingRight())
             {
-                direction = new Vector2(1, 0);
+                direction = rotation * Vector2.right;
             }
             else
             {
-                direction = new Vector2(-1, 0);
+                rotation = Quaternion.Euler(rotation.eulerAngles.x, rotation.eulerAngles.y, rotation.eulerAngles.z * -1);
+                direction = rotation * Vector2.left;
             }
 
-            //play gun shot sound
-            audio.PlayOneShot(shot);
-
             //create bullet on all clients
-            CmdShoot(direction);
+            CmdShoot(direction, position);
 
             //set next shot time
             nextShot = Time.time + timeBetweenShots;
