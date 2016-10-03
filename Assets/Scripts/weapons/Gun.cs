@@ -14,18 +14,18 @@ public class Gun : NetworkBehaviour {
 
 	//components
 	public Transform spawn;
-    private Transform[] spawnPositions;
+    protected Transform[] spawnPositions;
 
 	//external objects
-	private Player player;
+	protected Player player;
 
 	//system variables
-	private float spawnRotation;
-	private float timeBetweenShots;
-	private float nextShot;
-	private float currentRange;
+	protected float spawnRotation;
+    protected float timeBetweenShots;
+    protected float nextShot;
+    protected float currentRange;
 	
-	void Start(){
+	protected void init(){
 
         timeBetweenShots = 60 / rpm;
 		player = GetComponent<Player>();
@@ -38,18 +38,18 @@ public class Gun : NetworkBehaviour {
         }
     }
 
-    private Transform getSpawn() {
+    protected Transform getSpawn() {
         return spawnPositions[player.getCurrentPosition()];
     }
 
     [Command]
-    public void CmdShoot(Vector2 direction, Vector2 position) {
+    public virtual void CmdShoot(Vector2 direction, Vector2 position) {
         GameObject bullet = (GameObject)Instantiate(bulletPrefab, position, Quaternion.identity);
         bullet.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
         NetworkServer.Spawn(bullet);
     }
 
-    public void shoot() {
+    public virtual void shoot() {
 
 		if (canShoot ()) {
 
@@ -74,7 +74,7 @@ public class Gun : NetworkBehaviour {
 		}
 	}
 
-	private bool canShoot(){
+	protected bool canShoot(){
 
 		bool canShoot = true;
 			

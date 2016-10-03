@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class LaserDot : Particle {
+    public Vector2 direction;
 
 	// Use this for initialization
 	void Start () {

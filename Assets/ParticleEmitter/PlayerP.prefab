@@ -46,7 +46,7 @@ GameObject:
   - 114: {fileID: 11477352}
   - 114: {fileID: 11419128}
   - 114: {fileID: 11409310}
-  - 114: {fileID: 11486548}
+  - 114: {fileID: 11417362}
   m_Layer: 9
   m_Name: PlayerP
   m_TagString: player
@@ -421,6 +421,22 @@ MonoBehaviour:
   maxFallSpeed: -110
   AI: {fileID: 196414, guid: 9e76c0dbbc377ab4690d672765c5c795, type: 2}
   currentPlatform: {fileID: 0}
+--- !u!114 &11417362
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 129964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77aff03b745ca3344bf84a02150a813b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rpm: 450
+  bulletSpeed: 45
+  bulletPrefab: {fileID: 0}
+  spawn: {fileID: 430028}
+  pEmitter: {fileID: 11459930, guid: 6ef9c3c6eae2b0849a687bcc2387ef46, type: 2}
 --- !u!114 &11419128
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -463,22 +479,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87b71df98c00bf447af1fb7b558cc767, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &11486548
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 129964}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fdd830ab4de5eb47ad279c0671c5ef4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rpm: 450
-  bulletSpeed: 45
-  bulletPrefab: {fileID: 0}
-  spawn: {fileID: 430028}
-  pEmitter: {fileID: 11459930, guid: 6ef9c3c6eae2b0849a687bcc2387ef46, type: 2}
 --- !u!114 &11492310
 MonoBehaviour:
   m_ObjectHideFlags: 1

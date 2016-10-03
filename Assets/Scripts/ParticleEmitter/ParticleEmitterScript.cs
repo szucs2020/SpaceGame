@@ -74,11 +74,11 @@ public class ParticleEmitterScript : MonoBehaviour {
         }
         else if (particleType == Particle.ParticleTypes.LaserDot)
         {
-            angle = 360 * Mathf.PI / 180; ;
-            velocity = 50f;
-            print(velocity);
+            //angle = 360 * Mathf.PI / 180; ;
+            //velocity = 50f;
+            //print(velocity);
 
-            radius = 0.5f;
+            //radius = 0.5f;
             
 
             //CreateParticle();
@@ -93,28 +93,26 @@ public class ParticleEmitterScript : MonoBehaviour {
 
     }
 
-    public void GenerateShotgunShells(Vector2 direction, Vector2 position)
+    public LaserDot[] GenerateShotgunShells(Vector2 direction, Vector2 position)
     {
         velocity = 20;
-        LaserDot[] laser = new LaserDot[5];
+        LaserDot[] lasers = new LaserDot[5];
         Vector2 newDir;
-
-        //direction = Quaternion.AngleAxis(30, Vector3.back) * direction;
 
         for (int i = 0; i < 5; i++)
         {
             newDir = Quaternion.AngleAxis(Random.Range(-10, 10), Vector3.back) * direction;
-            laser[i] = (LaserDot)CreateParticle((Particle)laserDot, position);
-
-            laser[i].GetComponent<Rigidbody2D>().velocity = velocity * newDir;
+            lasers[i] = (LaserDot)CreateParticle((Particle)laserDot, position);
+            lasers[i].direction = newDir;
+            //lasers[i].GetComponent<Rigidbody2D>().velocity = velocity * newDir;
         }
+
+        return lasers;
     }
 
-    public void GeneratePlasma(Vector2 direction, Vector2 position)
+    public GameObject GeneratePlasma(Vector2 direction, Vector2 position)
     {
         amount = 50;
-        amountExists = 0;
-        velocity = 20;
 
         centrePoint = new GameObject();
         centrePoint.transform.position = position;
@@ -122,25 +120,21 @@ public class ParticleEmitterScript : MonoBehaviour {
         radius = 2f;
         particleCollider.radius = radius;
 
-        centrePoint.AddComponent<Rigidbody2D>();
-        centrePoint.GetComponent<Rigidbody2D>().gravityScale = 0;
+        centrePoint.AddComponent<Rigidbody2D>().gravityScale = 0;
 
         CreateParticles((int)amount);
         placeParticles();
 
-
-
-        centrePoint.GetComponent<Rigidbody2D>().velocity = velocity * direction;
+        return centrePoint;
     }
 
-    public void GenerateLaserDot(Vector2 direction, Vector2 position)
+    public LaserDot GenerateLaserDot(Vector2 direction, Vector2 position)
     {
-        velocity = 20;
         LaserDot laser;
 
         laser = (LaserDot)CreateParticle((Particle)laserDot, position);
 
-        laser.GetComponent<Rigidbody2D>().velocity = velocity * direction;
+        return laser;
     }
 
     private Particle CreateParticle(Particle particle, Vector2 position)
