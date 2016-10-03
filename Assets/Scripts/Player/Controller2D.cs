@@ -124,10 +124,16 @@ public class Controller2D : RaycastController {
 						continue;
 					}
 				}
-
+					
+				//if (transform.name != "Player(Clone)") {
+				//	Debug.Log (directionY + " " + hit.distance);
+				//}
 				//Allows us to know the platform a player is on
-				if (directionY == -1 && hit.distance < 0.020f) {
+				if (directionY == -1 && hit.distance < 1f) {
 					collisions.platform = hit.collider.transform;
+					//if (transform.name != "Player(Clone)") {
+					//	Debug.Log (collisions.platform.name);
+					//}
 				}
 
 				velocity.y = (hit.distance - skinWidth) * directionY;

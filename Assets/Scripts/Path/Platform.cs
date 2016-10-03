@@ -6,4 +6,16 @@ public class Platform : MonoBehaviour {
 	
 	public Transform[] neighbours;
 	public List<Transform> nodes;
+
+	private float length;
+	private float left;
+	private float right;
+
+	void Start() {
+		MeshRenderer renderer = transform.GetComponent<MeshRenderer> ();
+		length = renderer.bounds.size.x;
+
+		left = transform.position.x - renderer.bounds.size.x / 2;
+		right = transform.position.x + renderer.bounds.size.x / 2;
+	}
 }

@@ -2,6 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 
+/*
+ * 
+ * Read the article
+ * Seems like behaviours are really high level behaviours
+ * this might make things a tiny bit easier
+ * more like a FSM in a way
+ */
+
 public class AIController : MonoBehaviour {
 	AStar pathFinder;
 	List<Node> path;
@@ -17,14 +25,17 @@ public class AIController : MonoBehaviour {
 
 	MoveBehaviour MoveTheAI;
 
+	Status status;
+
+	//Blackboard (Memory Storage)
+	GameObject blackBoard;
+	GameObject blackBoardInstance;
+	Blackboard memory;
+
 	// Use this for initialization
 	void Start () {
 		pathFinder = this.GetComponent<AStar> ();
-		//path = pathFinder.FindShortestPath ();
 		controller = this.GetComponent<Controller2D> ();
-
-		//target = path [0];
-		//path.RemoveAt (0);
 
 		AI = transform.GetComponent<AIPlayer> ();
 
@@ -41,8 +52,15 @@ public class AIController : MonoBehaviour {
 
 		previousNode = null;
 
-		MoveTheAI = new MoveBehaviour (transform, pathFinder, path, target, previousNode, AI, player, playerComponent, controller);
-		MoveTheAI.onInitialize ();
+		//Create Blackboard (Memory Storage)
+		blackBoard = new GameObject ();
+		//blackBoardInstance = (GameObject)Instantiate (blackBoard, new Vector3(0f, 0f, 0f), Quaternion.identity);
+		blackBoard.name = "Blackboard";
+		blackBoard.AddComponent<Blackboard> ();
+		memory = blackBoard.GetComponent<Blackboard> ();
+		memory.setTarget (target);
+
+		MoveTheAI = new MoveBehaviour (transform, target, AI, player);
 	}
 
 	double timedelta = 0;
@@ -52,7 +70,7 @@ public class AIController : MonoBehaviour {
         //getClosestNodeToPlayer ();
 
         timedelta += Time.deltaTime;
-		if (timedelta < 1) {
+		if (timedelta < 2.5f) {
 			return;
 		}
 
@@ -69,32 +87,61 @@ public class AIController : MonoBehaviour {
 				target = player.GetComponent<Node> ();
 				Move (player.transform.position - new Vector3 (variablePos + 20f, 0, 0));
 			}
-		} else if (target != null) {
-			MoveToPlayersPlatform ();
-		} else {
-			ReCalcPath ();
-			AI.setMovementAxis (new Vector2 (0, 0));
-		}*/
-
-		MoveTheAI.update ();
-	}
-
-
-	/*MoveToPlayersPlatform should be broken up into another function which can be called from
-	 * the else of line 119 so code isn't duplicated
-	 * I guess just separate the firs if
-	 */
-	float holdJumpButtom = 0f;
-	private void MoveToPlayersPlatform () {
-
-		if (Time.time - holdJumpButtom > 1f || holdJumpButtom == 0f) {
+		} else*/ if (target != null && target.transform.parent == AI.currentPlatform) {
 			AI.setbuttonPressedJump (false);
+			AI.setbuttonReleasedJump (true);
+			WalkToPlayersPlatform ();
+		} else if(target != null && target.transform.parent != AI.currentPlatform) {
+			//Debug.Log (target.transform.parent.name + "  " + AI.currentPlatform.name);
+			if (AI.currentPlatform.position.y > target.transform.parent.position.y) {
+				//Target Platform is below Current Platform
+				print("HIGHER");
+				if (Mathf.Abs (AI.currentPlatform.position.x - target.transform.position.x) < 50f) {
+					//Can probably fall onto the platform
+					AI.setbuttonPressedJump (false);
+					AI.setbuttonReleasedJump (true);
+					Move (target.transform.position);
+				} else {
+					//Has to jump onto platform
+					Jump (target.transform.parent.position);
+				}
+			} else if(AI.currentPlatform.position.y < target.transform.parent.position.y) {
+				print ("LOWER" + AI.currentPlatform.position.y + " " +  target.transform.position.y);
+				//Target Platform is above Current Platform
+				Jump (target.transform.parent.position);
+			} else {
+				//Platform is level but there is a gap
+				print("LEVEL");
+				Jump (target.transform.parent.position);
+			}
 		} else {
-			holdJumpButtom += Time.deltaTime;
+			//ReCalcPath ();
+			AI.setMovementAxis (new Vector2 (0, 0));
 		}
 
+		/*if (path.Count != 0) {
+			target = path [0];
+			path.RemoveAt (0);
+		}*/
 
-		if(Mathf.Abs(target.transform.position.x - transform.position.x) < .5f) {
+		/*MoveTheAI.onInitialize ();
+		status = MoveTheAI.tick ();
+
+		if (status == Status.BH_SUCCESS) {
+			if (path.Count == 0) {
+				target = null;
+				AI.setMovementAxis (new Vector2(0, 0));
+				return;
+			}
+
+			target = path [0];
+			path.RemoveAt (0);
+			memory.setTarget (target);
+		}*/
+	}
+
+	private void WalkToPlayersPlatform () {
+		if(Mathf.Abs(target.transform.position.x - transform.position.x) < 0.5f) {
 
 			if (path.Count == 0) {
 				target = null;
@@ -108,17 +155,73 @@ public class AIController : MonoBehaviour {
 		Move (target.transform.position);
 	}
 
-	void Move(Vector3 target) {
-        
-		if(target.y > transform.position.y - heightOverTwo /*&& Mathf.Abs(target.x - transform.position.x) < 15f*/) {
-			holdJumpButtom = Time.time;
-			AI.setbuttonPressedJump (true);
+	private void JumpToPlayersPlatform () {
+		if(Mathf.Abs(target.transform.position.x - transform.position.x) < 0.5f) {
+
+			if (path.Count == 0) {
+				target = null;
+				return;
+			}
+
+			target = path [0];
+			path.RemoveAt (0);
 		}
 
+		Jump (target.transform.position);
+	}
+
+	void Move(Vector3 target) {
+
 		if (target.x < transform.position.x) {
-            AI.setMovementAxis (new Vector2 (-5, 1));
+            AI.setMovementAxis (new Vector2 (-1, 1));
 		} else {
-			AI.setMovementAxis (new Vector2 (5, 1));
+			AI.setMovementAxis (new Vector2 (1, 1));
+		}
+	}
+
+	void Jump(Vector3 target) {
+		JumpingHelper ();
+		Move (target);
+	}
+
+	private float amountOfTimePassed = 0f;
+	private bool firstStep = true;
+	private bool secondStep = false;
+	private bool thirdStep = false;
+	private bool finalStep = false;
+	public void JumpingHelper() {
+		amountOfTimePassed += Time.deltaTime;
+
+		if (firstStep) {
+			//Debug.Log ("1 " + amountOfTimePassed);
+			AI.setbuttonPressedJump (true);
+			AI.setbuttonReleasedJump (false);
+
+			firstStep = false;
+			secondStep = true;
+		} else if (secondStep) {
+			//Debug.Log ("2 " + amountOfTimePassed);
+			if (amountOfTimePassed > 0.5f) {
+				AI.setbuttonPressedJump (false);
+				AI.setbuttonReleasedJump (true);
+				//AI.setbuttonHeldJump (true);
+				secondStep = false;
+				thirdStep = true;
+			}
+		} else if (thirdStep) {
+			//Debug.Log ("3 " + amountOfTimePassed);
+			AI.setbuttonPressedJump (true);
+			AI.setbuttonReleasedJump (false);
+			thirdStep = false;
+		} else {
+			if(amountOfTimePassed > 0.9f) {
+				//Debug.Log ("4 " + amountOfTimePassed);
+				AI.setbuttonPressedJump (false);
+				AI.setbuttonReleasedJump (true);
+				finalStep = false;
+				firstStep = true;
+				amountOfTimePassed = 0f;
+			}
 		}
 	}
 

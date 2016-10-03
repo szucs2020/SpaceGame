@@ -25,12 +25,12 @@ public class PathGen : MonoBehaviour {
 
 				//If the node is too close to the edge of the platform it will not get generated
 				//if(!(length - i < 2) && !(length - i > length - 2)) {
-			instance = (GameObject)Instantiate (Node, new Vector3 ((int)child.position.x + 5 - length / 2, (int)child.position.y + 3, 0), Quaternion.identity);
+			instance = (GameObject)Instantiate (Node, new Vector3 ((int)child.position.x + 10 - length / 2, (int)child.position.y + 3, 0), Quaternion.identity);
 			instance.transform.SetParent (child, true);
 			platform.nodes.Add (instance.transform);
 			ObjectList.Add(instance);
 
-			instance = (GameObject)Instantiate (Node, new Vector3 ((int)child.position.x - 5 + length / 2, (int)child.position.y + 3, 0), Quaternion.identity);
+			instance = (GameObject)Instantiate (Node, new Vector3 ((int)child.position.x - 10 + length / 2, (int)child.position.y + 3, 0), Quaternion.identity);
 			instance.transform.SetParent (child, true);
 			platform.nodes.Add (instance.transform);
 			ObjectList.Add(instance);
