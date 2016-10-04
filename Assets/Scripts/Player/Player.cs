@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 [RequireComponent (typeof (Controller2D))]
 
@@ -16,8 +17,9 @@ public class Player : NetworkBehaviour {
 	public float maxFallSpeed = -110f;
 
 	private Gun gun;
-    private SyncPlayer syncPlayer;
+    private SyncFlip syncFlip;
 
+    //movement variables
     float gravity;
 	float maxJumpVelocity;
 	float minJumpVelocity;
@@ -57,16 +59,16 @@ public class Player : NetworkBehaviour {
 	//For PathGeneration
 	public Transform currentPlatform;
 
-	void Awake(){
-        syncPlayer = GetComponent<SyncPlayer>();
-        networkManager = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<NetworkManager>();
-    }
-
 	void Start() {
+
+        syncFlip = GetComponent<SyncFlip>();
+        syncFlip.player = this;
 
         if (!isLocalPlayer) {
             return;
         }
+
+        networkManager = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<NetworkManager>();
 
         controller = GetComponent<Controller2D> ();
         audio = GetComponent<AudioSource>();
@@ -223,11 +225,13 @@ public class Player : NetworkBehaviour {
 		}
 	}
 
+    //flip 2D sprite
     private void flip() {
         facingRight = !facingRight;
-        syncPlayer.CmdSyncFlip(facingRight);
+        syncFlip.CmdSyncFlip(facingRight);
     }
 
+    //getters & setters
 	public bool isFacingRight(){
 		return facingRight;
 	}
