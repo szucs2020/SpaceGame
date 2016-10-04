@@ -18,11 +18,10 @@ public class Pistol : Gun
     [Command]
     public override void CmdShoot(Vector2 direction, Vector2 position)
     {
-        float velocity = 20;
         LaserDot laser;
-        laser = pEmitter.GenerateLaserDot(direction, position);
+        laser = pEmitter.GenerateLaserDot(position);
 
-        laser.GetComponent<Rigidbody2D>().velocity = velocity * direction;
+        laser.GetComponent<Rigidbody2D>().velocity = bulletSpeed * direction;
         NetworkServer.Spawn(laser.gameObject);
     }
 

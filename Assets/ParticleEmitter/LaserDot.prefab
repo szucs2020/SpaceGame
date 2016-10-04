@@ -12,6 +12,8 @@ GameObject:
   - 114: {fileID: 11432110}
   - 50: {fileID: 5020240}
   - 58: {fileID: 5853376}
+  - 114: {fileID: 11466348}
+  - 114: {fileID: 11491468}
   m_Layer: 11
   m_Name: LaserDot
   m_TagString: Untagged
@@ -74,6 +76,59 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90eb297bb3ebd994596af63ed952f611, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  direction: {x: 0, y: 0}
+--- !u!114 &11466348
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 161146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 43
+    i1: 79
+    i2: 72
+    i3: 2
+    i4: 144
+    i5: 106
+    i6: 126
+    i7: 132
+    i8: 185
+    i9: 247
+    i10: 20
+    i11: 184
+    i12: 51
+    i13: 237
+    i14: 246
+    i15: 169
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
+--- !u!114 &11491468
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 161146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 2
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 3
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
 --- !u!212 &21236766
 SpriteRenderer:
   m_ObjectHideFlags: 1

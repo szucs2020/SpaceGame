@@ -15,13 +15,12 @@ public class ParticleEmitterScript : MonoBehaviour {
     float radius;
     int amountExists;
     Particle.ParticleTypes particleType;
-    GameObject centrePoint;
-    CircleCollider2D particleCollider;
 
     List<Particle> particles;
 
     public LaserDot laserDot;
     public Plasma plasma;
+    public GameObject plasmaAnchor;
 
     // Use this for initialization
     void Start () {
@@ -49,7 +48,7 @@ public class ParticleEmitterScript : MonoBehaviour {
             //amount = particle.GetLifespan() * rate;
             amountExists = 0;
 
-            CreateParticles((int)amount);
+            //CreateParticles((int)amount);
         }
         else if (particleType == Particle.ParticleTypes.Plasma)
         {
@@ -95,7 +94,6 @@ public class ParticleEmitterScript : MonoBehaviour {
 
     public LaserDot[] GenerateShotgunShells(Vector2 direction, Vector2 position)
     {
-        velocity = 20;
         LaserDot[] lasers = new LaserDot[5];
         Vector2 newDir;
 
@@ -110,25 +108,20 @@ public class ParticleEmitterScript : MonoBehaviour {
         return lasers;
     }
 
-    public GameObject GeneratePlasma(Vector2 direction, Vector2 position)
+    public GameObject GeneratePlasma(Vector2 position)
     {
         amount = 50;
+        radius = 2;
 
-        centrePoint = new GameObject();
-        centrePoint.transform.position = position;
-        particleCollider = centrePoint.AddComponent<CircleCollider2D>();
-        radius = 2f;
-        particleCollider.radius = radius;
+        GameObject centrePoint = (GameObject)Instantiate(plasmaAnchor, position, Quaternion.identity);
 
-        centrePoint.AddComponent<Rigidbody2D>().gravityScale = 0;
-
-        CreateParticles((int)amount);
+        CreateParticles((int)amount, centrePoint);
         placeParticles();
 
         return centrePoint;
     }
 
-    public LaserDot GenerateLaserDot(Vector2 direction, Vector2 position)
+    public LaserDot GenerateLaserDot(Vector2 position)
     {
         LaserDot laser;
 
@@ -142,7 +135,7 @@ public class ParticleEmitterScript : MonoBehaviour {
         return (Particle)Instantiate(particle, position, Quaternion.identity);
     }
 
-    private void CreateParticles(int amount)
+    private void CreateParticles(int amount, GameObject anchor)
     {
         particles = new List<Particle>();
 
@@ -150,10 +143,8 @@ public class ParticleEmitterScript : MonoBehaviour {
         {
             particles.Add((Particle)Instantiate(plasma, transform.position, Quaternion.identity));
             
-            particles[i].transform.SetParent(centrePoint.transform, false);
+            particles[i].transform.SetParent(anchor.transform, false);
             particles[i].transform.localPosition = new Vector3(0, 0, 0);
-
-            //particles[i].initialize(type);
         }
     }
 

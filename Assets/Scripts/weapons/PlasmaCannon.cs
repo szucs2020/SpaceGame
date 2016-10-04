@@ -5,7 +5,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
 
-public class Shotgun : Gun
+public class PlasmaCannon : Gun
 {
     public ParticleEmitterScript pEmitter;
 
@@ -18,13 +18,16 @@ public class Shotgun : Gun
     [Command]
     public override void CmdShoot(Vector2 direction, Vector2 position)
     {
-        float velocity = 20;
-        LaserDot[] lasers;
-        lasers = pEmitter.GenerateShotgunShells(direction, position);
+        GameObject plasmaBall;
+        plasmaBall = pEmitter.GeneratePlasma(position);
 
-        for (int i = 0; i < lasers.Length; i++)
+        plasmaBall.GetComponent<Rigidbody2D>().velocity = bulletSpeed * direction;
+
+        NetworkServer.Spawn(plasmaBall);
+
+        for (int i = 0; i < plasmaBall.transform.childCount; i++)
         {
-            lasers[i].GetComponent<Rigidbody2D>().velocity = velocity * lasers[i].direction;
+            NetworkServer.Spawn(plasmaBall.transform.GetChild(i).transform.gameObject);
         }
     }
 

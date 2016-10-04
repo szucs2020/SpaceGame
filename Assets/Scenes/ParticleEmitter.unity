@@ -256,7 +256,9 @@ MonoBehaviour:
   m_PlayerSpawnMethod: 0
   m_OfflineScene: ParticleEmitter
   m_OnlineScene: ParticleEmitter
-  m_SpawnPrefabs: []
+  m_SpawnPrefabs:
+  - {fileID: 161146, guid: 2b4f4802906a7e84b9f714b833edf6a9, type: 2}
+  - {fileID: 158854, guid: 110945707df2da5428ae885afa176a66, type: 2}
   m_CustomConfig: 0
   m_MaxConnections: 4
   m_ConnectionConfig:
@@ -288,7 +290,7 @@ MonoBehaviour:
     m_MaxPacketSize: 2000
   m_Channels: 
   m_UseWebSockets: 0
-  m_UseSimulator: 0
+  m_UseSimulator: 1
   m_SimulatedLatency: 1
   m_PacketLossPercentage: 0
   m_MatchHost: mm.unet.unity3d.com

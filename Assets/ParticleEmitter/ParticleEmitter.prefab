@@ -69,6 +69,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   laserDot: {fileID: 11432110, guid: 2b4f4802906a7e84b9f714b833edf6a9, type: 2}
   plasma: {fileID: 11451478, guid: 3493e1059c7d24843a98bd1e433326ea, type: 2}
+  plasmaAnchor: {fileID: 158854, guid: 110945707df2da5428ae885afa176a66, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
