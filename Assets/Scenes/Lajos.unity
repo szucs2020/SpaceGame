@@ -1073,7 +1073,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   neighbours:
   - {fileID: 926410217}
-  - {fileID: 1800697960}
   nodes: []
 --- !u!61 &2116840464
 BoxCollider2D:

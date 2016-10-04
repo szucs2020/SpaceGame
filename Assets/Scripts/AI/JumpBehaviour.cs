@@ -10,9 +10,6 @@ public class JumpBehaviour : Behaviour {
 
 	MoveClass Move;
 
-
-	bool buttonPressedJumped;
-
 	public JumpBehaviour(Transform me, Node target, AIPlayer AI, GameObject player) {
 		this.me = me;
 		this.target = target;
@@ -20,9 +17,6 @@ public class JumpBehaviour : Behaviour {
 		this.player = player;
 
 		Move = new MoveClass ();
-
-		//Movement
-		buttonPressedJumped = false;
 	}
 
 	public override Status update() {

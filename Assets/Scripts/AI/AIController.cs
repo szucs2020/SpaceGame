@@ -3,11 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 
 /*
- * 
- * Read the article
- * Seems like behaviours are really high level behaviours
- * this might make things a tiny bit easier
- * more like a FSM in a way
+ * If the AI.currentPlatform != Player.currentPlatform then 
+ *		check if the AI.currentPlatform is a neighbour of Player.currentPlatform
+ *			if it is then stay on that platform if you're within a certain distance
+ *			if not continue
  */
 
 public class AIController : MonoBehaviour {
@@ -18,10 +17,6 @@ public class AIController : MonoBehaviour {
 	GameObject player;
 	Player playerComponent;
 	Controller2D controller;
-
-	float heightOverTwo;
-
-	Node previousNode;
 
 	MoveBehaviour MoveTheAI;
 
@@ -47,11 +42,6 @@ public class AIController : MonoBehaviour {
 		//Movement
 		playerComponent = player.GetComponent<Player> ();
 
-		// I calculated the players height to be 16
-		heightOverTwo = 8f;
-
-		previousNode = null;
-
 		//Create Blackboard (Memory Storage)
 		blackBoard = new GameObject ();
 		//blackBoardInstance = (GameObject)Instantiate (blackBoard, new Vector3(0f, 0f, 0f), Quaternion.identity);
@@ -63,60 +53,72 @@ public class AIController : MonoBehaviour {
 		MoveTheAI = new MoveBehaviour (transform, target, AI, player);
 	}
 
-	double timedelta = 0;
+	private double timedelta = 0;
 	// Update is called once per frame
 	void Update () {
-
-        //getClosestNodeToPlayer ();
-
         timedelta += Time.deltaTime;
 		if (timedelta < 2.5f) {
 			return;
 		}
 
-		/*if (AI.currentPlatform == playerComponent.currentPlatform) {
+		if (AI.currentPlatform == playerComponent.currentPlatform) {
+			AI.setbuttonPressedJump (false);
+			AI.setbuttonReleasedJump (true);
 
             float variablePos = Random.Range(-5f, 5f);
 
 			if (player.transform.position.x < transform.position.x && transform.position.x - player.transform.position.x < 30f) {
 				path.Clear ();
-				target = player.GetComponent<Node> ();
 				Move (player.transform.position + new Vector3 (variablePos + 20f, 0, 0));
 			} else if (player.transform.position.x > transform.position.x && player.transform.position.x - transform.position.x < 30f) {
 				path.Clear ();
-				target = player.GetComponent<Node> ();
 				Move (player.transform.position - new Vector3 (variablePos + 20f, 0, 0));
 			}
-		} else*/ if (target != null && target.transform.parent == AI.currentPlatform) {
-			AI.setbuttonPressedJump (false);
-			AI.setbuttonReleasedJump (true);
-			WalkToPlayersPlatform ();
-		} else if(target != null && target.transform.parent != AI.currentPlatform) {
-			//Debug.Log (target.transform.parent.name + "  " + AI.currentPlatform.name);
-			if (AI.currentPlatform.position.y > target.transform.parent.position.y) {
-				//Target Platform is below Current Platform
-				print("HIGHER");
-				if (Mathf.Abs (AI.currentPlatform.position.x - target.transform.position.x) < 50f) {
-					//Can probably fall onto the platform
+		} else if (AI.currentPlatform != playerComponent.currentPlatform) {
+			bool onNeighbourPlatform = false;
+
+			foreach (Transform i in AI.currentPlatform.GetComponent<Platform>().neighbours) {
+				if (i == playerComponent.currentPlatform) {
+					print (i.name);
+					onNeighbourPlatform = true;
+					break;
+				}
+			}
+
+			if (onNeighbourPlatform == true) {
+				AI.setMovementAxis (new Vector2 (0, 0));
+				AI.setbuttonPressedJump (false);
+				AI.setbuttonReleasedJump (true);
+				print ("onNeighbour");
+			} else {
+				if (target != null && target.transform.parent == AI.currentPlatform) {
 					AI.setbuttonPressedJump (false);
 					AI.setbuttonReleasedJump (true);
-					Move (target.transform.position);
+					WalkOnPlatform ();
+				} else if (target != null && target.transform.parent != AI.currentPlatform) {
+					if (AI.currentPlatform.position.y > target.transform.parent.position.y) {
+						//Target Platform is below Current Platform
+						if (Mathf.Abs (AI.currentPlatform.position.x - target.transform.position.x) < 50f) {
+							//Can probably fall onto the platform
+							AI.setbuttonPressedJump (false);
+							AI.setbuttonReleasedJump (true);
+							Move (target.transform.position);
+						} else {
+							//Has to jump onto platform
+							Jump (target.transform.parent.position);
+						}
+					} else if(AI.currentPlatform.position.y < target.transform.parent.position.y) {
+						//Target Platform is above Current Platform
+						Jump (target.transform.parent.position);
+					} else {
+						//Platform is level but there is a gap
+						Jump (target.transform.parent.position);
+					}
 				} else {
-					//Has to jump onto platform
-					Jump (target.transform.parent.position);
+					//ReCalcPath ();
+					AI.setMovementAxis (new Vector2 (0, 0));
 				}
-			} else if(AI.currentPlatform.position.y < target.transform.parent.position.y) {
-				print ("LOWER" + AI.currentPlatform.position.y + " " +  target.transform.position.y);
-				//Target Platform is above Current Platform
-				Jump (target.transform.parent.position);
-			} else {
-				//Platform is level but there is a gap
-				print("LEVEL");
-				Jump (target.transform.parent.position);
 			}
-		} else {
-			//ReCalcPath ();
-			AI.setMovementAxis (new Vector2 (0, 0));
 		}
 
 		/*if (path.Count != 0) {
@@ -140,7 +142,7 @@ public class AIController : MonoBehaviour {
 		}*/
 	}
 
-	private void WalkToPlayersPlatform () {
+	private void WalkOnPlatform () {
 		if(Mathf.Abs(target.transform.position.x - transform.position.x) < 0.5f) {
 
 			if (path.Count == 0) {
