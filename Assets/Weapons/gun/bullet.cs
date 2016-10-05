@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.Networking;
 
-public class bullet : NetworkBehaviour {
+public class bullet : MonoBehaviour {
 
 	public float flightTime;
     public Player bulletOwner;

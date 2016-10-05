@@ -20,7 +20,7 @@ public class Pistol : Gun
     {
         LaserDot laser;
         laser = pEmitter.GenerateLaserDot(position);
-
+        laser.GetComponent<LaserDot>().bulletOwner = GetComponent<Player>();
         laser.GetComponent<Rigidbody2D>().velocity = bulletSpeed * direction;
         NetworkServer.Spawn(laser.gameObject);
     }

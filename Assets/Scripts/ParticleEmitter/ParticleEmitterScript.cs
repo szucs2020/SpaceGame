@@ -89,7 +89,6 @@ public class ParticleEmitterScript : MonoBehaviour {
     
 	// Update is called once per frame
 	void Update () {
-
     }
 
     public LaserDot[] GenerateShotgunShells(Vector2 direction, Vector2 position)
@@ -115,8 +114,8 @@ public class ParticleEmitterScript : MonoBehaviour {
 
         GameObject centrePoint = (GameObject)Instantiate(plasmaAnchor, position, Quaternion.identity);
 
-        CreateParticles((int)amount, centrePoint);
-        placeParticles();
+        //CreateParticles((int)amount, centrePoint);
+        //placeParticles();
 
         return centrePoint;
     }
@@ -135,30 +134,30 @@ public class ParticleEmitterScript : MonoBehaviour {
         return (Particle)Instantiate(particle, position, Quaternion.identity);
     }
 
-    private void CreateParticles(int amount, GameObject anchor)
-    {
-        particles = new List<Particle>();
+    //private void CreateParticles(int amount, GameObject anchor)
+    //{
+    //    particles = new List<Particle>();
 
-        for (int i = 0; i < amount - 1; i++)
-        {
-            particles.Add((Particle)Instantiate(plasma, transform.position, Quaternion.identity));
+    //    for (int i = 0; i < amount - 1; i++)
+    //    {
+    //        particles.Add((Particle)Instantiate(plasma, transform.position, Quaternion.identity));
             
-            particles[i].transform.SetParent(anchor.transform, false);
-            particles[i].transform.localPosition = new Vector3(0, 0, 0);
-        }
-    }
+    //        particles[i].transform.SetParent(anchor.transform, false);
+    //        particles[i].transform.localPosition = new Vector3(0, 0, 0);
+    //    }
+    //}
 
-    private void placeParticles()
-    {
-        for (int i = 0; i < amount - 1; i++)
-        {
-            Vector3 newPosition = Quaternion.AngleAxis(Mathf.Acos(Random.Range(0f, 2 * Mathf.PI)), particles[i].transform.localPosition)
-                                     * new Vector3(Random.Range(-radius, radius), Random.Range(-radius, radius), 0f);
+    //private void placeParticles()
+    //{
+    //    for (int i = 0; i < amount - 1; i++)
+    //    {
+    //        Vector3 newPosition = Quaternion.AngleAxis(Mathf.Acos(Random.Range(0f, 2 * Mathf.PI)), particles[i].transform.localPosition)
+    //                                 * new Vector3(Random.Range(-radius, radius), Random.Range(-radius, radius), 0f);
 
-            particles[i].transform.localPosition = newPosition;
-            //particles[i].transform.localPosition.Set(newPosition.x, newPosition.y, newPosition.z);
-        }
-    }
+    //        particles[i].transform.localPosition = newPosition;
+    //        //particles[i].transform.localPosition.Set(newPosition.x, newPosition.y, newPosition.z);
+    //    }
+    //}
 
     void OnCollisionEnter(Collision collision)
     {

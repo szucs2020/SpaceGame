@@ -128,6 +128,18 @@ public class Player : NetworkBehaviour {
             animator.setNeutral();
         }
 
+        //switcing weapons
+        if (Input.GetKeyDown("1")) {
+            RemoveGun();
+            gameObject.AddComponent<Gun>();
+        } else if (Input.GetKeyDown("2")) {
+            RemoveGun();
+            gameObject.AddComponent<Shotgun>();
+        } else if (Input.GetKeyDown("3")) {
+            RemoveGun();
+            gameObject.AddComponent<PlasmaCannon>();
+        }
+
         //OLD CODE: Flipping based on movement. Will probably still need this for sprint.
         ////flip sprite
         //if (movementAxis.x > 0 && !facingRight) {
@@ -229,6 +241,16 @@ public class Player : NetworkBehaviour {
     private void flip() {
         facingRight = !facingRight;
         syncFlip.CmdSyncFlip(facingRight);
+    }
+
+    private void RemoveGun() {
+        if (GetComponent<Gun>() != null) {
+            Destroy(GetComponent<Gun>());
+        } else if (GetComponent<Shotgun>() != null) {
+            Destroy(GetComponent<Shotgun>());
+        } else if (GetComponent<PlasmaCannon>() != null) {
+            Destroy(GetComponent<PlasmaCannon>());
+        }
     }
 
     //getters & setters

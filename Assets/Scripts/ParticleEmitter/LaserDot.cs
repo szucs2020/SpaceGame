@@ -2,7 +2,9 @@
 using System.Collections;
 
 public class LaserDot : Particle {
+
     public Vector2 direction;
+    public Player bulletOwner;
 
 	// Use this for initialization
 	void Start () {
@@ -35,5 +37,19 @@ public class LaserDot : Particle {
     private void destroy()
     {
         Destroy(this.gameObject, lifeSpan);
+    }
+
+    void OnTriggerEnter2D(Collider2D col) {
+        print(LayerMask.LayerToName(col.gameObject.layer));
+        if (LayerMask.LayerToName(col.gameObject.layer) == "Ground") {
+            Destroy(gameObject);
+        } else if (LayerMask.LayerToName(col.gameObject.layer) == "Player") {
+
+            if (col.gameObject.GetComponent<Player>().netId != bulletOwner.netId) {
+                //do damage to the other player and destroy the bullet
+                col.gameObject.GetComponent<Health>().Damage(5.0f);
+                Destroy(gameObject);
+            }
+        }
     }
 }

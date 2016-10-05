@@ -12,7 +12,8 @@ GameObject:
   - 50: {fileID: 5079530}
   - 114: {fileID: 11450506}
   - 114: {fileID: 11406402}
-  m_Layer: 0
+  - 114: {fileID: 11474576}
+  m_Layer: 11
   m_Name: PlasmaAnchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,7 +76,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TransformSyncMode: 2
-  m_SendInterval: 0.1
+  m_SendInterval: 0
   m_SyncRotationAxis: 3
   m_RotationSyncCompression: 0
   m_SyncSpin: 0
@@ -115,6 +116,20 @@ MonoBehaviour:
     i15: 102
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
+--- !u!114 &11474576
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 158854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75dc2f05ab4bd7e47af3f83c6f23e0b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  amount: 50
+  radius: 2
+  plasma: {fileID: 11451478, guid: 3493e1059c7d24843a98bd1e433326ea, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

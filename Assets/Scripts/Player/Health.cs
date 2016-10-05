@@ -15,7 +15,7 @@ public class Health : NetworkBehaviour {
 
     public void Start() {
         HealthBar = transform.FindChild("HealthCanvas").FindChild("HealthBG").FindChild("Health").GetComponent<Image>();
-        health = maxHealth - 50;
+        health = maxHealth;
         UpdateHealthBar(health);
     }
 
@@ -33,7 +33,6 @@ public class Health : NetworkBehaviour {
         if (this.health <= 0) {
             NetworkServer.Destroy(gameObject);
         }
-
     }
 
     //updates character health bar

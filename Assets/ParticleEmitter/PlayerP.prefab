@@ -46,7 +46,8 @@ GameObject:
   - 114: {fileID: 11477352}
   - 114: {fileID: 11419128}
   - 114: {fileID: 11409310}
-  - 114: {fileID: 11495698}
+  - 114: {fileID: 11401724}
+  - 114: {fileID: 11474310}
   m_Layer: 9
   m_Name: PlayerP
   m_TagString: player
@@ -369,6 +370,22 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &11401724
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 129964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 427ebd40321cbd443861efc333a17c75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rpm: 450
+  bulletSpeed: 45
+  bulletPrefab: {fileID: 0}
+  spawn: {fileID: 430028}
+  pEmitter: {fileID: 11459930, guid: 6ef9c3c6eae2b0849a687bcc2387ef46, type: 2}
 --- !u!114 &11404222
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -452,6 +469,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36ae1539bfbc38b43adabd385c49fceb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11474310
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 129964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0c2fede26e298540805634aae4fddb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  laserDot: {fileID: 11432110, guid: 2b4f4802906a7e84b9f714b833edf6a9, type: 2}
+  plasma: {fileID: 11451478, guid: 3493e1059c7d24843a98bd1e433326ea, type: 2}
+  plasmaAnchor: {fileID: 158854, guid: 110945707df2da5428ae885afa176a66, type: 2}
 --- !u!114 &11477352
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -463,6 +494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87b71df98c00bf447af1fb7b558cc767, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
 --- !u!114 &11492310
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -495,22 +527,6 @@ MonoBehaviour:
     i15: 254
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
---- !u!114 &11495698
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 129964}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 427ebd40321cbd443861efc333a17c75, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rpm: 450
-  bulletSpeed: 45
-  bulletPrefab: {fileID: 0}
-  spawn: {fileID: 430028}
-  pEmitter: {fileID: 11459930, guid: 6ef9c3c6eae2b0849a687bcc2387ef46, type: 2}
 --- !u!212 &21244870
 SpriteRenderer:
   m_ObjectHideFlags: 1
