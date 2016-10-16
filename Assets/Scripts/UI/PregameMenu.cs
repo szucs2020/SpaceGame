@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PregameMenu : MonoBehaviour {
     public Sprite blueHead;
@@ -18,16 +19,8 @@ public class PregameMenu : MonoBehaviour {
     public Sprite greenTorso;
     public Sprite greenLegs;
 
-
-    // Use this for initialization
-    void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    public LobbyPlayer player;
+    public int slot;
 
     public void ChangeTeam (string team) {
         GameObject head = transform.Find("Head").gameObject;
@@ -52,4 +45,14 @@ public class PregameMenu : MonoBehaviour {
             legs.GetComponent<SpriteRenderer>().sprite = greenLegs;
         }
     }
+
+    public void onClickReady() {
+        player.SendReadyToBeginMessage();
+    }
+
+    public void setPlayer(LobbyPlayer p) {
+        this.player = p;
+        transform.Find("Ready").GetComponent<Button>().interactable = true;
+    }
+
 }
