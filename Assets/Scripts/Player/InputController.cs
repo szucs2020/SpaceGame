@@ -37,14 +37,38 @@ public class InputController : NetworkBehaviour {
         player.setbuttonHeldJump(Input.GetButton("Jump"));
         player.setbuttonReleasedJump(Input.GetButtonUp("Jump"));
 
-        player.setbuttonHeldAimLeft(Input.GetButton("AimLeft"));
-        player.setbuttonHeldAimRight(Input.GetButton("AimRight"));
-        player.setbuttonHeldAimUp(Input.GetButton("AimUp"));
-        player.setbuttonHeldAimDown(Input.GetButton("AimDown"));
-
         //fix button pressed/held for the xbox controller
         if (usingGamepad){
-			if (Input.GetAxis("Shoot") != 0) {
+
+            print("Vert: " + Input.GetAxisRaw("RightStickVertical"));
+            print("Horiz: " + Input.GetAxisRaw("RightStickHorizontal"));
+
+            //gamepad right stick
+            if (Input.GetAxisRaw("RightStickVertical") < -0.50) {
+                player.setbuttonHeldAimUp(true);
+            } else {
+                player.setbuttonHeldAimUp(false);
+            }
+
+            if (Input.GetAxisRaw("RightStickVertical") > 0.50) {
+                player.setbuttonHeldAimDown(true);
+            } else {
+                player.setbuttonHeldAimDown(false);
+            }
+
+            if (Input.GetAxisRaw("RightStickHorizontal") > 0.50) {
+                player.setbuttonHeldAimRight(true);
+            } else {
+                player.setbuttonHeldAimRight(false);
+            }
+
+            if (Input.GetAxisRaw("RightStickHorizontal") < -0.50) {
+                player.setbuttonHeldAimLeft(true);
+            } else {
+                player.setbuttonHeldAimLeft(false);
+            }
+
+            if (Input.GetAxis("Shoot") != 0) {
 				player.setbuttonHeldShoot(true);
 				if (released){
 					player.setbuttonPressedShoot(true);
@@ -57,6 +81,12 @@ public class InputController : NetworkBehaviour {
 				released = true;
 			}
 		} else {
+
+            player.setbuttonHeldAimLeft(Input.GetButton("AimLeft"));
+            player.setbuttonHeldAimRight(Input.GetButton("AimRight"));
+            player.setbuttonHeldAimUp(Input.GetButton("AimUp"));
+            player.setbuttonHeldAimDown(Input.GetButton("AimDown"));
+
             player.setbuttonPressedShoot(Input.GetButtonDown("ShootButton"));
             player.setbuttonHeldShoot(Input.GetButton("ShootButton"));
         }

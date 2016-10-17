@@ -22,18 +22,10 @@ public class Lobby : MonoBehaviour {
     private int playerTeam = 0;
     private bool ready = false;
 
+    public LobbyPlayer player;
+    public int slot;
 
-    // Use this for initialization
-    void Start () {
-        
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
-    public void ChangeTeam () {
+    public void ChangeTeam() {
         GameObject head = transform.Find("Head").gameObject;
         GameObject torso = transform.Find("Torso").gameObject;
         GameObject legs = transform.Find("Legs").gameObject;
@@ -56,7 +48,7 @@ public class Lobby : MonoBehaviour {
                 torso.GetComponent<SpriteRenderer>().sprite = greenTorso;
                 legs.GetComponent<SpriteRenderer>().sprite = greenLegs;
                 playerTeam = 3;
-                break; 
+                break;
             case 3:
                 head.GetComponent<SpriteRenderer>().sprite = blueHead;
                 torso.GetComponent<SpriteRenderer>().sprite = blueTorso;
@@ -72,8 +64,22 @@ public class Lobby : MonoBehaviour {
         }
     }
 
-    public void Ready() {
-        GameObject button = transform.Find("Ready Button").gameObject;
+    public void onClickReady() {
+        if (player.readyToBegin) {
+            player.SendNotReadyToBeginMessage();
+        } else {
+            player.SendReadyToBeginMessage();
+        }
+    }
+
+    public void setPlayer(LobbyPlayer p) {
+        this.player = p;
+        transform.Find("Ready").GetComponent<Button>().gameObject.SetActive(true);
+        transform.Find("Change Team").GetComponent<Button>().gameObject.SetActive(true);
+    }
+
+    public void ChangeReadyColour() {
+        GameObject button = transform.Find("Ready").gameObject;
         Image image = button.GetComponent<Image>();
         Text text = button.transform.Find("Text").GetComponent<Text>();
 
@@ -85,8 +91,7 @@ public class Lobby : MonoBehaviour {
 
             text.text = "NOT READY";
             teamButton.interactable = true;
-        }
-        else {
+        } else {
             Color32 color = new Color32(0, 216, 0, 255);
             image.color = color;
 

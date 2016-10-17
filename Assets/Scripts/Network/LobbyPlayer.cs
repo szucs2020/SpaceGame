@@ -12,12 +12,15 @@ public class LobbyPlayer : NetworkLobbyPlayer {
         StartCoroutine("Setup");
     }
 
+    public override void OnClientReady(bool readyState) {
+
+    }
+
     //wait a frame to setup stuff because unity sucks
     IEnumerator Setup() {
         yield return new WaitForFixedUpdate();
-        print("slot: " + slot);
         if (isLocalPlayer) {
-            GameObject.Find("GameLobby").transform.Find((slot + 1).ToString()).GetComponent<PregameMenu>().setPlayer(this);
+            GameObject.Find("GameLobby").transform.Find((slot + 1).ToString()).GetComponent<Lobby>().setPlayer(this);
         }
     }
 }

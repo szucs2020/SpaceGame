@@ -94,7 +94,7 @@ public class Player : NetworkBehaviour {
         currentPosition = 2;
     }
 
-	void Update() {
+    void Update() {
 
         if (!isLocalPlayer) {
             return;
@@ -105,8 +105,8 @@ public class Player : NetworkBehaviour {
 
         //Aiming - TEMPORARY: This will probably change into a function that checks if the player is using controller or keyboard.
         //Flip if J or L are pressed.
-        if(buttonHeldAimLeft) {
-            if(facingRight) {
+        if (buttonHeldAimLeft) {
+            if (facingRight) {
                 flip();
             }
         } else if (buttonHeldAimRight) {
@@ -116,7 +116,7 @@ public class Player : NetworkBehaviour {
         }
 
         //Change aiming angle based on which keys are pressed.
-        if(buttonHeldAimUp && buttonHeldAimLeft || buttonHeldAimUp && buttonHeldAimRight) {
+        if (buttonHeldAimUp && buttonHeldAimLeft || buttonHeldAimUp && buttonHeldAimRight) {
             animator.setUpTilt();
         } else if (buttonHeldAimDown && buttonHeldAimLeft || buttonHeldAimDown && buttonHeldAimRight) {
             animator.setDownTilt();
@@ -125,6 +125,8 @@ public class Player : NetworkBehaviour {
         } else if (buttonHeldAimDown) {
             animator.setDown();
         } else if (buttonHeldAimLeft || buttonHeldAimRight) {
+            animator.setNeutral();
+        } else {
             animator.setNeutral();
         }
 
