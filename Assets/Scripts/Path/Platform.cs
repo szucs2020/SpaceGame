@@ -18,4 +18,12 @@ public class Platform : MonoBehaviour {
 		left = transform.position.x - renderer.bounds.size.x / 2;
 		right = transform.position.x + renderer.bounds.size.x / 2;
 	}
+
+	public float getLeft() {
+		return left;
+	}
+
+	public float getRight() {
+		return right;
+	}
 }

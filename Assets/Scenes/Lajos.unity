@@ -238,11 +238,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 497046, guid: 6247798682e1b3541bf621c790619a28, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -94.3
+      value: -164.1
       objectReference: {fileID: 0}
     - target: {fileID: 497046, guid: 6247798682e1b3541bf621c790619a28, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -2.9
+      value: 13.4
       objectReference: {fileID: 0}
     - target: {fileID: 497046, guid: 6247798682e1b3541bf621c790619a28, type: 2}
       propertyPath: m_LocalPosition.z
@@ -333,10 +333,11 @@ MonoBehaviour:
   m_LogLevel: 2
   m_PlayerPrefab: {fileID: 160062, guid: 174b0750537fee9418b18b0176013b60, type: 2}
   m_AutoCreatePlayer: 1
-  m_PlayerSpawnMethod: 1
+  m_PlayerSpawnMethod: 0
   m_OfflineScene: Lajos
   m_OnlineScene: Lajos
-  m_SpawnPrefabs: []
+  m_SpawnPrefabs:
+  - {fileID: 160062, guid: 174b0750537fee9418b18b0176013b60, type: 2}
   m_CustomConfig: 0
   m_MaxConnections: 4
   m_ConnectionConfig:
@@ -417,7 +418,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47c79c7f044a51e47bcfff790f1b145a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerPrefab: {fileID: 160062, guid: 174b0750537fee9418b18b0176013b60, type: 2}
+  PlayerPrefab: {fileID: 0}
   AIPrefab: {fileID: 182724, guid: 69116429202227e46a92792dc541d93e, type: 2}
   PlayerSpawnPoint: {fileID: 0}
   AISpawnPoint: {fileID: 0}
@@ -492,8 +493,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 668525910}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -126, y: 5.9, z: 0}
-  m_LocalScale: {x: 40, y: 1, z: 1}
+  m_LocalPosition: {x: -155.1, y: 5.9, z: 0}
+  m_LocalScale: {x: 100, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 1340466233}
@@ -632,7 +633,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 926410213}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 91.3, y: 9.3, z: 0}
+  m_LocalPosition: {x: 86.3, y: 9.3, z: 0}
   m_LocalScale: {x: 50, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -837,8 +838,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   neighbours:
-  - {fileID: 1800697960}
   - {fileID: 668525911}
+  - {fileID: 1800697960}
   nodes: []
 --- !u!61 &1455975391
 BoxCollider2D:
@@ -896,11 +897,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 497046, guid: 6247798682e1b3541bf621c790619a28, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 42.6
+      value: -70.6
       objectReference: {fileID: 0}
     - target: {fileID: 497046, guid: 6247798682e1b3541bf621c790619a28, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 15.4
+      value: 1.1
       objectReference: {fileID: 0}
     - target: {fileID: 497046, guid: 6247798682e1b3541bf621c790619a28, type: 2}
       propertyPath: m_LocalPosition.z
@@ -1024,9 +1025,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   neighbours:
-  - {fileID: 926410217}
   - {fileID: 1455975389}
-  - {fileID: 2116840462}
+  - {fileID: 926410217}
   nodes: []
 --- !u!1 &2116840461
 GameObject:
@@ -1054,7 +1054,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2116840461}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 20, y: 24.9, z: 0}
+  m_LocalPosition: {x: 19.5, y: 24.9, z: 0}
   m_LocalScale: {x: 50, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
