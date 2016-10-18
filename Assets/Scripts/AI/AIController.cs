@@ -208,9 +208,17 @@ public class AIController : MonoBehaviour {
 		} else {
 			AI.setMovementAxis (new Vector2 (1, 1));
 		}
-
-		if (canJump && Mathf.Abs(target.x - transform.position.x) < 20f && target.y > transform.position.y - AIHeight + 3) {
+		//Nodes are # units above the ground but I added four because the player isn't always touching the ground
+		if (canJump && Mathf.Abs (target.x - transform.position.x) < 25f && target.y > transform.position.y - AIHeight + 4) {
+			//print ("call jump helper");
 			JumpingHelper ();
+		} else {
+			amountOfTimePassed = 0f;
+			firstStep = true;
+			secondStep = false;
+			thirdStep = false;
+			finalStep = false;
+			once = false;
 		}
 	}
 
