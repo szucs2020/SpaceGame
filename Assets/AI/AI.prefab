@@ -167,6 +167,7 @@ GameObject:
   - 114: {fileID: 11481536}
   - 114: {fileID: 11445284}
   - 114: {fileID: 11476720}
+  - 114: {fileID: 11413580}
   m_Layer: 9
   m_Name: AI
   m_TagString: player
@@ -228,7 +229,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 199036}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.4, y: -34.4, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -515,6 +516,17 @@ MonoBehaviour:
   target: {fileID: 0}
   nodes: []
   closedNodes: []
+--- !u!114 &11413580
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 182724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c05e596a5ed43454da4fa746405fd351, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11434840
 MonoBehaviour:
   m_ObjectHideFlags: 1

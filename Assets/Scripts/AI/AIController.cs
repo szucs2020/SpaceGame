@@ -176,6 +176,7 @@ public class AIController : MonoBehaviour {
 
 			if (path.Count == 0) {
 				target = null;
+				hasPath = false;
 				return;
 			}
 
