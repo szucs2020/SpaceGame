@@ -6,7 +6,7 @@ public class AIController : MonoBehaviour {
 	private AStar pathFinder;
 	private List<Node> path;
 	public Node target;
-	private AIPlayer AI;
+	private Player AI;
 	private GameObject player;
 	private Player playerComponent;
 	private Controller2D controller;
@@ -15,12 +15,15 @@ public class AIController : MonoBehaviour {
 	private float AIHeight = 0f;
 	private bool hasPath = true;
 
+	private Platform savedPlatform = null;
+
 	// Use this for initialization
 	void Start () {
 		pathFinder = this.GetComponent<AStar> ();
 		controller = this.GetComponent<Controller2D> ();
 
-		AI = transform.GetComponent<AIPlayer> ();
+		AI = transform.GetComponent<Player> ();
+		AI.setIsAI (true);
 
 		player = GameObject.Find ("Player(Clone)");
 		path = pathFinder.FindShortestPath (player.transform.position);
@@ -33,6 +36,17 @@ public class AIController : MonoBehaviour {
 		AIHeight = transform.GetComponent<BoxCollider2D> ().bounds.size.y;
 	}
 
+	/*
+	 * 
+	 * 
+	 * 
+	 * 
+	 * PUT IF AI AND PLAYER ARE ON SAME PLATFORM AND AI ON THE EDGE
+	 * 
+	 * 
+	 * 
+	 */
+
 	private double timedelta = 0;
 	void Update () {
         timedelta += Time.deltaTime;
@@ -40,22 +54,30 @@ public class AIController : MonoBehaviour {
 			return;
 		}
 
+		if (savedPlatform == null) {
+			savedPlatform = AI.currentPlatform.GetComponent<Platform> ();
+		} else if (savedPlatform.transform != AI.currentPlatform) {
+			savedPlatform = AI.currentPlatform.GetComponent<Platform> ();
+		}
+
 		if (AI.currentPlatform == playerComponent.currentPlatform) {
-			//print (transform.position.x + "   " + AI.currentPlatform.GetComponent<Platform> ().getRight());
 			path.Clear ();
 			hasPath = false;
 			target = null;
-			print("same platform");
 
 			AI.setbuttonPressedJump (false);
-			AI.setbuttonReleasedJump (true);
+			AI.setbuttonReleasedJump (false);
+
+			if (Mathf.Abs (transform.position.x - AI.currentPlatform.GetComponent<Platform>().getRight()) < 10f) {
+				print ("near right edge");
+			}
 
             float variablePos = Random.Range(-5f, 5f);
 
 			if (player.transform.position.x < transform.position.x && transform.position.x - player.transform.position.x < 50f) {
-				Move (player.transform.position + new Vector3 (variablePos + 20f, -playerHeight + 3, 0), false); //Add a random x value so it doesn't always stay the same distance
+				Move (player.transform.position + new Vector3 (variablePos + 40f, -playerHeight + 3, 0), false); //Add a random x value so it doesn't always stay the same distance
 			} else if (player.transform.position.x > transform.position.x && player.transform.position.x - transform.position.x < 50f) {
-				Move (player.transform.position - new Vector3 (variablePos + 20f, -playerHeight + 3, 0), false); //Add a random x value so it doesn't always stay the same distance
+				Move (player.transform.position - new Vector3 (variablePos + 40f, -playerHeight + 3, 0), false); //Add a random x value so it doesn't always stay the same distance
 			}
 		} else if (AI.currentPlatform != playerComponent.currentPlatform) {
 			bool onNeighbourPlatform = false;
@@ -73,22 +95,36 @@ public class AIController : MonoBehaviour {
 				hasPath = false;
 				target = null;
 				AI.setbuttonPressedJump (false);
-				AI.setbuttonReleasedJump (true);
+				AI.setbuttonReleasedJump (false);
 
 				float variablePos = Random.Range(-5f, 5f);
 
-				if (player.transform.position.x < transform.position.x && transform.position.x - player.transform.position.x < 40f) { //If within a certain distance stop
+				if (player.transform.position.x < transform.position.x && transform.position.x - player.transform.position.x < 30f) { //If within a certain distance stop
 					AI.setMovementAxis (new Vector2 (0, 0));
-				} else if (player.transform.position.x > transform.position.x && player.transform.position.x - transform.position.x < 40f) { //If within a certain distance stop
+				} else if (player.transform.position.x > transform.position.x && player.transform.position.x - transform.position.x < 30f) { //If within a certain distance stop
 					AI.setMovementAxis (new Vector2 (0, 0));
-				} else if (player.transform.position.x < transform.position.x && transform.position.x - player.transform.position.x > 40f) { //If not within a certain distance continue
-					print ("TO THE LEFT");
+				} else if (player.transform.position.x < transform.position.x && transform.position.x - player.transform.position.x > 30f) { //If not within a certain distance continue
 					//nodes[1] represents the second(last) node on platform
-					Move(playerComponent.currentPlatform.GetComponent<Platform> ().nodes[1].transform.position, true);
-				} else if (player.transform.position.x > transform.position.x && player.transform.position.x - transform.position.x > 40f) { //If not within a certain distance continue
-					print ("TO THE RIGHT");
+					/*
+					 * 
+					 * Put this stuff if the player is on the same platform
+					 * 
+					 */
+					//print (transform.position.x - savedPlatform.getLeft ());
+					if (transform.position.x - savedPlatform.getLeft () < 15f) {
+						Move (playerComponent.currentPlatform.GetComponent<Platform> ().nodes [1].transform.position, true);
+					} else {
+						Move (playerComponent.currentPlatform.GetComponent<Platform> ().nodes [1].transform.position, false);
+					}
+				} else if (player.transform.position.x > transform.position.x && player.transform.position.x - transform.position.x > 30f) { //If not within a certain distance continue
 					//nodes[0] represents the first node on platform
-					Move(playerComponent.currentPlatform.GetComponent<Platform> ().nodes[0].transform.position, true);
+
+					//print (savedPlatform.getRight () - transform.position.x);
+					if (savedPlatform.getRight () - transform.position.x < 15f) {
+						Move(playerComponent.currentPlatform.GetComponent<Platform> ().nodes[0].transform.position, true);
+					} else {
+						Move(playerComponent.currentPlatform.GetComponent<Platform> ().nodes[0].transform.position, false);
+					}
 				}
 			} else { //target represents a node on the platform
 				if (!hasPath) {
@@ -100,7 +136,7 @@ public class AIController : MonoBehaviour {
 
 				if (target != null && target.transform.parent == AI.currentPlatform) {
 					AI.setbuttonPressedJump (false);
-					AI.setbuttonReleasedJump (true);
+					AI.setbuttonReleasedJump (false);
 					WalkOnPlatform ();
 				} else if (target != null && target.transform.parent != AI.currentPlatform) {
 					WalkOnPlatform();
@@ -132,21 +168,6 @@ public class AIController : MonoBehaviour {
 		/*if (path.Count != 0) {
 			target = path [0];
 			path.RemoveAt (0);
-		}*/
-
-		/*MoveTheAI.onInitialize ();
-		status = MoveTheAI.tick ();
-
-		if (status == Status.BH_SUCCESS) {
-			if (path.Count == 0) {
-				target = null;
-				AI.setMovementAxis (new Vector2(0, 0));
-				return;
-			}
-
-			target = path [0];
-			path.RemoveAt (0);
-			memory.setTarget (target);
 		}*/
 	}
 
@@ -188,7 +209,7 @@ public class AIController : MonoBehaviour {
 			AI.setMovementAxis (new Vector2 (1, 1));
 		}
 
-		if (canJump && Mathf.Abs(target.x - transform.position.x) < 45f && target.y > transform.position.y - AIHeight + 3) {
+		if (canJump && Mathf.Abs(target.x - transform.position.x) < 20f && target.y > transform.position.y - AIHeight + 3) {
 			JumpingHelper ();
 		}
 	}
@@ -203,39 +224,73 @@ public class AIController : MonoBehaviour {
 	private bool secondStep = false;
 	private bool thirdStep = false;
 	private bool finalStep = false;
+	private bool once = false;
 	public void JumpingHelper() {
 		amountOfTimePassed += Time.deltaTime;
 
 		if (firstStep) {
-			//Debug.Log ("1 " + amountOfTimePassed);
-			AI.setbuttonPressedJump (true);
+			//Debug.Log ("1 ");
+
+			if (!once) {
+				AI.setbuttonPressedJump (true);
+				once = true;
+			} else {
+				AI.setbuttonPressedJump (false);
+			}
 			AI.setbuttonReleasedJump (false);
 
-			firstStep = false;
-			secondStep = true;
+
+			if (amountOfTimePassed > 0.3f) {
+				firstStep = false;
+				secondStep = true;
+				once = false;
+			}
 		} else if (secondStep) {
-			//Debug.Log ("2 " + amountOfTimePassed);
-			if (amountOfTimePassed > 0.5f) {
-				AI.setbuttonPressedJump (false);
+			//Debug.Log ("2 ");
+
+			if (!once) {
 				AI.setbuttonReleasedJump (true);
-				//AI.setbuttonHeldJump (true);
+				AI.setbuttonPressedJump (false);
+				once = true;
+			} else {
+				AI.setbuttonReleasedJump (false);
+				AI.setbuttonPressedJump (false);
 				secondStep = false;
 				thirdStep = true;
+				once = false;
 			}
+
+			/*AI.setbuttonPressedJump (false);
+			if (amountOfTimePassed > 0.4f) {
+				secondStep = false;
+				thirdStep = true;
+				once = false;
+			}*/
 		} else if (thirdStep) {
-			//Debug.Log ("3 " + amountOfTimePassed);
-			AI.setbuttonPressedJump (true);
+			//Debug.Log ("3 ");
+
+			if (!once) {
+				AI.setbuttonPressedJump (true);
+				once = true;
+			} else {
+				AI.setbuttonPressedJump (false);
+			}
+
 			AI.setbuttonReleasedJump (false);
-			thirdStep = false;
+			if (amountOfTimePassed > 0.7f) {
+				thirdStep = false;
+				once = false;
+				finalStep = true;
+			}
 		} else {
-			if(amountOfTimePassed > 0.9f) {
-				//Debug.Log ("4 " + amountOfTimePassed);
+			//if(amountOfTimePassed > 0.9f) {
+				//Debug.Log ("4 ");
 				AI.setbuttonPressedJump (false);
 				AI.setbuttonReleasedJump (true);
 				finalStep = false;
 				firstStep = true;
 				amountOfTimePassed = 0f;
-			}
+			//}
 		}
 	}
 

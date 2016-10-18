@@ -58,13 +58,14 @@ public class Player : NetworkBehaviour {
 
 	//For PathGeneration
 	public Transform currentPlatform;
+	private bool isAI = false;
 
 	void Start() {
 
         syncFlip = GetComponent<SyncFlip>();
         syncFlip.player = this;
 
-        if (!isLocalPlayer) {
+		if (!isLocalPlayer && !isAI) {
             return;
         }
 
@@ -96,7 +97,7 @@ public class Player : NetworkBehaviour {
 
     void Update() {
 
-        if (!isLocalPlayer) {
+		if (!isLocalPlayer && !isAI) {
             return;
         }
 
@@ -189,7 +190,6 @@ public class Player : NetworkBehaviour {
 				jump = 2;
 			}
 		} 
-
 		else if (buttonReleasedJump) {
 			decelerating = true;
             //syncPlayer.CmdSyncJetpack(false);
@@ -299,4 +299,8 @@ public class Player : NetworkBehaviour {
     public int getCurrentPosition() {
         return this.currentPosition;
     }
+
+	public void setIsAI(bool isAI) {
+		this.isAI = isAI;
+	}
 }

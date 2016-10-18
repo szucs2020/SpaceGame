@@ -158,7 +158,6 @@ GameObject:
   - 82: {fileID: 8243644}
   - 114: {fileID: 11487556}
   - 114: {fileID: 11459676}
-  - 114: {fileID: 11423894}
   - 114: {fileID: 11461866}
   - 114: {fileID: 11495818}
   - 114: {fileID: 11434840}
@@ -167,6 +166,7 @@ GameObject:
   - 114: {fileID: 11494380}
   - 114: {fileID: 11481536}
   - 114: {fileID: 11445284}
+  - 114: {fileID: 11476720}
   m_Layer: 9
   m_Name: AI
   m_TagString: player
@@ -515,21 +515,6 @@ MonoBehaviour:
   target: {fileID: 0}
   nodes: []
   closedNodes: []
---- !u!114 &11423894
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 182724}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b8634365f0291544ac4f90744530ff6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rpm: 450
-  bulletSpeed: 45
-  bulletPrefab: {fileID: 115582, guid: bf279894d63713b47a453d27c95c68bd, type: 2}
-  spawn: {fileID: 410624}
 --- !u!114 &11434840
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -584,7 +569,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 182724}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2d81c33012cbb3b47978e9fa2615c801, type: 3}
   m_Name: 
@@ -631,6 +616,22 @@ MonoBehaviour:
     i15: 62
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
+--- !u!114 &11476720
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 182724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fdd830ab4de5eb47ad279c0671c5ef4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rpm: 450
+  bulletSpeed: 45
+  bulletPrefab: {fileID: 0}
+  spawn: {fileID: 410624}
+  pEmitter: {fileID: 11459930, guid: 6ef9c3c6eae2b0849a687bcc2387ef46, type: 2}
 --- !u!114 &11480158
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -664,7 +665,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 182724}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5c942e50fa8c96943b72d1c099ede168, type: 3}
   m_Name: 
@@ -769,6 +770,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faccb40e33fa2bd409db1b5deb6d15f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {fileID: 0}
 --- !u!114 &11495818
 MonoBehaviour:
   m_ObjectHideFlags: 1
