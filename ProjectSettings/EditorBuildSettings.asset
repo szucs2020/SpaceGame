@@ -15,3 +15,5 @@ EditorBuildSettings:
     path: Assets/Scenes/ParticleEmitter.unity
   - enabled: 1
     path: Assets/Scenes/AStarTest.unity
+  - enabled: 1
+    path: Assets/Scenes/Pregame Menu.unity

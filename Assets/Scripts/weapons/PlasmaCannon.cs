@@ -12,6 +12,7 @@ public class PlasmaCannon : Gun
     void Start()
     {
         init();
+        pEmitter = GetComponent<ParticleEmitterScript>();
     }
 
 
@@ -25,10 +26,10 @@ public class PlasmaCannon : Gun
 
         NetworkServer.Spawn(plasmaBall);
 
-        for (int i = 0; i < plasmaBall.transform.childCount; i++)
-        {
-            NetworkServer.Spawn(plasmaBall.transform.GetChild(i).transform.gameObject);
-        }
+        //for (int i = 0; i < plasmaBall.transform.childCount; i++)
+        //{
+        //    NetworkServer.Spawn(plasmaBall.transform.GetChild(i).transform.gameObject);
+        //}
     }
 
     public override void shoot()

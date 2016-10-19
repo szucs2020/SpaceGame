@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 [RequireComponent (typeof (Controller2D))]
 
@@ -16,8 +17,9 @@ public class Player : NetworkBehaviour {
 	public float maxFallSpeed = -110f;
 
 	private Gun gun;
-    private SyncPlayer syncPlayer;
+    private SyncFlip syncFlip;
 
+    //movement variables
     float gravity;
 	float maxJumpVelocity;
 	float minJumpVelocity;
@@ -56,17 +58,18 @@ public class Player : NetworkBehaviour {
 
 	//For PathGeneration
 	public Transform currentPlatform;
-
-	void Awake(){
-        syncPlayer = GetComponent<SyncPlayer>();
-        networkManager = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<NetworkManager>();
-    }
+	private bool isAI = false;
 
 	void Start() {
 
-        if (!isLocalPlayer) {
+        syncFlip = GetComponent<SyncFlip>();
+        syncFlip.player = this;
+
+		if (!isLocalPlayer && !isAI) {
             return;
         }
+
+        networkManager = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<NetworkManager>();
 
         controller = GetComponent<Controller2D> ();
         audio = GetComponent<AudioSource>();
@@ -92,9 +95,9 @@ public class Player : NetworkBehaviour {
         currentPosition = 2;
     }
 
-	void Update() {
+    void Update() {
 
-        if (!isLocalPlayer) {
+		if (!isLocalPlayer && !isAI) {
             return;
         }
 
@@ -103,8 +106,8 @@ public class Player : NetworkBehaviour {
 
         //Aiming - TEMPORARY: This will probably change into a function that checks if the player is using controller or keyboard.
         //Flip if J or L are pressed.
-        if(buttonHeldAimLeft) {
-            if(facingRight) {
+        if (buttonHeldAimLeft) {
+            if (facingRight) {
                 flip();
             }
         } else if (buttonHeldAimRight) {
@@ -114,7 +117,7 @@ public class Player : NetworkBehaviour {
         }
 
         //Change aiming angle based on which keys are pressed.
-        if(buttonHeldAimUp && buttonHeldAimLeft || buttonHeldAimUp && buttonHeldAimRight) {
+        if (buttonHeldAimUp && buttonHeldAimLeft || buttonHeldAimUp && buttonHeldAimRight) {
             animator.setUpTilt();
         } else if (buttonHeldAimDown && buttonHeldAimLeft || buttonHeldAimDown && buttonHeldAimRight) {
             animator.setDownTilt();
@@ -124,6 +127,20 @@ public class Player : NetworkBehaviour {
             animator.setDown();
         } else if (buttonHeldAimLeft || buttonHeldAimRight) {
             animator.setNeutral();
+        } else {
+            animator.setNeutral();
+        }
+
+        //switcing weapons
+        if (Input.GetKeyDown("1")) {
+            RemoveGun();
+            gameObject.AddComponent<Gun>();
+        } else if (Input.GetKeyDown("2")) {
+            RemoveGun();
+            gameObject.AddComponent<Shotgun>();
+        } else if (Input.GetKeyDown("3")) {
+            RemoveGun();
+            gameObject.AddComponent<PlasmaCannon>();
         }
 
         //OLD CODE: Flipping based on movement. Will probably still need this for sprint.
@@ -173,7 +190,6 @@ public class Player : NetworkBehaviour {
 				jump = 2;
 			}
 		} 
-
 		else if (buttonReleasedJump) {
 			decelerating = true;
             //syncPlayer.CmdSyncJetpack(false);
@@ -223,11 +239,23 @@ public class Player : NetworkBehaviour {
 		}
 	}
 
+    //flip 2D sprite
     private void flip() {
         facingRight = !facingRight;
-        syncPlayer.CmdSyncFlip(facingRight);
+        syncFlip.CmdSyncFlip(facingRight);
     }
 
+    private void RemoveGun() {
+        if (GetComponent<Gun>() != null) {
+            Destroy(GetComponent<Gun>());
+        } else if (GetComponent<Shotgun>() != null) {
+            Destroy(GetComponent<Shotgun>());
+        } else if (GetComponent<PlasmaCannon>() != null) {
+            Destroy(GetComponent<PlasmaCannon>());
+        }
+    }
+
+    //getters & setters
 	public bool isFacingRight(){
 		return facingRight;
 	}
@@ -271,4 +299,8 @@ public class Player : NetworkBehaviour {
     public int getCurrentPosition() {
         return this.currentPosition;
     }
+
+	public void setIsAI(bool isAI) {
+		this.isAI = isAI;
+	}
 }

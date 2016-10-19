@@ -16,7 +16,7 @@ public class AIPlayer : NetworkBehaviour {
     public float maxFallSpeed = -110f;
 
     private Gun gun;
-    private SyncPlayer syncPlayer;
+    private SyncFlip syncFlip;
 
     float gravity;
     float maxJumpVelocity;
@@ -51,7 +51,7 @@ public class AIPlayer : NetworkBehaviour {
     public Transform currentPlatform;
 
     void Awake() {
-        syncPlayer = GetComponent<SyncPlayer>();
+        syncFlip = GetComponent<SyncFlip>();
         networkManager = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<NetworkManager>();
     }
 
@@ -198,7 +198,7 @@ public class AIPlayer : NetworkBehaviour {
 
     private void flip() {
         facingRight = !facingRight;
-        syncPlayer.CmdSyncFlip(facingRight);
+        syncFlip.CmdSyncFlip(facingRight);
     }
 
     public bool isFacingRight() {

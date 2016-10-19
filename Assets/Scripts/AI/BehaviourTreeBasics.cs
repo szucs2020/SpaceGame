@@ -4,15 +4,6 @@ using System.Collections.Generic;
 
 public class BehaviourTreeBasics : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 }
 
 /***********************
@@ -91,7 +82,8 @@ public class Sequence : Composite {
 			if (m_Currentchild == m_children[m_children.Count - 1]) {
 				return Status.BH_SUCCESS;
 			}
-			m_Currentchild = m_children[++i];
+			i++;
+			m_Currentchild = m_children[i];
 		}
 
 		//return Status.BH_INVALID;

@@ -11,11 +11,12 @@ public class AStar : MonoBehaviour {
 	public List<Node> nodes;
 	public Node[] closedNodes;
 
-
 	Heap open;
 
+	private Player AI;
+
 	void Start() {
-		//StartHelper ();
+		AI = transform.GetComponent<Player> ();
 	}
 
 	private void StartHelper () {
@@ -26,25 +27,31 @@ public class AStar : MonoBehaviour {
 			nodes.Add (nodeList[i].GetComponent<Node> ());
 		}
 
-		//startNode = GameObject.Find ("1").GetComponent<Node> ();
+		if (AI.currentPlatform != null) {
+			print ("not null");
+			Platform platform = AI.currentPlatform.GetComponent<Platform> ();
+			if (Mathf.Abs ((transform.position - platform.nodes [0].transform.position).magnitude) < Mathf.Abs ((transform.position - platform.nodes [1].transform.position).magnitude)) {
+				startNode = platform.nodes [0].GetComponent<Node> ();
+			} else {
+				startNode = platform.nodes [1].GetComponent<Node> ();
+			}
+		} else {
+			print ("null");
+			float shortestDist = float.MaxValue;
+			float dist = float.MaxValue;
+			for (int i = 0; i < nodes.Count; i++) {
+				dist = (nodes [i].transform.position - transform.position).sqrMagnitude;
 
-		float shortestDist = float.MaxValue;
-		float dist = float.MaxValue;
-		for (int i = 0; i < nodes.Count; i++) {
-			dist = (nodes [i].transform.position - transform.position).sqrMagnitude;
-
-			if (dist < shortestDist) {
-				shortestDist = dist;
-				startNode = nodes [i];
+				if (dist < shortestDist) {
+					shortestDist = dist;
+					startNode = nodes [i];
+				}
 			}
 		}
 	}
 
 	public List<Node> FindShortestPath(Vector3 targetPosition) {
-
-		if (nodes.Count == 0) {
-			StartHelper ();
-		}
+		StartHelper ();
 
 		float shortestDist = float.MaxValue;
 		float dist = float.MaxValue;
