@@ -23,7 +23,6 @@ public class Lobby : MonoBehaviour {
     private bool ready = false;
 
     public LobbyPlayer player;
-    public int slot;
 
     public void ChangeTeam() {
         GameObject head = transform.Find("Head").gameObject;
