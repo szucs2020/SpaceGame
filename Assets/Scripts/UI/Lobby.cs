@@ -100,4 +100,81 @@ public class Lobby : MonoBehaviour {
 
         ready = !ready;
     }
+
+    public void ChangeGameType() {
+        Dropdown type = transform.Find("Game Type Dropdown").gameObject.GetComponent<Dropdown>();
+        GameSettings settings = FindObjectOfType<GameSettings>();
+        InputField livesInput = transform.Find("Lives Input").gameObject.GetComponent<InputField>();
+        InputField timeInput = transform.Find("Time Input").gameObject.GetComponent<InputField>();
+
+        //Retrieve the value and set the game type accordingly, enable disable fields as necessary.
+        switch (type.value) {    
+            case 0:
+                settings.gameType = GameSettings.GameType.Survival;
+                livesInput.enabled = true;
+                timeInput.interactable = false;
+                break;
+            case 1:
+                settings.gameType = GameSettings.GameType.Time;
+                livesInput.enabled = false;
+                timeInput.interactable = true;
+                break;
+        }
+    }
+
+    public void ChangeLives() {
+        InputField livesInput = transform.Find("Lives Input").gameObject.GetComponent<InputField>();
+        GameSettings settings = FindObjectOfType<GameSettings>();
+        int lives = 0;
+
+        //Retrieve the value.
+        if (livesInput.text != "") {
+            lives = int.Parse(livesInput.text);
+        }
+
+        //Check that the value entered is not 0 or negative, otherwise, default to 1.
+        if (lives <= 0) {
+            lives = 1;
+        }
+
+        settings.numLives = lives;
+    }
+
+    public void ChangeTime() {
+        InputField timeInput = transform.Find("Time Input").gameObject.GetComponent<InputField>();
+        GameSettings settings = FindObjectOfType<GameSettings>();
+        int time = 0;
+
+        //Retrieve the value.
+        if (timeInput.text != "") {
+            time = int.Parse(timeInput.text);
+        }
+
+        //Check that the value entered is not 0 or negative, otherwise, default to 1.
+        if (time <= 0) {
+            time = 1;
+        }
+
+        settings.time = time;
+    }
+
+    public void ChangeAIPlayers        () {
+        InputField aiInput = transform.Find("AI Players Input").gameObject.GetComponent<InputField>();
+        GameSettings settings = FindObjectOfType<GameSettings>();
+        int players = 0;
+
+        //Retrieve the value.
+        if (aiInput.text != "") {
+            players = int.Parse(aiInput.text);
+        }
+
+        //Check that the value entered is not negative, otherwise, default to 0.
+        if (players <= 0) {
+            players = 0;
+        } else if (players > 3) { //Apply a cap of 3 AI players. TODO: Check how many human players are present and make the cap 4 minus that.
+            players = 3;
+        }
+
+        settings.NumberOfAIPlayers = players;
+    }
 }
