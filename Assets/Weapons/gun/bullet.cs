@@ -12,6 +12,7 @@ public class bullet : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D col){
+        print(col.gameObject.tag);
 		if (LayerMask.LayerToName(col.gameObject.layer) == "Ground"){
 			Destroy(gameObject);
 		} else if (LayerMask.LayerToName(col.gameObject.layer) == "Player") {

@@ -40,7 +40,6 @@ public class LaserDot : Particle {
     }
 
     void OnTriggerEnter2D(Collider2D col) {
-        print(LayerMask.LayerToName(col.gameObject.layer));
         if (LayerMask.LayerToName(col.gameObject.layer) == "Ground") {
             Destroy(gameObject);
         } else if (LayerMask.LayerToName(col.gameObject.layer) == "Player") {

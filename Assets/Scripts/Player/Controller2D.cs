@@ -66,8 +66,16 @@ public class Controller2D : RaycastController {
 				if (hit.distance == 0) {
 					continue;
 				}
-			
-				float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
+
+                if (hit.collider.tag == "Portal")
+                {
+                    if (directionX == 1 || directionX == -1 || hit.distance == 0)
+                    {
+                        continue;
+                    }
+                }
+
+                    float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
 
 				if (i == 0 && slopeAngle <= maxClimbAngle) {
 					if (collisions.descendingSlope) {
@@ -124,6 +132,13 @@ public class Controller2D : RaycastController {
 						continue;
 					}
 				}
+                else if (hit.collider.tag == "Portal")
+                {
+                    if (directionY == 1 || directionY == -1 || hit.distance == 0)
+                    {
+                        continue;
+                    }
+                }
 					
 				//if (transform.name != "Player(Clone)") {
 				//	Debug.Log (directionY + " " + hit.distance);
