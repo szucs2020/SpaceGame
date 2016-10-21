@@ -50,4 +50,8 @@ public class SyncFlip : NetworkBehaviour {
 		transform.localScale = temp;
         health.localScale = new Vector3(scale, health.localScale.y, health.localScale.z);
     }
+
+	public bool getFacingRight() {
+		return facingRight;
+	}
 }

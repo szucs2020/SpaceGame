@@ -28,7 +28,6 @@ public class AStar : MonoBehaviour {
 		}
 
 		if (AI.currentPlatform != null) {
-			print ("not null");
 			Platform platform = AI.currentPlatform.GetComponent<Platform> ();
 			if (Mathf.Abs ((transform.position - platform.nodes [0].transform.position).magnitude) < Mathf.Abs ((transform.position - platform.nodes [1].transform.position).magnitude)) {
 				startNode = platform.nodes [0].GetComponent<Node> ();
@@ -36,7 +35,6 @@ public class AStar : MonoBehaviour {
 				startNode = platform.nodes [1].GetComponent<Node> ();
 			}
 		} else {
-			print ("null");
 			float shortestDist = float.MaxValue;
 			float dist = float.MaxValue;
 			for (int i = 0; i < nodes.Count; i++) {
