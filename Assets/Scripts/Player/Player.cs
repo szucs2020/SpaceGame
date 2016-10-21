@@ -52,6 +52,7 @@ public class Player : NetworkBehaviour {
 
     Controller2D controller;
     NetworkManager networkManager;
+    public int playerSlot;
 
 	//Temp AI Spawning
 	public GameObject AI;

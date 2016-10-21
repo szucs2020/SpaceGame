@@ -31,13 +31,19 @@ public class Health : NetworkBehaviour {
 
         //player death
         if (this.health <= 0) {
-            NetworkServer.Destroy(gameObject);
+            Die();
         }
     }
 
     //updates character health bar
     private void UpdateHealthBar(float curHealth) {
         HealthBar.fillAmount = (curHealth / this.maxHealth);
+    }
+
+    //kill player and attempt respawn
+    private void Die() {
+        NetworkServer.Destroy(this.gameObject);
+        GameObject.Find("GameSettings").GetComponent<GameController>().AttemptSpawnPlayer(this.connectionToClient, this.playerControllerId, GetComponent<Player>().playerSlot);
     }
 
 }
