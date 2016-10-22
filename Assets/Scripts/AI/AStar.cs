@@ -48,19 +48,40 @@ public class AStar : MonoBehaviour {
 		}
 	}
 
-	public List<Node> FindShortestPath(Vector3 targetPosition) {
+	public List<Node> FindShortestPath(Player targetPlayer) {
 		StartHelper ();
 
 		float shortestDist = float.MaxValue;
 		float dist = float.MaxValue;
 
-		for (int i = 0; i < nodes.Count; i++) {
+		if (targetPlayer.currentPlatform != null) {
+			Platform platform = targetPlayer.currentPlatform.GetComponent<Platform> ();
+			if (Mathf.Abs ((targetPlayer.transform.position - platform.nodes [0].transform.position).magnitude) < Mathf.Abs ((targetPlayer.transform.position - platform.nodes [1].transform.position).magnitude)) {
+				target = platform.nodes [0].GetComponent<Node> ();
+			} else {
+				target = platform.nodes [1].GetComponent<Node> ();
+			}
+		} else {
+			float shortestDistance = float.MaxValue;
+			float distance = float.MaxValue;
+			for (int i = 0; i < nodes.Count; i++) {
+				dist = (nodes [i].transform.position - transform.position).sqrMagnitude;
+
+				if (dist < shortestDist) {
+					shortestDist = dist;
+					target = nodes [i];
+				}
+			}
+		}
+
+		/*for (int i = 0; i < nodes.Count; i++) {
 			dist = (nodes [i].transform.position - targetPosition).sqrMagnitude;
 			if (dist < shortestDist) {
 				shortestDist = dist;
 				target = nodes [i];
 			}
-		}
+		}*/
+
 		//Initialize each node
 		for(int i = 0; i < nodes.Count; i++) {
 			nodes [i].Init (target);

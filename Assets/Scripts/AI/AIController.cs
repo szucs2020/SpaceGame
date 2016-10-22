@@ -26,14 +26,15 @@ public class AIController : MonoBehaviour {
 		AI.setIsAI (true);
 
 		player = GameObject.Find ("Player(Clone)");
-		path = pathFinder.FindShortestPath (player.transform.position);
-		target = path [0];
-		path.RemoveAt (0);
 
 		//Movement
 		playerComponent = player.GetComponent<Player> ();
 		playerHeight = player.GetComponent<BoxCollider2D> ().bounds.size.y;
 		AIHeight = transform.GetComponent<BoxCollider2D> ().bounds.size.y;
+
+		path = pathFinder.FindShortestPath (playerComponent);
+		target = path [0];
+		path.RemoveAt (0);
 	}
 
 	/*
@@ -110,7 +111,6 @@ public class AIController : MonoBehaviour {
 					 * Put this stuff if the player is on the same platform
 					 * 
 					 */
-					//print (transform.position.x - savedPlatform.getLeft ());
 					if (transform.position.x - savedPlatform.getLeft () < 15f) {
 						Move (playerComponent.currentPlatform.GetComponent<Platform> ().nodes [1].transform.position, true);
 					} else {
@@ -118,8 +118,6 @@ public class AIController : MonoBehaviour {
 					}
 				} else if (player.transform.position.x > transform.position.x && player.transform.position.x - transform.position.x > 30f) { //If not within a certain distance continue
 					//nodes[0] represents the first node on platform
-
-					//print (savedPlatform.getRight () - transform.position.x);
 					if (savedPlatform.getRight () - transform.position.x < 15f) {
 						Move(playerComponent.currentPlatform.GetComponent<Platform> ().nodes[0].transform.position, true);
 					} else {
@@ -128,7 +126,7 @@ public class AIController : MonoBehaviour {
 				}
 			} else { //target represents a node on the platform
 				if (!hasPath) {
-					path = pathFinder.FindShortestPath (player.transform.position);
+					path = pathFinder.FindShortestPath (playerComponent);
 					target = path [0];
 					path.RemoveAt (0);
 					hasPath = true;
@@ -209,9 +207,8 @@ public class AIController : MonoBehaviour {
 		} else {
 			AI.setMovementAxis (new Vector2 (1, 1));
 		}
-		//Nodes are # units above the ground but I added four because the player isn't always touching the ground
+		//Nodes are 3 units above the ground but I added 4 because the player isn't always touching the ground
 		if (canJump && Mathf.Abs (target.x - transform.position.x) < 25f && target.y > transform.position.y - AIHeight + 4) {
-			//print ("call jump helper");
 			JumpingHelper ();
 		} else {
 			amountOfTimePassed = 0f;
@@ -248,7 +245,6 @@ public class AIController : MonoBehaviour {
 			}
 			AI.setbuttonReleasedJump (false);
 
-
 			if (amountOfTimePassed > 0.3f) {
 				firstStep = false;
 				secondStep = true;
@@ -268,13 +264,6 @@ public class AIController : MonoBehaviour {
 				thirdStep = true;
 				once = false;
 			}
-
-			/*AI.setbuttonPressedJump (false);
-			if (amountOfTimePassed > 0.4f) {
-				secondStep = false;
-				thirdStep = true;
-				once = false;
-			}*/
 		} else if (thirdStep) {
 			//Debug.Log ("3 ");
 
@@ -292,14 +281,11 @@ public class AIController : MonoBehaviour {
 				finalStep = true;
 			}
 		} else {
-			//if(amountOfTimePassed > 0.9f) {
-				//Debug.Log ("4 ");
-				AI.setbuttonPressedJump (false);
-				AI.setbuttonReleasedJump (true);
-				finalStep = false;
-				firstStep = true;
-				amountOfTimePassed = 0f;
-			//}
+			AI.setbuttonPressedJump (false);
+			AI.setbuttonReleasedJump (true);
+			finalStep = false;
+			firstStep = true;
+			amountOfTimePassed = 0f;
 		}
 	}
 
@@ -334,7 +320,7 @@ public class AIController : MonoBehaviour {
 				}
 			} pathFinder.target = closestToPlayer;
 
-			path = pathFinder.FindShortestPath (player.transform.position);
+			path = pathFinder.FindShortestPath (playerComponent);
 			target = path [0];
 			path.RemoveAt (0);
 		}
@@ -492,7 +478,7 @@ public class AIController : MonoBehaviour {
 				}
 			} pathFinder.target = closestToPlayer;
 
-			path = pathFinder.FindShortestPath (player.transform.position);
+			path = pathFinder.FindShortestPath (playerComponent);
 			target = path [0];
 			path.RemoveAt (0);
 			return;

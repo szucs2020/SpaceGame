@@ -23,6 +23,10 @@ public class AIWeaponsController : MonoBehaviour {
 	// Update is called once per frame
 	private float timePassed = 0f;
 	private float randomTime = 0f;
+	private bool burst = false;
+	private int numberOfShots = 0;
+	private int shotsFired = 0;
+	private float burstTime = 0;
 	void Update () {
 		Vector3 dir3 = (player.position - new Vector3 (0, 5, 0)) - (transform.position - new Vector3 (0, 5, 0));
 		Vector2 dir2 = new Vector2 (dir3.x, dir3.y);
@@ -31,7 +35,6 @@ public class AIWeaponsController : MonoBehaviour {
 		bool belowPlayer;
 
 		if (AISync.getFacingRight () == true) {
-			//Hit = Physics2D.Raycast (new Vector2 (Spawns.GetChild (1).transform.position.x - 1, Spawns.GetChild (1).transform.position.y), dir2, 50f);
 			Debug.DrawRay (transform.position - new Vector3 (0, 5, 0), dir3, Color.green);
 			Debug.DrawRay (transform.position - new Vector3(0, 5, 0), Vector3.right * 50, Color.blue);
 
@@ -71,7 +74,6 @@ public class AIWeaponsController : MonoBehaviour {
 				}
 			}
 		} else if (AISync.getFacingRight () == false) {
-			//Hit = Physics2D.Raycast (new Vector2 (Spawns.GetChild (1).transform.position.x - 1, Spawns.GetChild (1).transform.position.y), dir2, 50f);
 			Debug.DrawRay (transform.position - new Vector3 (0, 5, 0), dir3, Color.green);
 			Debug.DrawRay (transform.position - new Vector3(0, 5, 0), Vector3.left * 50, Color.red);
 
@@ -92,7 +94,7 @@ public class AIWeaponsController : MonoBehaviour {
 					AI.setbuttonHeldAimDown (true);
 				}
 			} else {
-				if (angle > 10) {
+				if (angle > 20) {
 					AI.setbuttonHeldAimLeft (true);
 					AI.setbuttonHeldAimUp (true);
 
@@ -112,22 +114,40 @@ public class AIWeaponsController : MonoBehaviour {
 		}
 
 		Hit = Physics2D.Raycast (new Vector2(Spawns.GetChild(1).transform.position.x - 1, Spawns.GetChild(1).transform.position.y), new Vector2(-1, 0), 50f);
-		//Debug.DrawRay(new Vector2(Spawns.GetChild(1).transform.position.x - 1, Spawns.GetChild(1).transform.position.y), new Vector2(-50, 0),Color.red);
-
 		timePassed += Time.deltaTime;
 
 		if (timePassed > 1f + randomTime) {
-			print ("Time Passed");
+			burst = true;
+			numberOfShots = (int)Random.Range (2.5f, 4.5f);
 			randomTime = Random.Range (0f, 1f);
 			timePassed = 0f;
 
-			if (Hit.distance < 50) {
-				AI.setbuttonPressedShoot (true);
-			} else {
-				AI.setbuttonPressedShoot (false);
-			}
 		} else {
 			AI.setbuttonPressedShoot (false);
+		}
+
+		if (burst == true) {
+			burstTime += Time.deltaTime;
+
+			if (burstTime > 0.3f && shotsFired < numberOfShots) {
+				shotsFired++;
+				burstTime = 0;
+
+				if (Hit.distance < 50) {
+					AI.setbuttonPressedShoot (true);
+				} else {
+					AI.setbuttonPressedShoot (false);
+				}
+			} else {
+				AI.setbuttonPressedShoot (false);
+
+				if (shotsFired == numberOfShots) {
+					shotsFired = 0;
+					burst = false;
+					burstTime = 0f;
+					timePassed = 0f;
+				}
+			}
 		}
 	}
 }
