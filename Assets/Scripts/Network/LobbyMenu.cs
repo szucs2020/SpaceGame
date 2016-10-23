@@ -18,6 +18,8 @@ public class LobbyMenu : MonoBehaviour {
     public void onClickJoin() {
         lobbyManager.networkAddress = ipAddress.text;
         lobbyManager.StartClient();
+        menu.SetActive(false);
+        lobby.SetActive(true);
     }
 
 }

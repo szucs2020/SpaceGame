@@ -4,6 +4,23 @@ using UnityEngine.Networking;
 
 public class LobbyPlayer : NetworkLobbyPlayer {
 
+    [SyncVar(hook = "CallUpdateTeam")]
+    private int playerTeam = 0;
+
+    [Command]
+    public void CmdChangeTeam() {
+
+        if (playerTeam != 3) {
+            playerTeam++;
+        } else {
+            playerTeam = 0;
+        }
+    }
+
+    private void CallUpdateTeam(int pt) {
+        GameObject.Find("GameLobby").transform.Find((slot).ToString()).GetComponent<Lobby>().UpdateTeam(pt);
+    }
+
     void Awake() {
         //wait a frame to setup stuff because unity sucks
         StartCoroutine("Setup");

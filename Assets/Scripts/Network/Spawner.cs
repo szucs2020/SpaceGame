@@ -18,7 +18,7 @@ public class Spawner : NetworkBehaviour {
 
     //components
     private GameSettings settings;
-    private CustomNetworkManager manager;
+    private CustomNetworkLobby manager;
 
     void Start() {
 
@@ -27,7 +27,7 @@ public class Spawner : NetworkBehaviour {
         }
 
         settings = GameObject.FindGameObjectWithTag("GameSettings").GetComponent<GameSettings>();
-        manager = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<CustomNetworkManager>();
+        manager = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<CustomNetworkLobby>();
         SpawnAI();
     }
 

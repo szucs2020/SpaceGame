@@ -19,46 +19,40 @@ public class Lobby : MonoBehaviour {
     public Sprite greenTorso;
     public Sprite greenLegs;
 
-    private int playerTeam = 0;
     private bool ready = false;
 
     public LobbyPlayer player;
 
     public void ChangeTeam() {
+        player.CmdChangeTeam();
+    }
+
+    public void UpdateTeam(int pt) {
+
         GameObject head = transform.Find("Head").gameObject;
         GameObject torso = transform.Find("Torso").gameObject;
         GameObject legs = transform.Find("Legs").gameObject;
 
-        switch (playerTeam) {
+        switch (pt) {
             case 0:
+                head.GetComponent<SpriteRenderer>().sprite = blueHead;
+                torso.GetComponent<SpriteRenderer>().sprite = blueTorso;
+                legs.GetComponent<SpriteRenderer>().sprite = blueLegs;
+                break;
+            case 1:
                 head.GetComponent<SpriteRenderer>().sprite = redHead;
                 torso.GetComponent<SpriteRenderer>().sprite = redTorso;
                 legs.GetComponent<SpriteRenderer>().sprite = redLegs;
-                playerTeam = 1;
                 break;
-            case 1:
+            case 2:
                 head.GetComponent<SpriteRenderer>().sprite = yellowHead;
                 torso.GetComponent<SpriteRenderer>().sprite = yellowTorso;
                 legs.GetComponent<SpriteRenderer>().sprite = yellowLegs;
-                playerTeam = 2;
                 break;
-            case 2:
+            case 3:
                 head.GetComponent<SpriteRenderer>().sprite = greenHead;
                 torso.GetComponent<SpriteRenderer>().sprite = greenTorso;
                 legs.GetComponent<SpriteRenderer>().sprite = greenLegs;
-                playerTeam = 3;
-                break;
-            case 3:
-                head.GetComponent<SpriteRenderer>().sprite = blueHead;
-                torso.GetComponent<SpriteRenderer>().sprite = blueTorso;
-                legs.GetComponent<SpriteRenderer>().sprite = blueLegs;
-                playerTeam = 0;
-                break;
-            default:
-                head.GetComponent<SpriteRenderer>().sprite = blueHead;
-                torso.GetComponent<SpriteRenderer>().sprite = blueTorso;
-                legs.GetComponent<SpriteRenderer>().sprite = blueLegs;
-                playerTeam = 0;
                 break;
         }
     }

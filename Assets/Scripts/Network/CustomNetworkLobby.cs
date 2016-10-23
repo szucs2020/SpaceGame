@@ -14,5 +14,21 @@ public class CustomNetworkLobby : NetworkLobbyManager {
         return true;
     }
 
+    public override void OnServerConnect(NetworkConnection conn) {
+        this.minPlayers++;
+    }
 
+    public override void OnServerDisconnect(NetworkConnection conn) {
+        this.minPlayers--;
+    }
+
+    //public override void OnLobbyServerConnect(NetworkConnection conn) {
+    //    base.OnLobbyServerConnect(conn);
+    //    this.minPlayers++;
+    //}
+
+    //public override void OnLobbyServerDisconnect(NetworkConnection conn) {
+    //    base.OnLobbyServerDisconnect(conn);
+    //    this.minPlayers--;
+    //}
 }
