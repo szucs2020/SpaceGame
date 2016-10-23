@@ -3,7 +3,6 @@ using System.Collections;
 using UnityEngine.Networking;
 
 public class LobbyPlayer : NetworkLobbyPlayer {
-
     [SyncVar(hook = "CallUpdateTeam")]
     private int playerTeam = 0;
 
@@ -52,5 +51,9 @@ public class LobbyPlayer : NetworkLobbyPlayer {
         if (isLocalPlayer) {
             GameObject.Find("GameLobby").GetComponent<Lobby>().setPlayer(this);
         }
+    }
+
+    public int GetTeam() {
+        return this.playerTeam;
     }
 }

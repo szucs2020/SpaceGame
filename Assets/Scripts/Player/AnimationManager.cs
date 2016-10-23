@@ -2,11 +2,28 @@
 using System.Collections;
 
 public class AnimationManager : MonoBehaviour {
+    public RuntimeAnimatorController blueHead;
+    public RuntimeAnimatorController blueTorso;
+    public RuntimeAnimatorController blueLegs;
+
+    public RuntimeAnimatorController redHead;
+    public RuntimeAnimatorController redTorso;
+    public RuntimeAnimatorController redLegs;
+
+    public RuntimeAnimatorController yellowHead;
+    public RuntimeAnimatorController yellowTorso;
+    public RuntimeAnimatorController yellowLegs;
+
+    public RuntimeAnimatorController greenHead;
+    public RuntimeAnimatorController greenTorso;
+    public RuntimeAnimatorController greenLegs;
+
 
     Transform head;
     Transform torso;
     Transform legs;
     Player player;
+    LobbyPlayer myPlayer;
 
     Animator headAnimator;
     Animator torsoAnimator;
@@ -23,6 +40,40 @@ public class AnimationManager : MonoBehaviour {
         legsAnimator = legs.GetComponent<Animator>();
 
         player = GetComponent<Player>();
+
+        //Search for the LobbyPlayer associated with this Player.
+        LobbyPlayer[] lobbyPlayers = Object.FindObjectsOfType<LobbyPlayer>();
+        foreach (LobbyPlayer lobbyPlayer in lobbyPlayers) {
+            if (lobbyPlayer.slot == player.playerSlot) {
+                myPlayer = lobbyPlayer;
+            }
+        }
+
+        if (myPlayer != null) {
+            switch (myPlayer.GetTeam()) {
+                case 0:
+                    headAnimator.runtimeAnimatorController = blueHead as RuntimeAnimatorController;
+                    torsoAnimator.runtimeAnimatorController = blueTorso as RuntimeAnimatorController; 
+                    legsAnimator.runtimeAnimatorController = blueLegs as RuntimeAnimatorController;
+                    break;
+                case 1:
+                    headAnimator.runtimeAnimatorController = redHead as RuntimeAnimatorController;
+                    torsoAnimator.runtimeAnimatorController = redTorso as RuntimeAnimatorController;
+                    legsAnimator.runtimeAnimatorController = redLegs as RuntimeAnimatorController;
+                    break;
+                case 2:
+                    headAnimator.runtimeAnimatorController = yellowHead as RuntimeAnimatorController;
+                    torsoAnimator.runtimeAnimatorController = yellowTorso as RuntimeAnimatorController;
+                    legsAnimator.runtimeAnimatorController = yellowLegs as RuntimeAnimatorController;
+                    break;
+                case 3:
+                    headAnimator.runtimeAnimatorController = greenHead as RuntimeAnimatorController;
+                    torsoAnimator.runtimeAnimatorController = greenTorso as RuntimeAnimatorController;
+                    legsAnimator.runtimeAnimatorController = greenLegs as RuntimeAnimatorController;
+                    break;
+            }
+        }
+
     }
 
     //upper body
