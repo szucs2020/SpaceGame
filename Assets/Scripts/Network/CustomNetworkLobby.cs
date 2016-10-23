@@ -7,6 +7,8 @@ using UnityEngine.Networking.Match;
 
 public class CustomNetworkLobby : NetworkLobbyManager {
 
+    private bool hostFlag = false;
+
     public override bool OnLobbyServerSceneLoadedForPlayer(GameObject lobbyPlayer, GameObject gamePlayer) {
         Player p = gamePlayer.GetComponent<Player>();
         LobbyPlayer lp = lobbyPlayer.GetComponent<LobbyPlayer>();
@@ -15,20 +17,15 @@ public class CustomNetworkLobby : NetworkLobbyManager {
     }
 
     public override void OnServerConnect(NetworkConnection conn) {
-        this.minPlayers++;
+        if (hostFlag) {
+            this.minPlayers++;
+        } else {
+            hostFlag = true;
+        }
     }
 
     public override void OnServerDisconnect(NetworkConnection conn) {
+        print("disconnect");
         this.minPlayers--;
     }
-
-    //public override void OnLobbyServerConnect(NetworkConnection conn) {
-    //    base.OnLobbyServerConnect(conn);
-    //    this.minPlayers++;
-    //}
-
-    //public override void OnLobbyServerDisconnect(NetworkConnection conn) {
-    //    base.OnLobbyServerDisconnect(conn);
-    //    this.minPlayers--;
-    //}
 }
