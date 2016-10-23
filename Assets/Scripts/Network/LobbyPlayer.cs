@@ -17,8 +17,14 @@ public class LobbyPlayer : NetworkLobbyPlayer {
         }
     }
 
+    /*
     private void CallUpdateTeam(int pt) {
         GameObject.Find("GameLobby").transform.Find((slot).ToString()).GetComponent<Lobby>().UpdateTeam(pt);
+    }
+    */
+
+    private void CallUpdateTeam(int pt) {
+        GameObject.Find("GameLobby").GetComponent<Lobby>().UpdateTeam(pt, this.slot);
     }
 
     void Awake() {
@@ -30,11 +36,21 @@ public class LobbyPlayer : NetworkLobbyPlayer {
 
     }
 
+    /*
     //Give the player's slot a reference to the lobbyplayer
     IEnumerator Setup() {
         yield return new WaitForFixedUpdate();
         if (isLocalPlayer) {
             GameObject.Find("GameLobby").transform.Find((slot).ToString()).GetComponent<Lobby>().setPlayer(this);
+        }
+    }
+    */
+
+    //Give the player's slot a reference to the lobbyplayer
+    IEnumerator Setup() {
+        yield return new WaitForFixedUpdate();
+        if (isLocalPlayer) {
+            GameObject.Find("GameLobby").GetComponent<Lobby>().setPlayer(this);
         }
     }
 }
