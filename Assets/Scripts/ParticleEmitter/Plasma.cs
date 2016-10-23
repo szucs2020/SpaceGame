@@ -44,8 +44,6 @@ public class Plasma : Particle {
 
     private void destroy()
     {
-        //Destroy(this.gameObject, lifeSpan);
-
         if (this.transform.parent != null)
         {
             Destroy(this.transform.parent.gameObject, lifeSpan);

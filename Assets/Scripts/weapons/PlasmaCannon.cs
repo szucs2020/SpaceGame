@@ -7,12 +7,11 @@ using UnityEngine.Networking;
 
 public class PlasmaCannon : Gun
 {
-    public ParticleEmitterScript pEmitter;
+    public GameObject plasmaBallPrefab;
 
     void Start()
     {
         init();
-        pEmitter = GetComponent<ParticleEmitterScript>();
     }
 
 
@@ -20,16 +19,11 @@ public class PlasmaCannon : Gun
     public override void CmdShoot(Vector2 direction, Vector2 position)
     {
         GameObject plasmaBall;
-        plasmaBall = pEmitter.GeneratePlasma(position);
-
+        plasmaBall = (GameObject)Instantiate(plasmaBallPrefab, position, Quaternion.identity);
+        plasmaBall.GetComponent<PlasmaBall>().bulletOwner = GetComponent<Player>();
         plasmaBall.GetComponent<Rigidbody2D>().velocity = bulletSpeed * direction;
 
         NetworkServer.Spawn(plasmaBall);
-
-        //for (int i = 0; i < plasmaBall.transform.childCount; i++)
-        //{
-        //    NetworkServer.Spawn(plasmaBall.transform.GetChild(i).transform.gameObject);
-        //}
     }
 
     public override void shoot()

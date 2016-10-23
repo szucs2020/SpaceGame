@@ -81,22 +81,22 @@ public class Particle : MonoBehaviour {
         }
         else if (type == ParticleTypes.Plasma)
         {
-            //lifeSpan = 5f;
-            //tAlive = 0;
-            //minSize = Random.Range(0.01f, 0.02f);
-            //maxSize = Random.Range(minSize + 0.01f, minSize + 0.03f);
-            //deltaSizeRate = 0.02f;
-            //startTime = Time.time;
-            //minRed = 0;
-            //maxRed = 200;
-            //minBlue = 200;
-            //maxBlue = 255;
-            //minGreen = 50;
-            //maxGreen = 150;
-            //deltaTC = Random.Range(0.5f, 2f);
-            //Color a = Color.cyan;
-            //Color b = Color.blue;
-            //radius = 1;
+            lifeSpan = 5f;
+            tAlive = 0;
+            minSize = Random.Range(0.01f, 0.02f);
+            maxSize = Random.Range(minSize + 0.01f, minSize + 0.03f);
+            deltaSizeRate = 0.02f;
+            startTime = Time.time;
+            minRed = 0;
+            maxRed = 200;
+            minBlue = 200;
+            maxBlue = 255;
+            minGreen = 50;
+            maxGreen = 150;
+            deltaTC = Random.Range(0.5f, 2f);
+            Color a = Color.cyan;
+            Color b = Color.blue;
+            radius = 1;
         }
         else if (type == ParticleTypes.LaserDot)
         {

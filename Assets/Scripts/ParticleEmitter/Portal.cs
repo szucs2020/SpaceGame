@@ -1,16 +1,34 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Portal : MonoBehaviour {
     public GameObject target;
     public float waitTime = 2f;
+    public PortalFragments warpPrefab;
+    private List<PortalFragments> warp;
     private float startTime;
     private bool wait = false;
     private Portal targetScript;
+    private Vector3 deltad;
+    private int numWarp = 5;
 
 	// Use this for initialization
 	void Start () {
         targetScript = target.GetComponent<Portal>();
+
+        warp = new List<PortalFragments>();
+        for (int i = 0; i < numWarp; i++)
+        {
+            warp.Add((PortalFragments)Instantiate(warpPrefab, transform.position, Quaternion.identity));
+            if (i == numWarp - 1)
+            {
+                warp[i].changeSize = false;
+            }
+            warp[i].size = 1.2f * (i+1)/numWarp;
+            warp[i].transform.SetParent(transform.GetChild(0), false);
+            warp[i].transform.localPosition = new Vector3(0, 0, 0);
+        }
 	}
 	
 	// Update is called once per frame
@@ -32,8 +50,8 @@ public class Portal : MonoBehaviour {
             {
                 if (LayerMask.LayerToName(col.gameObject.layer) != "Ground")
                 {
-                    col.gameObject.transform.position = target.transform.position;
-                    col.gameObject.transform.position = col.gameObject.transform.position + Vector3.up * 5f;
+                    deltad = col.gameObject.transform.position - gameObject.transform.GetChild(0).transform.position;
+                    col.gameObject.transform.position = target.transform.position + deltad;
                     targetScript.Wait();
                 }
             }

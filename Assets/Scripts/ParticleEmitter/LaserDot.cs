@@ -5,6 +5,7 @@ public class LaserDot : Particle {
 
     public Vector2 direction;
     public Player bulletOwner;
+    private bool hurtSelf;
 
 	// Use this for initialization
 	void Start () {
@@ -26,6 +27,8 @@ public class LaserDot : Particle {
         sprite = GetComponent<SpriteRenderer>();
         sprite.color = Color.red;
 
+        hurtSelf = false;
+
         destroy();
     }
 	
@@ -43,10 +46,14 @@ public class LaserDot : Particle {
         if (LayerMask.LayerToName(col.gameObject.layer) == "Ground") {
             Destroy(gameObject);
         } else if (LayerMask.LayerToName(col.gameObject.layer) == "Player") {
-            if (col.gameObject.GetComponent<Player>().netId != bulletOwner.netId) {
+            if (col.gameObject.GetComponent<Player>().netId != bulletOwner.netId || hurtSelf == true) {
                 col.gameObject.GetComponent<Health>().Damage(5.0f);
                 Destroy(gameObject);
             }
+        }
+        else if (col.gameObject.tag == "Portal")
+        {
+            hurtSelf = true;
         }
     }
 }

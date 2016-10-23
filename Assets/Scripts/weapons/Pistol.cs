@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 
 public class Pistol : Gun
 {
-    public ParticleEmitterScript pEmitter;
+    public GameObject laserDot;
 
     void Start()
     {
@@ -18,8 +18,8 @@ public class Pistol : Gun
     [Command]
     public override void CmdShoot(Vector2 direction, Vector2 position)
     {
-        LaserDot laser;
-        laser = pEmitter.GenerateLaserDot(position);
+        GameObject laser;
+        laser = (GameObject)Instantiate(laserDot, position, Quaternion.identity);
         laser.GetComponent<LaserDot>().bulletOwner = GetComponent<Player>();
         laser.GetComponent<Rigidbody2D>().velocity = bulletSpeed * direction;
         NetworkServer.Spawn(laser.gameObject);

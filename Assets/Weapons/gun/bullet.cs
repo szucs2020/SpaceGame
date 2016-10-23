@@ -15,7 +15,10 @@ public class bullet : MonoBehaviour {
         print(col.gameObject.tag);
 		if (LayerMask.LayerToName(col.gameObject.layer) == "Ground"){
 			Destroy(gameObject);
-		} else if (LayerMask.LayerToName(col.gameObject.layer) == "Player") {
+		}else if (col.gameObject.tag == "Portal"){
+
+        }
+        else if (LayerMask.LayerToName(col.gameObject.layer) == "Player") {
 
             if (col.gameObject.GetComponent<Player>().netId != bulletOwner.netId) {
                 //do damage to the other player and destroy the bullet

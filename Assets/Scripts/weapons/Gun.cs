@@ -10,7 +10,6 @@ public class Gun : NetworkBehaviour {
 	//public variables
 	public float rpm;
 	public float bulletSpeed;
-	public GameObject bulletPrefab;
 
 	//components
 	public Transform spawn;
@@ -44,10 +43,10 @@ public class Gun : NetworkBehaviour {
 
     [Command]
     public virtual void CmdShoot(Vector2 direction, Vector2 position) {
-        GameObject bullet = (GameObject)Instantiate(bulletPrefab, position, Quaternion.identity);
-        bullet.GetComponent<LaserDot>().bulletOwner = player;
-        bullet.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
-        NetworkServer.Spawn(bullet);
+        //GameObject bullet = (GameObject)Instantiate(bulletPrefab, position, Quaternion.identity);
+        //bullet.GetComponent<LaserDot>().bulletOwner = player;
+        //bullet.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
+        //NetworkServer.Spawn(bullet);
     }
 
     public virtual void shoot() {
