@@ -52,6 +52,8 @@ public class Player : NetworkBehaviour {
 
     Controller2D controller;
     NetworkManager networkManager;
+
+    [SyncVar]
     public int playerSlot;
 
 	//Temp AI Spawning
