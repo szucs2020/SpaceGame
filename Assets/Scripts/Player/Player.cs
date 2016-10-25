@@ -135,13 +135,16 @@ public class Player : NetworkBehaviour {
         //switcing weapons
         if (Input.GetKeyDown("1")) {
             RemoveGun();
-            gameObject.AddComponent<Gun>();
+            gameObject.AddComponent<Pistol>();
+            gun = (Gun)GetComponent<Pistol>();
         } else if (Input.GetKeyDown("2")) {
             RemoveGun();
             gameObject.AddComponent<Shotgun>();
+            gun = (Gun)GetComponent<Shotgun>();
         } else if (Input.GetKeyDown("3")) {
             RemoveGun();
             gameObject.AddComponent<PlasmaCannon>();
+            gun = (Gun)GetComponent<PlasmaCannon>();
         }
 
         //OLD CODE: Flipping based on movement. Will probably still need this for sprint.
@@ -247,13 +250,7 @@ public class Player : NetworkBehaviour {
     }
 
     private void RemoveGun() {
-        if (GetComponent<Gun>() != null) {
-            Destroy(GetComponent<Gun>());
-        } else if (GetComponent<Shotgun>() != null) {
-            Destroy(GetComponent<Shotgun>());
-        } else if (GetComponent<PlasmaCannon>() != null) {
-            Destroy(GetComponent<PlasmaCannon>());
-        }
+        Destroy(GetComponent<Gun>());
     }
 
     //getters & setters

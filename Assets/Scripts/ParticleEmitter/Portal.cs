@@ -10,7 +10,7 @@ public class Portal : MonoBehaviour {
     private float startTime;
     private bool wait = false;
     private Portal targetScript;
-    private Vector3 deltad;
+    private Vector3 deltaD;
     private int numWarp = 5;
 
 	// Use this for initialization
@@ -50,8 +50,8 @@ public class Portal : MonoBehaviour {
             {
                 if (LayerMask.LayerToName(col.gameObject.layer) != "Ground")
                 {
-                    deltad = col.gameObject.transform.position - gameObject.transform.GetChild(0).transform.position;
-                    col.gameObject.transform.position = target.transform.position + deltad;
+                    deltaD = col.gameObject.transform.position - gameObject.transform.GetChild(0).transform.position;
+                    col.gameObject.transform.position = target.transform.position + deltaD;
                     targetScript.Wait();
                 }
             }

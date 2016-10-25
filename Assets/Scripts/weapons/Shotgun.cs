@@ -7,23 +7,47 @@ using UnityEngine.Networking;
 
 public class Shotgun : Gun
 {
-    public ParticleEmitterScript pEmitter;
+    private GameObject laserDot;
 
     void Start()
     {
+        rpm = 450;
+        bulletSpeed = 45;
         init();
+        laserDot = Resources.Load("LaserDot") as GameObject;
+    }
+
+    public GameObject[] generateShotgunShells(Vector2 direction, Vector2 position)
+    {
+        GameObject[] lasers = new GameObject[5];
+
+        for (int i = 0; i < 5; i++)
+        {
+            lasers[i] = (GameObject)Instantiate(laserDot, position, Quaternion.identity);
+        }
+
+        return lasers;
     }
 
 
     [Command]
     public override void CmdShoot(Vector2 direction, Vector2 position)
     {
-        LaserDot[] lasers;
-        lasers = pEmitter.GenerateShotgunShells(direction, position);
+        GameObject[] lasers;
+        lasers = generateShotgunShells(direction, position);
 
         for (int i = 0; i < lasers.Length; i++)
         {
-            lasers[i].GetComponent<Rigidbody2D>().velocity = bulletSpeed * lasers[i].direction;
+            if (i % 2 == 0)
+            {
+                lasers[i].GetComponent<Rigidbody2D>().velocity = bulletSpeed * (Quaternion.AngleAxis(i * 1.5f, Vector3.back) * direction);
+
+            }
+            else
+            {
+                lasers[i].GetComponent<Rigidbody2D>().velocity = bulletSpeed * (Quaternion.AngleAxis(i * -1.5f, Vector3.back) * direction);
+            }
+            lasers[i].GetComponent<LaserDot>().bulletOwner = GetComponent<Player>();
             NetworkServer.Spawn(lasers[i].gameObject);
         }
     }

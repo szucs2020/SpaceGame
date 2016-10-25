@@ -49,7 +49,7 @@ GameObject:
   - 114: {fileID: 11497924}
   - 114: {fileID: 11415786}
   - 114: {fileID: 11423600}
-  - 114: {fileID: 11495254}
+  - 114: {fileID: 11414008}
   m_Layer: 9
   m_Name: Player2
   m_TagString: player
@@ -465,6 +465,20 @@ MonoBehaviour:
   m_SnapThreshold: 5
   m_InterpolateRotation: 1
   m_InterpolateMovement: 0.8
+--- !u!114 &11414008
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 129382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 427ebd40321cbd443861efc333a17c75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rpm: 0
+  bulletSpeed: 0
+  spawn: {fileID: 478416, guid: 174b0750537fee9418b18b0176013b60, type: 2}
 --- !u!114 &11415786
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -642,21 +656,6 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
---- !u!114 &11495254
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 129382}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 427ebd40321cbd443861efc333a17c75, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rpm: 450
-  bulletSpeed: 45
-  spawn: {fileID: 496482}
-  plasmaBallPrefab: {fileID: 158854, guid: 110945707df2da5428ae885afa176a66, type: 2}
 --- !u!114 &11497924
 MonoBehaviour:
   m_ObjectHideFlags: 1

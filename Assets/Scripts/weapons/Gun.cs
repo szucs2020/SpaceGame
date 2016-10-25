@@ -30,6 +30,7 @@ public class Gun : NetworkBehaviour {
 		player = GetComponent<Player>();
 
         //set spawn positions
+        spawn = this.transform.GetChild(0);
         spawnPositions = new Transform[5];
 
         for (int i = 0; i < spawnPositions.Length; i++) {
@@ -77,10 +78,11 @@ public class Gun : NetworkBehaviour {
 	protected bool canShoot(){
 
 		bool canShoot = true;
-			
+		
 		if (Time.time < nextShot) {
 			canShoot = false;
 		}
+
 		return canShoot;
 	}
 }

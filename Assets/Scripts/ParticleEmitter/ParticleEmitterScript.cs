@@ -100,7 +100,6 @@ public class ParticleEmitterScript : MonoBehaviour {
         {
             newDir = Quaternion.AngleAxis(Random.Range(-10, 10), Vector3.back) * direction;
             lasers[i] = (LaserDot)CreateParticle((Particle)laserDot, position);
-            lasers[i].direction = newDir;
             //lasers[i].GetComponent<Rigidbody2D>().velocity = velocity * newDir;
         }
 

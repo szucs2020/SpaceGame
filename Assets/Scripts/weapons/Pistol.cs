@@ -7,11 +7,14 @@ using UnityEngine.Networking;
 
 public class Pistol : Gun
 {
-    public GameObject laserDot;
+    private GameObject laserDot;
 
     void Start()
     {
+        rpm = 450;
+        bulletSpeed = 45;
         init();
+        laserDot = Resources.Load("LaserDot") as GameObject;
     }
 
 
@@ -27,10 +30,8 @@ public class Pistol : Gun
 
     public override void shoot()
     {
-
         if (canShoot())
         {
-
             spawn.localEulerAngles = new Vector3(0f, spawn.localEulerAngles.y, 0f);
 
             Vector2 position = getSpawn().transform.position;

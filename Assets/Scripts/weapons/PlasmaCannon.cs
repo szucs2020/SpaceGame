@@ -7,11 +7,14 @@ using UnityEngine.Networking;
 
 public class PlasmaCannon : Gun
 {
-    public GameObject plasmaBallPrefab;
+    private GameObject plasmaBallPrefab;
 
     void Start()
     {
+        rpm = 450;
+        bulletSpeed = 45;
         init();
+        plasmaBallPrefab = Resources.Load("PlasmaBall") as GameObject;
     }
 
 

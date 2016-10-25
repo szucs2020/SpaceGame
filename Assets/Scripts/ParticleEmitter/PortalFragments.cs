@@ -17,14 +17,14 @@ public class PortalFragments : Particle {
         maxBlue = 255;
         minGreen = 50;
         maxGreen = 150;
-        deltaTC = Random.Range(0.5f, 2f);
+        deltaTC = Random.Range(1.5f, 4f);
         Color a = Color.cyan;
         Color b = Color.blue;
 
         radius = 1;
 
         sprite = GetComponent<SpriteRenderer>();
-        sprite.material.SetColor("_Color", new Color(0, 0, 0, 0));
+        sprite.material.SetColor("_Color", b);
     }
 	
 	// Update is called once per frame

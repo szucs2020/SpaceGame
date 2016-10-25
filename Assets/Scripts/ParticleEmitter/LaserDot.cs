@@ -3,7 +3,6 @@ using System.Collections;
 
 public class LaserDot : Particle {
 
-    public Vector2 direction;
     public Player bulletOwner;
     private bool hurtSelf;
 

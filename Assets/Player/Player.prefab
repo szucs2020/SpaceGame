@@ -479,9 +479,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rpm: 450
   bulletSpeed: 45
-  bulletPrefab: {fileID: 0}
-  spawn: {fileID: 478416}
-  pEmitter: {fileID: 11459930, guid: 6ef9c3c6eae2b0849a687bcc2387ef46, type: 2}
+  spawn: {fileID: 0}
 --- !u!114 &11427482
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -667,6 +665,7 @@ MonoBehaviour:
   moveSpeed: 30
   jumpDeceleration: 5
   maxFallSpeed: -110
+  playerSlot: 0
   AI: {fileID: 0}
   currentPlatform: {fileID: 0}
 --- !u!212 &21236706
