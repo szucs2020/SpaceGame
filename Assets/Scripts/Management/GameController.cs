@@ -4,16 +4,18 @@ using UnityEngine.Networking;
 
 public class GameController : NetworkBehaviour {
 
+    private CustomNetworkLobby manager;
     private GameSettings settings;
     private int[] playerLives;
 
-	void Start () {
+    [SerializeField]
+    GameObject AIPrefab;
+
+    void Start () {
+
         settings = GetComponent<GameSettings>();
-	}
-	
-	void Update () {
-	    
-	}
+        manager = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<CustomNetworkLobby>();
+    }
 
     public void StartGame() {
         
@@ -31,7 +33,7 @@ public class GameController : NetworkBehaviour {
     }
 
     public void AttemptSpawnPlayer(NetworkConnection connectionToClient, short playerControllerID, int playerSlot) {
-        
+
         playerLives[playerSlot]--;
         print("Lives left: " + playerLives[playerSlot]);
 
@@ -42,4 +44,17 @@ public class GameController : NetworkBehaviour {
             NetworkServer.ReplacePlayerForConnection(connectionToClient, newPlayer, playerControllerID);
         }
     }
+
+    // Update is called once per frame
+    public void SpawnAI() {
+        if (!isServer) {
+            return;
+        }
+        print("Spawn AI");
+        for (int i = 0; i < settings.NumberOfAIPlayers; i++) {
+            GameObject AI = (GameObject)GameObject.Instantiate(AIPrefab, manager.GetStartPosition().position, Quaternion.identity);
+            NetworkServer.Spawn(AI);
+        }
+    }
+
 }
