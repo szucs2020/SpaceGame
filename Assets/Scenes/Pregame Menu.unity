@@ -161,7 +161,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 58108006}
-  - 114: {fileID: 58108007}
   m_Layer: 5
   m_Name: 3
   m_TagString: player
@@ -188,30 +187,6 @@ Transform:
   - {fileID: 2063071774}
   m_Father: {fileID: 1877371822}
   m_RootOrder: 4
---- !u!114 &58108007
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 58108005}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ed63f5610ea686488dee5eb915215f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  blueHead: {fileID: 21300000, guid: 058880971c71d0f47b4e4eef9e8d3c5b, type: 3}
-  blueTorso: {fileID: 21300000, guid: e31aecee688ec984b8b88909a57ad939, type: 3}
-  blueLegs: {fileID: 21300000, guid: 18827afc1478caa47b82c101c626e55a, type: 3}
-  redHead: {fileID: 21300000, guid: 52906697ee292584dbd372baf2c8507b, type: 3}
-  redTorso: {fileID: 21300000, guid: 13755a55078c63a4d82fa2d0a9bd25c4, type: 3}
-  redLegs: {fileID: 21300000, guid: a27c85b78bdb9ee46bf282bf5da03d0d, type: 3}
-  yellowHead: {fileID: 21300000, guid: 50977c2c5d41ad14281de0cbb1aaa581, type: 3}
-  yellowTorso: {fileID: 21300000, guid: 01c30d6531e02674cb6e89d8bd40d73f, type: 3}
-  yellowLegs: {fileID: 21300000, guid: b73b4fd142096914c9e2d40edf488746, type: 3}
-  greenHead: {fileID: 21300000, guid: e576d25800aaaf34eb470952dc52d0b2, type: 3}
-  greenTorso: {fileID: 21300000, guid: e85cc9f9d0d0d4b4c9a1ff56c0ef399d, type: 3}
-  greenLegs: {fileID: 21300000, guid: fb96c48279d6ad74db392bc09cff0ae2, type: 3}
-  player: {fileID: 0}
 --- !u!1 &67841224
 GameObject:
   m_ObjectHideFlags: 0
@@ -410,7 +385,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 163240144}
-  - 114: {fileID: 163240145}
   m_Layer: 5
   m_Name: 1
   m_TagString: player
@@ -437,30 +411,6 @@ Transform:
   - {fileID: 1527764626}
   m_Father: {fileID: 1877371822}
   m_RootOrder: 2
---- !u!114 &163240145
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 163240143}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ed63f5610ea686488dee5eb915215f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  blueHead: {fileID: 21300000, guid: 058880971c71d0f47b4e4eef9e8d3c5b, type: 3}
-  blueTorso: {fileID: 21300000, guid: e31aecee688ec984b8b88909a57ad939, type: 3}
-  blueLegs: {fileID: 21300000, guid: 18827afc1478caa47b82c101c626e55a, type: 3}
-  redHead: {fileID: 21300000, guid: 52906697ee292584dbd372baf2c8507b, type: 3}
-  redTorso: {fileID: 21300000, guid: 13755a55078c63a4d82fa2d0a9bd25c4, type: 3}
-  redLegs: {fileID: 21300000, guid: a27c85b78bdb9ee46bf282bf5da03d0d, type: 3}
-  yellowHead: {fileID: 21300000, guid: 50977c2c5d41ad14281de0cbb1aaa581, type: 3}
-  yellowTorso: {fileID: 21300000, guid: 01c30d6531e02674cb6e89d8bd40d73f, type: 3}
-  yellowLegs: {fileID: 21300000, guid: b73b4fd142096914c9e2d40edf488746, type: 3}
-  greenHead: {fileID: 21300000, guid: e576d25800aaaf34eb470952dc52d0b2, type: 3}
-  greenTorso: {fileID: 21300000, guid: e85cc9f9d0d0d4b4c9a1ff56c0ef399d, type: 3}
-  greenLegs: {fileID: 21300000, guid: fb96c48279d6ad74db392bc09cff0ae2, type: 3}
-  player: {fileID: 0}
 --- !u!1 &191033090
 GameObject:
   m_ObjectHideFlags: 0
@@ -537,13 +487,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 58108007}
+      - m_Target: {fileID: 1877371823}
         m_MethodName: ChangeTeam
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -1002,9 +952,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1885922496}
+      - m_Target: {fileID: 1877371823}
         m_MethodName: ChangeTeam
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1124,13 +1074,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 163240145}
+      - m_Target: {fileID: 1877371823}
         m_MethodName: ChangeTeam
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -1471,7 +1421,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1648812270}
+      - m_Target: {fileID: 1877371823}
         m_MethodName: ChangeLives
         m_Mode: 1
         m_Arguments:
@@ -2197,7 +2147,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1648812270}
+      - m_Target: {fileID: 1877371823}
         m_MethodName: ChangeGameType
         m_Mode: 1
         m_Arguments:
@@ -2765,6 +2715,139 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1135982974}
+--- !u!1 &1136293868
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 224: {fileID: 1136293869}
+  - 222: {fileID: 1136293872}
+  - 114: {fileID: 1136293871}
+  - 114: {fileID: 1136293870}
+  m_Layer: 5
+  m_Name: PlayerName
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1136293869
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1136293868}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children:
+  - {fileID: 1824658709}
+  m_Father: {fileID: 1335017580}
+  m_RootOrder: 3
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -80}
+  m_SizeDelta: {x: 160, y: 30}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1136293870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1136293868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 575553740, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1136293871}
+  m_TextComponent: {fileID: 1824658710}
+  m_Placeholder: {fileID: 0}
+  m_ContentType: 0
+  m_InputType: 0
+  m_AsteriskChar: 42
+  m_KeyboardType: 0
+  m_LineType: 0
+  m_HideMobileInput: 0
+  m_CharacterValidation: 0
+  m_CharacterLimit: 0
+  m_OnEndEdit:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.InputField+SubmitEvent, UnityEngine.UI, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  m_OnValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.InputField+OnChangeEvent, UnityEngine.UI, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_CustomCaretColor: 0
+  m_SelectionColor: {r: 0.50735295, g: 0.72253203, b: 1, a: 0.728}
+  m_Text: Name
+  m_CaretBlinkRate: 0.85
+  m_CaretWidth: 1
+  m_ReadOnly: 0
+--- !u!114 &1136293871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1136293868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.83823526, g: 0.83823526, b: 0.83823526, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+--- !u!222 &1136293872
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1136293868}
 --- !u!1 &1138426585
 GameObject:
   m_ObjectHideFlags: 0
@@ -2773,7 +2856,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1138426586}
-  - 114: {fileID: 1138426587}
   m_Layer: 5
   m_Name: 2
   m_TagString: player
@@ -2800,30 +2882,6 @@ Transform:
   - {fileID: 1285401185}
   m_Father: {fileID: 1877371822}
   m_RootOrder: 3
---- !u!114 &1138426587
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1138426585}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ed63f5610ea686488dee5eb915215f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  blueHead: {fileID: 21300000, guid: 058880971c71d0f47b4e4eef9e8d3c5b, type: 3}
-  blueTorso: {fileID: 21300000, guid: e31aecee688ec984b8b88909a57ad939, type: 3}
-  blueLegs: {fileID: 21300000, guid: 18827afc1478caa47b82c101c626e55a, type: 3}
-  redHead: {fileID: 21300000, guid: 52906697ee292584dbd372baf2c8507b, type: 3}
-  redTorso: {fileID: 21300000, guid: 13755a55078c63a4d82fa2d0a9bd25c4, type: 3}
-  redLegs: {fileID: 21300000, guid: a27c85b78bdb9ee46bf282bf5da03d0d, type: 3}
-  yellowHead: {fileID: 21300000, guid: 50977c2c5d41ad14281de0cbb1aaa581, type: 3}
-  yellowTorso: {fileID: 21300000, guid: 01c30d6531e02674cb6e89d8bd40d73f, type: 3}
-  yellowLegs: {fileID: 21300000, guid: b73b4fd142096914c9e2d40edf488746, type: 3}
-  greenHead: {fileID: 21300000, guid: e576d25800aaaf34eb470952dc52d0b2, type: 3}
-  greenTorso: {fileID: 21300000, guid: e85cc9f9d0d0d4b4c9a1ff56c0ef399d, type: 3}
-  greenLegs: {fileID: 21300000, guid: fb96c48279d6ad74db392bc09cff0ae2, type: 3}
-  player: {fileID: 0}
 --- !u!1 &1142940119
 GameObject:
   m_ObjectHideFlags: 0
@@ -3154,13 +3212,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1138426587}
+      - m_Target: {fileID: 1877371823}
         m_MethodName: ChangeTeam
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -3366,24 +3424,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1138426587}
+      - m_Target: {fileID: 1877371823}
         m_MethodName: onClickReady
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1138426587}
-        m_MethodName: ChangeReadyColour
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -3782,6 +3829,7 @@ RectTransform:
   - {fileID: 993454412}
   - {fileID: 1039161201}
   - {fileID: 1721222850}
+  - {fileID: 1136293869}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_AnchorMin: {x: 0, y: 0}
@@ -3947,20 +3995,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1885922496}
+      - m_Target: {fileID: 1877371823}
         m_MethodName: onClickReady
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1885922496}
-        m_MethodName: ChangeReadyColour
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -4488,24 +4525,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 163240145}
+      - m_Target: {fileID: 1877371823}
         m_MethodName: onClickReady
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 163240145}
-        m_MethodName: ChangeReadyColour
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -4760,7 +4786,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 224: {fileID: 1648812269}
-  - 114: {fileID: 1648812270}
   m_Layer: 5
   m_Name: Game Options
   m_TagString: Untagged
@@ -4795,30 +4820,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 100}
   m_SizeDelta: {x: 750, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1648812270
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1648812268}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ed63f5610ea686488dee5eb915215f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  blueHead: {fileID: 0}
-  blueTorso: {fileID: 0}
-  blueLegs: {fileID: 0}
-  redHead: {fileID: 0}
-  redTorso: {fileID: 0}
-  redLegs: {fileID: 0}
-  yellowHead: {fileID: 0}
-  yellowTorso: {fileID: 0}
-  yellowLegs: {fileID: 0}
-  greenHead: {fileID: 0}
-  greenTorso: {fileID: 0}
-  greenLegs: {fileID: 0}
-  player: {fileID: 0}
 --- !u!1 &1674543668
 GameObject:
   m_ObjectHideFlags: 0
@@ -4984,7 +4985,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1648812270}
+      - m_Target: {fileID: 1877371823}
         m_MethodName: ChangeAIPlayers
         m_Mode: 1
         m_Arguments:
@@ -5498,6 +5499,80 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1804167209}
+--- !u!1 &1824658708
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 224: {fileID: 1824658709}
+  - 222: {fileID: 1824658711}
+  - 114: {fileID: 1824658710}
+  m_Layer: 5
+  m_Name: Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1824658709
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1824658708}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 1136293869}
+  m_RootOrder: 0
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: -0.5}
+  m_SizeDelta: {x: -20, y: -13}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1824658710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1824658708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 0
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: Name
+--- !u!222 &1824658711
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1824658708}
 --- !u!1 &1828891413
 GameObject:
   m_ObjectHideFlags: 0
@@ -5652,6 +5727,7 @@ GameObject:
   - 114: {fileID: 1877371820}
   - 114: {fileID: 1877371819}
   - 114: {fileID: 1877371818}
+  - 114: {fileID: 1877371823}
   m_Layer: 5
   m_Name: GameLobby
   m_TagString: Untagged
@@ -5751,6 +5827,34 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1877371823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1877371817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ed63f5610ea686488dee5eb915215f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blueHead: {fileID: 21300000, guid: 058880971c71d0f47b4e4eef9e8d3c5b, type: 3}
+  blueTorso: {fileID: 21300000, guid: e31aecee688ec984b8b88909a57ad939, type: 3}
+  blueLegs: {fileID: 21300000, guid: 18827afc1478caa47b82c101c626e55a, type: 3}
+  redHead: {fileID: 21300000, guid: 52906697ee292584dbd372baf2c8507b, type: 3}
+  redTorso: {fileID: 21300000, guid: 13755a55078c63a4d82fa2d0a9bd25c4, type: 3}
+  redLegs: {fileID: 21300000, guid: a27c85b78bdb9ee46bf282bf5da03d0d, type: 3}
+  yellowHead: {fileID: 21300000, guid: 50977c2c5d41ad14281de0cbb1aaa581, type: 3}
+  yellowTorso: {fileID: 21300000, guid: 01c30d6531e02674cb6e89d8bd40d73f, type: 3}
+  yellowLegs: {fileID: 21300000, guid: b73b4fd142096914c9e2d40edf488746, type: 3}
+  greenHead: {fileID: 21300000, guid: e576d25800aaaf34eb470952dc52d0b2, type: 3}
+  greenTorso: {fileID: 21300000, guid: e85cc9f9d0d0d4b4c9a1ff56c0ef399d, type: 3}
+  greenLegs: {fileID: 21300000, guid: fb96c48279d6ad74db392bc09cff0ae2, type: 3}
+  players:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &1885922494
 GameObject:
   m_ObjectHideFlags: 0
@@ -5759,7 +5863,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1885922495}
-  - 114: {fileID: 1885922496}
   m_Layer: 5
   m_Name: 0
   m_TagString: player
@@ -5786,30 +5889,6 @@ Transform:
   - {fileID: 1411368710}
   m_Father: {fileID: 1877371822}
   m_RootOrder: 1
---- !u!114 &1885922496
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1885922494}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ed63f5610ea686488dee5eb915215f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  blueHead: {fileID: 21300000, guid: 058880971c71d0f47b4e4eef9e8d3c5b, type: 3}
-  blueTorso: {fileID: 21300000, guid: e31aecee688ec984b8b88909a57ad939, type: 3}
-  blueLegs: {fileID: 21300000, guid: 18827afc1478caa47b82c101c626e55a, type: 3}
-  redHead: {fileID: 21300000, guid: 52906697ee292584dbd372baf2c8507b, type: 3}
-  redTorso: {fileID: 21300000, guid: 13755a55078c63a4d82fa2d0a9bd25c4, type: 3}
-  redLegs: {fileID: 21300000, guid: a27c85b78bdb9ee46bf282bf5da03d0d, type: 3}
-  yellowHead: {fileID: 21300000, guid: 50977c2c5d41ad14281de0cbb1aaa581, type: 3}
-  yellowTorso: {fileID: 21300000, guid: 01c30d6531e02674cb6e89d8bd40d73f, type: 3}
-  yellowLegs: {fileID: 21300000, guid: b73b4fd142096914c9e2d40edf488746, type: 3}
-  greenHead: {fileID: 21300000, guid: e576d25800aaaf34eb470952dc52d0b2, type: 3}
-  greenTorso: {fileID: 21300000, guid: e85cc9f9d0d0d4b4c9a1ff56c0ef399d, type: 3}
-  greenLegs: {fileID: 21300000, guid: fb96c48279d6ad74db392bc09cff0ae2, type: 3}
-  player: {fileID: 0}
 --- !u!1 &1965563498
 GameObject:
   m_ObjectHideFlags: 0
@@ -5901,7 +5980,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1648812270}
+      - m_Target: {fileID: 1877371823}
         m_MethodName: ChangeTime
         m_Mode: 1
         m_Arguments:
@@ -6036,7 +6115,7 @@ MonoBehaviour:
   matchMaker: {fileID: 0}
   matchName: default
   matchSize: 4
-  m_ShowLobbyGUI: 1
+  m_ShowLobbyGUI: 0
   m_MaxPlayers: 4
   m_MaxPlayersPerConnection: 1
   m_MinPlayers: 0
@@ -6135,24 +6214,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 58108007}
+      - m_Target: {fileID: 1877371823}
         m_MethodName: onClickReady
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 58108007}
-        m_MethodName: ChangeReadyColour
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0

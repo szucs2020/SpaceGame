@@ -19,93 +19,88 @@ public class Lobby : MonoBehaviour {
     public Sprite greenTorso;
     public Sprite greenLegs;
 
-    private int playerTeam = 0;
-    private bool ready = false;
+    //public LobbyPlayer player;
+    public LobbyPlayer[] players = new LobbyPlayer[4];
 
-    public LobbyPlayer player;
+    public void ChangeTeam(int p) {
+        players[p].CmdChangeTeam();
+    }
 
-    public void ChangeTeam() {
-        GameObject head = transform.Find("Head").gameObject;
-        GameObject torso = transform.Find("Torso").gameObject;
-        GameObject legs = transform.Find("Legs").gameObject;
+    public void UpdateTeam(int pt, int p) {
+        GameObject panel = transform.Find(p.ToString()).gameObject;
+        GameObject head = panel.transform.Find("Head").gameObject;
+        GameObject torso = panel.transform.Find("Torso").gameObject;
+        GameObject legs = panel.transform.Find("Legs").gameObject;
 
-        switch (playerTeam) {
+        switch (pt) {
             case 0:
+                head.GetComponent<SpriteRenderer>().sprite = blueHead;
+                torso.GetComponent<SpriteRenderer>().sprite = blueTorso;
+                legs.GetComponent<SpriteRenderer>().sprite = blueLegs;
+                break;
+            case 1:
                 head.GetComponent<SpriteRenderer>().sprite = redHead;
                 torso.GetComponent<SpriteRenderer>().sprite = redTorso;
                 legs.GetComponent<SpriteRenderer>().sprite = redLegs;
-                playerTeam = 1;
                 break;
-            case 1:
+            case 2:
                 head.GetComponent<SpriteRenderer>().sprite = yellowHead;
                 torso.GetComponent<SpriteRenderer>().sprite = yellowTorso;
                 legs.GetComponent<SpriteRenderer>().sprite = yellowLegs;
-                playerTeam = 2;
                 break;
-            case 2:
+            case 3:
                 head.GetComponent<SpriteRenderer>().sprite = greenHead;
                 torso.GetComponent<SpriteRenderer>().sprite = greenTorso;
                 legs.GetComponent<SpriteRenderer>().sprite = greenLegs;
-                playerTeam = 3;
                 break;
-            case 3:
-                head.GetComponent<SpriteRenderer>().sprite = blueHead;
-                torso.GetComponent<SpriteRenderer>().sprite = blueTorso;
-                legs.GetComponent<SpriteRenderer>().sprite = blueLegs;
-                playerTeam = 0;
-                break;
-            default:
-                head.GetComponent<SpriteRenderer>().sprite = blueHead;
-                torso.GetComponent<SpriteRenderer>().sprite = blueTorso;
-                legs.GetComponent<SpriteRenderer>().sprite = blueLegs;
-                playerTeam = 0;
-                break;
-        }
-    }
-
-    public void onClickReady() {
-        if (player.readyToBegin) {
-            player.SendNotReadyToBeginMessage();
-        } else {
-            player.SendReadyToBeginMessage();
         }
     }
 
     public void setPlayer(LobbyPlayer p) {
-        this.player = p;
-        transform.Find("Ready").GetComponent<Button>().gameObject.SetActive(true);
-        transform.Find("Change Team").GetComponent<Button>().gameObject.SetActive(true);
+        players[p.slot] = p;
+        GameObject.Find("GameLobby").transform.Find(p.slot.ToString()).transform.Find("Ready").GetComponent<Button>().gameObject.SetActive(true);
+        GameObject.Find("GameLobby").transform.Find(p.slot.ToString()).transform.Find("Change Team").GetComponent<Button>().gameObject.SetActive(true);
     }
 
-    public void ChangeReadyColour() {
-        GameObject button = transform.Find("Ready").gameObject;
+    public void onClickReady(int p) {
+        if (players[p].readyToBegin) {
+            players[p].SendNotReadyToBeginMessage();
+            ChangeReadyColour(false, p);
+        } else {
+            players[p].SendReadyToBeginMessage();
+            ChangeReadyColour(true, p);
+        }
+    }
+
+    private void ChangeReadyColour(bool ready, int p) {
+        GameObject panel = transform.Find(p.ToString()).gameObject;
+        GameObject button = panel.transform.Find("Ready").gameObject;
         Image image = button.GetComponent<Image>();
         Text text = button.transform.Find("Text").GetComponent<Text>();
 
-        Button teamButton = transform.Find("Change Team Button").gameObject.GetComponent<Button>();
+        Button teamButton = panel.transform.Find("Change Team").gameObject.GetComponent<Button>();
 
         if (ready) {
-            Color32 color = new Color32(158, 158, 158, 255);
-            image.color = color;
-
-            text.text = "NOT READY";
-            teamButton.interactable = true;
-        } else {
             Color32 color = new Color32(0, 216, 0, 255);
             image.color = color;
 
             text.text = "READY";
             teamButton.interactable = false;
-        }
+        } else {
+            Color32 color = new Color32(158, 158, 158, 255);
+            image.color = color;
 
-        ready = !ready;
+            text.text = "NOT READY";
+            teamButton.interactable = true;
+        }
     }
 
     public void ChangeGameType() {
-        Dropdown type = transform.Find("Game Type Dropdown").gameObject.GetComponent<Dropdown>();
+        GameObject panel = transform.Find("Game Options").gameObject;
+        Dropdown type = panel.transform.Find("Game Type Dropdown").gameObject.GetComponent<Dropdown>();
         GameSettings settings = FindObjectOfType<GameSettings>();
-        InputField livesInput = transform.Find("Lives Input").gameObject.GetComponent<InputField>();
-        InputField timeInput = transform.Find("Time Input").gameObject.GetComponent<InputField>();
+        InputField livesInput = panel.transform.Find("Lives Input").gameObject.GetComponent<InputField>();
+        InputField timeInput = panel.transform.Find("Time Input").gameObject.GetComponent<InputField>();
 
         //Retrieve the value and set the game type accordingly, enable disable fields as necessary.
         switch (type.value) {    
@@ -123,7 +118,8 @@ public class Lobby : MonoBehaviour {
     }
 
     public void ChangeLives() {
-        InputField livesInput = transform.Find("Lives Input").gameObject.GetComponent<InputField>();
+        GameObject panel = transform.Find("Game Options").gameObject;
+        InputField livesInput = panel.transform.Find("Lives Input").gameObject.GetComponent<InputField>();
         GameSettings settings = FindObjectOfType<GameSettings>();
         int lives = 0;
 
@@ -141,7 +137,8 @@ public class Lobby : MonoBehaviour {
     }
 
     public void ChangeTime() {
-        InputField timeInput = transform.Find("Time Input").gameObject.GetComponent<InputField>();
+        GameObject panel = transform.Find("Game Options").gameObject;
+        InputField timeInput = panel.transform.Find("Time Input").gameObject.GetComponent<InputField>();
         GameSettings settings = FindObjectOfType<GameSettings>();
         int time = 0;
 
@@ -158,8 +155,9 @@ public class Lobby : MonoBehaviour {
         settings.time = time;
     }
 
-    public void ChangeAIPlayers        () {
-        InputField aiInput = transform.Find("AI Players Input").gameObject.GetComponent<InputField>();
+    public void ChangeAIPlayers() {
+        GameObject panel = transform.Find("Game Options").gameObject;
+        InputField aiInput = panel.transform.Find("AI Players Input").gameObject.GetComponent<InputField>();
         GameSettings settings = FindObjectOfType<GameSettings>();
         int players = 0;
 

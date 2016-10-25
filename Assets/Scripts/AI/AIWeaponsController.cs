@@ -55,7 +55,7 @@ public class AIWeaponsController : MonoBehaviour {
 					AI.setbuttonHeldAimDown (true);
 				}
 			} else {
-				if (angle > 10) {
+				if (angle > 20) {
 					AI.setbuttonHeldAimRight (true);
 					AI.setbuttonHeldAimUp (true);
 
