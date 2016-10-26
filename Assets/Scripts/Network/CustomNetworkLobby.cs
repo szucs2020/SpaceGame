@@ -28,4 +28,10 @@ public class CustomNetworkLobby : NetworkLobbyManager {
         print("disconnect");
         this.minPlayers--;
     }
+
+     void OnLevelWasLoaded(int level) {
+        if (level == 1) {
+            GameObject.Find("GameSettings").GetComponent<GameController>().SpawnAI();
+        }
+    }
 }
