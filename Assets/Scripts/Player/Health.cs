@@ -42,7 +42,7 @@ public class Health : NetworkBehaviour {
 
     //kill player and attempt respawn
     private void Die() {
-        NetworkServer.Destroy(this.gameObject);
+        GetComponent<Player>().Die();
         GameObject.Find("GameSettings").GetComponent<GameController>().AttemptSpawnPlayer(this.connectionToClient, this.playerControllerId, GetComponent<Player>().playerSlot);
     }
 

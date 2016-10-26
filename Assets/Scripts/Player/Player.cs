@@ -16,7 +16,13 @@ public class Player : NetworkBehaviour {
 	public float jumpDeceleration = 0.5f;
 	public float maxFallSpeed = -110f;
 
-	private Gun gun;
+    //audio
+    private AudioSource audio;
+    private AudioClip audioJump;
+    private AudioClip audioBoost;
+    private AudioClip audioDie;
+
+    private Gun gun;
     private SyncFlip syncFlip;
 
     //movement variables
@@ -32,7 +38,6 @@ public class Player : NetworkBehaviour {
     private int currentPosition;
 
     //private SpriteRenderer fire;
-    AudioSource audio;
     private AnimationManager animator;
 
     //movement flags
@@ -75,7 +80,6 @@ public class Player : NetworkBehaviour {
         networkManager = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<NetworkManager>();
 
         controller = GetComponent<Controller2D> ();
-        audio = GetComponent<AudioSource>();
         gun = GetComponent<Gun>();
         animator = GetComponent<AnimationManager>();
 
@@ -94,8 +98,13 @@ public class Player : NetworkBehaviour {
         buttonHeldShoot = false;
 
         currentPlatform = null;
-
         currentPosition = 2;
+
+        //load audio
+        audio = GetComponent<AudioSource>();
+        audioJump = Resources.Load<AudioClip>("Audio/Player/Footstep1");
+        audioBoost = Resources.Load<AudioClip>("Audio/Player/Boost");
+        audioDie = Resources.Load<AudioClip>("Audio/Player/Wilhelm");
     }
 
     void Update() {
@@ -186,15 +195,15 @@ public class Player : NetworkBehaviour {
 				velocity.y = maxJumpVelocity;
 				decelerating = false;
                 if (jump == 1){
-                    //syncPlayer.CmdSyncJetpack(true);
+                    audio.PlayOneShot(audioBoost, 0.7f);
                 }
 			}
 
 			if (jump == 0) {
 				jump = 1;
-			} else if (jump == 1){
+            } else if (jump == 1){
 				jump = 2;
-			}
+            }
 		} 
 		else if (buttonReleasedJump) {
 			decelerating = true;
@@ -244,6 +253,11 @@ public class Player : NetworkBehaviour {
 			gun.shoot();
 		}
 	}
+
+    public void Die() {
+        Destroy(this.gameObject);
+        AudioSource.PlayClipAtPoint(audioDie, transform.position);
+    }
 
     //flip 2D sprite
     private void flip() {

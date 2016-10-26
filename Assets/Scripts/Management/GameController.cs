@@ -50,7 +50,6 @@ public class GameController : NetworkBehaviour {
         if (!isServer) {
             return;
         }
-        print("Spawn AI");
         for (int i = 0; i < settings.NumberOfAIPlayers; i++) {
             GameObject AI = (GameObject)GameObject.Instantiate(AIPrefab, manager.GetStartPosition().position, Quaternion.identity);
             NetworkServer.Spawn(AI);

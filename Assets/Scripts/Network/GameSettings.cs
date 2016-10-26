@@ -22,7 +22,7 @@ public class GameSettings : NetworkBehaviour {
         // prevent the scene from destroying this object
         DontDestroyOnLoad(transform.gameObject);
         gameType = GameType.Survival;
-        numLives = 3;
+        NumberOfAIPlayers = 0;
     }
 
     void OnLevelWasLoaded(int level) {
