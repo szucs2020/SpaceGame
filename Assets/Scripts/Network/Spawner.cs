@@ -22,6 +22,8 @@ public class Spawner : NetworkBehaviour {
 
     void Start() {
 
+        print("start AI");
+
         if (!isServer) {
             return;
         }
@@ -34,6 +36,7 @@ public class Spawner : NetworkBehaviour {
     // Update is called once per frame
     void SpawnAI () {
         for (int i = 0; i < settings.NumberOfAIPlayers; i++) {
+            print("Spawning AI");
             GameObject AI = (GameObject)GameObject.Instantiate(AIPrefab, manager.GetStartPosition().position, Quaternion.identity);
             NetworkServer.Spawn(AI);
         }

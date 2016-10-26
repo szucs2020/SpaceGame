@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Portal : MonoBehaviour {
     public GameObject target;
-    public float waitTime = 2f;
+    public float waitTime = 1f;
     public PortalFragments warpPrefab;
     private List<PortalFragments> warp;
     private float startTime;
@@ -13,8 +13,8 @@ public class Portal : MonoBehaviour {
     private Vector3 deltaD;
     private int numWarp = 5;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start() {
         targetScript = target.GetComponent<Portal>();
 
         warp = new List<PortalFragments>();
@@ -25,15 +25,19 @@ public class Portal : MonoBehaviour {
             {
                 warp[i].changeSize = false;
             }
-            warp[i].size = 1.2f * (i+1)/numWarp;
+            warp[i].size = 1.2f * (i + 1) / numWarp;
             warp[i].transform.SetParent(transform.GetChild(0), false);
             warp[i].transform.localPosition = new Vector3(0, 0, 0);
         }
-	}
-	
-	// Update is called once per frame
-	void Update ()
-    {
+    }
+
+    // Update is called once per frame
+    void Update()
+    { 
+        if (Time.time - startTime >= waitTime && wait == true)
+        {
+            wait = false;
+        }
     }
 
     public void Wait()
@@ -55,14 +59,6 @@ public class Portal : MonoBehaviour {
                     targetScript.Wait();
                 }
             }
-            else
-            {
-                if (Time.time - startTime >= waitTime)
-                {
-                    wait = false;
-                }
-            }
-            
         }
     }
 }

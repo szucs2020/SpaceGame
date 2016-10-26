@@ -17,3 +17,5 @@ EditorBuildSettings:
     path: Assets/Scenes/AStarTest.unity
   - enabled: 1
     path: Assets/Scenes/Pregame Menu.unity
+  - enabled: 1
+    path: Assets/Scenes/Demo.unity
