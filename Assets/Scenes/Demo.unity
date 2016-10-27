@@ -265,7 +265,7 @@ GameObject:
   - 23: {fileID: 887063121}
   - 61: {fileID: 887063122}
   - 114: {fileID: 887063124}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -359,7 +359,7 @@ GameObject:
   - 23: {fileID: 1267522634}
   - 61: {fileID: 1267522635}
   - 114: {fileID: 1267522637}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

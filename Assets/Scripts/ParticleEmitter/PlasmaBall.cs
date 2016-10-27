@@ -50,11 +50,11 @@ public class PlasmaBall : MonoBehaviour {
         {
             if (timePassed < 0.05)
             {
-                particles[i].transform.Translate((particles[i].transform.position - particles[i].transform.parent.position) * (timePassed/2 + timePassed*-3));
+                particles[i].transform.Translate((particles[i].transform.position - particles[i].transform.parent.localPosition) * (timePassed/2 + timePassed*-3));
             }
             else
             {
-                particles[i].transform.Translate((particles[i].transform.position - particles[i].transform.parent.position) * (timePassed/5));
+                particles[i].transform.Translate((particles[i].transform.position - particles[i].transform.parent.localPosition) * (timePassed/5));
             }
         }
     }
