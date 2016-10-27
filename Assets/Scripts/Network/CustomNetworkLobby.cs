@@ -47,7 +47,7 @@ public class CustomNetworkLobby : NetworkLobbyManager {
     void OnLevelWasLoaded(int level) {
         print("level: " + level);
         if (level == 1) {
-            GameObject.Find("GameSettings").GetComponent<GameController>().SpawnAI();
+            GameObject.Find("GameSettings").GetComponent<GameController>().SpawnAllAI();
         }
     }
 }

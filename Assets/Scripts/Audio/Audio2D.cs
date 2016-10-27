@@ -4,7 +4,7 @@ using System.Collections;
 public class Audio2D : MonoBehaviour {
 
     //components
-    private AudioSource audio;
+    private AudioSource audio2D;
 
     //audio clips
     private AudioClip audioJump;
@@ -14,7 +14,7 @@ public class Audio2D : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
-        audio = GetComponent<AudioSource>();
+        audio2D = GetComponent<AudioSource>();
 
         //load clips
         audioJump = Resources.Load<AudioClip>("Audio/Player/Footstep1");
@@ -23,15 +23,15 @@ public class Audio2D : MonoBehaviour {
     }
 
     public void playJump() {
-        audio.PlayOneShot(audioJump, 0.7f);
+        audio2D.PlayOneShot(audioJump, 0.7f);
     }
 
     public void playBoost() {
-        audio.PlayOneShot(audioBoost, 0.7f);
+        audio2D.PlayOneShot(audioBoost, 0.7f);
     }
 
     public void playDie() {
-        audio.PlayOneShot(audioDie, 0.7f);
+        audio2D.PlayOneShot(audioDie, 0.7f);
     }
 
 }

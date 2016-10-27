@@ -97,6 +97,9 @@ public class Player : NetworkBehaviour {
         currentPosition = 2;
 
         audio = GameObject.Find("Audio").GetComponent<Audio2D>();
+        if (audio == null) {
+            print("Audio null");
+        }
     }
 
     void Update() {
@@ -257,8 +260,8 @@ public class Player : NetworkBehaviour {
 	}
 
     public void Die() {
-        audio.playDie();
-        Destroy(this.gameObject);
+        //audio.playDie();
+        Destroy(gameObject);
     }
 
     //flip 2D sprite
@@ -319,4 +322,8 @@ public class Player : NetworkBehaviour {
 	public void setIsAI(bool isAI) {
 		this.isAI = isAI;
 	}
+
+    public bool getIsAI() {
+        return this.isAI;
+    }
 }

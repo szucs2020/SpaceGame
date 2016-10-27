@@ -34,7 +34,6 @@ public class GameController : NetworkBehaviour {
 
     public void EndGame() {
         manager.CloseConnection();
-        print("GAME OVER");
     }
 
     public void AttemptSpawnPlayer(NetworkConnection connectionToClient, short playerControllerID, int playerSlot) {
@@ -56,7 +55,9 @@ public class GameController : NetworkBehaviour {
             }
             if (playersLeft <= 1) {
                 EndGame();
-            } else if (playerLives[playerSlot] > 0) {
+            }
+
+            if (playerLives[playerSlot] > 0) {
                 respawn = true;
             }
         }
@@ -70,13 +71,17 @@ public class GameController : NetworkBehaviour {
     }
 
     // Update is called once per frame
-    public void SpawnAI() {
+    public void SpawnAllAI() {
         if (!isServer) {
             return;
         }
         for (int i = 0; i < settings.NumberOfAIPlayers; i++) {
-            GameObject AI = (GameObject)GameObject.Instantiate(AIPrefab, manager.GetStartPosition().position, Quaternion.identity);
-            NetworkServer.Spawn(AI);
+            SpawnAI();
         }
+    }
+
+    public void SpawnAI() {
+        GameObject AI = (GameObject)GameObject.Instantiate(AIPrefab, manager.GetStartPosition().position, Quaternion.identity);
+        NetworkServer.Spawn(AI);
     }
 }
