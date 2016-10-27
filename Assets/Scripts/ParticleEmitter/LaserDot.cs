@@ -44,10 +44,12 @@ public class LaserDot : Particle {
     void OnTriggerEnter2D(Collider2D col) {
         if (LayerMask.LayerToName(col.gameObject.layer) == "Ground") {
             Destroy(gameObject);
+            Instantiate(Resources.Load("Spark"), transform.position, Quaternion.identity);
         } else if (LayerMask.LayerToName(col.gameObject.layer) == "Player") {
+            Instantiate(Resources.Load("Spark"), transform.position, Quaternion.identity);
+            Destroy(gameObject);
             if (col.gameObject.GetComponent<Player>().netId != bulletOwner.netId || hurtSelf == true) {
                 col.gameObject.GetComponent<Health>().Damage(5.0f);
-                Destroy(gameObject);
             }
         }
         else if (col.gameObject.tag == "Portal")

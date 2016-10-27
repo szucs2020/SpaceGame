@@ -39,11 +39,11 @@ public class PlasmaBall : MonoBehaviour {
     {
         if (varDestroy)
         {
-            destroy();
+            destroyAnim();
         }
     }
 
-    void destroy()
+    void destroyAnim()
     {
         timePassed = 1 -(Time.time - tAtDestroy);
         for (int i = 0; i < amount-1; i++)
@@ -63,16 +63,17 @@ public class PlasmaBall : MonoBehaviour {
     {
         if (LayerMask.LayerToName(col.gameObject.layer) == "Ground")
         {
-            Destroy(gameObject);
+            varDestroy = true;
+            Destroy(gameObject, destroyTime);
         }
         else if (LayerMask.LayerToName(col.gameObject.layer) == "Player")
         {
+            Destroy(gameObject, destroyTime);
+            varDestroy = true;
             if (col.gameObject.GetComponent<Player>().netId != bulletOwner.netId || hurtSelf == true)
             {
                 col.gameObject.GetComponent<Health>().Damage(5.0f);
                 tAtDestroy = Time.time;
-                Destroy(gameObject, destroyTime);
-                varDestroy = true;
             }
         }
         else if (col.gameObject.tag == "Portal")
