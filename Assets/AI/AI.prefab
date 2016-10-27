@@ -594,6 +594,7 @@ MonoBehaviour:
   moveSpeed: 30
   jumpDeceleration: 5
   maxFallSpeed: -110
+  playerSlot: 0
   AI: {fileID: 0}
   currentPlatform: {fileID: 0}
 --- !u!114 &11461866
@@ -641,9 +642,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rpm: 450
   bulletSpeed: 45
-  bulletPrefab: {fileID: 0}
   spawn: {fileID: 410624}
-  pEmitter: {fileID: 11459930, guid: 6ef9c3c6eae2b0849a687bcc2387ef46, type: 2}
 --- !u!114 &11480158
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -744,6 +743,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6774433997237be4099379959d24b0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blueHead: {fileID: 9100000, guid: dda22be1e5848a445808ac19f50a9bc0, type: 2}
+  blueTorso: {fileID: 9100000, guid: 4ccdc3e3e5e5a564aad536923ea0729e, type: 2}
+  blueLegs: {fileID: 9100000, guid: 04032e1a81b00ae4a8131cb3b8224a3f, type: 2}
+  redHead: {fileID: 9100000, guid: 1fbfff4ce66be2440b582c2cfbadefb6, type: 2}
+  redTorso: {fileID: 9100000, guid: daf162e0fc5b83744b53b336ee347e02, type: 2}
+  redLegs: {fileID: 9100000, guid: 996fe0e4dbd5b8349b69dd77e787fae8, type: 2}
+  yellowHead: {fileID: 9100000, guid: 7029379e343de274e8ce9748b82fd8b7, type: 2}
+  yellowTorso: {fileID: 9100000, guid: 928b0697f8f3420419f8830705bec128, type: 2}
+  yellowLegs: {fileID: 9100000, guid: 9c61aaa282ea18246b4922c3e75071c5, type: 2}
+  greenHead: {fileID: 9100000, guid: 011ab63276376884a831cd64873f2906, type: 2}
+  greenTorso: {fileID: 9100000, guid: a871f9f0ccf4c174388167ef56837ca8, type: 2}
+  greenLegs: {fileID: 9100000, guid: 4e24219355bb0844c94f7c7d6f92e9a7, type: 2}
 --- !u!114 &11494362
 MonoBehaviour:
   m_ObjectHideFlags: 1
