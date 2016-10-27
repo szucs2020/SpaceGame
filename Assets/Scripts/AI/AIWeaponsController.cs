@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿/*
+ * AIWeaponsController.cs
+ * Authors: Lajos Polya
+ * Description: This script allows the AI to aim at its target and it also allows it to shoot in bursts
+ */
+using UnityEngine;
 using System.Collections;
 
 public class AIWeaponsController : MonoBehaviour {

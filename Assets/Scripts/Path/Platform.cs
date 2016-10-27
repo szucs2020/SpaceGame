@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿/*
+ * Platform.cs
+ * Authors: Lajos Polya
+ * Description: This script contains information about the platform it represents
+ */
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
