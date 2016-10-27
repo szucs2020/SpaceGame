@@ -35,6 +35,11 @@ public class Health : NetworkBehaviour {
         }
     }
 
+    public void Kill()
+    {
+        Die();
+    }
+
     //updates character health bar
     private void UpdateHealthBar(float curHealth) {
         HealthBar.fillAmount = (curHealth / this.maxHealth);

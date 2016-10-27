@@ -132,7 +132,7 @@ public class Controller2D : RaycastController {
 						continue;
 					}
 				}
-                else if (hit.collider.tag == "Portal")
+                else if (hit.collider.tag == "Portal" || hit.collider.tag == "Boundary")
                 {
                     if (directionY == 1 || directionY == -1 || hit.distance == 0)
                     {

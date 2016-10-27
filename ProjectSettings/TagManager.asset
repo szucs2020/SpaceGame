@@ -9,6 +9,7 @@ TagManager:
   - NetworkManager
   - GameSettings
   - Portal
+  - Boundary
   layers:
   - Default
   - TransparentFX
