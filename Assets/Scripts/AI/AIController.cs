@@ -74,23 +74,22 @@ public class AIController : MonoBehaviour {
 			AI.setbuttonPressedJump (false);
 			AI.setbuttonReleasedJump (false);
 
-			if (Mathf.Abs (transform.position.x - AI.currentPlatform.GetComponent<Platform>().getRight()) < 10f) {
-				print ("near right edge");
-			}
-
             float variablePos = Random.Range(-5f, 5f);
 
 			if (player.transform.position.x < transform.position.x && transform.position.x - player.transform.position.x < 50f) {
 				Move (player.transform.position + new Vector3 (variablePos + 40f, -playerHeight + 3, 0), false); //Add a random x value so it doesn't always stay the same distance
 
 				if (savedPlatform.getRight () - transform.position.x < 15f) {
-					Move(playerComponent.currentPlatform.GetComponent<Platform> ().nodes[0].transform.position, true);
+					print ("near right edge");
+					Transform targetPlatform = findNearestPlatform (playerComponent.currentPlatform.GetComponent<Platform> (), true);
+					Move(targetPlatform.transform.position, true);
 				}
 			} else if (player.transform.position.x > transform.position.x && player.transform.position.x - transform.position.x < 50f) {
 				Move (player.transform.position - new Vector3 (variablePos + 40f, -playerHeight + 3, 0), false); //Add a random x value so it doesn't always stay the same distance
 
 				if (transform.position.x - savedPlatform.getLeft () < 15f) {
-					Move (playerComponent.currentPlatform.GetComponent<Platform> ().nodes [1].transform.position, true);
+					Transform targetPlatform = findNearestPlatform (playerComponent.currentPlatform.GetComponent<Platform> (), false);
+					Move (targetPlatform.transform.position, true);
 				} 
 			}
 		} else if (AI.currentPlatform != playerComponent.currentPlatform) {
@@ -180,6 +179,42 @@ public class AIController : MonoBehaviour {
 			target = path [0];
 			path.RemoveAt (0);
 		}*/
+	}
+
+	private Transform findNearestPlatform (Platform platform, bool right) {
+		List<Transform> rightSide = new List<Transform>();
+		List<Transform> leftSide = new List<Transform>();
+		Transform targetPlatform;
+
+		foreach (Transform neighbour in platform.neighbours) {
+			if (neighbour.transform.position.x > platform.transform.position.x) {
+				rightSide.Add (neighbour);
+			} else if (neighbour.transform.position.x < platform.transform.position.x) {
+				leftSide.Add (neighbour);
+			}
+		}
+
+		if (right == true) {
+			if (rightSide.Count != 0) {
+				targetPlatform = getRandomPlatform (rightSide);
+			} else {
+				targetPlatform = getRandomPlatform (leftSide);
+			}
+		} else {
+			if (leftSide.Count != 0) {
+				targetPlatform = getRandomPlatform (leftSide);
+			} else {
+				targetPlatform = getRandomPlatform (rightSide);
+			}
+		}
+
+		return targetPlatform;
+	}
+
+	private Transform getRandomPlatform (List<Transform> platforms) {
+		int index = (int)Random.Range (0f, platforms.Count  - 0.1f);
+
+		return platforms [index];
 	}
 
 	private void WalkOnPlatform () {
