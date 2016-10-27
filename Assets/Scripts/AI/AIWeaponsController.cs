@@ -28,6 +28,9 @@ public class AIWeaponsController : MonoBehaviour {
 	private int shotsFired = 0;
 	private float burstTime = 0;
 	void Update () {
+		if (player == null) {
+			return;
+		}
 		Vector3 dir3 = (player.position - new Vector3 (0, 5, 0)) - (transform.position - new Vector3 (0, 5, 0));
 		Vector2 dir2 = new Vector2 (dir3.x, dir3.y);
 		RaycastHit2D Hit;

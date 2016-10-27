@@ -50,6 +50,9 @@ public class AIController : MonoBehaviour {
 
 	private double timedelta = 0;
 	void Update () {
+		if (player == null) {
+			return;
+		}
         timedelta += Time.deltaTime;
 		if (timedelta < 2.5f) {
 			return;
