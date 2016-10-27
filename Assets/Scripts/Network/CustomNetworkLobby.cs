@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿/*
+ * CustomNetworkLobby.cs
+ * Authors: Christian
+ * Description: This script extends the functionality of the network lobby manager class, and manages the client instances
+ */
+using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
 using System;

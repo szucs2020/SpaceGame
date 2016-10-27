@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿/*
+ * Controller2D.cs
+ * Authors: Sebastien Lague
+ * Description: This is one of the scripts that detects collisions to replace the default unity implementation
+ */
+using UnityEngine;
 using System.Collections;
 
 public class Controller2D : RaycastController {

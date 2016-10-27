@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿/*
+ * LetterBox.cs
+ * Authors: Christian
+ * Description: This script adds a letterbox and pillarbox to adjust the screen size for different resolutions
+ */
+using UnityEngine;
 using System.Collections;
 
 public class LetterBox : MonoBehaviour {

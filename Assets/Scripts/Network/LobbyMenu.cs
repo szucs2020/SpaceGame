@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿/*
+ * LobbyMenu.cs
+ * Authors: Christian
+ * Description: A UI controlled class that starts a server or joins a game when buttons are clicked
+ */
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.Networking;

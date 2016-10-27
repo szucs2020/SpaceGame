@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿/*
+ * Network.cs
+ * Authors: Christian
+ * Description: This is the partially implemented low level networking code I will be using for the chat system
+ */
+using UnityEngine;
 using System.Collections;
 using System.IO;
 using UnityEngine.Networking;

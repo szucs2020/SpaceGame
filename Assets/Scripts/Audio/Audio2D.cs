@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿/*
+ * Audio2D.cs
+ * Authors: Christian
+ * Description: This script allows us to play non-spatial sounds 
+ */
+using UnityEngine;
 using System.Collections;
 
 public class Audio2D : MonoBehaviour {

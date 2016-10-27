@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿/*
+ * Network.cs
+ * Authors: Sebastien Lague
+ * Description: This is the part of the collision detection system that sets up the rays for raycasting
+ */
+using UnityEngine;
 using System.Collections;
 
 [RequireComponent (typeof (BoxCollider2D))]

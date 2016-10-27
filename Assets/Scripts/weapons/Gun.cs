@@ -1,6 +1,9 @@
-﻿/********************************************************
- * Authors: 
-********************************************************/
+﻿/*
+ * Gun.cs
+ * Authors: Christian
+ * Description: This is the original gun class that shot on the network. 
+ * Lorant made changes to this class for some of the other guns. 
+ */
 using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;

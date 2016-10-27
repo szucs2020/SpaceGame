@@ -1,4 +1,9 @@
-﻿using System;
+﻿/*
+ * CameraExpander.cs
+ * Authors: Christian
+ * Description: This script moves the camera and changes its size to show all the players on the screen at once.
+ */
+using System;
 using UnityEngine;
 
 public class CameraExpander : MonoBehaviour {

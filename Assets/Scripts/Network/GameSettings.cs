@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿/*
+ * GameSettings.cs
+ * Authors: Christian
+ * Description: Allows us to save configuration settings, and move them from the lobby scene to the gameplay scene
+ */
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Networking;

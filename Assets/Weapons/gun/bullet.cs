@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿/*
+ * Bullet.cs
+ * Authors: Christian
+ * Description: This class is attached to every "standard" bullet. It supports having an owner and doing damage to other players.
+ */
+using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
 

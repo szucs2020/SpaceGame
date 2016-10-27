@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿/*
+ * GameController.cs
+ * Authors: Christian
+ * Description: This script controls the gametypes and respawning of the players
+ */
+using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
 

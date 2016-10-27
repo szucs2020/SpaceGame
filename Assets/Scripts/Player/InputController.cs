@@ -19,7 +19,7 @@ public class InputController : NetworkBehaviour {
 		released = true;
 
 		if (Input.GetJoystickNames().Length > 0){
-			usingGamepad = true;
+			usingGamepad = false;
 		} else {
 			usingGamepad = false;
 		}
@@ -39,9 +39,6 @@ public class InputController : NetworkBehaviour {
 
         //fix button pressed/held for the xbox controller
         if (usingGamepad){
-
-            print("Vert: " + Input.GetAxisRaw("RightStickVertical"));
-            print("Horiz: " + Input.GetAxisRaw("RightStickHorizontal"));
 
             //gamepad right stick
             if (Input.GetAxisRaw("RightStickVertical") < -0.50) {

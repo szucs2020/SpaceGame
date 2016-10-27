@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿/*
+ * SyncFlip.cs
+ * Authors: Christian
+ * Description: This class synchronizes the player direction over the network. 
+ */
+using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
 

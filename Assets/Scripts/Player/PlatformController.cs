@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿/*
+ * PlatformController.cs
+ * Authors: Sebastien Lague
+ * Description: This is a script that allows moving platforms to work with the collision detection system
+ */
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 

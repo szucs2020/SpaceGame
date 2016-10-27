@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿/*
+ * Timer.cs
+ * Authors: Christian
+ * Description: This script controls the timer for the "Time" gametype. It counts down and displays only when 
+ * its changed by one full second.
+ */
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 

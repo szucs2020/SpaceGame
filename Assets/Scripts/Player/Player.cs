@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿/*
+ * Network.cs
+ * Authors: Christian. Animation related code was done with Nigel. 
+ * Description: This is the main player controller class. 
+ */
+using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
 using UnityEngine.UI;

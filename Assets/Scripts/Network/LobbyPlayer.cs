@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿/*
+ * LobbyPlayer.cs
+ * Authors: Christian
+ * Description: Supplies a player controller for the lobby, that allows users to change their own settings but not 
+ * other player's settings.
+ */
+using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
 

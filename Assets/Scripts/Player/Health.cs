@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿/*
+ * Health.cs
+ * Authors: Christian
+ * Description: This is the class that supports player health, damage and death.
+ */
+using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
 using UnityEngine.UI;

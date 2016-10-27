@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿/*
+ * Network.cs
+ * Authors: Nigel. With help from christian with the networking code
+ * Description: This class handles the pregame lobby UI changes including the player colour and ready system.
+ */
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
