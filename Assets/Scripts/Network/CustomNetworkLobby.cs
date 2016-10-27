@@ -8,6 +8,20 @@ using UnityEngine.Networking.Match;
 public class CustomNetworkLobby : NetworkLobbyManager {
 
     private bool hostFlag = false;
+    private NetworkClient localClient;
+
+    public void HostGame() {
+        localClient = StartHost();
+    }
+
+    public void JoinGame(String ipAddress) {
+        networkAddress = ipAddress;
+        localClient = StartClient();
+    }
+
+    public void CloseConnection() {
+        localClient.Disconnect();
+    }
 
     public override bool OnLobbyServerSceneLoadedForPlayer(GameObject lobbyPlayer, GameObject gamePlayer) {
         Player p = gamePlayer.GetComponent<Player>();
@@ -16,6 +30,7 @@ public class CustomNetworkLobby : NetworkLobbyManager {
         return true;
     }
 
+    //cleverly getting around the fact that this is called twice every time someone joins
     public override void OnServerConnect(NetworkConnection conn) {
         if (hostFlag) {
             this.minPlayers++;
@@ -25,11 +40,10 @@ public class CustomNetworkLobby : NetworkLobbyManager {
     }
 
     public override void OnServerDisconnect(NetworkConnection conn) {
-        print("disconnect");
         this.minPlayers--;
     }
 
-     void OnLevelWasLoaded(int level) {
+    void OnLevelWasLoaded(int level) {
         if (level == 1) {
             GameObject.Find("GameSettings").GetComponent<GameController>().SpawnAI();
         }

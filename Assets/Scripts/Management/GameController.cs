@@ -28,16 +28,40 @@ public class GameController : NetworkBehaviour {
             }
 
         } else if (settings.gameType == GameSettings.GameType.Time) {
-            //set up time settings
+            GameObject.Find("HUD").transform.Find("Timer").GetComponent<Timer>().setTime(settings.time);
         }
+    }
+
+    public void EndGame() {
+        manager.CloseConnection();
+        print("GAME OVER");
     }
 
     public void AttemptSpawnPlayer(NetworkConnection connectionToClient, short playerControllerID, int playerSlot) {
 
-        playerLives[playerSlot]--;
-        print("Lives left: " + playerLives[playerSlot]);
+        bool respawn = false;
 
-        if (playerLives[playerSlot] > 0) {
+        if (settings.gameType == GameSettings.GameType.Survival) {
+
+            int playersLeft = 0;
+
+            playerLives[playerSlot]--;
+            print("Lives left: " + playerLives[playerSlot]);
+
+            //check if there is a winner
+            for (int i = 0; i < playerLives.Length; i++) {
+                if (playerLives[i] > 0) {
+                    playersLeft++;
+                }
+            }
+            if (playersLeft <= 1) {
+                EndGame();
+            } else if (playerLives[playerSlot] > 0) {
+                respawn = true;
+            }
+        }
+
+        if (respawn == true || settings.gameType == GameSettings.GameType.Time) {
             Transform spawn = NetworkManager.singleton.GetStartPosition();
             GameObject newPlayer = (GameObject)Instantiate(NetworkManager.singleton.playerPrefab, spawn.position, spawn.rotation);
             newPlayer.GetComponent<Player>().playerSlot = playerSlot;
@@ -55,5 +79,4 @@ public class GameController : NetworkBehaviour {
             NetworkServer.Spawn(AI);
         }
     }
-
 }
