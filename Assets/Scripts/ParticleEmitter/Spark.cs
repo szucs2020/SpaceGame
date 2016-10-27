@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿/*
+ * Spark.cs
+ * Authors: Lorant
+ * Description: This script spawns a spark when a
+ *              laser collides with an object
+ */
+using UnityEngine;
 using System.Collections;
 
 public class Spark : MonoBehaviour {

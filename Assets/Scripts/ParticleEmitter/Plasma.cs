@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿/*
+ * Plasma.cs
+ * Authors: Lorant
+ * Description: This script controls the functionality of the
+ *              plasma particle.  Plasma particles are used in the plasm ball
+ */
+using UnityEngine;
 using System.Collections;
 
 public class Plasma : Particle {

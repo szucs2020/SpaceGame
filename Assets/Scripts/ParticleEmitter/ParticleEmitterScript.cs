@@ -1,4 +1,11 @@
-﻿using UnityEngine;
+﻿/*
+ * ParticleEmitter.cs
+ * Authors: Lorant
+ * Description: This script is obselete
+ *              It was original used to emit the different particle
+ *              types before I pivoted approaches
+ */
+using UnityEngine;
 using System.Collections.Generic;
 
 public class ParticleEmitterScript : MonoBehaviour {

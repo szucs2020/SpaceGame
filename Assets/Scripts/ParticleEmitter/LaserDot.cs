@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿/*
+ * LaserDot.cs
+ * Authors: Lorant
+ * Description: This script controls the functionality
+ *              of a laser dot, which is used as a bullet
+ */
+using UnityEngine;
 using System.Collections;
 
 public class LaserDot : Particle {

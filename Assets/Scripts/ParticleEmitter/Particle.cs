@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿/*
+ * Particle.cs
+ * Authors: Lorant
+ * Description: This script is the bass class for all
+ *              particle types including plasma and laser dots
+ */
+using UnityEngine;
 using System.Collections;
 
 public class Particle : MonoBehaviour {
@@ -40,26 +46,11 @@ public class Particle : MonoBehaviour {
 
     void Start()
     {
-        //print("particle script " + this.transform.name);
-
         sprite = this.GetComponent<SpriteRenderer>();
     }
 
     void Update()
     {
-        //if (this.type == ParticleTypes.Fire)
-        //{
-        //    flickerFlame();
-        //}
-        //else if (this.type == ParticleTypes.Plasma)
-        //{
-        //    controlPlasma();
-        //}
-        //else if (this.type == ParticleTypes.LaserDot)
-        //{
-        //    changeParticleColour();
-        //}
-
     }
 
     public void initialize(ParticleTypes type)

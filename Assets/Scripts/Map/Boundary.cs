@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿/*
+ * Boundary.cs
+ * Authors: Lorant
+ * Description: This script adds functioality to kill
+ *              players when they fall off the map 
+ */
+using UnityEngine;
 using System.Collections;
 
 public class Boundary : MonoBehaviour

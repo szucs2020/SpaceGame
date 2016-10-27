@@ -1,6 +1,8 @@
-﻿/********************************************************
- * Authors: 
-********************************************************/
+﻿/*
+ * Shotgun.cs
+ * Authors: Lorant
+ * Description: This script controls how the shotgun works
+ */
 using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
