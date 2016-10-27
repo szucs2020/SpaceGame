@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿/*
+ * AIController.cs
+ * Authors: Lajos Polya
+ * Description: This script cotrolls how the AI moves around the map including jumping
+ */
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -36,17 +41,6 @@ public class AIController : MonoBehaviour {
 		target = path [0];
 		path.RemoveAt (0);
 	}
-
-	/*
-	 * 
-	 * 
-	 * 
-	 * 
-	 * PUT IF AI AND PLAYER ARE ON SAME PLATFORM AND AI ON THE EDGE
-	 * 
-	 * 
-	 * 
-	 */
 
 	private double timedelta = 0;
 	void Update () {
@@ -369,7 +363,7 @@ public class AIController : MonoBehaviour {
 
 
 
-	/*************
+ /*
  * 
  * 
  * Previous Implementation

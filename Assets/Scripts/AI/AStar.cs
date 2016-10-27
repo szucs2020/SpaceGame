@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿/*
+ * AStar.cs
+ * Authors: Lajos Polya
+ * Description: This script contains the A* (Star) algorithm which is the path finding algorithm
+ * which finds a path from one node to another node
+ */
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 

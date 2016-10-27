@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿/*
+ * BehaviourTreeBasics.cs
+ * Authors: Lajos Polya
+ * Description: This script contains basic classes for implementing a behaviour tree but this is currently
+ * not implemented
+ */
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
