@@ -97,7 +97,7 @@ GameObject:
   - 23: {fileID: 5540261}
   - 61: {fileID: 5540260}
   - 114: {fileID: 5540259}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube2 (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -676,7 +676,7 @@ GameObject:
   - 23: {fileID: 537908097}
   - 61: {fileID: 537908096}
   - 114: {fileID: 537908095}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -950,7 +950,7 @@ GameObject:
   - 23: {fileID: 675120414}
   - 61: {fileID: 675120413}
   - 114: {fileID: 675120412}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1365,7 +1365,7 @@ GameObject:
   - 23: {fileID: 1896907589}
   - 61: {fileID: 1896907588}
   - 114: {fileID: 1896907587}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube2 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
