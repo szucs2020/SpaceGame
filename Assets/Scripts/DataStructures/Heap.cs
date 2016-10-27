@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿/*
+ * Heap.cs
+ * Authors: Lajos Polya
+ * Description: This is a Heap which is used by the A* (Star) algorithm
+ */
+using UnityEngine;
 using System.Collections;
 
 public class Heap {

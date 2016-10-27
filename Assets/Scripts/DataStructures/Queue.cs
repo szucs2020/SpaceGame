@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿/*
+ * Queue.cs
+ * Authors: Lajos Polya
+ * Description: This is a Queue which stores nodes
+ */
+using UnityEngine;
 using System.Collections;
 
 public class Queue {

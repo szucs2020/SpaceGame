@@ -1,4 +1,11 @@
-﻿using UnityEngine;
+﻿/*
+ * PlasamBall.cs
+ * Authors: Lorant
+ * Description: This script controls the functionality of the 
+ *              palsma ball, which is used as ammo for the
+ *              plsam cannon
+ */
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 

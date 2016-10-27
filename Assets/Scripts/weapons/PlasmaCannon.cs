@@ -1,6 +1,9 @@
-﻿/********************************************************
- * Authors: 
-********************************************************/
+﻿/*
+ * PlasmaCannon.cs
+ * Authors: Lorant
+ * Description: This script controls the way the
+ *              plasma cannon works
+ */
 using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;

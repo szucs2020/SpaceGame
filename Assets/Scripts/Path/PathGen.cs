@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿/*
+ * PathGen.cs
+ * Authors: Lajos Polya
+ * Description: This script gets all the nodes on the platforms and connects them to create a tree, which paths can 
+ * be formed on by the A* (Star) algorithm.
+ */
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 

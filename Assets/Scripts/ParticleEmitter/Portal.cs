@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿/*
+ * Portal.cs
+ * Authors: Lorant
+ * Description: This script controls the funtionality of portals
+ */
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 

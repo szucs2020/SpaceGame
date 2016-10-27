@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿/*
+ * PortalFragments.cs
+ * Authors: Lorant
+ * Description: This script controls the functionality
+ *              of the inside of the portals
+ */
+using UnityEngine;
 using System.Collections;
 
 public class PortalFragments : Particle {
