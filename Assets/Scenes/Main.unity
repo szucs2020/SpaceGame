@@ -663,7 +663,7 @@ MonoBehaviour:
   offset: {x: 0, y: 0, z: -1}
   moveSpeed: 1
   zoomSpeed: 1
-  minCameraSize: 30
+  minCameraSize: 50
 --- !u!1 &537908093
 GameObject:
   m_ObjectHideFlags: 0

@@ -21,8 +21,12 @@ public class GameSettings : NetworkBehaviour {
 
         // prevent the scene from destroying this object
         DontDestroyOnLoad(transform.gameObject);
+        
+        //default values
         gameType = GameType.Survival;
         NumberOfAIPlayers = 0;
+        time = 120;
+        numLives = 3;
     }
 
     void OnLevelWasLoaded(int level) {
