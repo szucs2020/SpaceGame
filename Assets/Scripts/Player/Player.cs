@@ -16,12 +16,6 @@ public class Player : NetworkBehaviour {
 	public float jumpDeceleration = 0.5f;
 	public float maxFallSpeed = -110f;
 
-    //audio
-    private AudioSource audio;
-    private AudioClip audioJump;
-    private AudioClip audioBoost;
-    private AudioClip audioDie;
-
     private Gun gun;
     private SyncFlip syncFlip;
 
@@ -68,6 +62,8 @@ public class Player : NetworkBehaviour {
 	public Transform currentPlatform;
 	private bool isAI = false;
 
+    private Audio2D audio;
+
 	void Start() {
 
         syncFlip = GetComponent<SyncFlip>();
@@ -100,11 +96,7 @@ public class Player : NetworkBehaviour {
         currentPlatform = null;
         currentPosition = 2;
 
-        //load audio
-        audio = GetComponent<AudioSource>();
-        audioJump = Resources.Load<AudioClip>("Audio/Player/Footstep1");
-        audioBoost = Resources.Load<AudioClip>("Audio/Player/Boost");
-        audioDie = Resources.Load<AudioClip>("Audio/Player/Wilhelm");
+        audio = GameObject.Find("Audio").GetComponent<Audio2D>();
     }
 
     void Update() {
@@ -204,12 +196,13 @@ public class Player : NetworkBehaviour {
 				velocity.y = maxJumpVelocity;
 				decelerating = false;
                 if (jump == 1){
-                    audio.PlayOneShot(audioBoost, 0.7f);
+                    audio.playBoost();
                 }
 			}
 
 			if (jump == 0) {
 				jump = 1;
+                audio.playJump();
             } else if (jump == 1){
 				jump = 2;
             }
@@ -264,8 +257,8 @@ public class Player : NetworkBehaviour {
 	}
 
     public void Die() {
+        audio.playDie();
         Destroy(this.gameObject);
-        AudioSource.PlayClipAtPoint(audioDie, transform.position);
     }
 
     //flip 2D sprite
