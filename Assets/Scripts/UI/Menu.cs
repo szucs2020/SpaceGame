@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿/*
+ * Network.cs
+ * Authors: Nigel
+ * Description: Handles scene transitions and the in-game pause menu.
+ */
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
 

@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿/*
+ * Network.cs
+ * Authors: Nigel
+ * Description: Initiates and controls the animators of the head, torso, and legs of the Player object.
+ */
+using UnityEngine;
 using System.Collections;
 
 public class AnimationManager : MonoBehaviour {
