@@ -29,6 +29,7 @@ public class AIWeaponsController : MonoBehaviour {
 	private float burstTime = 0;
 	void Update () {
 		if (player == null) {
+			player = GameObject.Find ("Player(Clone)").transform;
 			return;
 		}
 		Vector3 dir3 = (player.position - new Vector3 (0, 5, 0)) - (transform.position - new Vector3 (0, 5, 0));

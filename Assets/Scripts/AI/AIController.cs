@@ -51,6 +51,14 @@ public class AIController : MonoBehaviour {
 	private double timedelta = 0;
 	void Update () {
 		if (player == null) {
+			AI.setMovementAxis (new Vector2 (0, 0));
+
+			player = GameObject.Find ("Player(Clone)");
+
+			if (player != null) {
+				playerComponent = player.GetComponent<Player> ();
+				playerHeight = player.GetComponent<BoxCollider2D> ().bounds.size.y;
+			}
 			return;
 		}
         timedelta += Time.deltaTime;
@@ -80,8 +88,16 @@ public class AIController : MonoBehaviour {
 
 			if (player.transform.position.x < transform.position.x && transform.position.x - player.transform.position.x < 50f) {
 				Move (player.transform.position + new Vector3 (variablePos + 40f, -playerHeight + 3, 0), false); //Add a random x value so it doesn't always stay the same distance
+
+				if (savedPlatform.getRight () - transform.position.x < 15f) {
+					Move(playerComponent.currentPlatform.GetComponent<Platform> ().nodes[0].transform.position, true);
+				}
 			} else if (player.transform.position.x > transform.position.x && player.transform.position.x - transform.position.x < 50f) {
 				Move (player.transform.position - new Vector3 (variablePos + 40f, -playerHeight + 3, 0), false); //Add a random x value so it doesn't always stay the same distance
+
+				if (transform.position.x - savedPlatform.getLeft () < 15f) {
+					Move (playerComponent.currentPlatform.GetComponent<Platform> ().nodes [1].transform.position, true);
+				} 
 			}
 		} else if (AI.currentPlatform != playerComponent.currentPlatform) {
 			bool onNeighbourPlatform = false;
