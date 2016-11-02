@@ -618,13 +618,13 @@ MonoBehaviour:
   blueTorso: {fileID: 9100000, guid: 4ccdc3e3e5e5a564aad536923ea0729e, type: 2}
   blueLegs: {fileID: 9100000, guid: 04032e1a81b00ae4a8131cb3b8224a3f, type: 2}
   redHead: {fileID: 9100000, guid: 1fbfff4ce66be2440b582c2cfbadefb6, type: 2}
-  redTorso: {fileID: 9100000, guid: daf162e0fc5b83744b53b336ee347e02, type: 2}
+  redTorso: {fileID: 9100000, guid: 88acc9f3ce34d6145856b9094cab0bd9, type: 2}
   redLegs: {fileID: 9100000, guid: 996fe0e4dbd5b8349b69dd77e787fae8, type: 2}
   yellowHead: {fileID: 9100000, guid: 7029379e343de274e8ce9748b82fd8b7, type: 2}
-  yellowTorso: {fileID: 9100000, guid: 928b0697f8f3420419f8830705bec128, type: 2}
+  yellowTorso: {fileID: 9100000, guid: a47ec40295bbc1c44aaaee87fe3211a8, type: 2}
   yellowLegs: {fileID: 9100000, guid: 9c61aaa282ea18246b4922c3e75071c5, type: 2}
   greenHead: {fileID: 9100000, guid: 011ab63276376884a831cd64873f2906, type: 2}
-  greenTorso: {fileID: 9100000, guid: a871f9f0ccf4c174388167ef56837ca8, type: 2}
+  greenTorso: {fileID: 9100000, guid: 68f4ddc7e4e4a9f4597ccca71f1d679b, type: 2}
   greenLegs: {fileID: 9100000, guid: 4e24219355bb0844c94f7c7d6f92e9a7, type: 2}
 --- !u!114 &11439566
 MonoBehaviour:

@@ -1,7 +1,7 @@
 ﻿/*
  * Network.cs
  * Authors: Nigel
- * Description: Initiates and controls the animators of the head, torso, and legs of the Player object.
+ * Description: Initializes and controls the animators of the head, torso, and legs of the Player object.
  */
 using UnityEngine;
 using System.Collections;
@@ -106,6 +106,15 @@ public class AnimationManager : MonoBehaviour {
         headAnimator.SetTrigger("Down Tilt");
         torsoAnimator.SetTrigger("Down Tilt");
         player.setCurrentPosition(1);
+    }
+    public void setPistol() {
+        torsoAnimator.SetTrigger("Pistol");
+    }
+    public void setShotgun() {
+        torsoAnimator.SetTrigger("Shotgun");
+    }
+    public void setCannon() {
+        torsoAnimator.SetTrigger("Cannon");
     }
 
     //legs
