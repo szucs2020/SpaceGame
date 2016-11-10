@@ -21,6 +21,7 @@ public class AIController : MonoBehaviour {
 	private bool hasPath = true;
 
 	private Platform savedPlatform = null;
+	private bool jumpingToNextPlatform = false;
 
 	// Use this for initialization
 	void Start () {
@@ -64,6 +65,7 @@ public class AIController : MonoBehaviour {
 			savedPlatform = AI.currentPlatform.GetComponent<Platform> ();
 		} else if (savedPlatform.transform != AI.currentPlatform) {
 			savedPlatform = AI.currentPlatform.GetComponent<Platform> ();
+			jumpingToNextPlatform = false;
 		}
 
 		if (AI.currentPlatform == playerComponent.currentPlatform) {
@@ -76,21 +78,30 @@ public class AIController : MonoBehaviour {
 
             float variablePos = Random.Range(-5f, 5f);
 
-			if (player.transform.position.x < transform.position.x && transform.position.x - player.transform.position.x < 50f) {
-				Move (player.transform.position + new Vector3 (variablePos + 40f, -playerHeight + 3, 0), false); //Add a random x value so it doesn't always stay the same distance
+			if (transform.position.x - player.transform.position.x < 40f || jumpingToNextPlatform == true) {
+				if ((player.transform.position.x < transform.position.x && transform.position.x - player.transform.position.x < 50f) || jumpingToNextPlatform == true) {
+					if (jumpingToNextPlatform == false) {
+						Move (player.transform.position + new Vector3 (variablePos + 40f, -playerHeight + 3, 0), false, false); //Add a random x value so it doesn't always stay the same distance
+					}
+						
+					if (savedPlatform.getRight () - transform.position.x < 15f) {
+						jumpingToNextPlatform = true;
+						Transform targetPlatform = findNearestPlatform (playerComponent.currentPlatform.GetComponent<Platform> (), true);
+						Move (targetPlatform.transform.position, true, true);
+					}
+				} else if (player.transform.position.x > transform.position.x && player.transform.position.x - transform.position.x < 50f || jumpingToNextPlatform == true) {
+					if (jumpingToNextPlatform == false) {
+						Move (player.transform.position - new Vector3 (variablePos + 40f, -playerHeight + 3, 0), false, false); //Add a random x value so it doesn't always stay the same distance
+					}
 
-				if (savedPlatform.getRight () - transform.position.x < 15f) {
-					print ("near right edge");
-					Transform targetPlatform = findNearestPlatform (playerComponent.currentPlatform.GetComponent<Platform> (), true);
-					Move(targetPlatform.transform.position, true);
+					if (transform.position.x - savedPlatform.getLeft () < 15f) {
+						jumpingToNextPlatform = true;
+						Transform targetPlatform = findNearestPlatform (playerComponent.currentPlatform.GetComponent<Platform> (), false);
+						Move (targetPlatform.transform.position, true, true);
+					} 
 				}
-			} else if (player.transform.position.x > transform.position.x && player.transform.position.x - transform.position.x < 50f) {
-				Move (player.transform.position - new Vector3 (variablePos + 40f, -playerHeight + 3, 0), false); //Add a random x value so it doesn't always stay the same distance
-
-				if (transform.position.x - savedPlatform.getLeft () < 15f) {
-					Transform targetPlatform = findNearestPlatform (playerComponent.currentPlatform.GetComponent<Platform> (), false);
-					Move (targetPlatform.transform.position, true);
-				} 
+			} else {
+				Move (player.transform.position + new Vector3 (variablePos + 40f, -playerHeight + 3, 0), false, false); //Add a random x value so it doesn't always stay the same distance
 			}
 		} else if (AI.currentPlatform != playerComponent.currentPlatform) {
 			bool onNeighbourPlatform = false;
@@ -124,16 +135,16 @@ public class AIController : MonoBehaviour {
 					 * 
 					 */
 					if (transform.position.x - savedPlatform.getLeft () < 15f) {
-						Move (playerComponent.currentPlatform.GetComponent<Platform> ().nodes [1].transform.position, true);
+						Move (playerComponent.currentPlatform.GetComponent<Platform> ().nodes [1].transform.position, true, false);
 					} else {
-						Move (playerComponent.currentPlatform.GetComponent<Platform> ().nodes [1].transform.position, false);
+						Move (playerComponent.currentPlatform.GetComponent<Platform> ().nodes [1].transform.position, false, false);
 					}
 				} else if (player.transform.position.x > transform.position.x && player.transform.position.x - transform.position.x > 30f) { //If not within a certain distance continue
 					//nodes[0] represents the first node on platform
 					if (savedPlatform.getRight () - transform.position.x < 15f) {
-						Move(playerComponent.currentPlatform.GetComponent<Platform> ().nodes[0].transform.position, true);
+						Move(playerComponent.currentPlatform.GetComponent<Platform> ().nodes[0].transform.position, true, false);
 					} else {
-						Move(playerComponent.currentPlatform.GetComponent<Platform> ().nodes[0].transform.position, false);
+						Move(playerComponent.currentPlatform.GetComponent<Platform> ().nodes[0].transform.position, false, false);
 					}
 				}
 			} else { //target represents a node on the platform
@@ -230,7 +241,7 @@ public class AIController : MonoBehaviour {
 			path.RemoveAt (0);
 		}
 
-		Move (target.transform.position, true);
+		Move (target.transform.position, true, false);
 	}
 
 	private void JumpToPlayersPlatform () {
@@ -248,7 +259,7 @@ public class AIController : MonoBehaviour {
 		Jump (target.transform.position);
 	}
 
-	void Move(Vector3 target, bool canJump) {
+	void Move(Vector3 target, bool canJump, bool overrrideJump) {
 
 		if (target.x < transform.position.x) {
             AI.setMovementAxis (new Vector2 (-1, 1));
@@ -256,7 +267,7 @@ public class AIController : MonoBehaviour {
 			AI.setMovementAxis (new Vector2 (1, 1));
 		}
 		//Nodes are 3 units above the ground but I added 4 because the player isn't always touching the ground
-		if (canJump && Mathf.Abs (target.x - transform.position.x) < 25f && target.y > transform.position.y - AIHeight + 4) {
+		if ((canJump && Mathf.Abs (target.x - transform.position.x) < 25f && target.y > transform.position.y - AIHeight + 4) || overrrideJump) {
 			JumpingHelper ();
 		} else {
 			amountOfTimePassed = 0f;
@@ -270,7 +281,7 @@ public class AIController : MonoBehaviour {
 
 	void Jump(Vector3 target) {
 		JumpingHelper ();
-		Move (target, true); //Added true but this method not used anymore
+		Move (target, true, true); //Added true but this method not used anymore
 	}
 
 	private float amountOfTimePassed = 0f;
