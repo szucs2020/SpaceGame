@@ -190,8 +190,6 @@ public class AIController : MonoBehaviour {
 			target = path [0];
 			path.RemoveAt (0);
 		}*/
-
-		AI.setMovementAxis (new Vector2 (0, 0));
 	}
 
 	private Platform findNearestPlatform (Platform platform, bool right) {
@@ -224,6 +222,7 @@ public class AIController : MonoBehaviour {
 		return targetPlatform.GetComponent<Platform>();
 	}
 
+	/*There's an Index Out of Range Exception Here*/
 	private Transform getRandomPlatform (List<Transform> platforms) {
 		int index = (int)Random.Range (0f, platforms.Count  - 0.1f);
 

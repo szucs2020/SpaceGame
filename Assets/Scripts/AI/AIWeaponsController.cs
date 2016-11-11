@@ -43,6 +43,8 @@ public class AIWeaponsController : MonoBehaviour {
 		float angle;
 		bool belowPlayer;
 
+		//This RayCast initializes the Hit variable becuase it won't fire in all cases
+		Hit = Physics2D.Raycast (new Vector2(transform.position.x, transform.position.y), Vector2.down, 0f);
 		if (AISync.getFacingRight () == true) {
 			Debug.DrawRay (transform.position - new Vector3 (0, 5, 0), dir3, Color.green);
 			Debug.DrawRay (transform.position - new Vector3(0, 5, 0), Vector3.right * 50, Color.blue);
@@ -80,7 +82,7 @@ public class AIWeaponsController : MonoBehaviour {
 					} else {
 						AI.setbuttonHeldAimUp (false);
 						AI.setbuttonHeldAimDown (true);
-						Hit = Physics2D.Raycast (new Vector2(Spawns.GetChild(3).position.x, Spawns.GetChild(3).position.y), (Spawns.GetChild(1).rotation * Vector2.right) * 50, 50f);
+						Hit = Physics2D.Raycast (new Vector2(Spawns.GetChild(1).position.x, Spawns.GetChild(1).position.y), (Spawns.GetChild(1).rotation * Vector2.right) * 50, 50f);
 						Debug.DrawRay (new Vector2(Spawns.GetChild(1).position.x, Spawns.GetChild(1).position.y), (Spawns.GetChild(1).rotation * Vector2.right) * 50, Color.magenta);
 
 					}
@@ -120,6 +122,11 @@ public class AIWeaponsController : MonoBehaviour {
 				} else {
 					AI.setbuttonHeldAimUp (false);
 					AI.setbuttonHeldAimDown (true);
+					rotation = Spawns.GetChild (0).rotation;
+					rotation = Quaternion.Euler(rotation.eulerAngles.x, rotation.eulerAngles.y, rotation.eulerAngles.z * -1);
+					direction = rotation * Vector2.left;
+					Hit = Physics2D.Raycast (new Vector2(Spawns.GetChild(0).position.x, Spawns.GetChild(0).position.y - 4), direction * 50, 50f);
+					Debug.DrawRay (new Vector2(Spawns.GetChild(0).position.x, Spawns.GetChild(0).position.y - 4), direction * 50, Color.magenta);
 				}
 			} else {
 				if (angle > 20) {
@@ -129,29 +136,43 @@ public class AIWeaponsController : MonoBehaviour {
 					if (player.position.y > transform.position.y) {
 						AI.setbuttonHeldAimUp (true);
 						AI.setbuttonHeldAimDown (false);
+						rotation = Spawns.GetChild (3).rotation;
+						rotation = Quaternion.Euler(rotation.eulerAngles.x, rotation.eulerAngles.y, rotation.eulerAngles.z * -1);
+						direction = rotation * Vector2.left;
+						Hit = Physics2D.Raycast (new Vector2(Spawns.GetChild(3).position.x, Spawns.GetChild(3).position.y), direction * 50, 50f);
+						Debug.DrawRay (new Vector2(Spawns.GetChild(3).position.x, Spawns.GetChild(3).position.y), direction * 50, Color.magenta);
 					} else {
 						AI.setbuttonHeldAimUp (false);
 						AI.setbuttonHeldAimDown (true);
+						rotation = Spawns.GetChild (1).rotation;
+						rotation = Quaternion.Euler(rotation.eulerAngles.x, rotation.eulerAngles.y, rotation.eulerAngles.z * -1);
+						direction = rotation * Vector2.left;
+						Hit = Physics2D.Raycast (new Vector2(Spawns.GetChild(1).position.x, Spawns.GetChild(1).position.y), direction * 50, 50f);
+						Debug.DrawRay (new Vector2(Spawns.GetChild(1).position.x, Spawns.GetChild(1).position.y), direction * 50, Color.magenta);
 					}
 				} else {
 					AI.setbuttonHeldAimLeft (true);
 					AI.setbuttonHeldAimDown (false);
 					AI.setbuttonHeldAimUp (false);
+					rotation = Spawns.GetChild (2).rotation;
+					rotation = Quaternion.Euler(rotation.eulerAngles.x, rotation.eulerAngles.y, rotation.eulerAngles.z * -1);
+					direction = rotation * Vector2.left;
+					Hit = Physics2D.Raycast (new Vector2(Spawns.GetChild(2).position.x, Spawns.GetChild(2).position.y), direction * 50, 50f);
+					Debug.DrawRay (new Vector2(Spawns.GetChild(2).position.x, Spawns.GetChild(2).position.y), direction * 50, Color.magenta);
 				}
 			}
 		}
 
-		Hit = Physics2D.Raycast (new Vector2(Spawns.GetChild(1).transform.position.x - 1, Spawns.GetChild(1).transform.position.y), new Vector2(-1, 0), 50f);
 		timePassed += Time.deltaTime;
-
-		if (timePassed > 1f + randomTime) {
-			burst = true;
-			numberOfShots = (int)Random.Range (2.5f, 4.5f);
-			randomTime = Random.Range (0f, 1f);
-			timePassed = 0f;
-
-		} else {
-			AI.setbuttonPressedShoot (false);
+		if (Hit.transform != null && Hit.transform == player) {
+			if (timePassed > 1f + randomTime) {
+				burst = true;
+				numberOfShots = (int)Random.Range (2.5f, 4.5f);
+				randomTime = Random.Range (0f, 1f);
+				timePassed = 0f;
+			} else {
+				AI.setbuttonPressedShoot (false);
+			}
 		}
 
 		if (burst == true) {
