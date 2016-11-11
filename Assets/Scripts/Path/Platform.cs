@@ -11,6 +11,7 @@ public class Platform : MonoBehaviour {
 	
 	public Transform[] neighbours;
 	public List<Transform> nodes;
+	public Transform[] portals;
 
 	private float length;
 	private float left;

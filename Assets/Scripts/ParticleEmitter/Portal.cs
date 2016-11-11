@@ -18,6 +18,8 @@ public class Portal : MonoBehaviour {
     private Vector3 deltaD;
     private int numWarp = 5;
 
+	public Node node;
+
     // Use this for initialization
     void Start() {
         targetScript = target.GetComponent<Portal>();
@@ -34,6 +36,8 @@ public class Portal : MonoBehaviour {
             warp[i].transform.SetParent(transform.GetChild(0), false);
             warp[i].transform.localPosition = new Vector3(0, 0, 0);
         }
+
+		node = null;
     }
 
     // Update is called once per frame
@@ -66,4 +70,12 @@ public class Portal : MonoBehaviour {
             }
         }
     }
+
+	public void SetNode(Node node) {
+		this.node = node;
+	}
+
+	public Node GetNode() {
+		return node;
+	}
 }

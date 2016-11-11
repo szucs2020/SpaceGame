@@ -130,6 +130,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   neighbours: []
   nodes: []
+  portals: []
 --- !u!61 &5540260
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -342,9 +343,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 105dfffbdccdc8b45b34720c54c97c82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  neighbours:
-  - {fileID: 537908094}
+  neighbours: []
   nodes: []
+  portals:
+  - {fileID: 1953507791}
 --- !u!61 &209717312
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -740,11 +742,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 485128, guid: b1af567da36f884479bf5cc4c4e23e86, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -138.22069
+      value: 28.1
       objectReference: {fileID: 0}
     - target: {fileID: 485128, guid: b1af567da36f884479bf5cc4c4e23e86, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 33.858284
+      value: -38.7
       objectReference: {fileID: 0}
     - target: {fileID: 485128, guid: b1af567da36f884479bf5cc4c4e23e86, type: 2}
       propertyPath: m_LocalPosition.z
@@ -781,6 +783,10 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b1af567da36f884479bf5cc4c4e23e86, type: 2}
   m_IsPrefabParent: 0
+--- !u!4 &526752662 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 485128, guid: b1af567da36f884479bf5cc4c4e23e86, type: 2}
+  m_PrefabInternal: {fileID: 526752661}
 --- !u!1 &537908093
 GameObject:
   m_ObjectHideFlags: 0
@@ -828,6 +834,7 @@ MonoBehaviour:
   - {fileID: 209717310}
   - {fileID: 675120411}
   nodes: []
+  portals: []
 --- !u!61 &537908096
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1102,6 +1109,7 @@ MonoBehaviour:
   - {fileID: 537908094}
   - {fileID: 1896907586}
   nodes: []
+  portals: []
 --- !u!61 &675120413
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1261,8 +1269,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1196505428}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -146.1, y: -20.3, z: 0}
-  m_LocalScale: {x: 57.7408, y: 1, z: 1}
+  m_LocalPosition: {x: 0.5, y: -97.7, z: 0}
+  m_LocalScale: {x: 100, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 2088671376}
@@ -1278,9 +1286,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 105dfffbdccdc8b45b34720c54c97c82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  neighbours:
-  - {fileID: 209717310}
+  neighbours: []
   nodes: []
+  portals:
+  - {fileID: 526752662}
 --- !u!61 &1196505431
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1887,6 +1896,7 @@ MonoBehaviour:
   - {fileID: 675120411}
   - {fileID: 5540258}
   nodes: []
+  portals: []
 --- !u!61 &1896907588
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2010,7 +2020,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 485128, guid: b1af567da36f884479bf5cc4c4e23e86, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 20.816189
+      value: 23.9
       objectReference: {fileID: 0}
     - target: {fileID: 485128, guid: b1af567da36f884479bf5cc4c4e23e86, type: 2}
       propertyPath: m_LocalPosition.z
@@ -2034,7 +2044,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 485128, guid: b1af567da36f884479bf5cc4c4e23e86, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 116194, guid: b1af567da36f884479bf5cc4c4e23e86, type: 2}
       propertyPath: m_Name
@@ -2047,6 +2057,10 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b1af567da36f884479bf5cc4c4e23e86, type: 2}
   m_IsPrefabParent: 0
+--- !u!4 &1953507791 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 485128, guid: b1af567da36f884479bf5cc4c4e23e86, type: 2}
+  m_PrefabInternal: {fileID: 1953507790}
 --- !u!1 &1956382759
 GameObject:
   m_ObjectHideFlags: 0

@@ -63,6 +63,35 @@ public class PathGen : MonoBehaviour {
 					objectNode.Add (platform.nodes [i - 1].GetComponent<Node>());
 				}
 			}
+
+			//Add a node for each portal and make the edge node of the platform a neighbour of the portal node
+			foreach (Transform portal in child.GetComponent<Platform>().portals) {
+				instance = (GameObject)Instantiate (Node, new Vector3 (portal.transform.position.x, (int)child.position.y + 3, 0), Quaternion.identity);
+				instance.name = child.name + " " + portal.name;
+				instance.transform.SetParent (child, true);
+				platform.nodes.Add (instance.transform);
+				ObjectList.Add(instance);
+				portal.GetComponent<Portal> ().SetNode (instance.GetComponent<Node> ());
+
+				//Add dependent portal as variable
+				instance.GetComponent<Node> ().neighbour = new List<Node> ();
+				if (portal.transform.position.x < platform.nodes [0].transform.position.x) {
+					instance.GetComponent<Node> ().neighbour.Add (platform.nodes [0].GetComponent<Node> ());
+					platform.nodes [0].GetComponent<Node> ().neighbour.Add (instance.GetComponent<Node> ());
+				} else if (portal.transform.position.x > platform.nodes [1].transform.position.x) {
+					instance.GetComponent<Node> ().neighbour.Add (platform.nodes [1].GetComponent<Node> ());
+					platform.nodes [1].GetComponent<Node> ().neighbour.Add (instance.GetComponent<Node> ());
+				} else {
+					Debug.LogError ("A Portal is Missplaced (Not Close Enough to Edge of Platform)");
+				}
+			}
+		}
+
+		//Connects each pair of portals to each other
+		foreach (Transform child in transform) {
+			foreach (Transform portal in child.GetComponent<Platform>().portals) {
+				portal.GetComponent<Portal> ().GetNode ().neighbour.Add (portal.GetComponent<Portal> ().target.GetComponent<Portal> ().GetNode ());
+			}
 		}
 
 		//Connects the neighbourng platforms
