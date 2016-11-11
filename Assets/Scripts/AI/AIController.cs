@@ -129,11 +129,6 @@ public class AIController : MonoBehaviour {
 					AI.setMovementAxis (new Vector2 (0, 0));
 				} else if (player.transform.position.x < transform.position.x && transform.position.x - player.transform.position.x > 30f) { //If not within a certain distance continue
 					//nodes[1] represents the second(last) node on platform
-					/*
-					 * 
-					 * Put this stuff if the player is on the same platform
-					 * 
-					 */
 					if (transform.position.x - savedPlatform.getLeft () < 15f) {
 						Move (playerComponent.currentPlatform.GetComponent<Platform> ().nodes [1].transform.position, true);
 					} else {
@@ -156,6 +151,7 @@ public class AIController : MonoBehaviour {
 				}
 
 				if (target != null && target.transform.parent == AI.currentPlatform) {
+					print ("THIS SHOULD NEVER PRINT");
 					AI.setbuttonPressedJump (false);
 					AI.setbuttonReleasedJump (false);
 					WalkOnPlatform ();
@@ -233,6 +229,7 @@ public class AIController : MonoBehaviour {
 		if(Mathf.Abs(target.transform.position.x - transform.position.x) < 0.5f && target.transform.parent == AI.currentPlatform) {
 
 			if (path.Count == 0) {
+				print ("ZERO COUNT");
 				target = null;
 				hasPath = false;
 				return;
