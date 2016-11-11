@@ -59,9 +59,13 @@ public class AIWeaponsController : MonoBehaviour {
 				if (player.position.y > transform.position.y) {
 					AI.setbuttonHeldAimUp (true);
 					AI.setbuttonHeldAimDown (false);
+					Hit = Physics2D.Raycast (new Vector2(Spawns.GetChild(4).position.x, Spawns.GetChild(4).position.y), (Spawns.GetChild(4).rotation * Vector2.right) * 50, 50f);
+					Debug.DrawRay (new Vector2(Spawns.GetChild(4).position.x, Spawns.GetChild(4).position.y), (Spawns.GetChild(4).rotation * Vector2.right) * 50, Color.magenta);
 				} else {
 					AI.setbuttonHeldAimUp (false);
 					AI.setbuttonHeldAimDown (true);
+					Hit = Physics2D.Raycast (new Vector2(Spawns.GetChild(0).position.x, Spawns.GetChild(0).position.y - 4), (Spawns.GetChild(0).rotation * Vector2.right) * 50, 50f);
+					Debug.DrawRay (new Vector2(Spawns.GetChild(0).position.x, Spawns.GetChild(0).position.y - 4), (Spawns.GetChild(0).rotation * Vector2.right) * 50, Color.magenta);
 				}
 			} else {
 				if (angle > 20) {
@@ -71,20 +75,30 @@ public class AIWeaponsController : MonoBehaviour {
 					if (player.position.y > transform.position.y) {
 						AI.setbuttonHeldAimUp (true);
 						AI.setbuttonHeldAimDown (false);
+						Hit = Physics2D.Raycast (new Vector2(Spawns.GetChild(3).position.x, Spawns.GetChild(3).position.y), (Spawns.GetChild(3).rotation * Vector2.right) * 50, 50f);
+						Debug.DrawRay (new Vector2(Spawns.GetChild(3).position.x, Spawns.GetChild(3).position.y), (Spawns.GetChild(3).rotation * Vector2.right) * 50, Color.magenta);
 					} else {
 						AI.setbuttonHeldAimUp (false);
 						AI.setbuttonHeldAimDown (true);
+						Hit = Physics2D.Raycast (new Vector2(Spawns.GetChild(3).position.x, Spawns.GetChild(3).position.y), (Spawns.GetChild(1).rotation * Vector2.right) * 50, 50f);
+						Debug.DrawRay (new Vector2(Spawns.GetChild(1).position.x, Spawns.GetChild(1).position.y), (Spawns.GetChild(1).rotation * Vector2.right) * 50, Color.magenta);
+
 					}
 
 				} else {
 					AI.setbuttonHeldAimRight (true);
 					AI.setbuttonHeldAimDown (false);
 					AI.setbuttonHeldAimUp (false);
+					Hit = Physics2D.Raycast (new Vector2(Spawns.GetChild(2).position.x, Spawns.GetChild(2).position.y), new Vector2(1, 0), 50f);
+					Debug.DrawRay (new Vector2(Spawns.GetChild(2).position.x, Spawns.GetChild(2).position.y), new Vector2(50, 0), Color.magenta);
 				}
 			}
 		} else if (AISync.getFacingRight () == false) {
 			Debug.DrawRay (transform.position - new Vector3 (0, 5, 0), dir3, Color.green);
 			Debug.DrawRay (transform.position - new Vector3(0, 5, 0), Vector3.left * 50, Color.red);
+
+			Quaternion rotation;
+			Vector2 direction;
 
 			angle = Vector3.Angle (new Vector3 (transform.position.x - 50, transform.position.y - 5, transform.position.z) - (transform.position - new Vector3 (5, 0, 0)), dir3);
 
@@ -98,6 +112,11 @@ public class AIWeaponsController : MonoBehaviour {
 				if (player.position.y > transform.position.y) {
 					AI.setbuttonHeldAimUp (true);
 					AI.setbuttonHeldAimDown (false);
+					rotation = Spawns.GetChild (4).rotation;
+					rotation = Quaternion.Euler(rotation.eulerAngles.x, rotation.eulerAngles.y, rotation.eulerAngles.z * -1);
+					direction = rotation * Vector2.left;
+					Hit = Physics2D.Raycast (new Vector2(Spawns.GetChild(4).position.x, Spawns.GetChild(4).position.y), direction * 50, 50f);
+					Debug.DrawRay (new Vector2(Spawns.GetChild(4).position.x, Spawns.GetChild(4).position.y), direction * 50, Color.magenta);
 				} else {
 					AI.setbuttonHeldAimUp (false);
 					AI.setbuttonHeldAimDown (true);

@@ -190,6 +190,8 @@ public class AIController : MonoBehaviour {
 			target = path [0];
 			path.RemoveAt (0);
 		}*/
+
+		AI.setMovementAxis (new Vector2 (0, 0));
 	}
 
 	private Platform findNearestPlatform (Platform platform, bool right) {
