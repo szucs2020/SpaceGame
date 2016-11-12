@@ -72,7 +72,7 @@ public class Controller2D : RaycastController {
 					continue;
 				}
 
-                if (hit.collider.tag == "Portal")
+                if (hit.collider.tag == "Portal" || hit.collider.tag == "Pickup")
                 {
                     if (directionX == 1 || directionX == -1 || hit.distance == 0)
                     {
@@ -137,7 +137,7 @@ public class Controller2D : RaycastController {
 						continue;
 					}
 				}
-                else if (hit.collider.tag == "Portal" || hit.collider.tag == "Boundary")
+                else if (hit.collider.tag == "Portal" || hit.collider.tag == "Boundary" || hit.collider.tag == "Pickup")
                 {
                     if (directionY == 1 || directionY == -1 || hit.distance == 0)
                     {

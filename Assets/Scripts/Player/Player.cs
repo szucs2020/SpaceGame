@@ -8,32 +8,38 @@ using System.Collections;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
-[RequireComponent (typeof (Controller2D))]
+[RequireComponent(typeof(Controller2D))]
 
-public class Player : NetworkBehaviour {
+public class Player : NetworkBehaviour
+{
 
-	public float maxJumpHeight = 4;
-	public float minJumpHeight = 1;
-	public float timeToJumpApex = .4f;
-	public float accelerationTimeAirborne = .2f;
-	public float accelerationTimeGrounded = .1f;
-	public float moveSpeed = 6;
-	public float jumpDeceleration = 0.5f;
-	public float maxFallSpeed = -110f;
+    public float maxJumpHeight = 4;
+    public float minJumpHeight = 1;
+    public float timeToJumpApex = .4f;
+    public float accelerationTimeAirborne = .2f;
+    public float accelerationTimeGrounded = .1f;
+    public float moveSpeed = 6;
+    public float jumpDeceleration = 0.5f;
+    public float maxFallSpeed = -110f;
 
     private Gun gun;
     private SyncFlip syncFlip;
+    [SyncVar(hook="ChangeWeapon")]
+    private int gunNum = 1;
+    //  1  Pistol
+    //  2  Shotgun
+    //  3  PlasmaCannon
 
     //movement variables
     float gravity;
-	float maxJumpVelocity;
-	float minJumpVelocity;
-	Vector3 velocity;
-	float velocityXSmoothing;
+    float maxJumpVelocity;
+    float minJumpVelocity;
+    Vector3 velocity;
+    float velocityXSmoothing;
 
     private bool facingRight = false;
-	private bool decelerating = false;
-	private int jump;
+    private bool decelerating = false;
+    private int jump;
     private int currentPosition;
 
     //private SpriteRenderer fire;
@@ -60,34 +66,36 @@ public class Player : NetworkBehaviour {
     [SyncVar]
     public int playerSlot;
 
-	//Temp AI Spawning
-	public GameObject AI;
+    //Temp AI Spawning
+    public GameObject AI;
 
-	//For PathGeneration
-	public Transform currentPlatform;
-	private bool isAI = false;
+    //For PathGeneration
+    public Transform currentPlatform;
+    private bool isAI = false;
 
     private Audio2D audio;
 
-	void Start() {
+    void Start()
+    {
 
         syncFlip = GetComponent<SyncFlip>();
         syncFlip.player = this;
 
-		if (!isLocalPlayer && !isAI) {
+        if (!isLocalPlayer && !isAI)
+        {
             return;
         }
 
         networkManager = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<NetworkManager>();
 
-        controller = GetComponent<Controller2D> ();
+        controller = GetComponent<Controller2D>();
         gun = GetComponent<Gun>();
         animator = GetComponent<AnimationManager>();
 
         jump = 0;
-		gravity = (2 * maxJumpHeight) / Mathf.Pow (timeToJumpApex, 2);
-		maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
-		minJumpVelocity = Mathf.Sqrt (2 * Mathf.Abs (gravity) * minJumpHeight);
+        gravity = (2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2);
+        maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
+        minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight);
 
         //syncPlayer.CmdSyncJetpack(false);
 
@@ -102,14 +110,17 @@ public class Player : NetworkBehaviour {
         currentPosition = 2;
 
         audio = GameObject.Find("Audio").GetComponent<Audio2D>();
-        if (audio == null) {
+        if (audio == null)
+        {
             print("Audio null");
         }
     }
 
-    void Update() {
+    void Update()
+    {
 
-		if (!isLocalPlayer && !isAI) {
+        if (!isLocalPlayer && !isAI)
+        {
             return;
         }
 
@@ -118,53 +129,65 @@ public class Player : NetworkBehaviour {
 
         //Aiming - TEMPORARY: This will probably change into a function that checks if the player is using controller or keyboard.
         //Flip if J or L are pressed.
-        if (buttonHeldAimLeft) {
-            if (facingRight) {
+        if (buttonHeldAimLeft)
+        {
+            if (facingRight)
+            {
                 flip();
             }
-        } else if (buttonHeldAimRight) {
-            if (!facingRight) {
+        }
+        else if (buttonHeldAimRight)
+        {
+            if (!facingRight)
+            {
                 flip();
             }
         }
 
         //Change aiming angle based on which keys are pressed.
-        if (buttonHeldAimUp && buttonHeldAimLeft || buttonHeldAimUp && buttonHeldAimRight) {
+        if (buttonHeldAimUp && buttonHeldAimLeft || buttonHeldAimUp && buttonHeldAimRight)
+        {
             animator.setUpTilt();
-        } else if (buttonHeldAimDown && buttonHeldAimLeft || buttonHeldAimDown && buttonHeldAimRight) {
+        }
+        else if (buttonHeldAimDown && buttonHeldAimLeft || buttonHeldAimDown && buttonHeldAimRight)
+        {
             animator.setDownTilt();
-        } else if (buttonHeldAimUp) {
+        }
+        else if (buttonHeldAimUp)
+        {
             animator.setUp();
-        } else if (buttonHeldAimDown) {
+        }
+        else if (buttonHeldAimDown)
+        {
             animator.setDown();
-        } else if (buttonHeldAimLeft || buttonHeldAimRight) {
+        }
+        else if (buttonHeldAimLeft || buttonHeldAimRight)
+        {
             animator.setNeutral();
-        } else {
+        }
+        else
+        {
             animator.setNeutral();
         }
 
         //switcing weapons
-        if (Input.GetKeyDown("1")) {
-            if (GetComponent<Pistol>() == null)
-            {
-                RemoveGun();
-                gameObject.AddComponent<Pistol>();
-                gun = (Gun)GetComponent<Pistol>();
-            }
-        } else if (Input.GetKeyDown("2")) {
-            if (GetComponent<Shotgun>() == null)
-            {
-                RemoveGun();
-                gameObject.AddComponent<Shotgun>();
-                gun = (Gun)GetComponent<Shotgun>();
-            }
-        } else if (Input.GetKeyDown("3")) {
-            if (GetComponent<PlasmaCannon>() == null)
-            {
-                RemoveGun();
-                gameObject.AddComponent<PlasmaCannon>();
-                gun = (Gun)GetComponent<PlasmaCannon>();
-            }
+        if (Input.GetKeyDown("1"))
+        {
+            print("1");
+            CmdChangeWeapon(1);
+            gunNum = 1;
+        }
+        else if (Input.GetKeyDown("2"))
+        {
+            print("2");
+            CmdChangeWeapon(2);
+            gunNum = 2;
+        }
+        else if (Input.GetKeyDown("3"))
+        {
+            print("3");
+            CmdChangeWeapon(3);
+            gunNum = 3;
         }
 
         //OLD CODE: Flipping based on movement. Will probably still need this for sprint.
@@ -176,159 +199,271 @@ public class Player : NetworkBehaviour {
         //}
 
         float targetVelocityX = input.x * moveSpeed;
-		velocity.x = Mathf.SmoothDamp (velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below)?accelerationTimeGrounded:accelerationTimeAirborne);
+        velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
 
         //walking
-        if (controller.collisions.below) {
-			currentPlatform = controller.collisions.platform;
-            if (targetVelocityX < 0) {
-                if (facingRight) {
+        if (controller.collisions.below)
+        {
+            currentPlatform = controller.collisions.platform;
+            if (targetVelocityX < 0)
+            {
+                if (facingRight)
+                {
                     animator.setWalkBackward();
-                } else {
+                }
+                else
+                {
                     animator.setWalkForward();
                 }
-            } else if (targetVelocityX > 0) {
-                if (!facingRight) {
+            }
+            else if (targetVelocityX > 0)
+            {
+                if (!facingRight)
+                {
                     animator.setWalkBackward();
-                } else {
+                }
+                else
+                {
                     animator.setWalkForward();
                 }
-            } else {
+            }
+            else
+            {
                 animator.setIdle();
             }
         }
 
         //jumping
-        if (buttonPressedJump) {
-			if (controller.collisions.below || jump == 1) {
-				velocity.y = maxJumpVelocity;
-				decelerating = false;
-                if (jump == 1){
+        if (buttonPressedJump)
+        {
+            if (controller.collisions.below || jump == 1)
+            {
+                velocity.y = maxJumpVelocity;
+                decelerating = false;
+                if (jump == 1)
+                {
                     audio.playBoost();
                 }
-			}
-
-			if (jump == 0) {
-				jump = 1;
-                audio.playJump();
-            } else if (jump == 1){
-				jump = 2;
             }
-		} 
-		else if (buttonReleasedJump) {
-			decelerating = true;
+
+            if (jump == 0)
+            {
+                jump = 1;
+                audio.playJump();
+            }
+            else if (jump == 1)
+            {
+                jump = 2;
+            }
+        }
+        else if (buttonReleasedJump)
+        {
+            decelerating = true;
             //syncPlayer.CmdSyncJetpack(false);
         }
 
-		if (velocity.y < 0){
+        if (velocity.y < 0)
+        {
             animator.setFall();
             //syncPlayer.CmdSyncJetpack(false);
-        } else if (velocity.y > 0) {
+        }
+        else if (velocity.y > 0)
+        {
             animator.setJump();
         }
 
         //decelerate after jump
-        if (decelerating && velocity.y > minJumpVelocity) {
-            if (velocity.y - jumpDeceleration > minJumpVelocity) {
+        if (decelerating && velocity.y > minJumpVelocity)
+        {
+            if (velocity.y - jumpDeceleration > minJumpVelocity)
+            {
                 velocity.y -= jumpDeceleration;
-            } else {
+            }
+            else
+            {
                 velocity.y = minJumpVelocity;
             }
         }
 
-		//gravity, with max fall speed
-		if (velocity.y > maxFallSpeed){
-			if (velocity.y - (gravity * Time.deltaTime) > maxFallSpeed){
-				velocity.y -= gravity * Time.deltaTime;
-			} else {
-				velocity.y = maxFallSpeed;
-			}
-		}
+        //gravity, with max fall speed
+        if (velocity.y > maxFallSpeed)
+        {
+            if (velocity.y - (gravity * Time.deltaTime) > maxFallSpeed)
+            {
+                velocity.y -= gravity * Time.deltaTime;
+            }
+            else
+            {
+                velocity.y = maxFallSpeed;
+            }
+        }
 
-        controller.Move (velocity * Time.deltaTime, input);
+        controller.Move(velocity * Time.deltaTime, input);
 
-		 if(controller.collisions.below){
-			velocity.y = 0;
-			decelerating = false;
-			jump = 0;
-        } else {
-			if (controller.collisions.above) {
-				velocity.y = 0;
-				decelerating = false;
-			}
-		}
+        if (controller.collisions.below)
+        {
+            velocity.y = 0;
+            decelerating = false;
+            jump = 0;
+        }
+        else
+        {
+            if (controller.collisions.above)
+            {
+                velocity.y = 0;
+                decelerating = false;
+            }
+        }
 
-		//shooting
-		if (buttonPressedShoot) {
-			gun.shoot();
-		}
-	}
+        //shooting
+        if (buttonPressedShoot)
+        {
+            gun.shoot();
+        }
+    }
 
-    public void Die() {
+    public void Die()
+    {
         //audio.playDie();
         Destroy(gameObject);
     }
 
     //flip 2D sprite
-    private void flip() {
+    private void flip()
+    {
         facingRight = !facingRight;
         syncFlip.CmdSyncFlip(facingRight);
     }
 
-    private void RemoveGun() {
+    private void RemoveGun()
+    {
         Destroy(GetComponent<Gun>());
     }
 
     //getters & setters
-	public bool isFacingRight(){
-		return facingRight;
-	}
-    public void setMovementAxis(Vector2 input) {
+    public bool isFacingRight()
+    {
+        return facingRight;
+    }
+    public void setMovementAxis(Vector2 input)
+    {
         this.movementAxis = input;
     }
-    public void setbuttonPressedJump(bool input) {
+    public void setbuttonPressedJump(bool input)
+    {
         this.buttonPressedJump = input;
     }
-    public void setbuttonHeldJump(bool input) {
+    public void setbuttonHeldJump(bool input)
+    {
         this.buttonHeldJump = input;
     }
-    public void setbuttonReleasedJump(bool input) {
+    public void setbuttonReleasedJump(bool input)
+    {
         this.buttonReleasedJump = input;
     }
-    public void setbuttonPressedShoot(bool input) {
+    public void setbuttonPressedShoot(bool input)
+    {
         this.buttonPressedShoot = input;
     }
-    public void setbuttonHeldShoot(bool input) {
+    public void setbuttonHeldShoot(bool input)
+    {
         this.buttonHeldShoot = input;
     }
 
     //right stick / right hand aiming
-    public void setbuttonHeldAimLeft(bool input) {
+    public void setbuttonHeldAimLeft(bool input)
+    {
         this.buttonHeldAimLeft = input;
     }
-    public void setbuttonHeldAimRight(bool input) {
+    public void setbuttonHeldAimRight(bool input)
+    {
         this.buttonHeldAimRight = input;
     }
-    public void setbuttonHeldAimUp(bool input) {
+    public void setbuttonHeldAimUp(bool input)
+    {
         this.buttonHeldAimUp = input;
     }
-    public void setbuttonHeldAimDown(bool input) {
+    public void setbuttonHeldAimDown(bool input)
+    {
         this.buttonHeldAimDown = input;
     }
 
     //current position
-    public void setCurrentPosition(int currentPosition) {
+    public void setCurrentPosition(int currentPosition)
+    {
         this.currentPosition = currentPosition;
     }
-    public int getCurrentPosition() {
+    public int getCurrentPosition()
+    {
         return this.currentPosition;
     }
 
-	public void setIsAI(bool isAI) {
-		this.isAI = isAI;
-	}
+    public void setIsAI(bool isAI)
+    {
+        this.isAI = isAI;
+    }
 
-    public bool getIsAI() {
+    public bool getIsAI()
+    {
         return this.isAI;
     }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.tag == "Pickup")
+        {
+            gunNum = 1;
+        }
+
+    }
+
+    [Command]
+    public void CmdChangeWeapon(int weaponNum)
+    {
+        gunNum = weaponNum;
+        print("CMDWeapon num " + weaponNum);
+        if (weaponNum == 1 && GetComponent<Pistol>() == null)
+        {
+            RemoveGun();
+            gameObject.AddComponent<Pistol>();
+            gun = (Gun)GetComponent<Pistol>();
+        }
+        else if (weaponNum == 2 && GetComponent<Shotgun>() == null)
+        {
+            RemoveGun();
+            gameObject.AddComponent<Shotgun>();
+            gun = (Gun)GetComponent<Shotgun>();
+        }
+        else if (weaponNum == 3 && GetComponent<PlasmaCannon>() == null)
+        {
+            RemoveGun();
+            gameObject.AddComponent<PlasmaCannon>();
+            gun = (Gun)GetComponent<PlasmaCannon>();
+        }
+    }
+
+    void ChangeWeapon(int weaponNum)
+    {
+        gunNum = weaponNum;
+        print("Weapon num " + weaponNum);
+        if (weaponNum == 1 && GetComponent<Pistol>() == null)
+        {
+            RemoveGun();
+            gameObject.AddComponent<Pistol>();
+            gun = (Gun)GetComponent<Pistol>();
+        }
+        else if (weaponNum == 2 && GetComponent<Shotgun>() == null)
+        {
+            RemoveGun();
+            gameObject.AddComponent<Shotgun>();
+            gun = (Gun)GetComponent<Shotgun>();
+        }
+        else if (weaponNum == 3 && GetComponent<PlasmaCannon>() == null)
+        {
+            RemoveGun();
+            gameObject.AddComponent<PlasmaCannon>();
+            gun = (Gun)GetComponent<PlasmaCannon>();
+        }
+    }
+
 }
