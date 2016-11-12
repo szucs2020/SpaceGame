@@ -73,7 +73,6 @@ public class AStar : MonoBehaviour {
 			}
 		} else {
 			target = GetClosestNodeToPlayer (targetPlayer.transform);
-			print (target.name);
 		}
 
 		//Initialize each node

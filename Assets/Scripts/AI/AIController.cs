@@ -18,7 +18,7 @@ public class AIController : MonoBehaviour {
 
 	private float playerHeight = 0f;
 	private float AIHeight = 0f;
-	private bool hasPath = true;
+	private bool hasPath = false;
 
 	private Platform savedPlatform = null;
 	private bool jumpingToNextPlatform = false;
@@ -145,6 +145,10 @@ public class AIController : MonoBehaviour {
 			} else { //target represents a node on the platform
 				if (!hasPath) {
 					path = pathFinder.FindShortestPath (playerComponent);
+					/*print ("Printing Path");
+					for (int i = 0; i < path.Count; i++) {
+						print (path[i]);
+					}*/
 					target = path [0];
 					path.RemoveAt (0);
 					hasPath = true;

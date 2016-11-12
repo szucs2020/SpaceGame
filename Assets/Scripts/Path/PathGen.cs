@@ -59,8 +59,8 @@ public class PathGen : MonoBehaviour {
 				} /*else if(i != 0 && i != platform.nodes.Count - 1) {  //When whole platform has nodes on it
 					objectNode.Add (platform.nodes [i + 1].GetComponent<Node>());
 					objectNode.Add (platform.nodes [i - 1].GetComponent<Node>());
-				} */else if(i == platform.nodes.Count - 1) {
-					objectNode.Add (platform.nodes [i - 1].GetComponent<Node>());
+				} */else if(i == platform.nodes.Count - 1) {//It's dangerous to do Count - 1 since portals are added but...
+					objectNode.Add (platform.nodes [i - 1].GetComponent<Node>());///portal are added after this line so it shouldn't matter
 				}
 			}
 
@@ -108,11 +108,10 @@ public class PathGen : MonoBehaviour {
 
 				//If the platform is to the right or left of its neighbour connect its respective nodes
 				if (child.position.x + length / 2 < neighour.position.x - neighbourLength / 2) {
-					
-					platform.nodes [platform.nodes.Count - 1].GetComponent<Node> ().neighbour.Add(neighbourPlatform.nodes [0].GetComponent<Node> ());
+					platform.nodes [1].GetComponent<Node> ().neighbour.Add(neighbourPlatform.nodes [0].GetComponent<Node> ());
 				} else if (child.position.x - length / 2 > neighour.position.x + neighbourLength / 2) {
 
-					platform.nodes [0].GetComponent<Node> ().neighbour.Add(neighbourPlatform.nodes [neighbourPlatform.nodes.Count - 1].GetComponent<Node> ());
+					platform.nodes [0].GetComponent<Node> ().neighbour.Add(neighbourPlatform.nodes [1].GetComponent<Node> ());
 				}
 
 				//If you can go through the platform then connect respective nodes

@@ -343,7 +343,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 105dfffbdccdc8b45b34720c54c97c82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  neighbours: []
+  neighbours:
+  - {fileID: 537908094}
   nodes: []
   portals:
   - {fileID: 1953507791}
