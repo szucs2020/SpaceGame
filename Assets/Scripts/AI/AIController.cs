@@ -86,8 +86,8 @@ public class AIController : MonoBehaviour {
 						
 					if (savedPlatform.getRight () - transform.position.x < 15f) {
 						jumpingToNextPlatform = true;
-						Platform targetPlatform = findNearestPlatform (playerComponent.currentPlatform.GetComponent<Platform> (), true);
-						Move (targetPlatform.nodes[0].transform.position, true);
+						Transform targetNode = findNearestPlatform (playerComponent.currentPlatform.GetComponent<Platform> (), true);
+						Move (targetNode.position, true);
 					}
 				} else if (player.transform.position.x > transform.position.x && player.transform.position.x - transform.position.x < 50f || jumpingToNextPlatform == true) {
 					if (jumpingToNextPlatform == false) {
@@ -96,8 +96,8 @@ public class AIController : MonoBehaviour {
 
 					if (transform.position.x - savedPlatform.getLeft () < 15f) {
 						jumpingToNextPlatform = true;
-						Platform targetPlatform = findNearestPlatform (playerComponent.currentPlatform.GetComponent<Platform> (), false);
-						Move (targetPlatform.nodes[1].transform.position, true);
+						Transform targetNode = findNearestPlatform (playerComponent.currentPlatform.GetComponent<Platform> (), false);
+						Move (targetNode.position, true);
 					} 
 				}
 			} else {
@@ -191,10 +191,11 @@ public class AIController : MonoBehaviour {
 		}*/
 	}
 
-	private Platform findNearestPlatform (Platform platform, bool right) {
+	private Transform findNearestPlatform (Platform platform, bool right) {
 		List<Transform> rightSide = new List<Transform>();
 		List<Transform> leftSide = new List<Transform>();
 		Transform targetPlatform;
+		Transform targetNode;
 
 		foreach (Transform neighbour in platform.neighbours) {
 			if (neighbour.transform.position.x > platform.transform.position.x) {
@@ -207,21 +208,22 @@ public class AIController : MonoBehaviour {
 		if (right == true) {
 			if (rightSide.Count != 0) {
 				targetPlatform = getRandomPlatform (rightSide);
+				targetNode = targetPlatform.GetComponent<Platform> ().nodes [0];
 			} else {
-				targetPlatform = getRandomPlatform (leftSide);
+				targetNode = platform.nodes [0];
 			}
 		} else {
 			if (leftSide.Count != 0) {
 				targetPlatform = getRandomPlatform (leftSide);
+				targetNode = targetPlatform.GetComponent<Platform> ().nodes [1];
 			} else {
-				targetPlatform = getRandomPlatform (rightSide);
+				targetNode = platform.nodes [1];
 			}
 		}
 
-		return targetPlatform.GetComponent<Platform> ();
+		return targetNode;
 	}
 
-	/*There's an Index Out of Range Exception Here*/
 	private Transform getRandomPlatform (List<Transform> platforms) {
 		int index = (int)Random.Range (0.5f, platforms.Count  - 0.5f);
 
@@ -232,7 +234,6 @@ public class AIController : MonoBehaviour {
 		if(Mathf.Abs(target.transform.position.x - transform.position.x) < 0.5f && target.transform.parent == AI.currentPlatform) {
 
 			if (path.Count == 0) {
-				print ("ZERO COUNT");
 				target = null;
 				hasPath = false;
 				return;
