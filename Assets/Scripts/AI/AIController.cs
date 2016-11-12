@@ -151,7 +151,6 @@ public class AIController : MonoBehaviour {
 				}
 
 				if (target != null && target.transform.parent == AI.currentPlatform) {
-					print ("THIS SHOULD NEVER PRINT");
 					AI.setbuttonPressedJump (false);
 					AI.setbuttonReleasedJump (false);
 					WalkOnPlatform ();
@@ -215,12 +214,12 @@ public class AIController : MonoBehaviour {
 			}
 		}
 
-		return targetPlatform.GetComponent<Platform>();
+		return targetPlatform.GetComponent<Platform> ();
 	}
 
 	/*There's an Index Out of Range Exception Here*/
 	private Transform getRandomPlatform (List<Transform> platforms) {
-		int index = (int)Random.Range (0f, platforms.Count  - 0.1f);
+		int index = (int)Random.Range (0.5f, platforms.Count  - 0.5f);
 
 		return platforms [index];
 	}

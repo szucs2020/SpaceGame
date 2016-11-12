@@ -41,16 +41,20 @@ public class AStar : MonoBehaviour {
 				startNode = platform.nodes [1].GetComponent<Node> ();
 			}
 		} else {
-			float shortestDist = float.MaxValue;
-			float dist = float.MaxValue;
-			for (int i = 0; i < nodes.Count; i++) {
-				dist = (nodes [i].transform.position - transform.position).sqrMagnitude;
+			startNode = GetClosestNodeToPlayer (transform);
+		}
+	}
 
-				if (dist < shortestDist) {
-					shortestDist = dist;
-					startNode = nodes [i];
-				}
-			}
+	private Node GetClosestNodeToPlayer(Transform member) {
+		Transform Spawns = member.Find ("spawn");
+		RaycastHit2D Hit;
+		Hit = Physics2D.Raycast (new Vector2(Spawns.GetChild(0).position.x, Spawns.GetChild(0).position.y - 4), (Spawns.GetChild(0).rotation * Vector2.right) * 50, 50f);
+
+		Platform platform = Hit.transform.GetComponent<Platform> ();
+		if (Mathf.Abs ((member.position - platform.nodes [0].transform.position).magnitude) < Mathf.Abs ((member.position - platform.nodes [1].transform.position).magnitude)) {
+			return platform.nodes [0].GetComponent<Node> ();
+		} else {
+			return platform.nodes [1].GetComponent<Node> ();
 		}
 	}
 
@@ -68,25 +72,9 @@ public class AStar : MonoBehaviour {
 				target = platform.nodes [1].GetComponent<Node> ();
 			}
 		} else {
-			float shortestDistance = float.MaxValue;
-			float distance = float.MaxValue;
-			for (int i = 0; i < nodes.Count; i++) {
-				dist = (nodes [i].transform.position - transform.position).sqrMagnitude;
-
-				if (dist < shortestDist) {
-					shortestDist = dist;
-					target = nodes [i];
-				}
-			}
+			target = GetClosestNodeToPlayer (targetPlayer.transform);
+			print (target.name);
 		}
-
-		/*for (int i = 0; i < nodes.Count; i++) {
-			dist = (nodes [i].transform.position - targetPosition).sqrMagnitude;
-			if (dist < shortestDist) {
-				shortestDist = dist;
-				target = nodes [i];
-			}
-		}*/
 
 		//Initialize each node
 		for(int i = 0; i < nodes.Count; i++) {
