@@ -12,16 +12,48 @@ using UnityEngine.Networking.Match;
 
 public class CustomNetworkLobby : NetworkLobbyManager {
 
+	public float timeout;
+	public GameObject menu;
+	public GameObject load;
+	public GameObject lobby;
+
     private bool hostFlag = false;
     private NetworkClient localClient;
+	private bool connecting = false;
+	private float timeLeft;
 
     public void HostGame() {
         localClient = StartHost();
     }
 
+	void Update(){
+		if (connecting){
+
+			if (localClient != null && localClient.isConnected){
+				
+				connecting = false;
+				load.SetActive(false);
+				lobby.SetActive(true);
+
+			} else {
+				timeLeft -= Time.deltaTime;
+				if (timeLeft <= 0.0f){
+					connecting = false;
+					localClient.Shutdown();
+					load.SetActive(false);
+					menu.SetActive(true);
+				}
+			}
+		}
+	}
+
     public void JoinGame(String ipAddress) {
+		
         networkAddress = ipAddress;
         localClient = StartClient();
+
+		timeLeft = timeout;
+		connecting = true;
     }
 
     public void CloseConnection() {

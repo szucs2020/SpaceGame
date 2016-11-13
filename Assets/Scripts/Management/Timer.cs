@@ -9,7 +9,7 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class Timer : MonoBehaviour {
-
+	
     private float timeLeft;
     private bool timeSet = false;
     int lastTime;

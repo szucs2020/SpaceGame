@@ -12,18 +12,18 @@ public class LobbyMenu : MonoBehaviour {
 
     public CustomNetworkLobby lobbyManager;
     public InputField ipAddress;
-    public GameObject menu;
     public GameObject lobby;
+	public GameObject load;
 
     public void onClickHost() {
         lobbyManager.HostGame();
-        menu.SetActive(false);
+        this.gameObject.SetActive(false);
         lobby.SetActive(true);
     }
 
     public void onClickJoin() {
         lobbyManager.JoinGame(ipAddress.text);
-        menu.SetActive(false);
-        lobby.SetActive(true);
+		this.gameObject.SetActive(false);
+		load.SetActive(true);
     }
 }
