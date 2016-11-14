@@ -143,6 +143,31 @@ public class AIController : MonoBehaviour {
 					}
 				}
 			} else { //target represents a node on the platform
+				/****/
+				RaycastHit2D Hit;
+				Vector2 origin = new Vector2 (savedPlatform.nodes [0].position.x, savedPlatform.nodes [0].position.y + 4);
+				Vector3 direction3D = new Vector3 (player.transform.position.x, player.transform.position.y - 2, 0) - new Vector3 (origin.x, origin.y, 0);
+				Vector2 direction2D = new Vector2 (direction3D.x, direction3D.y);
+
+				int distance = 5;
+				float leftSide = savedPlatform.getLeft ();
+				float rightSide = savedPlatform.getRight ();
+				int i;
+				for (i = 0; leftSide + distance * i < rightSide; i++) {
+					origin = new Vector2 (leftSide + distance * i, savedPlatform.nodes [0].position.y + 4);
+					direction3D = new Vector3 (player.transform.position.x, player.transform.position.y - 2, 0) - new Vector3 (origin.x, origin.y, 0);
+					direction2D = new Vector2 (direction3D.x, direction3D.y);
+
+					Hit = Physics2D.Raycast (origin, direction2D, 50f);
+					Debug.DrawRay (origin, direction2D, Color.cyan, 0.5f);
+				}
+
+
+
+
+				/****/
+
+
 				if (!hasPath) {
 					path = pathFinder.FindShortestPath (playerComponent);
 					/*print ("Printing Path");

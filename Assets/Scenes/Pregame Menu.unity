@@ -3420,7 +3420,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64210e43bd0f8f14980e30f5dcc741bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AIPrefab: {fileID: 0}
+  AIPrefab: {fileID: 182724, guid: 69116429202227e46a92792dc541d93e, type: 2}
 --- !u!114 &1217063792
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6372,7 +6372,6 @@ MonoBehaviour:
     m_MaxSentMessageQueueSize: 128
     m_IsAcksLong: 0
     m_UsePlatformSpecificProtocols: 0
-    m_WebSocketReceiveBufferMaxSize: 0
     m_Channels: []
   m_GlobalConfig:
     m_ThreadAwakeTimeout: 1
