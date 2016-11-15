@@ -86,7 +86,8 @@ public class GameController : NetworkBehaviour {
     }
 
     public void SpawnAI() {
-        GameObject AI = (GameObject)GameObject.Instantiate(AIPrefab, manager.GetStartPosition().position, Quaternion.identity);
+        Transform t = manager.GetStartPosition();
+        GameObject AI = (GameObject)GameObject.Instantiate(AIPrefab, t.position, Quaternion.identity);
         NetworkServer.Spawn(AI);
     }
 }

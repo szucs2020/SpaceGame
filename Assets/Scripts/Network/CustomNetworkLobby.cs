@@ -82,8 +82,7 @@ public class CustomNetworkLobby : NetworkLobbyManager {
     }
 
     void OnLevelWasLoaded(int level) {
-        print("level: " + level);
-        if (level == 1) {
+        if (level == SceneManager.GetSceneByName("Main").buildIndex) {
             GameObject.Find("GameSettings").GetComponent<GameController>().SpawnAllAI();
         }
     }
