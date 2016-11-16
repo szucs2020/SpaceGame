@@ -21,6 +21,12 @@ public class AIAimController : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
+	private float angle1 = 0;
+	private float angle2 = 0;
+	private float angle3 = 0;
+	private string angle1str = "";
+	private string angle2str = "";
+	private string angle3str = "";
 	void Update () {
 		if (player == null) {
 			if (GameObject.Find ("Player(Clone)") != null) {
@@ -30,29 +36,64 @@ public class AIAimController : MonoBehaviour {
 		}
 
 		Vector3 playerPos = player.transform.position - new Vector3 (0, 5, 0);
+		Vector3 vector1;
+		Vector3 vector2;
+		Vector3 vector3;
+		string vectorDirection = "";
 		if (AISync.getFacingRight () == true) {
 			if (player.position.y >= transform.position.y) {
 				//Up
 				Debug.DrawRay (new Vector2 (Spawns.GetChild (4).position.x, Spawns.GetChild (4).position.y), (Spawns.GetChild (4).rotation * Vector2.right) * 50, Color.yellow);
 				Debug.DrawRay (new Vector2 (Spawns.GetChild (4).position.x, Spawns.GetChild (4).position.y), (playerPos - Spawns.GetChild (4).position), Color.white);
+				vector1 = (Spawns.GetChild (4).rotation * Vector2.right) * 50 - new Vector3 (Spawns.GetChild (4).position.x, Spawns.GetChild (4).position.y, 0);
+				vector2 = (playerPos - Spawns.GetChild (4).position) - new Vector3 (Spawns.GetChild (4).position.x, Spawns.GetChild (4).position.y, 0);
+				angle1 = Vector3.Angle (vector1, vector2);
+				angle1str = "UP";
 
 				//Up Right
 				Debug.DrawRay (new Vector2 (Spawns.GetChild (3).position.x, Spawns.GetChild (3).position.y), (Spawns.GetChild (3).rotation * Vector2.right) * 50, Color.yellow);
 				Debug.DrawRay (new Vector2 (Spawns.GetChild (3).position.x, Spawns.GetChild (3).position.y), (playerPos - Spawns.GetChild (3).position), Color.white);
+				vector1 = (Spawns.GetChild (3).rotation * Vector2.right) * 50 - new Vector3 (Spawns.GetChild (3).position.x, Spawns.GetChild (3).position.y, 0);
+				vector2 = (playerPos - Spawns.GetChild (3).position) - new Vector3 (Spawns.GetChild (3).position.x, Spawns.GetChild (3).position.y, 0);
+				angle2 = Vector3.Angle (vector1, vector2);
+				angle2str = "UPRIGHT";
 			} else {
 				//Down
 				Vector3 spawn0Pos = Spawns.GetChild (0).position - new Vector3 (0, 4, 0);
 				Debug.DrawRay (new Vector2 (Spawns.GetChild (0).position.x, Spawns.GetChild (0).position.y - 4), (Spawns.GetChild (0).rotation * Vector2.right) * 50, Color.yellow);
 				Debug.DrawRay (new Vector2 (Spawns.GetChild (0).position.x, Spawns.GetChild (0).position.y - 4), (playerPos - spawn0Pos), Color.white);
+				vector1 = (Spawns.GetChild (0).rotation * Vector2.right) * 50 - new Vector3 (Spawns.GetChild (0).position.x, Spawns.GetChild (0).position.y - 4, 0);
+				vector2 = (playerPos - spawn0Pos) - new Vector3 (Spawns.GetChild (0).position.x, Spawns.GetChild (0).position.y - 4, 0);
+				angle1 = Vector3.Angle (vector1, vector2);
+				angle1str = "DOWN";
 
 				//Down Right
 				Debug.DrawRay (new Vector2 (Spawns.GetChild (1).position.x, Spawns.GetChild (1).position.y), (Spawns.GetChild (1).rotation * Vector2.right) * 50, Color.yellow);
 				Debug.DrawRay (new Vector2 (Spawns.GetChild (1).position.x, Spawns.GetChild (1).position.y), (playerPos - Spawns.GetChild (1).position), Color.white);
+				vector1 = (Spawns.GetChild (1).rotation * Vector2.right) * 50 - new Vector3 (Spawns.GetChild (1).position.x, Spawns.GetChild (1).position.y, 0);
+				vector2 = (playerPos - Spawns.GetChild (1).position) - new Vector3 (Spawns.GetChild (1).position.x, Spawns.GetChild (1).position.y, 0);
+				angle2 = Vector3.Angle (vector1, vector2);
+				angle2str = "DOWN RIGHT";
 			}
+			vectorDirection = angle1str;
+			if (angle1 > angle2) {
+				angle1 = angle2;
+				vectorDirection = angle2str;
+			}
+
 
 			//Right
 			Debug.DrawRay (new Vector2 (Spawns.GetChild (2).position.x, Spawns.GetChild (2).position.y), new Vector2 (50, 0), Color.yellow);
 			Debug.DrawRay (new Vector2 (Spawns.GetChild (2).position.x, Spawns.GetChild (2).position.y), (playerPos - Spawns.GetChild (2).position), Color.white);
+			vector1 = new Vector3 (50, 0, 0) - new Vector3 (Spawns.GetChild (2).position.x, Spawns.GetChild (2).position.y, 0);
+			vector2 = (playerPos - Spawns.GetChild (2).position) - new Vector3 (Spawns.GetChild (2).position.x, Spawns.GetChild (2).position.y, 0);
+			angle3 = Vector3.Angle (vector1, vector2);
+
+			if (angle1 > angle3) {
+				angle1 = angle3;
+				vectorDirection = "RIGHT";
+			}
+			//print (vectorDirection + " " + angle1);
 		} else if (AISync.getFacingRight () == false) {
 			Quaternion rotation;
 			Vector2 direction;
@@ -64,6 +105,10 @@ public class AIAimController : MonoBehaviour {
 				direction = rotation * Vector2.left;
 				Debug.DrawRay (new Vector2(Spawns.GetChild(4).position.x, Spawns.GetChild(4).position.y), direction * 50, Color.yellow);
 				Debug.DrawRay (new Vector2 (Spawns.GetChild (4).position.x, Spawns.GetChild (4).position.y), (playerPos - Spawns.GetChild (4).position), Color.white);
+				vector1 = direction * 50 - new Vector2(Spawns.GetChild(4).position.x, Spawns.GetChild(4).position.y);
+				vector2 = (playerPos - Spawns.GetChild (4).position) - new Vector3 (Spawns.GetChild (4).position.x, Spawns.GetChild (4).position.y, 0);
+				angle1 = Vector3.Angle (vector1, vector2);
+				angle1str = "UP";
 
 				//Up Left
 				rotation = Spawns.GetChild (3).rotation;
@@ -71,6 +116,10 @@ public class AIAimController : MonoBehaviour {
 				direction = rotation * Vector2.left;
 				Debug.DrawRay (new Vector2(Spawns.GetChild(3).position.x, Spawns.GetChild(3).position.y), direction * 50, Color.yellow);
 				Debug.DrawRay (new Vector2 (Spawns.GetChild (3).position.x, Spawns.GetChild (3).position.y), (playerPos - Spawns.GetChild (3).position), Color.white);
+				vector1 = direction * 50 - new Vector2(Spawns.GetChild(3).position.x, Spawns.GetChild(3).position.y);
+				vector2 = (playerPos - Spawns.GetChild (3).position) - new Vector3 (Spawns.GetChild (3).position.x, Spawns.GetChild (3).position.y, 0);
+				angle2 = Vector3.Angle (vector1, vector2);
+				angle2str = "UPLEFT";
 			} else {
 				//Down
 				Vector3 spawn0Pos = Spawns.GetChild (0).position - new Vector3 (0, 4, 0);
@@ -79,6 +128,10 @@ public class AIAimController : MonoBehaviour {
 				direction = rotation * Vector2.left;
 				Debug.DrawRay (new Vector2(Spawns.GetChild(0).position.x, Spawns.GetChild(0).position.y - 4), direction * 50, Color.yellow);
 				Debug.DrawRay (new Vector2 (Spawns.GetChild (0).position.x, Spawns.GetChild (0).position.y - 4), (playerPos - spawn0Pos), Color.white);
+				vector1 = direction * 50 - new Vector2(Spawns.GetChild(0).position.x, Spawns.GetChild(0).position.y - 4);
+				vector2 = (playerPos - spawn0Pos) - new Vector3 (Spawns.GetChild (0).position.x, Spawns.GetChild (0).position.y - 4, 0);
+				angle2 = Vector3.Angle (vector1, vector2);
+				angle2str = "DOWN";
 
 				//Down Left
 				rotation = Spawns.GetChild (1).rotation;
@@ -86,6 +139,14 @@ public class AIAimController : MonoBehaviour {
 				direction = rotation * Vector2.left;
 				Debug.DrawRay (new Vector2(Spawns.GetChild(1).position.x, Spawns.GetChild(1).position.y), direction * 50, Color.yellow);
 				Debug.DrawRay (new Vector2 (Spawns.GetChild (1).position.x, Spawns.GetChild (1).position.y), (playerPos - Spawns.GetChild (1).position), Color.white);
+				vector1 = direction * 50 - new Vector2(Spawns.GetChild(1).position.x, Spawns.GetChild(1).position.y);
+				vector2 = (playerPos - Spawns.GetChild (1).position) - new Vector3 (Spawns.GetChild (1).position.x, Spawns.GetChild (1).position.y, 0);
+				angle2 = Vector3.Angle (vector1, vector2);
+				angle2str = "DOWNLEFT";
+			}
+			if (angle1 > angle2) {
+				angle1 = angle2;
+				vectorDirection = angle2str;
 			}
 
 			//Left
@@ -94,6 +155,15 @@ public class AIAimController : MonoBehaviour {
 			direction = rotation * Vector2.left;
 			Debug.DrawRay (new Vector2(Spawns.GetChild(2).position.x, Spawns.GetChild(2).position.y), direction * 50, Color.yellow);
 			Debug.DrawRay (new Vector2 (Spawns.GetChild (2).position.x, Spawns.GetChild (2).position.y), (playerPos - Spawns.GetChild (2).position), Color.white);
+			vector1 = direction * 50 - new Vector2(Spawns.GetChild(2).position.x, Spawns.GetChild(2).position.y);
+			vector2 = (playerPos - Spawns.GetChild (2).position) - new Vector3 (Spawns.GetChild (2).position.x, Spawns.GetChild (2).position.y, 0);
+			angle3 = Vector3.Angle (vector1, vector2);
+
+			if (angle1 > angle3) {
+				angle1 = angle3;
+				vectorDirection = "LEFT";
+			}
+			//print (vectorDirection + " " + angle1);
 		}
 
 
