@@ -11,7 +11,7 @@ GameObject:
   - 223: {fileID: 22336112}
   - 114: {fileID: 11486712}
   - 114: {fileID: 11441248}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: HealthCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,7 +26,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 452140}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: spawn (5)
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - 4: {fileID: 427678}
   - 212: {fileID: 21270822}
   - 95: {fileID: 9516172}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,7 +58,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 417554}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: spawn (2)
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -75,7 +75,7 @@ GameObject:
   - 4: {fileID: 419652}
   - 212: {fileID: 21240452}
   - 95: {fileID: 9592524}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Torso
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   - 224: {fileID: 22418240}
   - 222: {fileID: 22249120}
   - 114: {fileID: 11480158}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: Health
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,7 +109,7 @@ GameObject:
   - 224: {fileID: 22414154}
   - 222: {fileID: 22240750}
   - 114: {fileID: 11494362}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: HealthBG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +124,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 450206}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: spawn (3)
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -139,7 +139,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 412946}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: spawn (1)
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -168,7 +168,8 @@ GameObject:
   - 114: {fileID: 11445284}
   - 114: {fileID: 11476720}
   - 114: {fileID: 11413580}
-  m_Layer: 9
+  - 114: {fileID: 11479148}
+  m_Layer: 12
   m_Name: AI
   m_TagString: player
   m_Icon: {fileID: 0}
@@ -183,7 +184,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 460634}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: spawn (4)
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -200,7 +201,7 @@ GameObject:
   - 4: {fileID: 447610}
   - 212: {fileID: 21292292}
   - 95: {fileID: 9514782}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Legs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -215,7 +216,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 410624}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: spawn
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -351,7 +352,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 182724}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.4, y: 34.4, z: 0}
+  m_LocalPosition: {x: 11.54739, y: 38.684975, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -643,6 +644,17 @@ MonoBehaviour:
   rpm: 450
   bulletSpeed: 45
   spawn: {fileID: 410624}
+--- !u!114 &11479148
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 182724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25cc639b7aacff24eb1045b55de06358, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11480158
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -725,7 +737,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collisionMask:
     serializedVersion: 2
-    m_Bits: 4294966783
+    m_Bits: 4294962687
   horizontalRayCount: 4
   verticalRayCount: 4
   horizontalRaySpacing: 0
@@ -747,13 +759,13 @@ MonoBehaviour:
   blueTorso: {fileID: 9100000, guid: 4ccdc3e3e5e5a564aad536923ea0729e, type: 2}
   blueLegs: {fileID: 9100000, guid: 04032e1a81b00ae4a8131cb3b8224a3f, type: 2}
   redHead: {fileID: 9100000, guid: 1fbfff4ce66be2440b582c2cfbadefb6, type: 2}
-  redTorso: {fileID: 9100000, guid: daf162e0fc5b83744b53b336ee347e02, type: 2}
+  redTorso: {fileID: 0}
   redLegs: {fileID: 9100000, guid: 996fe0e4dbd5b8349b69dd77e787fae8, type: 2}
   yellowHead: {fileID: 9100000, guid: 7029379e343de274e8ce9748b82fd8b7, type: 2}
-  yellowTorso: {fileID: 9100000, guid: 928b0697f8f3420419f8830705bec128, type: 2}
+  yellowTorso: {fileID: 0}
   yellowLegs: {fileID: 9100000, guid: 9c61aaa282ea18246b4922c3e75071c5, type: 2}
   greenHead: {fileID: 9100000, guid: 011ab63276376884a831cd64873f2906, type: 2}
-  greenTorso: {fileID: 9100000, guid: a871f9f0ccf4c174388167ef56837ca8, type: 2}
+  greenTorso: {fileID: 0}
   greenLegs: {fileID: 9100000, guid: 4e24219355bb0844c94f7c7d6f92e9a7, type: 2}
 --- !u!114 &11494362
 MonoBehaviour:

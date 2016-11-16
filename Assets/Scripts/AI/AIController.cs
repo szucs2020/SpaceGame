@@ -66,6 +66,7 @@ public class AIController : MonoBehaviour {
 		} else if (savedPlatform.transform != AI.currentPlatform) {
 			savedPlatform = AI.currentPlatform.GetComponent<Platform> ();
 			jumpingToNextPlatform = false;
+			hasPath = false;
 		}
 
 		if (AI.currentPlatform == playerComponent.currentPlatform) {
@@ -144,6 +145,9 @@ public class AIController : MonoBehaviour {
 				}
 			} else { //target represents a node on the platform
 				/****/
+				/*****DO ONLY THE CURRENT PLATFORM IS NOT THE SAME AS THE SAVED PLATFORM
+				SO IT ONLY DOES IT WHEN THE AI MOVES TO A DIFFERENT PLATFORM SO THIS IS NOT
+				CALCULATED EVERY FRAME*****/
 				RaycastHit2D Hit;
 				Vector2 origin = new Vector2 (savedPlatform.nodes [0].position.x, savedPlatform.nodes [0].position.y + 4);
 				Vector3 direction3D = new Vector3 (player.transform.position.x, player.transform.position.y - 2, 0) - new Vector3 (origin.x, origin.y, 0);
@@ -157,9 +161,17 @@ public class AIController : MonoBehaviour {
 					origin = new Vector2 (leftSide + distance * i, savedPlatform.nodes [0].position.y + 4);
 					direction3D = new Vector3 (player.transform.position.x, player.transform.position.y - 2, 0) - new Vector3 (origin.x, origin.y, 0);
 					direction2D = new Vector2 (direction3D.x, direction3D.y);
+					float angle = 0;
+					float angle1 = 0;
+					float angle2 = 0;
 
-					Hit = Physics2D.Raycast (origin, direction2D, 50f);
-					Debug.DrawRay (origin, direction2D, Color.cyan, 0.5f);
+					Hit = Physics2D.Raycast (origin, direction2D);
+					//Debug.DrawRay (origin, (direction2D / direction2D.magnitude) * 50, Color.cyan, 0.5f);
+
+					if (Hit.transform != null && Hit.transform.name == "Player(Clone)") {
+						Debug.DrawRay (origin, direction2D, Color.cyan, 5f);
+						//print (Hit.transform.name + " " + i);
+					}
 				}
 
 
@@ -287,6 +299,9 @@ public class AIController : MonoBehaviour {
 	}
 
 	void Move(Vector3 target, bool canJump) {
+		if (target == null) {
+			return;
+		}
 
 		if (target.x < transform.position.x) {
             AI.setMovementAxis (new Vector2 (-1, 1));

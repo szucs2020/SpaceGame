@@ -27,7 +27,7 @@ GameObject:
   - 4: {fileID: 417318}
   - 212: {fileID: 21236706}
   - 95: {fileID: 9545838}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Legs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74,7 +74,7 @@ GameObject:
   - 4: {fileID: 401734}
   - 212: {fileID: 21297052}
   - 95: {fileID: 9533952}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -150,7 +150,7 @@ GameObject:
   - 4: {fileID: 432526}
   - 212: {fileID: 21270766}
   - 95: {fileID: 9515230}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Torso
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -330,7 +330,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 160062}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -52.129864, y: 70.95989, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -726,7 +726,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collisionMask:
     serializedVersion: 2
-    m_Bits: 4294966783
+    m_Bits: 4294962687
   horizontalRayCount: 4
   verticalRayCount: 4
   horizontalRaySpacing: 0
