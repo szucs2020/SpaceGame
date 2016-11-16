@@ -28,6 +28,76 @@ public class AIAimController : MonoBehaviour {
 			}
 			return;
 		}
+
+		Vector3 playerPos = player.transform.position - new Vector3 (0, 5, 0);
+		if (AISync.getFacingRight () == true) {
+			if (player.position.y >= transform.position.y) {
+				//Up
+				Debug.DrawRay (new Vector2 (Spawns.GetChild (4).position.x, Spawns.GetChild (4).position.y), (Spawns.GetChild (4).rotation * Vector2.right) * 50, Color.yellow);
+				Debug.DrawRay (new Vector2 (Spawns.GetChild (4).position.x, Spawns.GetChild (4).position.y), (playerPos - Spawns.GetChild (4).position), Color.white);
+
+				//Up Right
+				Debug.DrawRay (new Vector2 (Spawns.GetChild (3).position.x, Spawns.GetChild (3).position.y), (Spawns.GetChild (3).rotation * Vector2.right) * 50, Color.yellow);
+				Debug.DrawRay (new Vector2 (Spawns.GetChild (3).position.x, Spawns.GetChild (3).position.y), (playerPos - Spawns.GetChild (3).position), Color.white);
+			} else {
+				//Down
+				Vector3 spawn0Pos = Spawns.GetChild (0).position - new Vector3 (0, 4, 0);
+				Debug.DrawRay (new Vector2 (Spawns.GetChild (0).position.x, Spawns.GetChild (0).position.y - 4), (Spawns.GetChild (0).rotation * Vector2.right) * 50, Color.yellow);
+				Debug.DrawRay (new Vector2 (Spawns.GetChild (0).position.x, Spawns.GetChild (0).position.y - 4), (playerPos - spawn0Pos), Color.white);
+
+				//Down Right
+				Debug.DrawRay (new Vector2 (Spawns.GetChild (1).position.x, Spawns.GetChild (1).position.y), (Spawns.GetChild (1).rotation * Vector2.right) * 50, Color.yellow);
+				Debug.DrawRay (new Vector2 (Spawns.GetChild (1).position.x, Spawns.GetChild (1).position.y), (playerPos - Spawns.GetChild (1).position), Color.white);
+			}
+
+			//Right
+			Debug.DrawRay (new Vector2 (Spawns.GetChild (2).position.x, Spawns.GetChild (2).position.y), new Vector2 (50, 0), Color.yellow);
+			Debug.DrawRay (new Vector2 (Spawns.GetChild (2).position.x, Spawns.GetChild (2).position.y), (playerPos - Spawns.GetChild (2).position), Color.white);
+		} else if (AISync.getFacingRight () == false) {
+			Quaternion rotation;
+			Vector2 direction;
+
+			if (player.position.y >= transform.position.y) {
+				//Up
+				rotation = Spawns.GetChild (4).rotation;
+				rotation = Quaternion.Euler(rotation.eulerAngles.x, rotation.eulerAngles.y, rotation.eulerAngles.z * -1);
+				direction = rotation * Vector2.left;
+				Debug.DrawRay (new Vector2(Spawns.GetChild(4).position.x, Spawns.GetChild(4).position.y), direction * 50, Color.yellow);
+				Debug.DrawRay (new Vector2 (Spawns.GetChild (4).position.x, Spawns.GetChild (4).position.y), (playerPos - Spawns.GetChild (4).position), Color.white);
+
+				//Up Left
+				rotation = Spawns.GetChild (3).rotation;
+				rotation = Quaternion.Euler(rotation.eulerAngles.x, rotation.eulerAngles.y, rotation.eulerAngles.z * -1);
+				direction = rotation * Vector2.left;
+				Debug.DrawRay (new Vector2(Spawns.GetChild(3).position.x, Spawns.GetChild(3).position.y), direction * 50, Color.yellow);
+				Debug.DrawRay (new Vector2 (Spawns.GetChild (3).position.x, Spawns.GetChild (3).position.y), (playerPos - Spawns.GetChild (3).position), Color.white);
+			} else {
+				//Down
+				Vector3 spawn0Pos = Spawns.GetChild (0).position - new Vector3 (0, 4, 0);
+				rotation = Spawns.GetChild (0).rotation;
+				rotation = Quaternion.Euler(rotation.eulerAngles.x, rotation.eulerAngles.y, rotation.eulerAngles.z * -1);
+				direction = rotation * Vector2.left;
+				Debug.DrawRay (new Vector2(Spawns.GetChild(0).position.x, Spawns.GetChild(0).position.y - 4), direction * 50, Color.yellow);
+				Debug.DrawRay (new Vector2 (Spawns.GetChild (0).position.x, Spawns.GetChild (0).position.y - 4), (playerPos - spawn0Pos), Color.white);
+
+				//Down Left
+				rotation = Spawns.GetChild (1).rotation;
+				rotation = Quaternion.Euler(rotation.eulerAngles.x, rotation.eulerAngles.y, rotation.eulerAngles.z * -1);
+				direction = rotation * Vector2.left;
+				Debug.DrawRay (new Vector2(Spawns.GetChild(1).position.x, Spawns.GetChild(1).position.y), direction * 50, Color.yellow);
+				Debug.DrawRay (new Vector2 (Spawns.GetChild (1).position.x, Spawns.GetChild (1).position.y), (playerPos - Spawns.GetChild (1).position), Color.white);
+			}
+
+			//Left
+			rotation = Spawns.GetChild (2).rotation;
+			rotation = Quaternion.Euler(rotation.eulerAngles.x, rotation.eulerAngles.y, rotation.eulerAngles.z * -1);
+			direction = rotation * Vector2.left;
+			Debug.DrawRay (new Vector2(Spawns.GetChild(2).position.x, Spawns.GetChild(2).position.y), direction * 50, Color.yellow);
+			Debug.DrawRay (new Vector2 (Spawns.GetChild (2).position.x, Spawns.GetChild (2).position.y), (playerPos - Spawns.GetChild (2).position), Color.white);
+		}
+
+
+
 		Vector3 dir3 = (player.position - new Vector3 (0, 5, 0)) - (transform.position - new Vector3 (0, 5, 0));
 		Vector2 dir2 = new Vector2 (dir3.x, dir3.y);
 		float angle;
@@ -152,6 +222,10 @@ public class AIAimController : MonoBehaviour {
 				}
 			}
 		}
+	}
+
+	public void getLowestAngle() {
+
 	}
 
 	public RaycastHit2D getHit() {

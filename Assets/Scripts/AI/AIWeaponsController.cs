@@ -24,7 +24,6 @@ public class AIWeaponsController : MonoBehaviour {
 		Spawns = transform.Find ("spawn");
 
 		player = GameObject.Find ("Player(Clone)").transform;
-		print (player.transform.name);
 		AISync = transform.GetComponent<SyncFlip> ();
 		//playerCollider = player.GetComponent<BoxCollider2D> ();
 
