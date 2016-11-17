@@ -1,6 +1,6 @@
 ﻿/*
  * Health.cs
- * Authors: Christian
+ * Authors: Christian, Lorant
  * Description: This is the class that supports player health, damage and death.
  */
 using UnityEngine;
@@ -12,6 +12,9 @@ public class Health : NetworkBehaviour {
 
     public float maxHealth;
     private Image HealthBar;
+    private bool regen = false;
+    public float regenTime = 2f;
+    private float regenStarTime = 0f;
 
     [SyncVar(hook = "UpdateHealthBar")]
     private float health;
@@ -22,6 +25,12 @@ public class Health : NetworkBehaviour {
         HealthBar = transform.FindChild("HealthCanvas").FindChild("HealthBG").FindChild("Health").GetComponent<Image>();
         health = maxHealth;
         UpdateHealthBar(health);
+    }
+
+    void Update() {
+        if (Time.time - regenStarTime > regenTime && regen) {
+            regenHealth();
+        }
     }
 
     public void Damage(float damage) {
@@ -38,6 +47,9 @@ public class Health : NetworkBehaviour {
         if (this.health <= 0) {
             Die();
         }
+
+        regenStarTime = Time.time;
+        regen = true;
     }
 
     public void Kill()
@@ -61,6 +73,13 @@ public class Health : NetworkBehaviour {
         } else {
             GameObject.Find("GameSettings").GetComponent<GameController>().AttemptSpawnPlayer(this.connectionToClient, this.playerControllerId, GetComponent<Player>().playerSlot);
         }
+    }
+
+    private void regenHealth() {
+        health += Time.deltaTime * 40;
+
+        if (health >= maxHealth)
+            regen = false;
     }
 
 }
