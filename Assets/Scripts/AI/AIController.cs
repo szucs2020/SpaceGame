@@ -148,7 +148,7 @@ public class AIController : MonoBehaviour {
 				/*****DO ONLY THE CURRENT PLATFORM IS NOT THE SAME AS THE SAVED PLATFORM
 				SO IT ONLY DOES IT WHEN THE AI MOVES TO A DIFFERENT PLATFORM SO THIS IS NOT
 				CALCULATED EVERY FRAME*****/
-				RaycastHit2D Hit;
+				/*RaycastHit2D Hit;
 				Vector2 origin = new Vector2 (savedPlatform.nodes [0].position.x, savedPlatform.nodes [0].position.y + 4);
 				Vector3 direction3D = new Vector3 (player.transform.position.x, player.transform.position.y - 2, 0) - new Vector3 (origin.x, origin.y, 0);
 				Vector2 direction2D = new Vector2 (direction3D.x, direction3D.y);
@@ -172,7 +172,7 @@ public class AIController : MonoBehaviour {
 						Debug.DrawRay (origin, direction2D, Color.cyan, 5f);
 						//print (Hit.transform.name + " " + i);
 					}
-				}
+				}*/
 
 
 

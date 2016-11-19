@@ -56,7 +56,6 @@ public class AIAimController : MonoBehaviour {
 		Vector3 playerPos = player.transform.position - new Vector3 (0, 5, 0);
 		Vector3 vector1;
 		Vector3 vector2;
-		Vector3 vector3;
 		string vectorDirection = "";
 		if (AISync.getFacingRight () == true) {
 			if (player.position.y >= transform.position.y) {
@@ -202,7 +201,7 @@ public class AIAimController : MonoBehaviour {
 			direction = rotation * Vector2.left;
 			Debug.DrawRay (new Vector2(Spawns.GetChild(2).position.x, Spawns.GetChild(2).position.y), direction * 50, Color.yellow);
 			Debug.DrawRay (new Vector2 (Spawns.GetChild (2).position.x, Spawns.GetChild (2).position.y), (playerPos - Spawns.GetChild (2).position), Color.white);
-			vector1 = direction * 50 - new Vector2(Spawns.GetChild(2).position.x, Spawns.GetChild(2).position.y);
+			vector1 = direction * 50/* - new Vector2(Spawns.GetChild(2).position.x, Spawns.GetChild(2).position.y)*/;
 			vector2 = (playerPos - Spawns.GetChild (2).position)/* - new Vector3 (Spawns.GetChild (2).position.x, Spawns.GetChild (2).position.y, 0)*/;
 			angle3 = Vector3.Angle (vector1, vector2);
 
