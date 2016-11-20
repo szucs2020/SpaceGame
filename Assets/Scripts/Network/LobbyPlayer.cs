@@ -7,11 +7,18 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class LobbyPlayer : NetworkLobbyPlayer {
 
+	private Lobby lob;
+	private GameSettings settings;
+
     [SyncVar(hook = "CallUpdateTeam")]
     private int playerTeam = 0;
+
+	[SyncVar(hook = "CallUpdateName")]
+	private string playerName;
 
     [Command]
     public void CmdChangeTeam() {
@@ -23,9 +30,18 @@ public class LobbyPlayer : NetworkLobbyPlayer {
         }
     }
 
+	[Command]
+	public void CmdChangeName(string pn) {
+		playerName = pn;
+	}
+
     private void CallUpdateTeam(int pt) {
         GameObject.Find("GameLobby").GetComponent<Lobby>().UpdateTeam(pt, this.slot);
     }
+
+	private void CallUpdateName(string name){
+		GameObject.Find("GameLobby").GetComponent<Lobby>().UpdateName(name, this.slot);
+	}
 
     void Awake() {
         //wait a frame to setup stuff because unity sucks
@@ -35,9 +51,15 @@ public class LobbyPlayer : NetworkLobbyPlayer {
     //Give the player's slot a reference to the lobbyplayer
     IEnumerator Setup() {
         yield return new WaitForFixedUpdate();
+		lob = GameObject.Find("GameLobby").GetComponent<Lobby>();
         if (isLocalPlayer) {
-            GameObject.Find("GameLobby").GetComponent<Lobby>().setPlayer(this);
-        }
+			settings = GameObject.Find("GameSettings").GetComponent<GameSettings>();
+            lob.setPlayer(this);
+//			lob.UpdateName(settings.getLocalPlayerName(), this.slot);
+			CmdChangeName(settings.getLocalPlayerName());
+		} else {
+//			lob.UpdateName(playerName, this.slot);
+		}
     }
 
     public int GetTeam() {

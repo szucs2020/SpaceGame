@@ -22,6 +22,8 @@ public class GameSettings : NetworkBehaviour {
     public int time;
     public int NumberOfAIPlayers;
 
+	private string localPlayerName;
+
     void Start () {
 
         // prevent the scene from destroying this object
@@ -41,4 +43,11 @@ public class GameSettings : NetworkBehaviour {
             GetComponent<GameController>().StartGame();
         }
     }
+
+	public void setLocalPlayerName(string pn){
+		localPlayerName = pn;
+	}
+	public string getLocalPlayerName(){
+		return this.localPlayerName;
+	}
 }

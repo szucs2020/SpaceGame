@@ -61,11 +61,17 @@ public class Lobby : MonoBehaviour {
         }
     }
 
+	public void UpdateName(string name, int p){
+		print("updatename: " + name + " " + p);
+		Text nameText = transform.Find(p.ToString()).transform.Find("Name").GetComponent<Text>();
+		nameText.text = name;
+	}
+
     public void setPlayer(LobbyPlayer p) {
         players[p.slot] = p;
         GameObject.Find("GameLobby").transform.Find(p.slot.ToString()).transform.Find("Ready").GetComponent<Button>().gameObject.SetActive(true);
         GameObject.Find("GameLobby").transform.Find(p.slot.ToString()).transform.Find("Change Team").GetComponent<Button>().gameObject.SetActive(true);
-    }
+	}
 
     public void onClickReady(int p) {
         if (players[p].readyToBegin) {
