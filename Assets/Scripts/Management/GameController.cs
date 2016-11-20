@@ -41,7 +41,7 @@ public class GameController : NetworkBehaviour {
         manager.CloseConnection();
     }
 
-    public void AttemptSpawnPlayer(NetworkConnection connectionToClient, short playerControllerID, int playerSlot) {
+    public void AttemptSpawnPlayer(NetworkConnection connectionToClient, short playerControllerID, int playerSlot, string playerName) {
 
         bool respawn = false;
 
@@ -71,6 +71,7 @@ public class GameController : NetworkBehaviour {
             Transform spawn = NetworkManager.singleton.GetStartPosition();
             GameObject newPlayer = (GameObject)Instantiate(NetworkManager.singleton.playerPrefab, spawn.position, spawn.rotation);
             newPlayer.GetComponent<Player>().playerSlot = playerSlot;
+            newPlayer.GetComponent<Player>().playerName = playerName;
             NetworkServer.ReplacePlayerForConnection(connectionToClient, newPlayer, playerControllerID);
         }
     }

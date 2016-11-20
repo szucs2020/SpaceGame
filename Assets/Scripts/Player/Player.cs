@@ -66,6 +66,9 @@ public class Player : NetworkBehaviour
     [SyncVar]
     public int playerSlot;
 
+    [SyncVar (hook="playerNameChanged")]
+    public string playerName;
+
     //Temp AI Spawning
     public GameObject AI;
 
@@ -323,6 +326,12 @@ public class Player : NetworkBehaviour
         {
             gun.shoot();
         }
+
+    }
+
+    private void playerNameChanged(string pn) {
+        Text Name = transform.FindChild("NameCanvas").FindChild("Name").GetComponent<Text>();
+        Name.text = pn;
     }
 
     public void Die()

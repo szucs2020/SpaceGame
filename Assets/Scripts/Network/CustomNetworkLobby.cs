@@ -65,6 +65,7 @@ public class CustomNetworkLobby : NetworkLobbyManager {
         Player p = gamePlayer.GetComponent<Player>();
         LobbyPlayer lp = lobbyPlayer.GetComponent<LobbyPlayer>();
         p.playerSlot = lp.slot;
+        p.playerName = lp.getPlayerName();
         return true;
     }
 

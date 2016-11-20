@@ -2,5 +2,6 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class PregameMenu : MonoBehaviour {
+public class Name : MonoBehaviour {
+
 }

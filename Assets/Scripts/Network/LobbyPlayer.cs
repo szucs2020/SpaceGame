@@ -55,14 +55,17 @@ public class LobbyPlayer : NetworkLobbyPlayer {
         if (isLocalPlayer) {
 			settings = GameObject.Find("GameSettings").GetComponent<GameSettings>();
             lob.setPlayer(this);
-//			lob.UpdateName(settings.getLocalPlayerName(), this.slot);
 			CmdChangeName(settings.getLocalPlayerName());
 		} else {
-//			lob.UpdateName(playerName, this.slot);
-		}
+            CallUpdateName(playerName);
+        }
     }
 
     public int GetTeam() {
         return this.playerTeam;
+    }
+
+    public string getPlayerName() {
+        return playerName;
     }
 }
