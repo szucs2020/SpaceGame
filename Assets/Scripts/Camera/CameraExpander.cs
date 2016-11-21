@@ -8,11 +8,11 @@ using UnityEngine;
 
 public class CameraExpander : MonoBehaviour {
 
+    private const float moveSpeed = 2.0f;
+    private const float zoomSpeed = 10.0f;
+    private const int minCameraSize = 70;
+    private const int margin = 30;
     public Vector3 offset = new Vector3(0f, 0f, -1f);
-    public float moveSpeed;
-    public float zoomSpeed;
-    public int minCameraSize;
-	public int margin;
 
     private GameObject[] players;
     private Camera mainCamera;
@@ -85,9 +85,9 @@ public class CameraExpander : MonoBehaviour {
 
             //set the size to include all the players
             if ((highestX - lowestX) > (highestY - lowestY)) {
-				camTarget = ((highestX - lowestX) * 0.5f) + margin;
+				camTarget = ((highestX - lowestX) * 0.6f) + margin;
             } else {
-				camTarget = ((highestY - lowestY) * 0.5f) + margin;
+				camTarget = ((highestY - lowestY) * 0.6f) + margin;
             }
             
             if (camTarget < minCameraSize) {

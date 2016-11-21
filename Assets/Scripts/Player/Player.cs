@@ -198,14 +198,6 @@ public class Player : NetworkBehaviour
             CmdChangeWeapon(3);
         }
 
-        //OLD CODE: Flipping based on movement. Will probably still need this for sprint.
-        ////flip sprite
-        //if (movementAxis.x > 0 && !facingRight) {
-        //    flip();
-        //} else if (movementAxis.x < 0 && facingRight) {
-        //    flip();
-        //}
-
         float targetVelocityX = input.x * moveSpeed;
         velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
 
