@@ -62,7 +62,6 @@ public class Lobby : MonoBehaviour {
     }
 
 	public void UpdateName(string name, int p){
-		print("updatename: " + name + " " + p);
 		Text nameText = transform.Find(p.ToString()).transform.Find("Name").GetComponent<Text>();
 		nameText.text = name;
 	}
@@ -117,13 +116,13 @@ public class Lobby : MonoBehaviour {
         switch (type.value) {    
             case 0:
                 settings.gameType = GameSettings.GameType.Survival;
-                livesInput.enabled = true;
-                timeInput.interactable = false;
+				livesInput.interactable = true;
+				timeInput.interactable = false;
                 break;
             case 1:
                 settings.gameType = GameSettings.GameType.Time;
-                livesInput.enabled = false;
-                timeInput.interactable = true;
+				livesInput.interactable = false;
+				timeInput.interactable = true;
                 break;
         }
     }

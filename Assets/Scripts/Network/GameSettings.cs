@@ -7,6 +7,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
 public class GameSettings : NetworkBehaviour {
 
@@ -39,7 +40,7 @@ public class GameSettings : NetworkBehaviour {
     void OnLevelWasLoaded(int level) {
 
         //gameplay scene
-        if (level == 1) {
+		if (level == SceneManager.GetSceneByName("Main").buildIndex) {
             GetComponent<GameController>().StartGame();
         }
     }

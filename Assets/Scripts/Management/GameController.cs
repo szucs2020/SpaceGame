@@ -16,8 +16,7 @@ public class GameController : NetworkBehaviour {
     [SerializeField]
     GameObject AIPrefab;
 
-    void Start () {
-
+	void Start () {
         settings = GetComponent<GameSettings>();
         manager = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<CustomNetworkLobby>();
     }
@@ -38,19 +37,21 @@ public class GameController : NetworkBehaviour {
     }
 
     public void EndGame() {
-        manager.CloseConnection();
+		manager.StopHost();
     }
 
     public void AttemptSpawnPlayer(NetworkConnection connectionToClient, short playerControllerID, int playerSlot, string playerName) {
 
+		print("playerSlot: " + playerSlot);
+
         bool respawn = false;
+		bool end = false;
 
         if (settings.gameType == GameSettings.GameType.Survival) {
 
             int playersLeft = 0;
 
             playerLives[playerSlot]--;
-            print("Lives left: " + playerLives[playerSlot]);
 
             //check if there is a winner
             for (int i = 0; i < playerLives.Length; i++) {
@@ -59,6 +60,7 @@ public class GameController : NetworkBehaviour {
                 }
             }
             if (playersLeft <= 1) {
+				end = true;
                 EndGame();
             }
 
@@ -67,7 +69,7 @@ public class GameController : NetworkBehaviour {
             }
         }
 
-        if (respawn == true || settings.gameType == GameSettings.GameType.Time) {
+		if (end == false && (respawn == true || settings.gameType == GameSettings.GameType.Time)) {
             Transform spawn = NetworkManager.singleton.GetStartPosition();
             GameObject newPlayer = (GameObject)Instantiate(NetworkManager.singleton.playerPrefab, spawn.position, spawn.rotation);
             newPlayer.GetComponent<Player>().playerSlot = playerSlot;

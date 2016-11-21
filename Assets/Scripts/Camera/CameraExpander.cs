@@ -12,6 +12,7 @@ public class CameraExpander : MonoBehaviour {
     public float moveSpeed;
     public float zoomSpeed;
     public int minCameraSize;
+	public int margin;
 
     private GameObject[] players;
     private Camera mainCamera;
@@ -84,9 +85,9 @@ public class CameraExpander : MonoBehaviour {
 
             //set the size to include all the players
             if ((highestX - lowestX) > (highestY - lowestY)) {
-                camTarget = (highestX - lowestX) * 0.5f;
+				camTarget = ((highestX - lowestX) * 0.5f) + margin;
             } else {
-                camTarget = (highestY - lowestY) * 0.5f;
+				camTarget = ((highestY - lowestY) * 0.5f) + margin;
             }
             
             if (camTarget < minCameraSize) {

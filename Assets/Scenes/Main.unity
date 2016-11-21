@@ -732,8 +732,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   offset: {x: 0, y: 0, z: -1}
   moveSpeed: 1
-  zoomSpeed: 1
+  zoomSpeed: 10
   minCameraSize: 50
+  margin: 10
 --- !u!1001 &526752661
 Prefab:
   m_ObjectHideFlags: 0
@@ -1026,11 +1027,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 464634, guid: 4d27f2841cc9a2745b62701631303a62, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 14.4
+      value: 12.21
       objectReference: {fileID: 0}
     - target: {fileID: 464634, guid: 4d27f2841cc9a2745b62701631303a62, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -10.6
+      value: -79
       objectReference: {fileID: 0}
     - target: {fileID: 464634, guid: 4d27f2841cc9a2745b62701631303a62, type: 2}
       propertyPath: m_LocalPosition.z
@@ -1054,7 +1055,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 464634, guid: 4d27f2841cc9a2745b62701631303a62, type: 2}
       propertyPath: m_RootOrder
-      value: 10
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 464634, guid: 4d27f2841cc9a2745b62701631303a62, type: 2}
       propertyPath: m_LocalScale.x
