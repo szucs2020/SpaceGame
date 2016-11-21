@@ -181,19 +181,16 @@ public class Player : NetworkBehaviour
         {
             print("1");
             CmdChangeWeapon(1);
-            gunNum = 1;
-        }
-        else if (Input.GetKeyDown("2"))
+
+        } else if (Input.GetKeyDown("2"))
         {
             print("2");
             CmdChangeWeapon(2);
-            gunNum = 2;
         }
         else if (Input.GetKeyDown("3"))
         {
             print("3");
             CmdChangeWeapon(3);
-            gunNum = 3;
         }
 
         //OLD CODE: Flipping based on movement. Will probably still need this for sprint.
@@ -457,7 +454,7 @@ public class Player : NetworkBehaviour
     void ChangeWeapon(int weaponNum)
     {
         gunNum = weaponNum;
-        print("Weapon num " + weaponNum);
+        print("hook Weapon num " + weaponNum);
         if (weaponNum == 1 && GetComponent<Pistol>() == null)
         {
             RemoveGun();
