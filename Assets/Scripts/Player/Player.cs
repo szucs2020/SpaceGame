@@ -187,17 +187,14 @@ public class Player : NetworkBehaviour
         //switcing weapons
         if (Input.GetKeyDown("1"))
         {
-            print("1");
             CmdChangeWeapon(1);
 
         } else if (Input.GetKeyDown("2"))
         {
-            print("2");
             CmdChangeWeapon(2);
         }
         else if (Input.GetKeyDown("3"))
         {
-            print("3");
             CmdChangeWeapon(3);
         }
 
@@ -429,7 +426,9 @@ public class Player : NetworkBehaviour
     {
         if (col.tag == "Pickup")
         {
-            gunNum = 1;
+            int pickupGunId = col.gameObject.GetComponent<Pickup>().id;
+            gunNum = pickupGunId;
+            CmdChangeWeapon(pickupGunId);
         }
 
     }
@@ -438,25 +437,28 @@ public class Player : NetworkBehaviour
     public void CmdChangeWeapon(int weaponNum)
     {
         gunNum = weaponNum;
-        print("CMDWeapon num " + weaponNum);
+
         if (weaponNum == 1)
         {
             gun = (Gun)pistol;
+            animator.setPistol();
         }
         else if (weaponNum == 2)
         {
             gun = (Gun)shotgun;
+            animator.setShotgun();
         }
         else if (weaponNum == 3)
         {
             gun = (Gun)plasmaCannon;
+            animator.setCannon();
         }
     }
 
     void ChangeWeapon(int weaponNum)
     {
         gunNum = weaponNum;
-        print("hook Weapon num " + weaponNum);
+
         if (weaponNum == 1) {
             gun = (Gun)pistol;
         } else if (weaponNum == 2) {

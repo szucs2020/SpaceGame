@@ -3,6 +3,10 @@ using System.Collections;
 
 public class Pickup : MonoBehaviour {
 
+    public int id;
+    //  1: Pistol
+    //  2: Shotgun
+    //  3: PlasmaCannon
     public float ascendHeigt;
     public float descendHeight;
     private bool ascend = false;
