@@ -23,6 +23,9 @@ public class Player : NetworkBehaviour
     public float maxFallSpeed = -110f;
 
     private Gun gun;
+    private Pistol pistol;
+    private Shotgun shotgun;
+    private PlasmaCannon plasmaCannon;
     private SyncFlip syncFlip;
     [SyncVar(hook="ChangeWeapon")]
     private int gunNum = 1;
@@ -95,7 +98,12 @@ public class Player : NetworkBehaviour
         networkManager = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<NetworkManager>();
 
         controller = GetComponent<Controller2D>();
-        gun = GetComponent<Gun>();
+        
+        pistol = GetComponent<Pistol>();
+        shotgun = GetComponent<Shotgun>();
+        plasmaCannon = GetComponent<PlasmaCannon>();
+        gun = (Gun)pistol;
+
         animator = GetComponent<AnimationManager>();
 
         jump = 0;
@@ -431,23 +439,17 @@ public class Player : NetworkBehaviour
     {
         gunNum = weaponNum;
         print("CMDWeapon num " + weaponNum);
-        if (weaponNum == 1 && GetComponent<Pistol>() == null)
+        if (weaponNum == 1)
         {
-            RemoveGun();
-            gameObject.AddComponent<Pistol>();
-            gun = (Gun)GetComponent<Pistol>();
+            gun = (Gun)pistol;
         }
-        else if (weaponNum == 2 && GetComponent<Shotgun>() == null)
+        else if (weaponNum == 2)
         {
-            RemoveGun();
-            gameObject.AddComponent<Shotgun>();
-            gun = (Gun)GetComponent<Shotgun>();
+            gun = (Gun)shotgun;
         }
-        else if (weaponNum == 3 && GetComponent<PlasmaCannon>() == null)
+        else if (weaponNum == 3)
         {
-            RemoveGun();
-            gameObject.AddComponent<PlasmaCannon>();
-            gun = (Gun)GetComponent<PlasmaCannon>();
+            gun = (Gun)plasmaCannon;
         }
     }
 
@@ -455,24 +457,14 @@ public class Player : NetworkBehaviour
     {
         gunNum = weaponNum;
         print("hook Weapon num " + weaponNum);
-        if (weaponNum == 1 && GetComponent<Pistol>() == null)
-        {
-            RemoveGun();
-            gameObject.AddComponent<Pistol>();
-            gun = (Gun)GetComponent<Pistol>();
-        }
-        else if (weaponNum == 2 && GetComponent<Shotgun>() == null)
-        {
-            RemoveGun();
-            gameObject.AddComponent<Shotgun>();
-            gun = (Gun)GetComponent<Shotgun>();
-        }
-        else if (weaponNum == 3 && GetComponent<PlasmaCannon>() == null)
-        {
-            RemoveGun();
-            gameObject.AddComponent<PlasmaCannon>();
-            gun = (Gun)GetComponent<PlasmaCannon>();
+        if (weaponNum == 1) {
+            gun = (Gun)pistol;
+        } else if (weaponNum == 2) {
+            gun = (Gun)shotgun;
+        } else if (weaponNum == 3) {
+            gun = (Gun)plasmaCannon;
         }
     }
+
 
 }
