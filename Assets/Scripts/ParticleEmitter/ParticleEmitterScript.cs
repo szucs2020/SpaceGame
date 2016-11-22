@@ -31,65 +31,6 @@ public class ParticleEmitterScript : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        //Initialze Particle
-        //particle.initialize(Particle.ParticleTypes.LaserDot);
-        //particleType = particle.getType();
-        //print("Emmiter " + particleType);
-
-        //laserDot.initialize(Particle.ParticleTypes.Plasma);
-        //plasma.initialize(Particle.ParticleTypes.Plasma);
-
-        // fire... refactor later
-        if (particleType == Particle.ParticleTypes.Fire)
-        {
-            xPos = 0;
-            ypos = 0;
-            rate = 60;
-            prevTime = Time.time;
-
-            angle = 90 * Mathf.PI / 180; ;
-            velocity = 10;
-
-            //particle.initialize(Particle.ParticleTypes.Fire);
-
-            //amount = particle.GetLifespan() * rate;
-            amountExists = 0;
-
-            //CreateParticles((int)amount);
-        }
-        else if (particleType == Particle.ParticleTypes.Plasma)
-        {
-            //angle = 360 * Mathf.PI / 180; ;
-            //speed = 20f;
-
-            //particle.initialize(particle.getType());
-
-            //amount = 50;
-            //amountExists = 0;
-
-            //centrePoint = new GameObject();
-            //centrePoint.transform.position = this.transform.position;
-            //particleCollider = centrePoint.AddComponent<CircleCollider2D>();
-            //radius = 2f;
-            //particleCollider.radius = radius;
-
-            //centrePoint.AddComponent<Rigidbody2D>();
-
-            //CreateParticles((int)amount);
-            //placeParticles();
-        }
-        else if (particleType == Particle.ParticleTypes.LaserDot)
-        {
-            //angle = 360 * Mathf.PI / 180; ;
-            //velocity = 50f;
-            //print(velocity);
-
-            //radius = 0.5f;
-            
-
-            //CreateParticle();
-        }
-
 
     }
 	

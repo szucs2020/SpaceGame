@@ -41,6 +41,10 @@ public class Pickup : MonoBehaviour {
                 ascend = true;
             }
         }
-        
 	}
+
+    public void destroy()
+    {
+        Destroy(this.gameObject);
+    }
 }

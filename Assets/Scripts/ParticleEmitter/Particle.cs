@@ -53,58 +53,6 @@ public class Particle : MonoBehaviour {
     {
     }
 
-    public void initialize(ParticleTypes type)
-    {
-        this.type = type;
-        if (type == ParticleTypes.Water)
-        {
-            lifeSpan = 10;
-        }
-        else if (type == ParticleTypes.Fire)
-        {
-            lifeSpan = 5f;
-            tAlive = 0;
-            minSize = 0.6f;
-            maxSize = 0.4f;
-
-            deltaSizeRate = 0.6f;
-            startTime = Time.time;
-        }
-        else if (type == ParticleTypes.Plasma)
-        {
-            lifeSpan = 5f;
-            tAlive = 0;
-            minSize = Random.Range(0.01f, 0.02f);
-            maxSize = Random.Range(minSize + 0.01f, minSize + 0.03f);
-            deltaSizeRate = 0.02f;
-            startTime = Time.time;
-            minRed = 0;
-            maxRed = 200;
-            minBlue = 200;
-            maxBlue = 255;
-            minGreen = 50;
-            maxGreen = 150;
-            deltaTC = Random.Range(0.5f, 2f);
-            Color a = Color.cyan;
-            Color b = Color.blue;
-            radius = 1;
-        }
-        else if (type == ParticleTypes.LaserDot)
-        {
-            lifeSpan = 5f;
-            tAlive = 0;
-            startTime = Time.time;
-            minRed = 150;
-            maxRed = 255;
-            minBlue = 0;
-            maxBlue = 50;
-            minGreen = 0;
-            maxGreen = 50;
-            deltaTC = Random.Range(0.5f, 2f);
-            Color a = Color.red;
-            Color b = Color.red;
-        }
-    }
 
     private void flickerFlame()
     {
@@ -184,11 +132,6 @@ public class Particle : MonoBehaviour {
             }
         }
     }
-    public void Reset()
-    {
-        //this.transform.localPosition = new Vector3(0, 0, 0);
-        return;
-    }
 
     public void SetLifeSpan(float lifeSpan)
     {
@@ -220,21 +163,9 @@ public class Particle : MonoBehaviour {
         return this.maxSize;
     }
 
-    public ParticleTypes getType()
-    {
-        return this.type;
-    }
-
     public enum ParticleTypes
     {
-        Water,
-        Mist,
-        Bullet,
-        Blood,
-        Fire,
-        Flame,
         Plasma,
         LaserDot,
-        LaserLine
     }
 }

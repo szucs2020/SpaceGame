@@ -58,6 +58,8 @@ public class Player : NetworkBehaviour
     private bool buttonPressedShoot;
     private bool buttonHeldShoot;
 
+    private bool buttonPressedAction;
+
     private bool buttonHeldAimLeft;
     private bool buttonHeldAimRight;
     private bool buttonHeldAimUp;
@@ -119,6 +121,7 @@ public class Player : NetworkBehaviour
         buttonReleasedJump = false;
         buttonPressedShoot = false;
         buttonHeldShoot = false;
+        buttonPressedAction = false;
 
         currentPlatform = null;
         currentPosition = 2;
@@ -376,6 +379,11 @@ public class Player : NetworkBehaviour
         this.buttonHeldShoot = input;
     }
 
+    public void setbuttonPressedAction(bool input)
+    {
+        this.buttonPressedAction = input;
+    }
+
     //right stick / right hand aiming
     public void setbuttonHeldAimLeft(bool input)
     {
@@ -414,13 +422,13 @@ public class Player : NetworkBehaviour
         return this.isAI;
     }
 
-    void OnTriggerEnter2D(Collider2D col)
+    void OnTriggerStay2D(Collider2D col)
     {
-        if (col.tag == "Pickup")
+        if (col.tag == "Pickup" && buttonPressedAction)
         {
-            int pickupGunId = col.gameObject.GetComponent<Pickup>().id;
-            gunNum = pickupGunId;
-            CmdChangeWeapon(pickupGunId);
+            Pickup pickup = col.gameObject.GetComponent<Pickup>();
+            CmdChangeWeapon(pickup.id);
+            pickup.destroy();
         }
 
     }
