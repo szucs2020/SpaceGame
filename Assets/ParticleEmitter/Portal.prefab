@@ -12,7 +12,7 @@ GameObject:
   - 50: {fileID: 5027398}
   - 61: {fileID: 6183874}
   - 114: {fileID: 11452268}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Portal
   m_TagString: Portal
   m_Icon: {fileID: 0}
@@ -27,7 +27,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 498776}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Centre
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,6 +106,7 @@ MonoBehaviour:
   target: {fileID: 0}
   waitTime: 2
   warpPrefab: {fileID: 11441464, guid: 3011637949467294197913a3868da1ee, type: 2}
+  node: {fileID: 0}
 --- !u!212 &21290200
 SpriteRenderer:
   m_ObjectHideFlags: 1

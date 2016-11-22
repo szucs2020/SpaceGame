@@ -70,22 +70,23 @@ public class PlasmaBall : MonoBehaviour {
     {
         if (LayerMask.LayerToName(col.gameObject.layer) == "Ground")
         {
+            tAtDestroy = Time.time;
             varDestroy = true;
             Destroy(gameObject, destroyTime);
-        }
-        else if (LayerMask.LayerToName(col.gameObject.layer) == "Player")
-        {
-            Destroy(gameObject, destroyTime);
-            varDestroy = true;
-            if (col.gameObject.GetComponent<Player>().netId != bulletOwner.netId || hurtSelf == true)
-            {
-                col.gameObject.GetComponent<Health>().Damage(5.0f);
-                tAtDestroy = Time.time;
-            }
         }
         else if (col.gameObject.tag == "Portal")
         {
             hurtSelf = true;
+        }
+        else if (LayerMask.LayerToName(col.gameObject.layer) == "Player" && hurtSelf == true)
+        {
+            tAtDestroy = Time.time;
+            varDestroy = true;
+            Destroy(gameObject, destroyTime);
+            if (col.gameObject.GetComponent<Player>().netId != bulletOwner.netId || hurtSelf == true)
+            {
+                col.gameObject.GetComponent<Health>().Damage(10.0f);
+            }
         }
     }
 }
