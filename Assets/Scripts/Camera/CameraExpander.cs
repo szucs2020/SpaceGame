@@ -85,9 +85,9 @@ public class CameraExpander : MonoBehaviour {
 
             //set the size to include all the players
             if ((highestX - lowestX) > (highestY - lowestY)) {
-				camTarget = ((highestX - lowestX) * 0.6f) + margin;
+				camTarget = ((highestX - lowestX) * 0.51f) + margin;
             } else {
-				camTarget = ((highestY - lowestY) * 0.6f) + margin;
+				camTarget = ((highestY - lowestY) * 0.51f) + margin;
             }
             
             if (camTarget < minCameraSize) {
