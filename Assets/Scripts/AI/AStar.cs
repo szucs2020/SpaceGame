@@ -130,6 +130,10 @@ public class AStar : MonoBehaviour {
 							currentNode = currentNode.getParent ();
 							currentNode.inPath = true;
 						}
+
+						if (path.Count > 2 && path[0].transform.parent == path[1].transform.parent) {
+							path.RemoveAt (0);
+						}
 						return path;
 					} else if (currentNode.neighbour [i].getClosed() == true) {
 						continue;

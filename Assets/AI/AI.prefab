@@ -11,7 +11,7 @@ GameObject:
   - 223: {fileID: 22336112}
   - 114: {fileID: 11486712}
   - 114: {fileID: 11441248}
-  m_Layer: 12
+  m_Layer: 9
   m_Name: HealthCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,7 +26,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 452140}
-  m_Layer: 12
+  m_Layer: 9
   m_Name: spawn (5)
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - 4: {fileID: 427678}
   - 212: {fileID: 21270822}
   - 95: {fileID: 9516172}
-  m_Layer: 12
+  m_Layer: 9
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,7 +58,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 417554}
-  m_Layer: 12
+  m_Layer: 9
   m_Name: spawn (2)
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -75,7 +75,7 @@ GameObject:
   - 4: {fileID: 419652}
   - 212: {fileID: 21240452}
   - 95: {fileID: 9592524}
-  m_Layer: 12
+  m_Layer: 9
   m_Name: Torso
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   - 224: {fileID: 22418240}
   - 222: {fileID: 22249120}
   - 114: {fileID: 11480158}
-  m_Layer: 12
+  m_Layer: 9
   m_Name: Health
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,7 +109,7 @@ GameObject:
   - 224: {fileID: 22414154}
   - 222: {fileID: 22240750}
   - 114: {fileID: 11494362}
-  m_Layer: 12
+  m_Layer: 9
   m_Name: HealthBG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +124,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 450206}
-  m_Layer: 12
+  m_Layer: 9
   m_Name: spawn (3)
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -139,7 +139,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 412946}
-  m_Layer: 12
+  m_Layer: 9
   m_Name: spawn (1)
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -169,7 +169,7 @@ GameObject:
   - 114: {fileID: 11476720}
   - 114: {fileID: 11413580}
   - 114: {fileID: 11479148}
-  m_Layer: 12
+  m_Layer: 9
   m_Name: AI
   m_TagString: player
   m_Icon: {fileID: 0}
@@ -184,7 +184,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 460634}
-  m_Layer: 12
+  m_Layer: 9
   m_Name: spawn (4)
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -201,7 +201,7 @@ GameObject:
   - 4: {fileID: 447610}
   - 212: {fileID: 21292292}
   - 95: {fileID: 9514782}
-  m_Layer: 12
+  m_Layer: 9
   m_Name: Legs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -216,7 +216,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 410624}
-  m_Layer: 12
+  m_Layer: 9
   m_Name: spawn
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -576,6 +576,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
+  regenTime: 2
 --- !u!114 &11459676
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -596,6 +597,7 @@ MonoBehaviour:
   jumpDeceleration: 5
   maxFallSpeed: -110
   playerSlot: 0
+  playerName: 
   AI: {fileID: 0}
   currentPlatform: {fileID: 0}
 --- !u!114 &11461866
