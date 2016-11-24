@@ -4,25 +4,15 @@
  * Description: This class handles the pregame lobby UI changes including the player colour and ready system.
  */
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections;
 
 public class Lobby : MonoBehaviour {
-    public Sprite blueHead;
-    public Sprite blueTorso;
-    public Sprite blueLegs;
-
-    public Sprite redHead;
-    public Sprite redTorso;
-    public Sprite redLegs;
-
-    public Sprite yellowHead;
-    public Sprite yellowTorso;
-    public Sprite yellowLegs;
-
-    public Sprite greenHead;
-    public Sprite greenTorso;
-    public Sprite greenLegs;
+    public Sprite blue;
+    public Sprite red;
+    public Sprite yellow;
+    public Sprite green;
 
     //public LobbyPlayer player;
     public LobbyPlayer[] players = new LobbyPlayer[4];
@@ -31,32 +21,40 @@ public class Lobby : MonoBehaviour {
         players[p].CmdChangeTeam();
     }
 
+    // Use this for initialization
+    void Start() {
+        
+    }
+
+    void OnEnable() {
+        StartCoroutine("InitSelect");
+    }
+
+    public IEnumerator InitSelect() {
+        GameObject panel = transform.Find("Game Options").gameObject;
+        Scrollbar type = panel.transform.Find("Game Type Scrollbar").gameObject.GetComponent<Scrollbar>();
+
+        EventSystem.current.SetSelectedGameObject(null);
+        yield return null;
+        EventSystem.current.SetSelectedGameObject(type.gameObject);
+    }
+
     public void UpdateTeam(int pt, int p) {
         GameObject panel = transform.Find(p.ToString()).gameObject;
-        GameObject head = panel.transform.Find("Head").gameObject;
-        GameObject torso = panel.transform.Find("Torso").gameObject;
-        GameObject legs = panel.transform.Find("Legs").gameObject;
+        GameObject player = panel.transform.Find("Player").gameObject;
 
         switch (pt) {
             case 0:
-                head.GetComponent<SpriteRenderer>().sprite = blueHead;
-                torso.GetComponent<SpriteRenderer>().sprite = blueTorso;
-                legs.GetComponent<SpriteRenderer>().sprite = blueLegs;
+                player.GetComponent<SpriteRenderer>().sprite = blue;
                 break;
             case 1:
-                head.GetComponent<SpriteRenderer>().sprite = redHead;
-                torso.GetComponent<SpriteRenderer>().sprite = redTorso;
-                legs.GetComponent<SpriteRenderer>().sprite = redLegs;
+                player.GetComponent<SpriteRenderer>().sprite = red;
                 break;
             case 2:
-                head.GetComponent<SpriteRenderer>().sprite = yellowHead;
-                torso.GetComponent<SpriteRenderer>().sprite = yellowTorso;
-                legs.GetComponent<SpriteRenderer>().sprite = yellowLegs;
+                player.GetComponent<SpriteRenderer>().sprite = yellow;
                 break;
             case 3:
-                head.GetComponent<SpriteRenderer>().sprite = greenHead;
-                torso.GetComponent<SpriteRenderer>().sprite = greenTorso;
-                legs.GetComponent<SpriteRenderer>().sprite = greenLegs;
+                player.GetComponent<SpriteRenderer>().sprite = green;
                 break;
         }
     }
@@ -107,82 +105,88 @@ public class Lobby : MonoBehaviour {
 
     public void ChangeGameType() {
         GameObject panel = transform.Find("Game Options").gameObject;
-        Dropdown type = panel.transform.Find("Game Type Dropdown").gameObject.GetComponent<Dropdown>();
+        Scrollbar type = panel.transform.Find("Game Type Scrollbar").gameObject.GetComponent<Scrollbar>();
+        Scrollbar lives = panel.transform.Find("Lives Scrollbar").gameObject.GetComponent<Scrollbar>();
+        Scrollbar time = panel.transform.Find("Time Scrollbar").gameObject.GetComponent<Scrollbar>();
+        Text typeText = panel.transform.Find("Game Type Value").gameObject.GetComponent<Text>();
         GameSettings settings = FindObjectOfType<GameSettings>();
-        InputField livesInput = panel.transform.Find("Lives Input").gameObject.GetComponent<InputField>();
-        InputField timeInput = panel.transform.Find("Time Input").gameObject.GetComponent<InputField>();
-
+    
         //Retrieve the value and set the game type accordingly, enable disable fields as necessary.
-        switch (type.value) {    
-            case 0:
-                settings.gameType = GameSettings.GameType.Survival;
-				livesInput.interactable = true;
-				timeInput.interactable = false;
-                break;
-            case 1:
-                settings.gameType = GameSettings.GameType.Time;
-				livesInput.interactable = false;
-				timeInput.interactable = true;
-                break;
+        if (type.value == 0) {
+            settings.gameType = GameSettings.GameType.Survival;
+            typeText.text = "SURVIVAL";
+            lives.value = 0.3f;
+            time.value = 0f;
+        }
+        else {
+            settings.gameType = GameSettings.GameType.Time;
+            typeText.text = "TIME";
+            lives.value = 0f;
+            time.value = 0.2f;
         }
     }
-
+        
     public void ChangeLives() {
         GameObject panel = transform.Find("Game Options").gameObject;
-        InputField livesInput = panel.transform.Find("Lives Input").gameObject.GetComponent<InputField>();
+        Scrollbar type = panel.transform.Find("Game Type Scrollbar").gameObject.GetComponent<Scrollbar>();
+        Scrollbar lives = panel.transform.Find("Lives Scrollbar").gameObject.GetComponent<Scrollbar>();
+        Text liveText = panel.transform.Find("Lives Value").gameObject.GetComponent<Text>();
         GameSettings settings = FindObjectOfType<GameSettings>();
-        int lives = 0;
 
-        //Retrieve the value.
-        if (livesInput.text != "") {
-            lives = int.Parse(livesInput.text);
+        int value = (int)(lives.value * 10);
+
+        //Retrieve the value and set the game type accordingly, enable disable fields as necessary.
+        settings.numLives = value;
+        if (value == 0) {
+            liveText.text = "INFINITE";
+        } 
+        else {
+            liveText.text = "" + value;
         }
-
-        //Check that the value entered is not 0 or negative, otherwise, default to 1.
-        if (lives <= 0) {
-            lives = 1;
-        }
-
-        settings.numLives = lives;
     }
-
+        
     public void ChangeTime() {
         GameObject panel = transform.Find("Game Options").gameObject;
-        InputField timeInput = panel.transform.Find("Time Input").gameObject.GetComponent<InputField>();
+        Scrollbar time = panel.transform.Find("Time Scrollbar").gameObject.GetComponent<Scrollbar>();
+        Text timeText = panel.transform.Find("Time Value").gameObject.GetComponent<Text>();
         GameSettings settings = FindObjectOfType<GameSettings>();
-        int time = 0;
 
-        //Retrieve the value.
-        if (timeInput.text != "") {
-            time = int.Parse(timeInput.text);
+        int value = (int)(time.value * 10);
+
+        //Retrieve the value and set the game type accordingly, enable disable fields as necessary.
+        settings.time = value * 60;
+        if (value == 0) {
+            timeText.text = "INFINITE";
+        } 
+        else {
+            timeText.text = value + ":00";
         }
-
-        //Check that the value entered is not 0 or negative, otherwise, default to 1.
-        if (time <= 0) {
-            time = 1;
-        }
-
-        settings.time = time;
     }
-
+        
     public void ChangeAIPlayers() {
         GameObject panel = transform.Find("Game Options").gameObject;
-        InputField aiInput = panel.transform.Find("AI Players Input").gameObject.GetComponent<InputField>();
+        Scrollbar AI = panel.transform.Find("AI Players Scrollbar").gameObject.GetComponent<Scrollbar>();
+        Text AIText = panel.transform.Find("AI Players Value").gameObject.GetComponent<Text>();
         GameSettings settings = FindObjectOfType<GameSettings>();
-        int players = 0;
 
-        //Retrieve the value.
-        if (aiInput.text != "") {
-            players = int.Parse(aiInput.text);
+        int value = (int)(AI.value * 10);
+
+        if (value == 0) {
+            settings.NumberOfAIPlayers = 0;
+            AIText.text = "0";
+        }
+        else if (value == 3) {
+            settings.NumberOfAIPlayers = 1;
+            AIText.text = "1";
+        }
+        else if (value == 6) {
+            settings.NumberOfAIPlayers = 2;
+            AIText.text = "2";
+        }
+        else if (value == 10) {
+            settings.NumberOfAIPlayers = 3;
+            AIText.text = "3";
         }
 
-        //Check that the value entered is not negative, otherwise, default to 0.
-        if (players <= 0) {
-            players = 0;
-        } else if (players > 3) { //Apply a cap of 3 AI players. TODO: Check how many human players are present and make the cap 4 minus that.
-            players = 3;
-        }
-
-        settings.NumberOfAIPlayers = players;
     }
 }
