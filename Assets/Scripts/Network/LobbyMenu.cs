@@ -5,6 +5,7 @@
  */
 using UnityEngine;
 using System.Collections;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 
@@ -14,6 +15,24 @@ public class LobbyMenu : MonoBehaviour {
     public InputField ipAddress;
     public GameObject lobby;
 	public GameObject load;
+
+    void Start() {
+            StartCoroutine("InitSelect");
+    }
+
+    void OnAwake() {
+            StartCoroutine("InitSelect");
+    }
+
+    //Highlight first option for controller-friendly menu.
+    public IEnumerator InitSelect() {
+        GameObject panel = GameObject.Find("Menu").gameObject;
+        Button host = panel.transform.Find("Host Game").gameObject.GetComponent<Button>();
+
+        EventSystem.current.SetSelectedGameObject(null);
+        yield return null;
+        EventSystem.current.SetSelectedGameObject(host.gameObject);
+    }
 
     public void onClickHost() {
         lobbyManager.HostGame();

@@ -1,5 +1,5 @@
 ﻿/*
- * Network.cs
+ * Lobby.cs
  * Authors: Nigel. With help from Christian with the networking code
  * Description: This class handles the pregame lobby UI changes including the player colour and ready system.
  */
@@ -30,6 +30,7 @@ public class Lobby : MonoBehaviour {
         StartCoroutine("InitSelect");
     }
 
+    //Highlight first option for controller-friendly menu.
     public IEnumerator InitSelect() {
         GameObject panel = transform.Find("Game Options").gameObject;
         Scrollbar type = panel.transform.Find("Game Type Scrollbar").gameObject.GetComponent<Scrollbar>();
