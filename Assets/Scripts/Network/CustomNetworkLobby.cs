@@ -96,4 +96,8 @@ public class CustomNetworkLobby : NetworkLobbyManager {
             GameObject.Find("GameSettings").GetComponent<GameController>().SpawnAllAI();
         }
     }
+
+    public bool getIsHost() {
+        return isHost;
+    }
 }

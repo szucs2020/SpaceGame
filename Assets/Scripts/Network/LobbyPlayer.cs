@@ -52,6 +52,7 @@ public class LobbyPlayer : NetworkLobbyPlayer {
     IEnumerator Setup() {
         yield return new WaitForFixedUpdate();
 		lob = GameObject.Find("GameLobby").GetComponent<Lobby>();
+        CallUpdateTeam(this.playerTeam);
         if (isLocalPlayer) {
 			settings = GameObject.Find("GameSettings").GetComponent<GameSettings>();
             lob.setPlayer(this);
@@ -59,6 +60,11 @@ public class LobbyPlayer : NetworkLobbyPlayer {
 		} else {
             CallUpdateName(playerName);
         }
+    }
+
+    //hook called when player sets to ready
+    public override void OnClientReady(bool readyState) {
+        lob.ChangeReadyColour(readyState, slot);
     }
 
     public int GetTeam() {

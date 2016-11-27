@@ -7,8 +7,10 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.Networking;
 
-public class Lobby : MonoBehaviour {
+public class Lobby : NetworkBehaviour {
+
     public Sprite blue;
     public Sprite red;
     public Sprite yellow;
@@ -21,23 +23,28 @@ public class Lobby : MonoBehaviour {
         players[p].CmdChangeTeam();
     }
 
-    // Use this for initialization
-    void Start() {
-        
-    }
-
     void OnEnable() {
         StartCoroutine("InitSelect");
     }
 
     //Highlight first option for controller-friendly menu.
     public IEnumerator InitSelect() {
+
         GameObject panel = transform.Find("Game Options").gameObject;
-        Scrollbar type = panel.transform.Find("Game Type Scrollbar").gameObject.GetComponent<Scrollbar>();
+        bool host = GameObject.Find("NetworkManager").GetComponent<CustomNetworkLobby>().getIsHost();
+        Scrollbar type = null;
+
+        if (!host) {
+            panel.SetActive(false);
+        } else {
+            type = panel.transform.Find("Game Type Scrollbar").gameObject.GetComponent<Scrollbar>();
+        }
 
         EventSystem.current.SetSelectedGameObject(null);
         yield return null;
-        EventSystem.current.SetSelectedGameObject(type.gameObject);
+        if (host) {
+            EventSystem.current.SetSelectedGameObject(type.gameObject);
+        }
     }
 
     public void UpdateTeam(int pt, int p) {
@@ -67,21 +74,19 @@ public class Lobby : MonoBehaviour {
 
     public void setPlayer(LobbyPlayer p) {
         players[p.slot] = p;
-        GameObject.Find("GameLobby").transform.Find(p.slot.ToString()).transform.Find("Ready").GetComponent<Button>().gameObject.SetActive(true);
+        GameObject.Find("GameLobby").transform.Find(p.slot.ToString()).transform.Find("Ready").GetComponent<Button>().interactable = true;
         GameObject.Find("GameLobby").transform.Find(p.slot.ToString()).transform.Find("Change Team").GetComponent<Button>().gameObject.SetActive(true);
 	}
 
     public void onClickReady(int p) {
         if (players[p].readyToBegin) {
             players[p].SendNotReadyToBeginMessage();
-            ChangeReadyColour(false, p);
         } else {
             players[p].SendReadyToBeginMessage();
-            ChangeReadyColour(true, p);
         }
     }
 
-    private void ChangeReadyColour(bool ready, int p) {
+    public void ChangeReadyColour(bool ready, int p) {
         GameObject panel = transform.Find(p.ToString()).gameObject;
         GameObject button = panel.transform.Find("Ready").gameObject;
         Image image = button.GetComponent<Image>();

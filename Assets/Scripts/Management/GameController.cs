@@ -42,8 +42,6 @@ public class GameController : NetworkBehaviour {
 
     public void AttemptSpawnPlayer(NetworkConnection connectionToClient, short playerControllerID, int playerSlot, string playerName) {
 
-		print("playerSlot: " + playerSlot);
-
         bool respawn = false;
 		bool end = false;
 
