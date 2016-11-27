@@ -143,7 +143,7 @@ public class Lobby : NetworkBehaviour {
         Text liveText = panel.transform.Find("Lives Value").gameObject.GetComponent<Text>();
         GameSettings settings = FindObjectOfType<GameSettings>();
 
-        int value = (int)(lives.value * 10);
+        int value = Mathf.RoundToInt(lives.value * 10);
 
         //Enforce restrictions depending on game type.
         if (type.value == 0) {
@@ -175,7 +175,7 @@ public class Lobby : NetworkBehaviour {
         Text timeText = panel.transform.Find("Time Value").gameObject.GetComponent<Text>();
         GameSettings settings = FindObjectOfType<GameSettings>();
 
-        int value = (int)(time.value * 10);
+        int value = Mathf.RoundToInt(time.value * 10);
 
         //Enforce restrictions depending on game type.
         if (type.value == 0) {
@@ -207,7 +207,7 @@ public class Lobby : NetworkBehaviour {
         Text AIText = panel.transform.Find("AI Players Value").gameObject.GetComponent<Text>();
         GameSettings settings = FindObjectOfType<GameSettings>();
 
-        int value = (int)(AI.value * 10);
+        int value = Mathf.RoundToInt(AI.value * 10);
 
         if (value == 0) {
             settings.NumberOfAIPlayers = 0;
