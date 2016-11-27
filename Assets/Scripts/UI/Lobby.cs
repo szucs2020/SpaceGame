@@ -118,12 +118,16 @@ public class Lobby : MonoBehaviour {
             typeText.text = "SURVIVAL";
             lives.value = 0.3f;
             time.value = 0f;
+            ChangeLives();
+            ChangeTime();
         }
         else {
             settings.gameType = GameSettings.GameType.Time;
             typeText.text = "TIME";
             lives.value = 0f;
             time.value = 0.2f;
+            ChangeLives();
+            ChangeTime();
         }
     }
         
@@ -135,6 +139,19 @@ public class Lobby : MonoBehaviour {
         GameSettings settings = FindObjectOfType<GameSettings>();
 
         int value = (int)(lives.value * 10);
+
+        //Enforce restrictions depending on game type.
+        if (type.value == 0) {
+            //Restrict lives being set to "INFINITE" if Survival.
+            if (value == 0) {
+                lives.value = 0.1f;
+                value = 1;
+            }
+        } else {
+            //Restrict ability to change lives if Time.
+            value = 0;
+            lives.value = 0;
+        }
 
         //Retrieve the value and set the game type accordingly, enable disable fields as necessary.
         settings.numLives = value;
@@ -148,11 +165,26 @@ public class Lobby : MonoBehaviour {
         
     public void ChangeTime() {
         GameObject panel = transform.Find("Game Options").gameObject;
+        Scrollbar type = panel.transform.Find("Game Type Scrollbar").gameObject.GetComponent<Scrollbar>();
         Scrollbar time = panel.transform.Find("Time Scrollbar").gameObject.GetComponent<Scrollbar>();
         Text timeText = panel.transform.Find("Time Value").gameObject.GetComponent<Text>();
         GameSettings settings = FindObjectOfType<GameSettings>();
 
         int value = (int)(time.value * 10);
+
+        //Enforce restrictions depending on game type.
+        if (type.value == 0) {
+            //Restrict ability to change time if Survival.
+            value = 0;
+            time.value = 0;
+        } else {
+            //Restrict time being set to "INFINITE" if Time.
+
+            if (value == 0) {
+                time.value = 0.1f;
+                value = 1;
+            }
+        }
 
         //Retrieve the value and set the game type accordingly, enable disable fields as necessary.
         settings.time = value * 60;
