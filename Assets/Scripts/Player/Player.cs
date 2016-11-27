@@ -202,42 +202,32 @@ public class Player : NetworkBehaviour
         velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
 
         //walking
-        if (controller.collisions.below)
-        {
+        if (controller.collisions.below){
             currentPlatform = controller.collisions.platform;
-            if (targetVelocityX < 0)
-            {
-                if (facingRight)
-                {
+            if (targetVelocityX < 0){
+                if (facingRight) {
                     animator.setWalkBackward();
                 }
-                else
-                {
+                else {
                     animator.setWalkForward();
                 }
             }
-            else if (targetVelocityX > 0)
-            {
-                if (!facingRight)
-                {
+            else if (targetVelocityX > 0){
+                if (!facingRight){
                     animator.setWalkBackward();
                 }
-                else
-                {
+                else {
                     animator.setWalkForward();
                 }
             }
-            else
-            {
+            else {
                 animator.setIdle();
             }
         }
 
         //jumping
-        if (buttonPressedJump)
-        {
-            if (controller.collisions.below || jump == 1)
-            {
+        if (buttonPressedJump){
+            if (controller.collisions.below || jump == 1){
                 velocity.y = maxJumpVelocity;
                 decelerating = false;
                 if (jump == 1)
@@ -246,29 +236,27 @@ public class Player : NetworkBehaviour
                 }
             }
 
-            if (jump == 0)
-            {
+            if (jump == 0){
                 jump = 1;
                 audio.playJump();
             }
-            else if (jump == 1)
-            {
+            else if (jump == 1){
                 jump = 2;
             }
         }
-        else if (buttonReleasedJump)
-        {
+        else if (buttonReleasedJump){
             decelerating = true;
-            //syncPlayer.CmdSyncJetpack(false);
         }
 
-        if (velocity.y < 0)
-        {
+        if (!controller.collisions.below && jump == 0) {
+            jump = 1;
+        }
+
+        if (velocity.y < 0){
             animator.setFall();
             //syncPlayer.CmdSyncJetpack(false);
         }
-        else if (velocity.y > 0)
-        {
+        else if (velocity.y > 0){
             animator.setJump();
         }
 
@@ -300,16 +288,13 @@ public class Player : NetworkBehaviour
 
         controller.Move(velocity * Time.deltaTime, input);
 
-        if (controller.collisions.below)
-        {
+        if (controller.collisions.below){
             velocity.y = 0;
             decelerating = false;
             jump = 0;
         }
-        else
-        {
-            if (controller.collisions.above)
-            {
+        else {
+            if (controller.collisions.above){
                 velocity.y = 0;
                 decelerating = false;
             }
