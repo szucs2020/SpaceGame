@@ -8,6 +8,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class LobbyPlayer : NetworkLobbyPlayer {
 
@@ -19,6 +20,19 @@ public class LobbyPlayer : NetworkLobbyPlayer {
 
 	[SyncVar(hook = "CallUpdateName")]
 	private string playerName;
+
+    void Update() {
+        //TEMP?
+        //Listen for input to change team or ready up.
+        if (SceneManager.GetActiveScene().name == "Pregame Menu") {
+            if (Input.GetKeyDown(KeyCode.Q) || Input.GetButtonDown("LB")) {
+                lob.ChangeTeam(this.slot);
+            }
+            if (Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("RB")) {
+                lob.onClickReady(this.slot);
+            }
+        }
+    }
 
     [Command]
     public void CmdChangeTeam() {
