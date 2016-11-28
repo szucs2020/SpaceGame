@@ -19,7 +19,7 @@ public class InputController : NetworkBehaviour {
 		released = true;
 
 		if (Input.GetJoystickNames().Length > 0){
-			usingGamepad = false;
+			usingGamepad = true;
 		} else {
 			usingGamepad = false;
 		}
