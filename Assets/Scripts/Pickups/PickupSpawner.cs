@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
 
-public class PickupSpawner : MonoBehaviour {
+public class PickupSpawner : NetworkBehaviour {
     public GameObject pistol;
     public GameObject shotgun;
     public GameObject cannon;
@@ -22,9 +23,9 @@ public class PickupSpawner : MonoBehaviour {
             canSpawn[i] = true;
         }
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update () {
         for (int i = 0; i < this.transform.childCount; i++) {
             if (canSpawn[i] == false && this.transform.GetChild(i).transform.childCount == 0) {
                 canSpawn[i] = true;
@@ -33,26 +34,28 @@ public class PickupSpawner : MonoBehaviour {
             
             if (spawnTimes[i] < Time.time && canSpawn[i]) {
                 int rand = Random.Range(1, 100);
-                if (rand < 35) {
-                    pickup = (GameObject)Instantiate(pistol, this.transform.GetChild(i).transform.position, Quaternion.identity);
-                    pickup.transform.parent = this.transform.GetChild(i).transform;
-                    pickup.transform.position = pickup.transform.parent.position;
-                }
-                else if (rand < 80)
-                {
-                    pickup = (GameObject)Instantiate(shotgun, this.transform.GetChild(i).transform.position, Quaternion.identity);
-                    pickup.transform.parent = this.transform.GetChild(i).transform;
-                    pickup.transform.position = pickup.transform.parent.position;
-                }
-                else if (rand <= 100)
-                {
-                    pickup = (GameObject)Instantiate(cannon, this.transform.GetChild(i).transform.position, Quaternion.identity);
-                    pickup.transform.position = new Vector3(0, 0, 0);
-                    pickup.transform.parent = this.transform.GetChild(i).transform;
-                    pickup.transform.position = pickup.transform.parent.position;
-                }
+                CmdSpawnPickup(rand, i);
                 canSpawn[i] = false;
             }
         }
 	}
+
+    [Command]
+    void CmdSpawnPickup(int rand, int i) {
+        if (rand < 35)
+        {
+            pickup = (GameObject)Instantiate(pistol, this.transform.GetChild(i).transform.position, Quaternion.identity);
+        }
+        else if (rand < 80)
+        {
+            pickup = (GameObject)Instantiate(shotgun, this.transform.GetChild(i).transform.position, Quaternion.identity);
+        }
+        else if (rand <= 100)
+        {
+            pickup = (GameObject)Instantiate(cannon, this.transform.GetChild(i).transform.position, Quaternion.identity);
+        }
+        pickup.transform.parent = this.transform.GetChild(i).transform;
+        pickup.transform.position = pickup.transform.parent.position;
+        NetworkServer.Spawn(pickup);
+    }
 }
