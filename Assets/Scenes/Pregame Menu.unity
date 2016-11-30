@@ -688,7 +688,6 @@ GameObject:
   - component: {fileID: 201948151}
   - component: {fileID: 201948150}
   - component: {fileID: 201948155}
-  - component: {fileID: 201948156}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -778,17 +777,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0f2eb42e54b213746b05dd4e96049826, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &201948156
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 201948149}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25cc639b7aacff24eb1045b55de06358, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &289412940
@@ -3504,7 +3492,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2a743f9fecfde447a56ac51c4826a72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameType: 1
+  gameType: 0
   numLives: 0
   time: 0
   NumberOfAIPlayers: 0
@@ -3519,7 +3507,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64210e43bd0f8f14980e30f5dcc741bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AIPrefab: {fileID: 182724, guid: 69116429202227e46a92792dc541d93e, type: 2}
+  AIPrefab: {fileID: 0}
 --- !u!114 &1217063792
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4002,7 +3990,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dccd6cd91d24414ab4a11e07e4979a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lobbyManager: {fileID: 0}
   ipAddress: {fileID: 1721222849}
   lobby: {fileID: 1877371817}
   load: {fileID: 618134780}

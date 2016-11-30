@@ -11,7 +11,7 @@ using UnityEngine.Networking;
 
 public class LobbyMenu : MonoBehaviour {
 
-    public CustomNetworkLobby lobbyManager;
+    private CustomNetworkLobby lobbyManager;
     public InputField ipAddress;
     public GameObject lobby;
 	public GameObject load;

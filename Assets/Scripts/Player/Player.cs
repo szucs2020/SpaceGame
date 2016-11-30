@@ -318,8 +318,15 @@ public class Player : NetworkBehaviour
         {
             StartCoroutine("chargeCannon");
             if (charged && shootReleased) {
-                gun.shoot();
-                //charged = false;
+
+                if (gunNum == 1) {
+                    pistol.shoot();
+                } else if (gunNum == 2) {
+                    shotgun.shoot();
+                } else if (gunNum == 3) {
+                    plasmaCannon.shoot();
+                }
+
                 shootReleased = false;
 
             }
