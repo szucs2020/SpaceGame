@@ -60,11 +60,13 @@ public class AIWeaponsController : MonoBehaviour {
 			if (burstTime > 0.3f && shotsFired < numberOfShots) {
 				shotsFired++;
 				burstTime = 0;
-
-				if (Hit.distance < 50) {
+			
+				if (Hit.distance < 100) {
 					AI.setbuttonPressedShoot (true);
+					AI.setbuttonReleasedShoot (false);
 				} else {
 					AI.setbuttonPressedShoot (false);
+					AI.setbuttonReleasedShoot (true);
 				}
 			} else {
 				AI.setbuttonPressedShoot (false);

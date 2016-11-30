@@ -27,6 +27,11 @@ public class AIController : MonoBehaviour {
 	// Movement State
 	private States state;
 
+	//Same Platform Movement
+	private bool inMotion;
+	private Vector3 moveTo;
+	private bool mightJump;
+
 	// Use this for initialization
 	void Start () {
 		pathFinder = this.GetComponent<AStar> ();
@@ -49,6 +54,10 @@ public class AIController : MonoBehaviour {
 
 		// Movement State
 		state = States.Follow;
+
+		//Same Platform Movement
+		inMotion = false;
+		mightJump = true;
 	}
 
 	private double timedelta = 0;
@@ -78,7 +87,7 @@ public class AIController : MonoBehaviour {
 		}
 
 		if (state == States.SamePlatform) {
-			//print ("SAMEPLATFORM");
+			print ("SAMEPLATFORM");
 
 			if (AI.currentPlatform != playerComponent.currentPlatform) {
 				state = States.Follow;
@@ -91,7 +100,34 @@ public class AIController : MonoBehaviour {
 			AI.setbuttonPressedJump (false);
 			AI.setbuttonReleasedJump (false);
 
-			float variablePos = Random.Range(-5f, 5f);
+			if (inMotion == false) {
+				int index = (int)Random.Range (0, 4.99f);
+
+				if (index < 2) {
+					moveTo = AI.currentPlatform.GetChild (index).position;
+				} else {
+					moveTo = new Vector3 (player.transform.position.x + Random.Range (-30f, 30f), player.transform.position.y, 0f);
+					mightJump = true;
+
+				}
+				inMotion = true;
+			} else {
+				
+				if (mightJump == true && (savedPlatform.getRight () - transform.position.x < 15f || transform.position.x - savedPlatform.getLeft () < 15f)) {
+					if (moveTo.x > savedPlatform.getRight () || moveTo.x < savedPlatform.getLeft ()) {
+						Move (moveTo, true);
+					}
+				} else {
+					Move (moveTo, false);
+				}
+
+				if (Mathf.Abs (transform.position.x - moveTo.x) < 2f) {
+					inMotion = false;
+					mightJump = false;
+				}
+			}
+
+			/*float variablePos = Random.Range(-5f, 5f);
 
 			if (transform.position.x - player.transform.position.x < 40f || jumpingToNextPlatform == true) {
 				if ((player.transform.position.x < transform.position.x && transform.position.x - player.transform.position.x < 50f) || jumpingToNextPlatform == true) {
@@ -117,10 +153,10 @@ public class AIController : MonoBehaviour {
 				}
 			} else {
 				Move (player.transform.position + new Vector3 (variablePos + 40f, -playerHeight + 3, 0), false); //Add a random x value so it doesn't always stay the same distance
-			}
+			}*/
 
 		} else if (state == States.Follow) {
-			//print ("FOLLOW");
+			print ("FOLLOW");
 			bool onNeighbourPlatform = false;
 
 			if (AI.currentPlatform == playerComponent.currentPlatform) {
@@ -166,10 +202,6 @@ public class AIController : MonoBehaviour {
 			} else { //target represents a node on the platform
 				if (!hasPath) {
 					path = pathFinder.FindShortestPath (playerComponent);
-					/*print ("Printing Path");
-					for (int i = 0; i < path.Count; i++) {
-						print (path[i]);
-					}*/
 					target = path [0];
 					path.RemoveAt (0);
 					hasPath = true;
@@ -182,13 +214,12 @@ public class AIController : MonoBehaviour {
 				} else if (target != null && target.transform.parent != AI.currentPlatform) {
 					WalkOnPlatform();
 				} else {
-					//ReCalcPath ();
 					AI.setMovementAxis (new Vector2 (0, 0));
 				}
 			}
 
 		} else if (state == States.Disregard) {
-
+			print ("DISREGARD");
 		}
 
 		/*if (AI.currentPlatform == playerComponent.currentPlatform) {
@@ -430,41 +461,4 @@ public class AIController : MonoBehaviour {
 	}
 
 	enum States {Follow, Disregard, SamePlatform};
-
-	void ReCalcPath() {
-
-		/*If path is empty if Player can't be found find closest nodes to AI and Player
-		 * and run AStar again*/
-		if (path.Count == 0 && player != null) {
-
-			Node closestToAI = null;
-			Node closestToPlayer = null;
-			float dist = float.MaxValue;
-			float smallestDist = float.MaxValue;
-
-			for (int i = 0; i < pathFinder.nodes.Count; i++) {
-				dist = (AI.transform.position - pathFinder.nodes[i].transform.position).sqrMagnitude;
-				if (dist < smallestDist) {
-					smallestDist = dist;
-					closestToAI = pathFinder.nodes [i];
-				}
-			} pathFinder.startNode = closestToAI;
-
-			dist = float.MaxValue;
-			smallestDist = float.MaxValue;
-
-			Vector3 playerPos = player.transform.position - new Vector3 (0, player.transform.position.y / 2, 0);
-			for (int i = 0; i < pathFinder.nodes.Count; i++) {
-				dist = (playerPos - pathFinder.nodes[i].transform.position).sqrMagnitude;
-				if (dist < smallestDist) {
-					smallestDist = dist;
-					closestToPlayer = pathFinder.nodes [i];
-				}
-			} pathFinder.target = closestToPlayer;
-
-			path = pathFinder.FindShortestPath (playerComponent);
-			target = path [0];
-			path.RemoveAt (0);
-		}
-	}
 }
