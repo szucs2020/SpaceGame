@@ -15,6 +15,7 @@ public class AIController : MonoBehaviour {
 	private GameObject player;
 	private Player playerComponent;
 	private Controller2D controller;
+	private PlayerFinder playerFinder;
 
 	private float playerHeight = 0f;
 	private float AIHeight = 0f;
@@ -31,7 +32,8 @@ public class AIController : MonoBehaviour {
 		AI = transform.GetComponent<Player> ();
 		AI.setIsAI (true);
 
-		player = GameObject.Find ("Player(Clone)");
+		playerFinder = transform.GetComponent<PlayerFinder> ();
+		player = playerFinder.getPlayer ().gameObject;
 
 		//Movement
 		playerComponent = player.GetComponent<Player> ();
@@ -48,7 +50,7 @@ public class AIController : MonoBehaviour {
 		if (player == null) {
 			AI.setMovementAxis (new Vector2 (0, 0));
 
-			player = GameObject.Find ("Player(Clone)");
+			player = playerFinder.getPlayer ();
 
 			if (player != null) {
 				playerComponent = player.GetComponent<Player> ();
