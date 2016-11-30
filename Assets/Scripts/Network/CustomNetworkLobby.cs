@@ -13,15 +13,21 @@ using UnityEngine.Networking.Match;
 public class CustomNetworkLobby : NetworkLobbyManager {
 
 	public float timeout;
-	public GameObject menu;
-	public GameObject load;
-	public GameObject lobby;
+	private GameObject menu;
+    private GameObject load;
+    private GameObject lobby;
 
 	private bool sneakyFlag = false;
     private NetworkClient localClient;
 	private bool connecting = false;
 	private float timeLeft;
 	private bool isHost = false;
+
+    void Start() {
+        menu = GameObject.Find("Menu");
+        load = menu.GetComponent<LobbyMenu>().load;
+        lobby = menu.GetComponent<LobbyMenu>().lobby;
+    }
 
     public void HostGame() {
         localClient = StartHost();
@@ -60,7 +66,6 @@ public class CustomNetworkLobby : NetworkLobbyManager {
 
     public void CloseConnection() {
         Shutdown();
-		SceneManager.LoadScene("Menu");
     }
 
     public override bool OnLobbyServerSceneLoadedForPlayer(GameObject lobbyPlayer, GameObject gamePlayer) {

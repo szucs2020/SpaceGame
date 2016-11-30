@@ -83,7 +83,6 @@ public class InputController : NetworkBehaviour {
             player.setbuttonHeldAimRight(Input.GetButton("AimRight"));
             player.setbuttonHeldAimUp(Input.GetButton("AimUp"));
             player.setbuttonHeldAimDown(Input.GetButton("AimDown"));
-
             player.setbuttonPressedShoot(Input.GetButtonDown("ShootButton"));
             player.setbuttonHeldShoot(Input.GetButton("ShootButton"));
             player.setbuttonPressedAction(Input.GetButton("Action"));

@@ -6,6 +6,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
 public class GameController : NetworkBehaviour {
 
@@ -18,7 +19,7 @@ public class GameController : NetworkBehaviour {
 
 	void Start () {
         settings = GetComponent<GameSettings>();
-        manager = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<CustomNetworkLobby>();
+        manager = GameObject.Find("NetworkManager").GetComponent<CustomNetworkLobby>();
     }
 
     public void StartGame() {
@@ -37,8 +38,16 @@ public class GameController : NetworkBehaviour {
     }
 
     public void EndGame() {
-		manager.StopHost();
+        manager.CloseConnection();
+        Destroy(manager.gameObject);
+        Destroy(settings.gameObject);
+        SceneManager.LoadScene("EndGame");
     }
+
+    //[Command]
+    //public void CmdEndGame(string level) {
+    //    NetworkManager.singleton.ServerChangeScene(level);
+    //}
 
     public void AttemptSpawnPlayer(NetworkConnection connectionToClient, short playerControllerID, int playerSlot, string playerName) {
 

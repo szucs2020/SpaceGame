@@ -192,7 +192,7 @@ public class AIPlayer : NetworkBehaviour {
 
         //shooting
         if (buttonPressedShoot) {
-            gun.shoot();
+            //gun.shoot();
         }
     }
 

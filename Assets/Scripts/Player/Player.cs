@@ -303,7 +303,13 @@ public class Player : NetworkBehaviour
         //shooting
         if (buttonPressedShoot)
         {
-            gun.shoot();
+            if (gunNum == 1) {
+                pistol.shoot();
+            } else if (gunNum == 2) {
+                shotgun.shoot();
+            } else if (gunNum == 3) {
+                plasmaCannon.shoot();
+            }
         }
 
     }
@@ -416,38 +422,25 @@ public class Player : NetworkBehaviour
     }
 
     [Command]
-    public void CmdChangeWeapon(int weaponNum)
-    {
+    public void CmdChangeWeapon(int weaponNum){
         gunNum = weaponNum;
 
         if (weaponNum == 1)
         {
-            gun = (Gun)pistol;
             animator.setPistol();
         }
         else if (weaponNum == 2)
         {
-            gun = (Gun)shotgun;
             animator.setShotgun();
         }
         else if (weaponNum == 3)
         {
-            gun = (Gun)plasmaCannon;
             animator.setCannon();
         }
     }
 
-    void ChangeWeapon(int weaponNum)
-    {
+    void ChangeWeapon(int weaponNum){
         gunNum = weaponNum;
-
-        if (weaponNum == 1) {
-            gun = (Gun)pistol;
-        } else if (weaponNum == 2) {
-            gun = (Gun)shotgun;
-        } else if (weaponNum == 3) {
-            gun = (Gun)plasmaCannon;
-        }
     }
 
 

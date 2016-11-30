@@ -17,11 +17,14 @@ public class LobbyMenu : MonoBehaviour {
 	public GameObject load;
 
     void Start() {
-            StartCoroutine("InitSelect");
+        Object g = Instantiate(Resources.Load("NetworkManager"), new Vector3(0, 0, 0), Quaternion.identity);
+        g.name = "NetworkManager";
+        lobbyManager = ((GameObject)g).GetComponent<CustomNetworkLobby>();
+        StartCoroutine("InitSelect");
     }
 
     void OnAwake() {
-            StartCoroutine("InitSelect");
+        StartCoroutine("InitSelect");
     }
 
     //Highlight first option for controller-friendly menu.

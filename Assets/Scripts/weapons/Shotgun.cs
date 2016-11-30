@@ -33,7 +33,7 @@ public class Shotgun : Gun
 
 
     [Command]
-    public override void CmdShoot(Vector2 direction, Vector2 position)
+    public void CmdShoot(Vector2 direction, Vector2 position)
     {
         GameObject[] lasers;
         lasers = generateShotgunShells(direction, position);
@@ -54,7 +54,7 @@ public class Shotgun : Gun
         }
     }
 
-    public override void shoot()
+    public void shoot()
     {
 
         if (canShoot())

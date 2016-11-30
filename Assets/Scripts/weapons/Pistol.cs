@@ -22,7 +22,7 @@ public class Pistol : Gun
 
 
     [Command]
-    public override void CmdShoot(Vector2 direction, Vector2 position)
+    public void CmdShoot(Vector2 direction, Vector2 position)
     {
         GameObject laser;
         laser = (GameObject)Instantiate(laserDot, position, Quaternion.identity);
@@ -31,7 +31,7 @@ public class Pistol : Gun
         NetworkServer.Spawn(laser.gameObject);
     }
 
-    public override void shoot()
+    public void shoot()
     {
         if (canShoot())
         {

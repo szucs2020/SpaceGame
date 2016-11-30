@@ -22,7 +22,7 @@ public class PlasmaCannon : Gun
 
 
     [Command]
-    public override void CmdShoot(Vector2 direction, Vector2 position)
+    public void CmdShoot(Vector2 direction, Vector2 position)
     {
         GameObject plasmaBall;
         plasmaBall = (GameObject)Instantiate(plasmaBallPrefab, position, Quaternion.identity);
@@ -32,7 +32,7 @@ public class PlasmaCannon : Gun
         NetworkServer.Spawn(plasmaBall);
     }
 
-    public override void shoot()
+    public void shoot()
     {
 
         if (canShoot())
