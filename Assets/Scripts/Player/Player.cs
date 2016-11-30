@@ -27,6 +27,9 @@ public class Player : NetworkBehaviour
     private Shotgun shotgun;
     private PlasmaCannon plasmaCannon;
     private SyncFlip syncFlip;
+
+    private bool charged = false;
+    private bool shootReleased = true;
     [SyncVar(hook="ChangeWeapon")]
     private int gunNum = 1;
     //  1  Pistol
@@ -57,6 +60,7 @@ public class Player : NetworkBehaviour
 
     private bool buttonPressedShoot;
     private bool buttonHeldShoot;
+    private bool buttonReleasedShoot;
 
     private bool buttonPressedAction;
 
@@ -121,6 +125,7 @@ public class Player : NetworkBehaviour
         buttonReleasedJump = false;
         buttonPressedShoot = false;
         buttonHeldShoot = false;
+        buttonReleasedShoot = true;
         buttonPressedAction = false;
 
         currentPlatform = null;
@@ -304,11 +309,33 @@ public class Player : NetworkBehaviour
         }
 
         //shooting
-        if (buttonPressedShoot)
+        if (buttonReleasedShoot) {
+            shootReleased = true;
+            charged = false;
+            StopCoroutine("chargeCannon");
+        }
+        else if (buttonHeldShoot && gunNum == 3)
+        {
+            StartCoroutine("chargeCannon");
+            if (charged && shootReleased) {
+                gun.shoot();
+                //charged = false;
+                shootReleased = false;
+
+            }
+        }
+        else if (buttonPressedShoot && gunNum != 3)
         {
             gun.shoot();
         }
 
+    }
+
+    IEnumerator chargeCannon()
+    {
+        yield return new WaitForSeconds(.5f);
+        charged = true;
+        
     }
 
     private void playerNameChanged(string pn) {
@@ -362,6 +389,10 @@ public class Player : NetworkBehaviour
     public void setbuttonHeldShoot(bool input)
     {
         this.buttonHeldShoot = input;
+    }
+    public void setbuttonReleasedShoot(bool input)
+    {
+        this.buttonReleasedShoot = input;
     }
 
     public void setbuttonPressedAction(bool input)
