@@ -146,42 +146,6 @@ public class AIController : MonoBehaviour {
 					}
 				}
 			} else { //target represents a node on the platform
-				/****/
-				/*****DO ONLY THE CURRENT PLATFORM IS NOT THE SAME AS THE SAVED PLATFORM
-				SO IT ONLY DOES IT WHEN THE AI MOVES TO A DIFFERENT PLATFORM SO THIS IS NOT
-				CALCULATED EVERY FRAME*****/
-				/*RaycastHit2D Hit;
-				Vector2 origin = new Vector2 (savedPlatform.nodes [0].position.x, savedPlatform.nodes [0].position.y + 4);
-				Vector3 direction3D = new Vector3 (player.transform.position.x, player.transform.position.y - 2, 0) - new Vector3 (origin.x, origin.y, 0);
-				Vector2 direction2D = new Vector2 (direction3D.x, direction3D.y);
-
-				int distance = 5;
-				float leftSide = savedPlatform.getLeft ();
-				float rightSide = savedPlatform.getRight ();
-				int i;
-				for (i = 0; leftSide + distance * i < rightSide; i++) {
-					origin = new Vector2 (leftSide + distance * i, savedPlatform.nodes [0].position.y + 4);
-					direction3D = new Vector3 (player.transform.position.x, player.transform.position.y - 2, 0) - new Vector3 (origin.x, origin.y, 0);
-					direction2D = new Vector2 (direction3D.x, direction3D.y);
-					float angle = 0;
-					float angle1 = 0;
-					float angle2 = 0;
-
-					Hit = Physics2D.Raycast (origin, direction2D);
-					//Debug.DrawRay (origin, (direction2D / direction2D.magnitude) * 50, Color.cyan, 0.5f);
-
-					if (Hit.transform != null && Hit.transform.name == "Player(Clone)") {
-						Debug.DrawRay (origin, direction2D, Color.cyan, 5f);
-						//print (Hit.transform.name + " " + i);
-					}
-				}*/
-
-
-
-
-				/****/
-
-
 				if (!hasPath) {
 					path = pathFinder.FindShortestPath (playerComponent);
 					/*print ("Printing Path");
@@ -199,35 +163,12 @@ public class AIController : MonoBehaviour {
 					WalkOnPlatform ();
 				} else if (target != null && target.transform.parent != AI.currentPlatform) {
 					WalkOnPlatform();
-					/*if (AI.currentPlatform.position.y > target.transform.parent.position.y) {
-						//Target Platform is below Current Platform
-						if (Mathf.Abs (AI.currentPlatform.position.x - target.transform.position.x) < 50f) {
-							//Can probably fall onto the platform
-							AI.setbuttonPressedJump (false);
-							AI.setbuttonReleasedJump (true);
-							Move (target.transform.position, true);
-						} else {
-							//Has to jump onto platform
-							Jump (target.transform.parent.position);
-						}
-					} else if(AI.currentPlatform.position.y < target.transform.parent.position.y) {
-						//Target Platform is above Current Platform
-						Jump (target.transform.parent.position);
-					} else {
-						//Platform is level but there is a gap
-						Jump (target.transform.parent.position);
-					}*/
 				} else {
 					//ReCalcPath ();
 					AI.setMovementAxis (new Vector2 (0, 0));
 				}
 			}
 		}
-
-		/*if (path.Count != 0) {
-			target = path [0];
-			path.RemoveAt (0);
-		}*/
 	}
 
 	private Transform findNearestPlatform (Platform platform, bool right) {

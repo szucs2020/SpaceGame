@@ -93,6 +93,9 @@ public class Player : NetworkBehaviour
         {
             return;
 		}
+		/*if (isAI) {
+			playerNameChanged ("AI");
+		}*/
 
         networkManager = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<NetworkManager>();
 

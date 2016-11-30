@@ -12,7 +12,6 @@ public class AIAimController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		print (gameObject.name);
 		AI = transform.GetComponent<Player> ();
 		Spawns = transform.Find ("spawn");
 

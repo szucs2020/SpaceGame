@@ -27,16 +27,18 @@ public class PlayerFinder : MonoBehaviour {
 
 			int i = int.MaxValue;
 			float minDist = float.MaxValue;
-			int index;
+			int index = 0;
 			for (i = 0; i < players.Length; i++) {
-				float curDist = (transform.position - players [i].transform.position).sqrMagnitude;
-				if (curDist < minDist) {
-					minDist = curDist;
-					index = i;
+				if (players [i] != gameObject) {
+					float curDist = (transform.position - players [i].transform.position).sqrMagnitude;
+					if (curDist < minDist) {
+						minDist = curDist;
+						index = i;
+					}
 				}
 			}
 			if (i != int.MaxValue) {
-				player = players [i];
+				player = players [index];
 			}
 		}
 	}
