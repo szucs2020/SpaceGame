@@ -6,6 +6,7 @@ public class AIAimController : MonoBehaviour {
 	private Transform Spawns;
 	private Transform player;
 	private SyncFlip AISync;
+	private PlayerFinder playerFinder;
 
 	private RaycastHit2D Hit;
 
@@ -14,9 +15,9 @@ public class AIAimController : MonoBehaviour {
 		AI = transform.GetComponent<Player> ();
 		Spawns = transform.Find ("spawn");
 
-		if (GameObject.Find ("Player(Clone)") != null) {
-			player = GameObject.Find ("Player(Clone)").transform;
-		}
+		playerFinder = transform.GetComponent<PlayerFinder> ();
+		player = playerFinder.getPlayerTransform ();
+
 		AISync = transform.GetComponent<SyncFlip> ();
 	}
 	
@@ -42,9 +43,8 @@ public class AIAimController : MonoBehaviour {
 	private Vector2 Left;
 	void Update () {
 		if (player == null) {
-			if (GameObject.Find ("Player(Clone)") != null) {
-				player = GameObject.Find ("Player(Clone)").transform;
-			}
+			print ("null");
+			player = playerFinder.getPlayerTransform ();
 			return;
 		}
 
@@ -265,7 +265,7 @@ public class AIAimController : MonoBehaviour {
 			origin = Spawns.GetChild (2).position;
 			hitDirection = Left;
 		}
-		Hit = Physics2D.Raycast (origin, hitDirection, 100);
+		Hit = Physics2D.Raycast (origin, hitDirection, 100f);
 
 		/*Vector3 dir3 = (player.position - new Vector3 (0, 5, 0)) - (transform.position - new Vector3 (0, 5, 0));
 		Vector2 dir2 = new Vector2 (dir3.x, dir3.y);

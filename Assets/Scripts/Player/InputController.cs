@@ -69,12 +69,14 @@ public class InputController : NetworkBehaviour {
 				player.setbuttonHeldShoot(true);
 				if (released){
 					player.setbuttonPressedShoot(true);
-					released = false;
+                    player.setbuttonReleasedShoot(false);
+                    released = false;
 				}
 
 			} else {
 				player.setbuttonHeldShoot(false);
 				player.setbuttonPressedShoot(false);
+                player.setbuttonReleasedShoot(true);
 				released = true;
 			}
 		} else {
@@ -85,6 +87,7 @@ public class InputController : NetworkBehaviour {
             player.setbuttonHeldAimDown(Input.GetButton("AimDown"));
             player.setbuttonPressedShoot(Input.GetButtonDown("ShootButton"));
             player.setbuttonHeldShoot(Input.GetButton("ShootButton"));
+            player.setbuttonReleasedShoot(Input.GetButtonUp("ShootButton"));
             player.setbuttonPressedAction(Input.GetButton("Action"));
         }
     }

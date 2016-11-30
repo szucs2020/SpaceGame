@@ -78,13 +78,13 @@ public class PlasmaBall : MonoBehaviour {
         {
             hurtSelf = true;
         }
-        else if (LayerMask.LayerToName(col.gameObject.layer) == "Player" && hurtSelf == true)
+        else if (LayerMask.LayerToName(col.gameObject.layer) == "Player")
         {
-            tAtDestroy = Time.time;
-            varDestroy = true;
-            Destroy(gameObject, destroyTime);
             if (col.gameObject.GetComponent<Player>().netId != bulletOwner.netId || hurtSelf == true)
             {
+                tAtDestroy = Time.time;
+                varDestroy = true;
+                Destroy(gameObject, destroyTime);
                 col.gameObject.GetComponent<Health>().Damage(10.0f);
             }
         }
