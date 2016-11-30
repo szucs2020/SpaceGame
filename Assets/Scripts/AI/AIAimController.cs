@@ -43,7 +43,6 @@ public class AIAimController : MonoBehaviour {
 	private Vector2 Left;
 	void Update () {
 		if (player == null) {
-			print (playerFinder);
 			player = playerFinder.getPlayerTransform ();
 			return;
 		}
