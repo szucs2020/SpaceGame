@@ -25,7 +25,7 @@ public class AIWeaponsController : MonoBehaviour {
 		Spawns = transform.Find ("spawn");
 
 		playerFinder = transform.GetComponent<PlayerFinder> ();
-		player = playerFinder.getPlayer ().transform;
+		player = playerFinder.getPlayerTransform ();
 		AISync = transform.GetComponent<SyncFlip> ();
 		//playerCollider = player.GetComponent<BoxCollider2D> ();
 
@@ -40,6 +40,10 @@ public class AIWeaponsController : MonoBehaviour {
 	private int shotsFired = 0;
 	private float burstTime = 0;
 	void Update () {
+		if (player == null) {
+			player = playerFinder.getPlayerTransform ();
+			return;
+		}
 		Hit = AimController.getHit ();
 
 		timePassed += Time.deltaTime;

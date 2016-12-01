@@ -14,8 +14,10 @@ public class AIController : MonoBehaviour {
 	private Player AI;
 	private GameObject player;
 	private Player playerComponent;
+	private Health playerHealth;
 	private Controller2D controller;
 	private PlayerFinder playerFinder;
+	private Health health;
 
 	private float playerHeight = 0f;
 	private float AIHeight = 0f;
@@ -37,12 +39,14 @@ public class AIController : MonoBehaviour {
 		pathFinder = this.GetComponent<AStar> ();
 		controller = this.GetComponent<Controller2D> ();
 
+		health = transform.GetComponent<Health> ();
 		AI = transform.GetComponent<Player> ();
 		AI.setIsAI (true);
 
 		playerFinder = transform.GetComponent<PlayerFinder> ();
 		player = playerFinder.getPlayer ().gameObject;
 
+		playerHealth = player.GetComponent<Health> ();
 		//Movement
 		playerComponent = player.GetComponent<Player> ();
 		playerHeight = player.GetComponent<BoxCollider2D> ().bounds.size.y;
@@ -70,6 +74,7 @@ public class AIController : MonoBehaviour {
 			if (player != null) {
 				playerComponent = player.GetComponent<Player> ();
 				playerHeight = player.GetComponent<BoxCollider2D> ().bounds.size.y;
+				playerHealth = player.GetComponent<Health> ();
 			}
 			return;
 		}
@@ -91,6 +96,8 @@ public class AIController : MonoBehaviour {
 
 			if (AI.currentPlatform != playerComponent.currentPlatform) {
 				state = States.Follow;
+			} else if(health.getHealth() < 30f && playerHealth.getHealth() > 50f) {
+				state = States.Disregard;
 			}
 
 			path.Clear ();
@@ -245,6 +252,10 @@ public class AIController : MonoBehaviour {
 
 		} else if (state == States.Disregard) {
 			print ("DISREGARD");
+			if (health.getHealth () > 70f) {
+				state = States.Follow;
+			}
+			AI.setMovementAxis (new Vector2 (0, 0));
 		}
 
 		/*if (AI.currentPlatform == playerComponent.currentPlatform) {

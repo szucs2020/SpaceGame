@@ -139,6 +139,13 @@ public class AIAimController : MonoBehaviour {
 				aimDown = false;
 			}
 
+			// If the AI gets close to a target it'll aim up
+			if (Mathf.Abs (transform.position.x - player.position.x) < 10f && Mathf.Abs (transform.position.y - player.position.y) < 3) {
+				vectorDirection = AimDirection.Right;
+				aimUp = false;
+				aimDown = false;
+			}
+
 			AI.setbuttonHeldAimRight (aimRight);
 			AI.setbuttonHeldAimLeft (aimLeft);
 			AI.setbuttonHeldAimUp (aimUp);
@@ -233,12 +240,19 @@ public class AIAimController : MonoBehaviour {
 				aimUp = false;
 				aimDown = false;
 			}
+
+			// If the AI gets close to a target it'll aim up
+			if (Mathf.Abs (transform.position.x - player.position.x) < 5f && Mathf.Abs (transform.position.y - player.position.y) < 3) {
+				vectorDirection = AimDirection.Left;
+				aimUp = false;
+				aimDown = false;
+			}
 			AI.setbuttonHeldAimRight (aimRight);
 			AI.setbuttonHeldAimLeft (aimLeft);
 			AI.setbuttonHeldAimUp (aimUp);
 			AI.setbuttonHeldAimDown (aimDown);
 		}
-		//{Up = 1, Down, UpRight, UpLeft, DownRight, DownLeft, Right, Left}
+
 		if (vectorDirection == AimDirection.Up) {
 			origin = Spawns.GetChild (4).position;
 			hitDirection = Up;

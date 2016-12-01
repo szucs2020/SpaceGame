@@ -82,4 +82,7 @@ public class Health : NetworkBehaviour {
             regen = false;
     }
 
+	public float getHealth() {
+		return health;
+	}
 }
