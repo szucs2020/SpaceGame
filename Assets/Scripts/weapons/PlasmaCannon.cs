@@ -22,8 +22,7 @@ public class PlasmaCannon : Gun
 
 
     [Command]
-    public void CmdShoot(Vector2 direction, Vector2 position)
-    {
+    public void CmdShoot(Vector2 direction, Vector2 position){
         GameObject plasmaBall;
         plasmaBall = (GameObject)Instantiate(plasmaBallPrefab, position, Quaternion.identity);
         plasmaBall.GetComponent<PlasmaBall>().bulletOwner = GetComponent<Player>();
@@ -32,11 +31,9 @@ public class PlasmaCannon : Gun
         NetworkServer.Spawn(plasmaBall);
     }
 
-    public void shoot()
-    {
+    public void shoot(){
 
-        if (canShoot())
-        {
+        if (canShoot()){
 
             spawn.localEulerAngles = new Vector3(0f, spawn.localEulerAngles.y, 0f);
 
@@ -44,12 +41,10 @@ public class PlasmaCannon : Gun
             Vector2 direction;
             Quaternion rotation = getSpawn().transform.rotation;
 
-            if (player.isFacingRight())
-            {
+            if (player.isFacingRight()){
+                rotation = Quaternion.Euler(rotation.eulerAngles.x, rotation.eulerAngles.y, rotation.eulerAngles.z * -1);
                 direction = rotation * Vector2.right;
-            }
-            else
-            {
+            } else {
                 rotation = Quaternion.Euler(rotation.eulerAngles.x, rotation.eulerAngles.y, rotation.eulerAngles.z * -1);
                 direction = rotation * Vector2.left;
             }

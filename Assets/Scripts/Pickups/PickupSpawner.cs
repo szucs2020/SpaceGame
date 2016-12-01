@@ -11,7 +11,7 @@ public class PickupSpawner : NetworkBehaviour {
 
     private bool[] canSpawn;
     private float[] spawnTimes;
-    public float waitBetweenSpawns = 5;
+    public float waitBetweenSpawns = 20;
 
 	// Use this for initialization
 	void Start () {
@@ -42,11 +42,11 @@ public class PickupSpawner : NetworkBehaviour {
 
     [Command]
     void CmdSpawnPickup(int rand, int i) {
-        if (rand < 35)
-        {
-            pickup = (GameObject)Instantiate(pistol, this.transform.GetChild(i).transform.position, Quaternion.identity);
-        }
-        else if (rand < 80)
+        //if (rand < 35)
+        //{
+        //    pickup = (GameObject)Instantiate(pistol, this.transform.GetChild(i).transform.position, Quaternion.identity);
+        //}
+        if (rand < 70)
         {
             pickup = (GameObject)Instantiate(shotgun, this.transform.GetChild(i).transform.position, Quaternion.identity);
         }

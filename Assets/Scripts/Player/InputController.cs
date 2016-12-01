@@ -38,7 +38,7 @@ public class InputController : NetworkBehaviour {
         player.setbuttonReleasedJump(Input.GetButtonUp("Jump"));
 
         //fix button pressed/held for the xbox controller
-        if (usingGamepad){
+        if (false){
 
             //gamepad right stick
             if (Input.GetAxisRaw("RightStickVertical") < -0.50) {
