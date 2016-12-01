@@ -96,12 +96,6 @@ public class CustomNetworkLobby : NetworkLobbyManager {
 		}
 	}
 
-    void OnLevelWasLoaded(int level) {
-        if (level == SceneManager.GetSceneByName("Main").buildIndex) {
-            GameObject.Find("GameSettings").GetComponent<GameController>().SpawnAllAI();
-        }
-    }
-
     public bool getIsHost() {
         return isHost;
     }
