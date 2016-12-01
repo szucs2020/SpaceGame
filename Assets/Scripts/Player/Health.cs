@@ -69,7 +69,7 @@ public class Health : NetworkBehaviour {
         GetComponent<Player>().Die();
 
         if (isAI) {
-            GameObject.Find("GameSettings").GetComponent<GameController>().SpawnAI(GetComponent<Player>().playerSlot, GetComponent<Player>().playerName);
+            GameObject.Find("GameSettings").GetComponent<GameController>().AttemptSpawnAI(GetComponent<Player>().playerSlot, GetComponent<Player>().playerName);
         } else {
             GameObject.Find("GameSettings").GetComponent<GameController>().AttemptSpawnPlayer(this.connectionToClient, this.playerControllerId, GetComponent<Player>().playerSlot, GetComponent<Player>().playerName);
         }
