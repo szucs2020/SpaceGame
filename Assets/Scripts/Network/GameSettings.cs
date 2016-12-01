@@ -42,6 +42,7 @@ public class GameSettings : NetworkBehaviour {
         //gameplay scene
 		if (level == SceneManager.GetSceneByName("Main").buildIndex) {
             GetComponent<GameController>().StartGame();
+            gameObject.GetComponent<GameController>().SpawnAllAI();
         }
     }
 

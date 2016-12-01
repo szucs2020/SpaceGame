@@ -48,18 +48,21 @@ public class LaserDot : Particle {
     }
 
     void OnTriggerEnter2D(Collider2D col) {
+
         if (LayerMask.LayerToName(col.gameObject.layer) == "Ground") {
             Destroy(gameObject);
             Instantiate(Resources.Load("Spark"), transform.position, Quaternion.identity);
-        } else if (LayerMask.LayerToName(col.gameObject.layer) == "Player") {
-            if (col.gameObject.GetComponent<Player>().netId != bulletOwner.netId || hurtSelf == true) {
+        } 
+        
+        else if (LayerMask.LayerToName(col.gameObject.layer) == "Player") {
+            if (hurtSelf == true || (bulletOwner != null && col.gameObject.GetComponent<Player>().netId != bulletOwner.netId)) {
                 col.gameObject.GetComponent<Health>().Damage(5.0f);
                 Instantiate(Resources.Load("Spark"), transform.position, Quaternion.identity);
                 Destroy(gameObject);
             }
         }
-        else if (col.gameObject.tag == "Portal")
-        {
+
+        else if (col.gameObject.tag == "Portal"){
             hurtSelf = true;
         }
     }

@@ -141,10 +141,6 @@ public class Player : NetworkBehaviour
         currentPosition = 2;
 
         audio = GameObject.Find("Audio").GetComponent<Audio2D>();
-        if (audio == null)
-        {
-            print("Audio null");
-        }
     }
 
     void Update()
