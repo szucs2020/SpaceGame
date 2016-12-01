@@ -13,8 +13,8 @@ public class Pickup : MonoBehaviour {
     private bool descend = true;
 
 	void Start () {
-	
-	}
+        Destroy(this.gameObject, 20f);
+    }
 	
 	void Update () {
         Vector3 pos = transform.position;
