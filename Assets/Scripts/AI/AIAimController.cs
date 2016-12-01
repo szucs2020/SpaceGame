@@ -52,16 +52,20 @@ public class AIAimController : MonoBehaviour {
 		}
 
 		if (player.position.x > transform.position.x && AISync.getFacingRight () == false) {
-			AI.setbuttonHeldAimRight (true);
+			aimLeft = false;
+			aimRight = true;
+			AI.setbuttonHeldAimLeft (aimLeft);
+			AI.setbuttonHeldAimRight (aimRight);
 			AI.setbuttonHeldAimUp (aimUp);
 			AI.setbuttonHeldAimDown (aimDown);
-			print ("FaceRight");
 			return;
 		} else if (player.position.x < transform.position.x && AISync.getFacingRight () == true) {
-			AI.setbuttonHeldAimLeft (true);
+			aimRight = false;
+			aimLeft = true;
+			AI.setbuttonHeldAimRight (aimRight);
+			AI.setbuttonHeldAimLeft (aimLeft);
 			AI.setbuttonHeldAimUp (aimUp);
 			AI.setbuttonHeldAimDown (aimDown);
-			print ("FaceLeft");
 			return;
 		}
 

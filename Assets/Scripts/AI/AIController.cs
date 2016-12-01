@@ -94,8 +94,6 @@ public class AIController : MonoBehaviour {
 		}
 
 		if (state == States.SamePlatform) {
-			print ("SAMEPLATFORM");
-
 			if (AI.currentPlatform != playerComponent.currentPlatform) {
 				state = States.Follow;
 			} /*else if(health.getHealth() < 30f && playerHealth.getHealth() > 50f) {
