@@ -96,9 +96,9 @@ public class AIController : MonoBehaviour {
 
 			if (AI.currentPlatform != playerComponent.currentPlatform) {
 				state = States.Follow;
-			} else if(health.getHealth() < 30f && playerHealth.getHealth() > 50f) {
+			} /*else if(health.getHealth() < 30f && playerHealth.getHealth() > 50f) {
 				state = States.Disregard;
-			}
+			}*/
 
 			path.Clear ();
 			hasPath = false;
@@ -126,7 +126,7 @@ public class AIController : MonoBehaviour {
 								}
 							}
 							if (moveTo.x == x) {
-								moveTo = AI.currentPlatform.GetChild (1).position;
+								moveTo = AI.currentPlatform.GetComponent<Platform> ().nodes [1].transform.position;
 							}
 						} else if (x < savedPlatform.getLeft ()) {
 							foreach (Transform neighbour in savedPlatform.neighbours) {
@@ -137,7 +137,7 @@ public class AIController : MonoBehaviour {
 								}
 							}
 							if (moveTo.x == x) {
-								moveTo = AI.currentPlatform.GetChild (0).position;
+								moveTo = AI.currentPlatform.GetComponent<Platform> ().nodes [0].transform.position;
 							}
 						}
 					}
@@ -212,11 +212,12 @@ public class AIController : MonoBehaviour {
 				AI.setbuttonPressedJump (false);
 				AI.setbuttonReleasedJump (false);
 
-				if (player.transform.position.x < transform.position.x && transform.position.x - player.transform.position.x < 30f) { //If within a certain distance stop
+				if (player.transform.position.x < transform.position.x && transform.position.x - player.transform.position.x < 30f && inMotion == false) { //If within a certain distance stop
 					AI.setMovementAxis (new Vector2 (0, 0));
-				} else if (player.transform.position.x > transform.position.x && player.transform.position.x - transform.position.x < 30f) { //If within a certain distance stop
+				} else if (player.transform.position.x > transform.position.x && player.transform.position.x - transform.position.x < 30f && inMotion == false) { //If within a certain distance stop
 					AI.setMovementAxis (new Vector2 (0, 0));
 				} else if (player.transform.position.x < transform.position.x && transform.position.x - player.transform.position.x > 30f) { //If not within a certain distance continue
+					inMotion = true;
 					//nodes[1] represents the second(last) node on platform
 					if (transform.position.x - savedPlatform.getLeft () < 15f) {
 						Move (playerComponent.currentPlatform.GetComponent<Platform> ().nodes [1].transform.position, true);
@@ -224,6 +225,7 @@ public class AIController : MonoBehaviour {
 						Move (playerComponent.currentPlatform.GetComponent<Platform> ().nodes [1].transform.position, false);
 					}
 				} else if (player.transform.position.x > transform.position.x && player.transform.position.x - transform.position.x > 30f) { //If not within a certain distance continue
+					inMotion = true;
 					//nodes[0] represents the first node on platform
 					if (savedPlatform.getRight () - transform.position.x < 15f) {
 						Move(playerComponent.currentPlatform.GetComponent<Platform> ().nodes[0].transform.position, true);
