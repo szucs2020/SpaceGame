@@ -13,6 +13,11 @@ public class Shotgun : Gun {
     void Start(){
         rpm = 450;
         bulletSpeed = 45;
+
+        clipSize = 6;
+        shots = 0;
+        reloadTime = 2;
+
         init();
         laserDot = Resources.Load("LaserDot") as GameObject;
     }
@@ -46,6 +51,13 @@ public class Shotgun : Gun {
     }
 
     public void shoot(){
+        if (reloading)
+        {
+            if (Time.time >= endReloadTime)
+            {
+                reloading = false;
+            }
+        }
 
         if (canShoot()){
 
@@ -68,6 +80,12 @@ public class Shotgun : Gun {
 
             //set next shot time
             nextShot = Time.time + timeBetweenShots;
+            shots++;
+        }
+
+        if (shots == clipSize)
+        {
+            reload();
         }
     }
 }

@@ -13,6 +13,10 @@ public class Gun : NetworkBehaviour {
 	//public variables
 	public float rpm;
 	public float bulletSpeed;
+    public int clipSize;
+    public float reloadTime;
+    protected float endReloadTime;
+    public int shots = 0;
 
 	//components
 	public Transform spawn;
@@ -26,6 +30,7 @@ public class Gun : NetworkBehaviour {
     protected float timeBetweenShots;
     protected float nextShot;
     protected float currentRange;
+    protected bool reloading = false;
 	
 	protected void init(){
 
@@ -49,11 +54,19 @@ public class Gun : NetworkBehaviour {
 
         bool canShoot = true;
 
-        if (Time.time < nextShot) {
+        if (Time.time < nextShot || reloading) {
             canShoot = false;
         }
 
         return canShoot;
+    }
+
+    public void reload() {
+        if (shots != 0) {
+            reloading = true;
+            endReloadTime = Time.time + reloadTime;
+            shots = 0;
+        }
     }
 }
 

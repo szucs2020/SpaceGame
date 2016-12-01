@@ -89,6 +89,7 @@ public class InputController : NetworkBehaviour {
             player.setbuttonHeldShoot(Input.GetButton("ShootButton"));
             player.setbuttonReleasedShoot(Input.GetButtonUp("ShootButton"));
             player.setbuttonPressedAction(Input.GetButtonDown("Action"));
+            player.setbuttonPressedReload(Input.GetButtonDown("Reload"));
         }
     }
 }

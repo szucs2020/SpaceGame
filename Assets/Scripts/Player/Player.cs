@@ -69,6 +69,7 @@ public class Player : NetworkBehaviour
     private bool buttonReleasedShoot;
 
     private bool buttonPressedAction;
+    private bool buttonPressedReload;
 
     private bool buttonHeldAimLeft;
     private bool buttonHeldAimRight;
@@ -136,6 +137,7 @@ public class Player : NetworkBehaviour
         buttonHeldShoot = false;
         buttonReleasedShoot = true;
         buttonPressedAction = false;
+        buttonPressedReload = false;
 
         currentPlatform = null;
         currentPosition = 2;
@@ -347,11 +349,23 @@ public class Player : NetworkBehaviour
             }
         }
 
+        if (buttonPressedReload) {
+            if (gunNum == 2)
+            {
+                shotgun.reload();
+            }
+            else if (gunNum == 3)
+            {
+                plasmaCannon.reload();
+            }
+        }
+
         if (buttonPressedAction) {
             GameObject droppedGun;
 
             if (gunNum == 2){
                 droppedGun = (GameObject)Instantiate(dropShotgun, this.transform.position, Quaternion.identity);
+                NetworkServer.Spawn(droppedGun);
                 Destroy(droppedGun, 3f);
                 Rigidbody2D rb = droppedGun.GetComponent<Rigidbody2D>();
                 rb.AddForce(Vector2.up*12, ForceMode2D.Impulse);
@@ -359,6 +373,7 @@ public class Player : NetworkBehaviour
             }
             else if (gunNum == 3) {
                 droppedGun = (GameObject)Instantiate(dropCannon, this.transform.position, Quaternion.identity);
+                NetworkServer.Spawn(droppedGun);
                 Destroy(droppedGun, 3f);
                 Rigidbody2D rb = droppedGun.GetComponent<Rigidbody2D>();
                 rb.AddForce(Vector2.up * 12, ForceMode2D.Impulse);
@@ -446,6 +461,11 @@ public class Player : NetworkBehaviour
     public void setbuttonPressedAction(bool input)
     {
         this.buttonPressedAction = input;
+    }
+
+    public void setbuttonPressedReload(bool input)
+    {
+        this.buttonPressedReload = input;
     }
 
     //right stick / right hand aiming

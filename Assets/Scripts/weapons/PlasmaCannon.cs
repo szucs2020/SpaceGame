@@ -16,6 +16,11 @@ public class PlasmaCannon : Gun
     {
         rpm = 450;
         bulletSpeed = 45;
+
+        clipSize = 2;
+        shots = 0;
+        reloadTime = 3;
+
         init();
         plasmaBallPrefab = Resources.Load("PlasmaBall") as GameObject;
     }
@@ -32,6 +37,13 @@ public class PlasmaCannon : Gun
     }
 
     public void shoot(){
+        if (reloading)
+        {
+            if (Time.time >= endReloadTime)
+            {
+                reloading = false;
+            }
+        }
 
         if (canShoot()){
 
@@ -54,6 +66,12 @@ public class PlasmaCannon : Gun
 
             //set next shot time
             nextShot = Time.time + timeBetweenShots;
+            shots++;
+        }
+
+        if (shots == clipSize)
+        {
+            reload();
         }
     }
 }
