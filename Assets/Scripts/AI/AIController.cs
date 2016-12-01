@@ -106,24 +106,49 @@ public class AIController : MonoBehaviour {
 				if (index < 2) {
 					moveTo = AI.currentPlatform.GetChild (index).position;
 				} else {
-					moveTo = new Vector3 (player.transform.position.x + Random.Range (-30f, 30f), player.transform.position.y, 0f);
-					mightJump = true;
+					float x = player.transform.position.x + Random.Range (-30f, 30f);
+					moveTo = new Vector3 (x, player.transform.position.y, 0f);
+
+					if (x > savedPlatform.getRight () || x < savedPlatform.getLeft ()) {
+						if (x > savedPlatform.getRight ()) {
+							foreach (Transform neighbour in savedPlatform.neighbours) {
+								if (savedPlatform.transform.position.x < neighbour.transform.position.x) {
+									moveTo = neighbour.GetComponent<Platform> ().nodes [0].position;
+									mightJump = true;
+									break;
+								}
+							}
+							if (moveTo.x == x) {
+								moveTo = AI.currentPlatform.GetChild (1).position;
+							}
+						} else if (x < savedPlatform.getLeft ()) {
+							foreach (Transform neighbour in savedPlatform.neighbours) {
+								if (savedPlatform.transform.position.x > neighbour.transform.position.x) {
+									moveTo = neighbour.GetComponent<Platform> ().nodes [1].position;
+									mightJump = true;
+									break;
+								}
+							}
+							if (moveTo.x == x) {
+								moveTo = AI.currentPlatform.GetChild (0).position;
+							}
+						}
+					}
 
 				}
 				inMotion = true;
 			} else {
-				
+				if (Mathf.Abs (transform.position.x - moveTo.x) < 2f) {
+					inMotion = false;
+					mightJump = false;
+				}
+
 				if (mightJump == true && (savedPlatform.getRight () - transform.position.x < 15f || transform.position.x - savedPlatform.getLeft () < 15f)) {
 					if (moveTo.x > savedPlatform.getRight () || moveTo.x < savedPlatform.getLeft ()) {
 						Move (moveTo, true);
 					}
 				} else {
 					Move (moveTo, false);
-				}
-
-				if (Mathf.Abs (transform.position.x - moveTo.x) < 2f) {
-					inMotion = false;
-					mightJump = false;
 				}
 			}
 
@@ -161,6 +186,7 @@ public class AIController : MonoBehaviour {
 
 			if (AI.currentPlatform == playerComponent.currentPlatform) {
 				state = States.SamePlatform;
+				inMotion = false;
 			}
 
 			foreach (Transform neighbourPlatform in AI.currentPlatform.GetComponent<Platform>().neighbours) {
@@ -172,13 +198,12 @@ public class AIController : MonoBehaviour {
 
 			//On a neighbouring platform to the Player
 			if (onNeighbourPlatform == true) {
+				print ("Neighbour");
 				path.Clear ();
 				hasPath = false;
 				target = null;
 				AI.setbuttonPressedJump (false);
 				AI.setbuttonReleasedJump (false);
-
-				float variablePos = Random.Range(-5f, 5f);
 
 				if (player.transform.position.x < transform.position.x && transform.position.x - player.transform.position.x < 30f) { //If within a certain distance stop
 					AI.setMovementAxis (new Vector2 (0, 0));
