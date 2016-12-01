@@ -44,20 +44,24 @@ public class AIAimController : MonoBehaviour {
 	void Update () {
 		if (player == null) {
 			player = playerFinder.getPlayerTransform ();
+			AI.setbuttonHeldAimRight (true);
+			AI.setbuttonHeldAimLeft (false);
+			AI.setbuttonHeldAimUp (false);
+			AI.setbuttonHeldAimDown (false);
 			return;
 		}
 
 		if (player.position.x > transform.position.x && AISync.getFacingRight () == false) {
 			AI.setbuttonHeldAimRight (true);
-			AI.setbuttonHeldAimLeft (false);
 			AI.setbuttonHeldAimUp (aimUp);
 			AI.setbuttonHeldAimDown (aimDown);
+			print ("FaceRight");
 			return;
 		} else if (player.position.x < transform.position.x && AISync.getFacingRight () == true) {
-			AI.setbuttonHeldAimRight (false);
 			AI.setbuttonHeldAimLeft (true);
 			AI.setbuttonHeldAimUp (aimUp);
 			AI.setbuttonHeldAimDown (aimDown);
+			print ("FaceLeft");
 			return;
 		}
 
@@ -141,6 +145,7 @@ public class AIAimController : MonoBehaviour {
 
 			// If the AI gets close to a target it'll aim up
 			if (Mathf.Abs (transform.position.x - player.position.x) < 10f && Mathf.Abs (transform.position.y - player.position.y) < 3) {
+				angle1 = angle3;
 				vectorDirection = AimDirection.Right;
 				aimUp = false;
 				aimDown = false;
@@ -243,6 +248,7 @@ public class AIAimController : MonoBehaviour {
 
 			// If the AI gets close to a target it'll aim up
 			if (Mathf.Abs (transform.position.x - player.position.x) < 5f && Mathf.Abs (transform.position.y - player.position.y) < 3) {
+				angle1 = angle3;
 				vectorDirection = AimDirection.Left;
 				aimUp = false;
 				aimDown = false;
@@ -408,7 +414,6 @@ public class AIAimController : MonoBehaviour {
 
 	public RaycastHit2D getHit() {
 		return Hit;
-		//return Hit;
 	}
 
 	enum AimDirection {Up = 1, Down, UpRight, UpLeft, DownRight, DownLeft, Right, Left};
