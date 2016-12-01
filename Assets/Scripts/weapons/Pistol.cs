@@ -31,22 +31,18 @@ public class Pistol : Gun
         NetworkServer.Spawn(laser.gameObject);
     }
 
-    public void shoot()
-    {
-        if (canShoot())
-        {
+    public void shoot(){
+        if (canShoot()){
             spawn.localEulerAngles = new Vector3(0f, spawn.localEulerAngles.y, 0f);
 
             Vector2 position = getSpawn().transform.position;
             Vector2 direction;
             Quaternion rotation = getSpawn().transform.rotation;
 
-            if (player.isFacingRight())
-            {
+            if (player.isFacingRight()) {
+                rotation = Quaternion.Euler(rotation.eulerAngles.x, rotation.eulerAngles.y, rotation.eulerAngles.z * -1);
                 direction = rotation * Vector2.right;
-            }
-            else
-            {
+            } else {
                 rotation = Quaternion.Euler(rotation.eulerAngles.x, rotation.eulerAngles.y, rotation.eulerAngles.z * -1);
                 direction = rotation * Vector2.left;
             }
