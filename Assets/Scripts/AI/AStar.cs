@@ -41,7 +41,9 @@ public class AStar : MonoBehaviour {
 				startNode = platform.nodes [1].GetComponent<Node> ();
 			}
 		} else {
-			startNode = GetClosestNodeToPlayer (transform);
+			if (transform != null) {
+				startNode = GetClosestNodeToPlayer (transform);
+			}
 		}
 	}
 
@@ -50,7 +52,13 @@ public class AStar : MonoBehaviour {
 		RaycastHit2D Hit;
 		Hit = Physics2D.Raycast (new Vector2(Spawns.GetChild(0).position.x, Spawns.GetChild(0).position.y - 4), (Spawns.GetChild(0).rotation * Vector2.right) * 50, 50f);
 
+		if (Hit.transform == null) {
+			return null;
+		}
 		Platform platform = Hit.transform.GetComponent<Platform> ();
+		if (platform == null) {
+			return null;
+		}
 		if (Mathf.Abs ((member.position - platform.nodes [0].transform.position).magnitude) < Mathf.Abs ((member.position - platform.nodes [1].transform.position).magnitude)) {
 			return platform.nodes [0].GetComponent<Node> ();
 		} else {
@@ -72,7 +80,13 @@ public class AStar : MonoBehaviour {
 				target = platform.nodes [1].GetComponent<Node> ();
 			}
 		} else {
-			target = GetClosestNodeToPlayer (targetPlayer.transform);
+			if (targetPlayer.transform != null) {
+				target = GetClosestNodeToPlayer (targetPlayer.transform);
+			}
+		}
+
+		if (target == null || startNode == null) {
+			return null;
 		}
 
 		//Initialize each node

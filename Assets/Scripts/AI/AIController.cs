@@ -53,8 +53,10 @@ public class AIController : MonoBehaviour {
 		AIHeight = transform.GetComponent<BoxCollider2D> ().bounds.size.y;
 
 		path = pathFinder.FindShortestPath (playerComponent);
-		target = path [0];
-		path.RemoveAt (0);
+		if (path != null) {
+			target = path [0];
+			path.RemoveAt (0);
+		}
 
 		// Movement State
 		state = States.Follow;
@@ -85,7 +87,7 @@ public class AIController : MonoBehaviour {
 
 		if (savedPlatform == null) {
 			savedPlatform = AI.currentPlatform.GetComponent<Platform> ();
-		} else if (savedPlatform.transform != AI.currentPlatform) {
+		} else if (AI.currentPlatform != null && savedPlatform.transform != AI.currentPlatform) {
 			savedPlatform = AI.currentPlatform.GetComponent<Platform> ();
 			jumpingToNextPlatform = false;
 			hasPath = false;
@@ -195,18 +197,22 @@ public class AIController : MonoBehaviour {
 				state = States.SamePlatform;
 				inMotion = false;
 			}
-
-			foreach (Transform neighbourPlatform in AI.currentPlatform.GetComponent<Platform>().neighbours) {
-				if (neighbourPlatform == playerComponent.currentPlatform) {
-					onNeighbourPlatform = true;
-					break;
+			if (AI.currentPlatform != null) {
+				print (AI.currentPlatform.name);
+				foreach (Transform neighbourPlatform in AI.currentPlatform.GetComponent<Platform>().neighbours) {
+					if (neighbourPlatform == playerComponent.currentPlatform) {
+						onNeighbourPlatform = true;
+						break;
+					}
 				}
 			}
 
 			//On a neighbouring platform to the Player
 			if (onNeighbourPlatform == true) {
 				print ("Neighbour");
-				path.Clear ();
+				if (path != null) {
+					path.Clear ();
+				}
 				hasPath = false;
 				target = null;
 				AI.setbuttonPressedJump (false);
@@ -236,9 +242,11 @@ public class AIController : MonoBehaviour {
 			} else { //target represents a node on the platform
 				if (!hasPath) {
 					path = pathFinder.FindShortestPath (playerComponent);
-					target = path [0];
-					path.RemoveAt (0);
-					hasPath = true;
+					if (path != null) {
+						target = path [0];
+						path.RemoveAt (0);
+						hasPath = true;
+					}
 				}
 
 				if (target != null && target.transform.parent == AI.currentPlatform) {
