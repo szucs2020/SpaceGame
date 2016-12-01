@@ -36,6 +36,12 @@ public class Player : NetworkBehaviour
     //  2  Shotgun
     //  3  PlasmaCannon
 
+    Pickup pickup;
+    private bool byPickup = false;
+    private bool pickedUp = false;
+    private GameObject dropShotgun;
+    private GameObject dropCannon;
+
     //movement variables
     float gravity;
     float maxJumpVelocity;
@@ -109,6 +115,9 @@ public class Player : NetworkBehaviour
         shotgun = GetComponent<Shotgun>();
         plasmaCannon = GetComponent<PlasmaCannon>();
         gun = (Gun)pistol;
+
+        dropShotgun = Resources.Load("DropShotgun") as GameObject;
+        dropCannon = Resources.Load("DropCannon") as GameObject;
 
         animator = GetComponent<AnimationManager>();
 
@@ -342,6 +351,36 @@ public class Player : NetworkBehaviour
             }
         }
 
+        if (buttonPressedAction) {
+            GameObject droppedGun;
+
+            if (gunNum == 2){
+                droppedGun = (GameObject)Instantiate(dropShotgun, this.transform.position, Quaternion.identity);
+                Destroy(droppedGun, 3f);
+                Rigidbody2D rb = droppedGun.GetComponent<Rigidbody2D>();
+                rb.AddForce(Vector2.up*12, ForceMode2D.Impulse);
+                rb.AddTorque(-500f);
+            }
+            else if (gunNum == 3) {
+                droppedGun = (GameObject)Instantiate(dropCannon, this.transform.position, Quaternion.identity);
+                Destroy(droppedGun, 3f);
+                Rigidbody2D rb = droppedGun.GetComponent<Rigidbody2D>();
+                rb.AddForce(Vector2.up * 12, ForceMode2D.Impulse);
+                rb.AddTorque(-500f);
+            }
+
+            if (byPickup)
+            {
+                CmdChangeWeapon(pickup.id);
+                pickup.destroy();
+                byPickup = false;
+            }
+            else if (!byPickup)
+            {
+                CmdChangeWeapon(1);
+            }
+        }
+
     }
 
     IEnumerator chargeCannon()
@@ -451,15 +490,20 @@ public class Player : NetworkBehaviour
         return this.isAI;
     }
 
-    void OnTriggerStay2D(Collider2D col)
+    void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.tag == "Pickup" && buttonPressedAction)
-        {
-            Pickup pickup = col.gameObject.GetComponent<Pickup>();
-            CmdChangeWeapon(pickup.id);
-            pickup.destroy();
+        if (col.tag == "Pickup") {
+            byPickup = true;
+            pickup = col.gameObject.GetComponent<Pickup>();
         }
 
+    }
+
+    void OnTriggerExit2D(Collider2D col) {
+        if (col.tag == "Pickup")
+        {
+            byPickup = false;
+        }
     }
 
     [Command]
