@@ -44,11 +44,6 @@ public class GameController : NetworkBehaviour {
         SceneManager.LoadScene("EndGame");
     }
 
-    //[Command]
-    //public void CmdEndGame(string level) {
-    //    NetworkManager.singleton.ServerChangeScene(level);
-    //}
-
     public void AttemptSpawnPlayer(NetworkConnection connectionToClient, short playerControllerID, int playerSlot, string playerName) {
 
         bool respawn = false;
@@ -91,11 +86,11 @@ public class GameController : NetworkBehaviour {
             return;
         }
         for (int i = 0; i < settings.NumberOfAIPlayers; i++) {
-            SpawnAI();
+            SpawnAI(0, "hello");
         }
     }
 
-    public void SpawnAI() {
+    public void SpawnAI(int slot, string name) {
         Transform t = manager.GetStartPosition();
         GameObject AI = (GameObject)GameObject.Instantiate(AIPrefab, t.position, Quaternion.identity);
         NetworkServer.Spawn(AI);

@@ -94,7 +94,7 @@ public class AIController : MonoBehaviour {
 		}
 
 		if (state == States.SamePlatform) {
-			print ("SAMEPLATFORM");
+			//print ("SAMEPLATFORM");
 
 			if (AI.currentPlatform != playerComponent.currentPlatform) {
 				state = States.Follow;
@@ -190,7 +190,7 @@ public class AIController : MonoBehaviour {
 			}*/
 
 		} else if (state == States.Follow) {
-			print ("FOLLOW");
+			//print ("FOLLOW");
 			bool onNeighbourPlatform = false;
 
 			if (AI.currentPlatform == playerComponent.currentPlatform) {
@@ -198,7 +198,7 @@ public class AIController : MonoBehaviour {
 				inMotion = false;
 			}
 			if (AI.currentPlatform != null) {
-				print (AI.currentPlatform.name);
+				//print (AI.currentPlatform.name);
 				foreach (Transform neighbourPlatform in AI.currentPlatform.GetComponent<Platform>().neighbours) {
 					if (neighbourPlatform == playerComponent.currentPlatform) {
 						onNeighbourPlatform = true;
@@ -209,7 +209,7 @@ public class AIController : MonoBehaviour {
 
 			//On a neighbouring platform to the Player
 			if (onNeighbourPlatform == true) {
-				print ("Neighbour");
+				//print ("Neighbour");
 				if (path != null) {
 					path.Clear ();
 				}
@@ -261,7 +261,7 @@ public class AIController : MonoBehaviour {
 			}
 
 		} else if (state == States.Disregard) {
-			print ("DISREGARD");
+			//print ("DISREGARD");
 			if (health.getHealth () > 70f) {
 				state = States.Follow;
 			}

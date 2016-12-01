@@ -46,36 +46,44 @@ public class AnimationManager : NetworkBehaviour {
 
         player = GetComponent<Player>();
 
-        //Search for the LobbyPlayer associated with this Player.
-        LobbyPlayer[] lobbyPlayers = Object.FindObjectsOfType<LobbyPlayer>();
-        foreach (LobbyPlayer lobbyPlayer in lobbyPlayers) {
-            if (lobbyPlayer.slot == player.playerSlot) {
-                myPlayer = lobbyPlayer;
-            }
-        }
+        //AI are always blue with a red head
+        if (player.getIsAI()) {
+            headAnimator.runtimeAnimatorController = redHead as RuntimeAnimatorController;
+            torsoAnimator.runtimeAnimatorController = blueTorso as RuntimeAnimatorController;
+            legsAnimator.runtimeAnimatorController = blueLegs as RuntimeAnimatorController;
+        } else {
 
-        if (myPlayer != null) {
-            switch (myPlayer.GetTeam()) {
-                case 0:
-                    headAnimator.runtimeAnimatorController = blueHead as RuntimeAnimatorController;
-                    torsoAnimator.runtimeAnimatorController = blueTorso as RuntimeAnimatorController; 
-                    legsAnimator.runtimeAnimatorController = blueLegs as RuntimeAnimatorController;
-                    break;
-                case 1:
-                    headAnimator.runtimeAnimatorController = redHead as RuntimeAnimatorController;
-                    torsoAnimator.runtimeAnimatorController = redTorso as RuntimeAnimatorController;
-                    legsAnimator.runtimeAnimatorController = redLegs as RuntimeAnimatorController;
-                    break;
-                case 2:
-                    headAnimator.runtimeAnimatorController = yellowHead as RuntimeAnimatorController;
-                    torsoAnimator.runtimeAnimatorController = yellowTorso as RuntimeAnimatorController;
-                    legsAnimator.runtimeAnimatorController = yellowLegs as RuntimeAnimatorController;
-                    break;
-                case 3:
-                    headAnimator.runtimeAnimatorController = greenHead as RuntimeAnimatorController;
-                    torsoAnimator.runtimeAnimatorController = greenTorso as RuntimeAnimatorController;
-                    legsAnimator.runtimeAnimatorController = greenLegs as RuntimeAnimatorController;
-                    break;
+            //Search for the LobbyPlayer associated with this Player.
+            LobbyPlayer[] lobbyPlayers = Object.FindObjectsOfType<LobbyPlayer>();
+            foreach (LobbyPlayer lobbyPlayer in lobbyPlayers) {
+                if (lobbyPlayer.slot == player.playerSlot) {
+                    myPlayer = lobbyPlayer;
+                }
+            }
+
+            if (myPlayer != null) {
+                switch (myPlayer.GetTeam()) {
+                    case 0:
+                        headAnimator.runtimeAnimatorController = blueHead as RuntimeAnimatorController;
+                        torsoAnimator.runtimeAnimatorController = blueTorso as RuntimeAnimatorController;
+                        legsAnimator.runtimeAnimatorController = blueLegs as RuntimeAnimatorController;
+                        break;
+                    case 1:
+                        headAnimator.runtimeAnimatorController = redHead as RuntimeAnimatorController;
+                        torsoAnimator.runtimeAnimatorController = redTorso as RuntimeAnimatorController;
+                        legsAnimator.runtimeAnimatorController = redLegs as RuntimeAnimatorController;
+                        break;
+                    case 2:
+                        headAnimator.runtimeAnimatorController = yellowHead as RuntimeAnimatorController;
+                        torsoAnimator.runtimeAnimatorController = yellowTorso as RuntimeAnimatorController;
+                        legsAnimator.runtimeAnimatorController = yellowLegs as RuntimeAnimatorController;
+                        break;
+                    case 3:
+                        headAnimator.runtimeAnimatorController = greenHead as RuntimeAnimatorController;
+                        torsoAnimator.runtimeAnimatorController = greenTorso as RuntimeAnimatorController;
+                        legsAnimator.runtimeAnimatorController = greenLegs as RuntimeAnimatorController;
+                        break;
+                }
             }
         }
 
