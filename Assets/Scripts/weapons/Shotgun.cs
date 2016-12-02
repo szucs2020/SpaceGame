@@ -49,8 +49,11 @@ public class Shotgun : Gun {
             NetworkServer.Spawn(lasers[i].gameObject);
         }
     }
+	
+    public bool shoot(){
 
-    public void shoot(){
+		bool shot = false;
+
         if (reloading)
         {
             if (Time.time >= endReloadTime)
@@ -81,12 +84,14 @@ public class Shotgun : Gun {
             //set next shot time
             nextShot = Time.time + timeBetweenShots;
             shots++;
+			shot = true;
         }
 
         if (shots == clipSize)
         {
             reload();
         }
+		return shot;
     }
 }
 
