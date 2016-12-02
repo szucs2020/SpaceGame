@@ -10,6 +10,13 @@ public class AIAimController : MonoBehaviour {
 
 	private RaycastHit2D Hit;
 
+	//Spawns
+	private Transform spawn0;
+	private Transform spawn1;
+	private Transform spawn2;
+	private Transform spawn3;
+	private Transform spawn4;
+
 	// Use this for initialization
 	void Start () {
 		AI = transform.GetComponent<Player> ();
@@ -19,6 +26,12 @@ public class AIAimController : MonoBehaviour {
 		player = playerFinder.getPlayerTransform ();
 
 		AISync = transform.GetComponent<SyncFlip> ();
+
+		spawn0 = Spawns.GetChild (0);
+		spawn1 = Spawns.GetChild (1);
+		spawn2 = Spawns.GetChild (2);
+		spawn3 = Spawns.GetChild (3);
+		spawn4 = Spawns.GetChild (4);
 	}
 	
 	// Update is called once per frame
@@ -73,35 +86,35 @@ public class AIAimController : MonoBehaviour {
 		Vector2 origin = new Vector2(0f, 0f);//Init
 		Vector2 hitDirection = new Vector2(0f, 0f);//Init
 		AimDirection vectorDirection = 0;
+		Quaternion rotation;
+		Vector2 direction;
 		if (AISync.getFacingRight () == true) {
-			Quaternion rotation;
-			Vector2 direction;
 			if (player.position.y >= transform.position.y) {
 				//Up
 				aimUp = true;
 				aimDown = false;
 
 				//Up
-				rotation = Spawns.GetChild (4).rotation;
+				rotation = spawn4.rotation;
 				rotation = Quaternion.Euler(rotation.eulerAngles.x, rotation.eulerAngles.y, rotation.eulerAngles.z * -1);
 				direction = rotation * Vector2.right;
-				Debug.DrawRay (new Vector2 (Spawns.GetChild (4).position.x, Spawns.GetChild (4).position.y), direction * 50, Color.yellow);
-				Debug.DrawRay (new Vector2 (Spawns.GetChild (4).position.x, Spawns.GetChild (4).position.y), (playerPos - Spawns.GetChild (4).position), Color.white);
-				vector1 = direction * 50/*(Spawns.GetChild (4).rotation * Vector2.right) * 50*//* - new Vector3 (Spawns.GetChild (4).position.x, Spawns.GetChild (4).position.y, 0)*/;
-				vector2 = (playerPos - Spawns.GetChild (4).position)/* - new Vector3 (Spawns.GetChild (4).position.x, Spawns.GetChild (4).position.y, 0)*/;
+				vector1 = direction * 50;
+				vector2 = (playerPos - spawn4.position);
 				angle1 = Vector3.Angle (vector1, vector2);
+				Debug.DrawRay (new Vector2 (spawn4.position.x, spawn4.position.y), vector1, Color.yellow);
+				Debug.DrawRay (new Vector2 (spawn4.position.x, spawn4.position.y), (playerPos - spawn4.position), Color.white);
 				angleEnum1 = AimDirection.Up;
 				Up = vector1;
 
 				//Up Right
-				rotation = Spawns.GetChild (3).rotation;
+				rotation = spawn3.rotation;
 				rotation = Quaternion.Euler(rotation.eulerAngles.x, rotation.eulerAngles.y, rotation.eulerAngles.z * -1);
 				direction = rotation * Vector2.right;
-				Debug.DrawRay (new Vector2 (Spawns.GetChild (3).position.x, Spawns.GetChild (3).position.y), direction * 50, Color.yellow);
-				Debug.DrawRay (new Vector2 (Spawns.GetChild (3).position.x, Spawns.GetChild (3).position.y), (playerPos - Spawns.GetChild (3).position), Color.white);
-				vector1 = direction * 50/*(Spawns.GetChild (3).rotation * Vector2.right) * 50*/ /*- new Vector3 (Spawns.GetChild (3).position.x, Spawns.GetChild (3).position.y, 0)*/;
-				vector2 = (playerPos - Spawns.GetChild (3).position)/* - new Vector3 (Spawns.GetChild (3).position.x, Spawns.GetChild (3).position.y, 0)*/;
+				vector1 = direction * 50;
+				vector2 = (playerPos - spawn3.position);
 				angle2 = Vector3.Angle (vector1, vector2);
+				Debug.DrawRay (new Vector2 (spawn3.position.x, spawn3.position.y), vector1, Color.yellow);
+				Debug.DrawRay (new Vector2 (spawn3.position.x, spawn3.position.y), (playerPos - spawn3.position), Color.white);
 				angleEnum2 = AimDirection.UpRight;
 				UpRight = vector1;
 			} else {
@@ -110,27 +123,27 @@ public class AIAimController : MonoBehaviour {
 				aimDown = true;
 
 				//Down
-				rotation = Spawns.GetChild (0).rotation;
+				rotation = spawn0.rotation;
 				rotation = Quaternion.Euler(rotation.eulerAngles.x, rotation.eulerAngles.y, rotation.eulerAngles.z * -1);
 				direction = rotation * Vector2.right;
-				Vector3 spawn0Pos = Spawns.GetChild (0).position - new Vector3 (0, 4, 0);
-				Debug.DrawRay (new Vector2 (Spawns.GetChild (0).position.x, Spawns.GetChild (0).position.y - 4), direction * 50, Color.yellow);
-				Debug.DrawRay (new Vector2 (Spawns.GetChild (0).position.x, Spawns.GetChild (0).position.y - 4), (playerPos - spawn0Pos), Color.white);
-				vector1 = direction * 50/*(Spawns.GetChild (0).rotation * Vector2.right) * 50*//* - new Vector3 (Spawns.GetChild (0).position.x, Spawns.GetChild (0).position.y - 4, 0)*/;
-				vector2 = (playerPos - spawn0Pos)/* - new Vector3 (Spawns.GetChild (0).position.x, Spawns.GetChild (0).position.y - 4, 0)*/;
+				Vector3 spawn0Pos = spawn0.position - new Vector3 (0, 4, 0);
+				vector1 = direction * 50;
+				vector2 = (playerPos - spawn0Pos);
 				angle1 = Vector3.Angle (vector1, vector2);
+				Debug.DrawRay (new Vector2 (spawn0.position.x, spawn0.position.y - 4), vector1, Color.yellow);
+				Debug.DrawRay (new Vector2 (spawn0.position.x, spawn0.position.y - 4), (playerPos - spawn0Pos), Color.white);
 				angleEnum1 = AimDirection.Down;
 				Down = vector1;
 
 				//Down Right
-				rotation = Spawns.GetChild (1).rotation;
+				rotation = spawn1.rotation;
 				rotation = Quaternion.Euler(rotation.eulerAngles.x, rotation.eulerAngles.y, rotation.eulerAngles.z * -1);
 				direction = rotation * Vector2.right;
-				Debug.DrawRay (new Vector2 (Spawns.GetChild (1).position.x, Spawns.GetChild (1).position.y), direction * 50, Color.yellow);
-				Debug.DrawRay (new Vector2 (Spawns.GetChild (1).position.x, Spawns.GetChild (1).position.y), (playerPos - Spawns.GetChild (1).position), Color.white);
-				vector1 = direction * 50/*(Spawns.GetChild (1).rotation * Vector2.right) * 50*//* - new Vector3 (Spawns.GetChild (1).position.x, Spawns.GetChild (1).position.y, 0)*/;
-				vector2 = (playerPos - Spawns.GetChild (1).position)/* - new Vector3 (Spawns.GetChild (1).position.x, Spawns.GetChild (1).position.y, 0)*/;
+				vector1 = direction * 50;
+				vector2 = (playerPos - spawn1.position);
 				angle2 = Vector3.Angle (vector1, vector2);
+				Debug.DrawRay (new Vector2 (spawn1.position.x, spawn1.position.y), vector1, Color.yellow);
+				Debug.DrawRay (new Vector2 (spawn1.position.x, spawn1.position.y), (playerPos - spawn1.position), Color.white);
 				angleEnum2 = AimDirection.DownRight;
 				DownRight = vector1;
 			}
@@ -147,10 +160,10 @@ public class AIAimController : MonoBehaviour {
 
 
 			//Right
-			Debug.DrawRay (new Vector2 (Spawns.GetChild (2).position.x, Spawns.GetChild (2).position.y), new Vector3 (50, 0, 0), Color.yellow);
-			Debug.DrawRay (new Vector2 (Spawns.GetChild (2).position.x, Spawns.GetChild (2).position.y), (playerPos - Spawns.GetChild (2).position), Color.white);
-			vector1 = new Vector3 (Spawns.GetChild (2).position.x + 50, Spawns.GetChild (2).position.y + 0, 0) - new Vector3 (Spawns.GetChild (2).position.x, Spawns.GetChild (2).position.y, 0);
-			vector2 = (playerPos - Spawns.GetChild (2).position)/* - new Vector3 (Spawns.GetChild (2).position.x, Spawns.GetChild (2).position.y, 0)*/;
+			Debug.DrawRay (new Vector2 (spawn2.position.x, spawn2.position.y), new Vector3 (50, 0, 0), Color.yellow);
+			Debug.DrawRay (new Vector2 (spawn2.position.x, spawn2.position.y), (playerPos - spawn2.position), Color.white);
+			vector1 = new Vector3 (spawn2.position.x + 50, spawn2.position.y + 0, 0) - new Vector3 (spawn2.position.x, spawn2.position.y, 0);
+			vector2 = (playerPos - spawn2.position);
 			angle3 = Vector3.Angle (vector1, vector2);
 			Right = vector1;
 
@@ -174,35 +187,32 @@ public class AIAimController : MonoBehaviour {
 			AI.setbuttonHeldAimUp (aimUp);
 			AI.setbuttonHeldAimDown (aimDown);
 		} else if (AISync.getFacingRight () == false) {
-			Quaternion rotation;
-			Vector2 direction;
-
 			if (player.position.y >= transform.position.y) {
 				//Up
 				aimUp = true;
 				aimDown = false;
 
 				//Up
-				rotation = Spawns.GetChild (4).rotation;
+				rotation = spawn4.rotation;
 				rotation = Quaternion.Euler(rotation.eulerAngles.x, rotation.eulerAngles.y, rotation.eulerAngles.z * -1);
 				direction = rotation * Vector2.left;
-				Debug.DrawRay (new Vector2(Spawns.GetChild(4).position.x, Spawns.GetChild(4).position.y), direction * 50, Color.yellow);
-				Debug.DrawRay (new Vector2 (Spawns.GetChild (4).position.x, Spawns.GetChild (4).position.y), (playerPos - Spawns.GetChild (4).position), Color.white);
-				vector1 = direction * 50/* - new Vector2(Spawns.GetChild(4).position.x, Spawns.GetChild(4).position.y)*/;
-				vector2 = (playerPos - Spawns.GetChild (4).position)/* - new Vector3 (Spawns.GetChild (4).position.x, Spawns.GetChild (4).position.y, 0)*/;
+				vector1 = direction * 50;
+				vector2 = (playerPos - spawn4.position);
 				angle1 = Vector3.Angle (vector1, vector2);
+				Debug.DrawRay (new Vector2(spawn4.position.x, spawn4.position.y), vector1, Color.yellow);
+				Debug.DrawRay (new Vector2 (spawn4.position.x, spawn4.position.y), (playerPos - spawn4.position), Color.white);
 				angleEnum1 = AimDirection.Up;
 				Up = vector1;
 
 				//Up Left
-				rotation = Spawns.GetChild (3).rotation;
+				rotation = spawn3.rotation;
 				rotation = Quaternion.Euler(rotation.eulerAngles.x, rotation.eulerAngles.y, rotation.eulerAngles.z * -1);
 				direction = rotation * Vector2.left;
-				Debug.DrawRay (new Vector2(Spawns.GetChild(3).position.x, Spawns.GetChild(3).position.y), direction * 50, Color.yellow);
-				Debug.DrawRay (new Vector2 (Spawns.GetChild (3).position.x, Spawns.GetChild (3).position.y), (playerPos - Spawns.GetChild (3).position), Color.white);
-				vector1 = direction * 50/* - new Vector2(Spawns.GetChild(3).position.x, Spawns.GetChild(3).position.y)*/;
-				vector2 = (playerPos - Spawns.GetChild (3).position)/* - new Vector3 (Spawns.GetChild (3).position.x, Spawns.GetChild (3).position.y, 0)*/;
+				vector1 = direction * 50;
+				vector2 = (playerPos - spawn3.position);
 				angle2 = Vector3.Angle (vector1, vector2);
+				Debug.DrawRay (new Vector2(spawn3.position.x, spawn3.position.y), vector1, Color.yellow);
+				Debug.DrawRay (new Vector2 (spawn3.position.x, spawn3.position.y), (playerPos - spawn3.position), Color.white);
 				angleEnum2 = AimDirection.UpLeft;
 				UpLeft = vector1;
 			} else {
@@ -211,27 +221,27 @@ public class AIAimController : MonoBehaviour {
 				aimDown = true;
 
 				//Down
-				Vector3 spawn0Pos = Spawns.GetChild (0).position - new Vector3 (0, 4, 0);
-				rotation = Spawns.GetChild (0).rotation;
+				Vector3 spawn0Pos = spawn0.position - new Vector3 (0, 4, 0);
+				rotation = spawn0.rotation;
 				rotation = Quaternion.Euler(rotation.eulerAngles.x, rotation.eulerAngles.y, rotation.eulerAngles.z * -1);
 				direction = rotation * Vector2.left;
-				Debug.DrawRay (new Vector2(Spawns.GetChild(0).position.x, Spawns.GetChild(0).position.y - 4), direction * 50, Color.yellow);
-				Debug.DrawRay (new Vector2 (Spawns.GetChild (0).position.x, Spawns.GetChild (0).position.y - 4), (playerPos - spawn0Pos), Color.white);
-				vector1 = direction * 50/* - new Vector2(Spawns.GetChild(0).position.x, Spawns.GetChild(0).position.y - 4)*/;
-				vector2 = (playerPos - spawn0Pos)/* - new Vector3 (Spawns.GetChild (0).position.x, Spawns.GetChild (0).position.y - 4, 0)*/;
+				vector1 = direction * 50;
+				vector2 = (playerPos - spawn0Pos);
 				angle1 = Vector3.Angle (vector1, vector2);
+				Debug.DrawRay (new Vector2(spawn0.position.x, spawn0.position.y - 4), vector1, Color.yellow);
+				Debug.DrawRay (new Vector2 (spawn0.position.x, spawn0.position.y - 4), (playerPos - spawn0Pos), Color.white);
 				angleEnum1 = AimDirection.Down;
 				Down = vector1;
 
 				//Down Left
-				rotation = Spawns.GetChild (1).rotation;
+				rotation = spawn1.rotation;
 				rotation = Quaternion.Euler(rotation.eulerAngles.x, rotation.eulerAngles.y, rotation.eulerAngles.z * -1);
 				direction = rotation * Vector2.left;
-				Debug.DrawRay (new Vector2(Spawns.GetChild(1).position.x, Spawns.GetChild(1).position.y), direction * 50, Color.yellow);
-				Debug.DrawRay (new Vector2 (Spawns.GetChild (1).position.x, Spawns.GetChild (1).position.y), (playerPos - Spawns.GetChild (1).position), Color.white);
-				vector1 = direction * 50/* - new Vector2(Spawns.GetChild(1).position.x, Spawns.GetChild(1).position.y)*/;
-				vector2 = (playerPos - Spawns.GetChild (1).position)/* - new Vector3 (Spawns.GetChild (1).position.x, Spawns.GetChild (1).position.y, 0)*/;
+				vector1 = direction * 50;
+				vector2 = (playerPos - spawn1.position);
 				angle2 = Vector3.Angle (vector1, vector2);
+				Debug.DrawRay (new Vector2(spawn1.position.x, spawn1.position.y), vector1, Color.yellow);
+				Debug.DrawRay (new Vector2 (spawn1.position.x, spawn1.position.y), (playerPos - spawn1.position), Color.white);
 				angleEnum2 = AimDirection.DownLeft;
 				DownLeft = vector1;
 			}
@@ -247,14 +257,14 @@ public class AIAimController : MonoBehaviour {
 			}
 
 			//Left
-			rotation = Spawns.GetChild (2).rotation;
+			rotation = spawn2.rotation;
 			rotation = Quaternion.Euler(rotation.eulerAngles.x, rotation.eulerAngles.y, rotation.eulerAngles.z * -1);
 			direction = rotation * Vector2.left;
-			Debug.DrawRay (new Vector2(Spawns.GetChild(2).position.x, Spawns.GetChild(2).position.y), direction * 50, Color.yellow);
-			Debug.DrawRay (new Vector2 (Spawns.GetChild (2).position.x, Spawns.GetChild (2).position.y), (playerPos - Spawns.GetChild (2).position), Color.white);
-			vector1 = direction * 50/* - new Vector2(Spawns.GetChild(2).position.x, Spawns.GetChild(2).position.y)*/;
-			vector2 = (playerPos - Spawns.GetChild (2).position)/* - new Vector3 (Spawns.GetChild (2).position.x, Spawns.GetChild (2).position.y, 0)*/;
+			vector1 = direction * 50;
+			vector2 = (playerPos - spawn2.position);
 			angle3 = Vector3.Angle (vector1, vector2);
+			Debug.DrawRay (new Vector2 (spawn2.position.x, spawn2.position.y), vector1, Color.yellow);
+			Debug.DrawRay (new Vector2 (spawn2.position.x, spawn2.position.y), (playerPos - spawn2.position), Color.white);
 			Left = vector1;
 
 			if (angle1 > angle3) {
@@ -278,28 +288,28 @@ public class AIAimController : MonoBehaviour {
 		}
 
 		if (vectorDirection == AimDirection.Up) {
-			origin = Spawns.GetChild (4).position;
+			origin = spawn4.position;
 			hitDirection = Up;
 		} else if (vectorDirection == AimDirection.Down) {
-			origin = Spawns.GetChild (0).position;
+			origin = spawn0.position;
 			hitDirection = Down;
 		} else if (vectorDirection == AimDirection.UpRight) {
-			origin = Spawns.GetChild (3).position;
+			origin = spawn3.position;
 			hitDirection = UpRight;
 		} else if (vectorDirection == AimDirection.UpLeft) {
-			origin = Spawns.GetChild (3).position;
+			origin = spawn3.position;
 			hitDirection = UpLeft;
 		} else if (vectorDirection == AimDirection.DownRight) {
-			origin = Spawns.GetChild (1).position;
+			origin = spawn1.position;
 			hitDirection = DownRight;
 		} else if (vectorDirection == AimDirection.DownLeft) {
-			origin = Spawns.GetChild (1).position;
+			origin = spawn1.position;
 			hitDirection = DownLeft;
 		} else if (vectorDirection == AimDirection.Right) {
-			origin = Spawns.GetChild (2).position;
+			origin = spawn2.position;
 			hitDirection = Right;
 		} else if (vectorDirection == AimDirection.Left) {
-			origin = Spawns.GetChild (2).position;
+			origin = spawn2.position;
 			hitDirection = Left;
 		}
 		Hit = Physics2D.Raycast (origin, hitDirection, 100f);
