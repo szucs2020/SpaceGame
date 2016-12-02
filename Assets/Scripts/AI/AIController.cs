@@ -94,6 +94,7 @@ public class AIController : MonoBehaviour {
 		}
 
 		if (state == States.SamePlatform) {
+			//print ("SamePlatform");
 			if (AI.currentPlatform != playerComponent.currentPlatform) {
 				state = States.Follow;
 			} /*else if(health.getHealth() < 30f && playerHealth.getHealth() > 50f) {
@@ -188,6 +189,7 @@ public class AIController : MonoBehaviour {
 			}*/
 
 		} else if (state == States.Follow) {
+			//print ("Follow");
 			bool onNeighbourPlatform = false;
 
 			if (AI.currentPlatform == playerComponent.currentPlatform) {
@@ -205,6 +207,7 @@ public class AIController : MonoBehaviour {
 
 			//On a neighbouring platform to the Player
 			if (onNeighbourPlatform == true) {
+				//print ("Neighbour");
 				if (path != null) {
 					path.Clear ();
 				}
@@ -235,7 +238,9 @@ public class AIController : MonoBehaviour {
 					}
 				}
 			} else { //target represents a node on the platform
+				//print("Not Neighbour");
 				if (!hasPath) {
+					//print ("Doesn't Have Path");
 					path = pathFinder.FindShortestPath (playerComponent);
 					if (path != null) {
 						target = path [0];
@@ -245,17 +250,21 @@ public class AIController : MonoBehaviour {
 				}
 
 				if (target != null && target.transform.parent == AI.currentPlatform) {
+					//print ("Target is on AI Platform");
 					AI.setbuttonPressedJump (false);
 					AI.setbuttonReleasedJump (false);
 					WalkOnPlatform ();
 				} else if (target != null && target.transform.parent != AI.currentPlatform) {
+					//print ("Target isn't on AI Platform");
 					WalkOnPlatform();
 				} else {
+					//print ("Else");
 					AI.setMovementAxis (new Vector2 (0, 0));
 				}
 			}
 
 		} else if (state == States.Disregard) {
+			print ("Disregard");
 			if (health.getHealth () > 70f) {
 				state = States.Follow;
 			}
@@ -399,17 +408,17 @@ public class AIController : MonoBehaviour {
 
 	private void WalkOnPlatform () {
 		if(Mathf.Abs(target.transform.position.x - transform.position.x) < 0.5f && target.transform.parent == AI.currentPlatform) {
-
 			if (path.Count == 0) {
+				//print ("0 Path Count");
 				target = null;
 				hasPath = false;
 				return;
 			}
-
 			target = path [0];
 			path.RemoveAt (0);
 		}
 
+		//print (target.name);
 		Move (target.transform.position, true);
 	}
 
