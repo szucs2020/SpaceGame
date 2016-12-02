@@ -86,7 +86,9 @@ public class AIController : MonoBehaviour {
 		}
 
 		if (savedPlatform == null) {
-			savedPlatform = AI.currentPlatform.GetComponent<Platform> ();
+			if (AI.currentPlatform != null) {
+				savedPlatform = AI.currentPlatform.GetComponent<Platform> ();
+			}
 		} else if (AI.currentPlatform != null && savedPlatform.transform != AI.currentPlatform) {
 			savedPlatform = AI.currentPlatform.GetComponent<Platform> ();
 			jumpingToNextPlatform = false;
