@@ -15,6 +15,7 @@ public class Audio2D : MonoBehaviour {
     private AudioClip audioJump;
     private AudioClip audioBoost;
     private AudioClip audioDie;
+    private AudioClip audioPistol;
 
     // Use this for initialization
     void Start () {
@@ -25,6 +26,11 @@ public class Audio2D : MonoBehaviour {
         audioJump = Resources.Load<AudioClip>("Audio/Player/Footstep1");
         audioBoost = Resources.Load<AudioClip>("Audio/Player/Boost");
         audioDie = Resources.Load<AudioClip>("Audio/Player/Wilhelm");
+        audioPistol = Resources.Load<AudioClip>("Audio/Weapons/PistolZap");
+    }
+
+    public void PlayShootPistol() {
+        audio2D.PlayOneShot(audioPistol, 0.7f);
     }
 
     public void playJump() {

@@ -104,9 +104,6 @@ public class Player : NetworkBehaviour
         {
             return;
 		}
-		/*if (isAI) {
-			playerNameChanged ("AI");
-		}*/
 
         networkManager = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<NetworkManager>();
 
@@ -126,8 +123,6 @@ public class Player : NetworkBehaviour
         gravity = (2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2);
         maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
         minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight);
-
-        //syncPlayer.CmdSyncJetpack(false);
 
         movementAxis = new Vector2(0, 0);
         buttonPressedJump = false;
@@ -156,60 +151,38 @@ public class Player : NetworkBehaviour
         Vector2 input = movementAxis;
         int wallDirX = (controller.collisions.left) ? -1 : 1;
 
-        //Aiming - TEMPORARY: This will probably change into a function that checks if the player is using controller or keyboard.
-        //Flip if J or L are pressed.
-        if (buttonHeldAimLeft)
-        {
-            if (facingRight)
-            {
+        if (buttonHeldAimLeft){
+            if (facingRight){
                 flip();
             }
         }
-        else if (buttonHeldAimRight)
-        {
-            if (!facingRight)
-            {
+        else if (buttonHeldAimRight){
+            if (!facingRight){
                 flip();
             }
         }
 
         //Change aiming angle based on which keys are pressed.
-        if (buttonHeldAimUp && buttonHeldAimLeft || buttonHeldAimUp && buttonHeldAimRight)
-        {
+        if (buttonHeldAimUp && buttonHeldAimLeft || buttonHeldAimUp && buttonHeldAimRight){
             animator.setUpTilt();
-        }
-        else if (buttonHeldAimDown && buttonHeldAimLeft || buttonHeldAimDown && buttonHeldAimRight)
-        {
+        } else if (buttonHeldAimDown && buttonHeldAimLeft || buttonHeldAimDown && buttonHeldAimRight){
             animator.setDownTilt();
-        }
-        else if (buttonHeldAimUp)
-        {
+        } else if (buttonHeldAimUp){
             animator.setUp();
-        }
-        else if (buttonHeldAimDown)
-        {
+        } else if (buttonHeldAimDown){
             animator.setDown();
-        }
-        else if (buttonHeldAimLeft || buttonHeldAimRight)
-        {
+        } else if (buttonHeldAimLeft || buttonHeldAimRight){
             animator.setNeutral();
-        }
-        else
-        {
+        } else{
             animator.setNeutral();
         }
 
         //switcing weapons
-        if (Input.GetKeyDown("1"))
-        {
+        if (Input.GetKeyDown("1")){
             CmdChangeWeapon(1);
-
-        } else if (Input.GetKeyDown("2"))
-        {
+        } else if (Input.GetKeyDown("2")){
             CmdChangeWeapon(2);
-        }
-        else if (Input.GetKeyDown("3"))
-        {
+        } else if (Input.GetKeyDown("3")){
             CmdChangeWeapon(3);
         }
 
@@ -327,20 +300,20 @@ public class Player : NetworkBehaviour
             if (charged && shootReleased) {
 
                 if (gunNum == 1) {
+                    audio.PlayShootPistol();
                     pistol.shoot();
                 } else if (gunNum == 2) {
                     shotgun.shoot();
                 } else if (gunNum == 3) {
                     plasmaCannon.shoot();
                 }
-
                 shootReleased = false;
-
             }
         }
         else if (buttonPressedShoot && gunNum != 3)
         {
             if (gunNum == 1) {
+                audio.PlayShootPistol();
                 pistol.shoot();
             } else if (gunNum == 2) {
                 shotgun.shoot();
@@ -394,11 +367,9 @@ public class Player : NetworkBehaviour
 
     }
 
-    IEnumerator chargeCannon()
-    {
+    IEnumerator chargeCannon(){
         yield return new WaitForSeconds(.5f);
         charged = true;
-        
     }
 
     private void playerNameChanged(string pn) {
@@ -406,60 +377,47 @@ public class Player : NetworkBehaviour
         Name.text = pn;
     }
 
-    public void Die()
-    {
+    public void Die(){
         //audio.playDie();
         Destroy(gameObject);
     }
 
     //flip 2D sprite
-    private void flip()
-    {
+    private void flip(){
         facingRight = !facingRight;
         syncFlip.CmdSyncFlip(facingRight);
     }
 
-    private void RemoveGun()
-    {
+    private void RemoveGun(){
         Destroy(GetComponent<Gun>());
     }
 
     //getters & setters
-    public bool isFacingRight()
-    {
+    public bool isFacingRight(){
         return facingRight;
     }
-    public void setMovementAxis(Vector2 input)
-    {
+    public void setMovementAxis(Vector2 input){
         this.movementAxis = input;
     }
-    public void setbuttonPressedJump(bool input)
-    {
+    public void setbuttonPressedJump(bool input){
         this.buttonPressedJump = input;
     }
-    public void setbuttonHeldJump(bool input)
-    {
+    public void setbuttonHeldJump(bool input){
         this.buttonHeldJump = input;
     }
-    public void setbuttonReleasedJump(bool input)
-    {
+    public void setbuttonReleasedJump(bool input){
         this.buttonReleasedJump = input;
     }
-    public void setbuttonPressedShoot(bool input)
-    {
+    public void setbuttonPressedShoot(bool input){
         this.buttonPressedShoot = input;
     }
-    public void setbuttonHeldShoot(bool input)
-    {
+    public void setbuttonHeldShoot(bool input){
         this.buttonHeldShoot = input;
     }
-    public void setbuttonReleasedShoot(bool input)
-    {
+    public void setbuttonReleasedShoot(bool input){
         this.buttonReleasedShoot = input;
     }
-
-    public void setbuttonPressedAction(bool input)
-    {
+    public void setbuttonPressedAction(bool input){
         this.buttonPressedAction = input;
     }
 
