@@ -170,6 +170,7 @@ GameObject:
   - component: {fileID: 11410174}
   - component: {fileID: 11425440}
   - component: {fileID: 11464208}
+  - component: {fileID: 114557460401347532}
   m_Layer: 9
   m_Name: Player
   m_TagString: player
@@ -614,6 +615,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rpm: 450
   bulletSpeed: 45
+  clipSize: 0
+  reloadTime: 0
+  shots: 0
   spawn: {fileID: 0}
 --- !u!114 &11425440
 MonoBehaviour:
@@ -628,6 +632,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rpm: 0
   bulletSpeed: 0
+  clipSize: 0
+  reloadTime: 0
+  shots: 0
   spawn: {fileID: 0}
 --- !u!114 &11427482
 MonoBehaviour:
@@ -756,6 +763,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rpm: 0
   bulletSpeed: 0
+  clipSize: 0
+  reloadTime: 0
+  shots: 0
   spawn: {fileID: 0}
 --- !u!114 &11464214
 MonoBehaviour:
@@ -1164,3 +1174,14 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 160062}
   m_IsPrefabParent: 1
+--- !u!114 &114557460401347532
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 160062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dff9933c6daf090488c7fae0f025d0ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
