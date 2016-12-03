@@ -252,7 +252,6 @@ public class AIController : MonoBehaviour {
 					AI.setMovementAxis (new Vector2 (0, 0));
 				}
 			}
-
 		} else if (state == States.Disregard) {
 			//print ("Disregard");
 			if (health.getHealth () > 70f) {

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class AIAimController : MonoBehaviour {
 	private Player AI;
@@ -313,6 +314,15 @@ public class AIAimController : MonoBehaviour {
 			hitDirection = Left;
 		}
 		Hit = Physics2D.Raycast (origin, hitDirection, 100f);
+
+		if (Hit.transform != null) {
+			if (String.Compare (Hit.transform.name, 0, "Cube", 0, 4) == 0) {
+				aimUp = false;
+				aimDown = false;
+				AI.setbuttonHeldAimUp (aimUp);
+				AI.setbuttonHeldAimDown (aimDown);
+			}
+		}
 	}
 
 	public RaycastHit2D getHit() {
