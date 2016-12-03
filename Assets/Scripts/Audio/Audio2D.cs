@@ -44,6 +44,7 @@ public class Audio2D : MonoBehaviour {
 	void Start(){
 		for (int i = 0; i < sounds.Length; i++){
 			GameObject g = new GameObject("Sound_" + i + "_" + sounds[i].name);
+			g.transform.SetParent(this.transform);
 			sounds[i].SetSource(g.AddComponent<AudioSource>());
 		}
 	}
