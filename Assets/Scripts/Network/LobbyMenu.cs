@@ -17,9 +17,16 @@ public class LobbyMenu : MonoBehaviour {
 	public GameObject load;
 
     void Start() {
+		
         Object g = Instantiate(Resources.Load("NetworkManager"), new Vector3(0, 0, 0), Quaternion.identity);
         g.name = "NetworkManager";
         lobbyManager = ((GameObject)g).GetComponent<CustomNetworkLobby>();
+
+		if (GameObject.Find("Audio") == null){
+			Object audio = Instantiate(Resources.Load("Audio/Audio"), new Vector3(0, 0, 0), Quaternion.identity);
+			audio.name = "Audio";
+		}
+
         StartCoroutine("InitSelect");
     }
 

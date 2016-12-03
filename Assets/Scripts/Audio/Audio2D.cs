@@ -6,43 +6,56 @@
 using UnityEngine;
 using System.Collections;
 
+[System.Serializable]
+public class Sound {
+
+	public string name;
+	public AudioClip clip;
+
+	[Range(0f, 1f)]
+	public float volume = 0.7f;
+	[Range(0.5f, 1.5f)]
+	public float pitch = 1.0f;
+
+	private AudioSource source;
+
+	public void SetSource(AudioSource src){
+		source = src;
+		source.clip = clip;
+	}
+
+	public void Play(){
+		source.volume = volume;
+		source.pitch = pitch;
+		source.Play();
+	}
+
+}
+
 public class Audio2D : MonoBehaviour {
 
-    //components
-    private AudioSource audio2D;
+	[SerializeField]
+	Sound[] sounds;
 
-    //audio clips
-    private AudioClip audioJump;
-    private AudioClip audioBoost;
-    private AudioClip audioDie;
-    private AudioClip audioPistol;
+	void Awake(){
+		DontDestroyOnLoad(this);
+	}
 
-    // Use this for initialization
-    void Start () {
+	void Start(){
+		for (int i = 0; i < sounds.Length; i++){
+			GameObject g = new GameObject("Sound_" + i + "_" + sounds[i].name);
+			g.transform.SetParent(this.transform);
+			sounds[i].SetSource(g.AddComponent<AudioSource>());
+		}
+	}
 
-        audio2D = GetComponent<AudioSource>();
-
-        //load clips
-        audioJump = Resources.Load<AudioClip>("Audio/Player/Footstep1");
-        audioBoost = Resources.Load<AudioClip>("Audio/Player/Boost");
-        audioDie = Resources.Load<AudioClip>("Audio/Player/Wilhelm");
-        audioPistol = Resources.Load<AudioClip>("Audio/Weapons/PistolZap");
-    }
-
-    public void PlayShootPistol() {
-        audio2D.PlayOneShot(audioPistol, 0.7f);
-    }
-
-    public void playJump() {
-        audio2D.PlayOneShot(audioJump, 0.7f);
-    }
-
-    public void playBoost() {
-        audio2D.PlayOneShot(audioBoost, 0.7f);
-    }
-
-    public void playDie() {
-        audio2D.PlayOneShot(audioDie, 0.7f);
-    }
-
+	public void PlaySound(string n){
+		for (int i = 0; i < sounds.Length; i++){
+			if (sounds[i].name == n){
+				sounds[i].Play();
+				return;
+			}
+		}
+		print("ERROR: No sound with name: " + n);
+	}
 }

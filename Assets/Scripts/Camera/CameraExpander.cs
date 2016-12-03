@@ -56,7 +56,7 @@ public class CameraExpander : MonoBehaviour {
         float highestY = float.MinValue;
         float camTarget;
 
-        players = GameObject.FindGameObjectsWithTag("player");
+		players = GameObject.FindGameObjectsWithTag("player");
 
         if (players != null && players.Length > 0) {
             for (int i = 0; i < players.Length; i++) {

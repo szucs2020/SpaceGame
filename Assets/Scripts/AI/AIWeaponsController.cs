@@ -7,27 +7,19 @@ using UnityEngine;
 using System.Collections;
 
 public class AIWeaponsController : MonoBehaviour {
-	private Pistol pistol;
 	private Player AI;
-	private Transform Spawns;
 	private Transform player;
-	private SyncFlip AISync;
 	private AIAimController AimController;
 	private PlayerFinder playerFinder;
-	//private BoxCollider2D playerCollider;
 
 	private RaycastHit2D Hit;
 
 	// Use this for initialization
 	void Start () {
-		pistol = transform.GetComponent<Pistol> ();
 		AI = transform.GetComponent<Player> ();
-		Spawns = transform.Find ("spawn");
 
 		playerFinder = transform.GetComponent<PlayerFinder> ();
 		player = playerFinder.getPlayerTransform ();
-		AISync = transform.GetComponent<SyncFlip> ();
-		//playerCollider = player.GetComponent<BoxCollider2D> ();
 
 		AimController = transform.GetComponent<AIAimController> ();
 	}

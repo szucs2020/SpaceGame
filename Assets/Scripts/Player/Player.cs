@@ -218,15 +218,14 @@ public class Player : NetworkBehaviour
             if (controller.collisions.below || jump == 1){
                 velocity.y = maxJumpVelocity;
                 decelerating = false;
-                if (jump == 1)
-                {
-                    audio.playBoost();
+                if (jump == 1){
+					audio.PlaySound("Boost");
                 }
             }
 
             if (jump == 0){
                 jump = 1;
-                audio.playJump();
+				audio.PlaySound("Jump");
             }
             else if (jump == 1){
                 jump = 2;
@@ -300,12 +299,17 @@ public class Player : NetworkBehaviour
             if (charged && shootReleased) {
 
                 if (gunNum == 1) {
-                    audio.PlayShootPistol();
-                    pistol.shoot();
+					if (pistol.shoot()){
+						audio.PlaySound("Pistol");
+					}
                 } else if (gunNum == 2) {
-                    shotgun.shoot();
+					if (shotgun.shoot()){
+						audio.PlaySound("Shotgun");
+					}
                 } else if (gunNum == 3) {
-                    plasmaCannon.shoot();
+					if (plasmaCannon.shoot()){
+						audio.PlaySound("Plasma");
+					}
                 }
                 shootReleased = false;
             }
@@ -313,12 +317,17 @@ public class Player : NetworkBehaviour
         else if (buttonPressedShoot && gunNum != 3)
         {
             if (gunNum == 1) {
-                audio.PlayShootPistol();
-                pistol.shoot();
+				if (pistol.shoot()){
+					audio.PlaySound("Pistol");
+				}
             } else if (gunNum == 2) {
-                shotgun.shoot();
+				if (shotgun.shoot()){
+					audio.PlaySound("Shotgun");
+				}
             } else if (gunNum == 3) {
-                plasmaCannon.shoot();
+				if (plasmaCannon.shoot()){
+					audio.PlaySound("Plasma");
+				}
             }
         }
 
@@ -378,7 +387,7 @@ public class Player : NetworkBehaviour
     }
 
     public void Die(){
-        //audio.playDie();
+		audio.PlaySound("Die");
         Destroy(gameObject);
     }
 

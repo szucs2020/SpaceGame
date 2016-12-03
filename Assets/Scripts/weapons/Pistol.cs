@@ -31,7 +31,10 @@ public class Pistol : Gun
         NetworkServer.Spawn(laser.gameObject);
     }
 
-    public void shoot(){
+    public bool shoot(){
+
+		bool shot = false;
+
         if (canShoot()){
             spawn.localEulerAngles = new Vector3(0f, spawn.localEulerAngles.y, 0f);
 
@@ -52,7 +55,9 @@ public class Pistol : Gun
 
             //set next shot time
             nextShot = Time.time + timeBetweenShots;
-        }
+			shot = true;
+		}
+		return shot;
     }
 }
 

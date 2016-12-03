@@ -69,9 +69,6 @@ public class AStar : MonoBehaviour {
 	public List<Node> FindShortestPath(Player targetPlayer) {
 		StartHelper ();
 
-		float shortestDist = float.MaxValue;
-		float dist = float.MaxValue;
-
 		if (targetPlayer.currentPlatform != null) {
 			Platform platform = targetPlayer.currentPlatform.GetComponent<Platform> ();
 			if (Mathf.Abs ((targetPlayer.transform.position - platform.nodes [0].transform.position).magnitude) < Mathf.Abs ((targetPlayer.transform.position - platform.nodes [1].transform.position).magnitude)) {

@@ -36,7 +36,10 @@ public class PlasmaCannon : Gun
         NetworkServer.Spawn(plasmaBall);
     }
 
-    public void shoot(){
+    public bool shoot(){
+
+		bool shot = false;
+
         if (reloading)
         {
             if (Time.time >= endReloadTime)
@@ -67,12 +70,14 @@ public class PlasmaCannon : Gun
             //set next shot time
             nextShot = Time.time + timeBetweenShots;
             shots++;
-        }
+			shot = true;
+		}
 
         if (shots == clipSize)
         {
             reload();
         }
+		return shot;
     }
 }
 
