@@ -209,7 +209,6 @@ public class AIController : MonoBehaviour {
 
 			//On a neighbouring platform to the Player
 			if (onNeighbourPlatform == true) {
-				//print ("Neighbour");
 				if (path != null) {
 					path.Clear ();
 				}
@@ -233,7 +232,7 @@ public class AIController : MonoBehaviour {
 				} else if (player.transform.position.x > transform.position.x && player.transform.position.x - transform.position.x > 30f) { //If not within a certain distance continue
 					inMotion = true;
 					//nodes[0] represents the first node on platform
-					if (savedPlatform.getRight () - transform.position.x < 15f) {
+					if (savedPlatform.getRight () - transform.position.x < 17f) {
 						Move(playerComponent.currentPlatform.GetComponent<Platform> ().nodes[0].transform.position, true);
 					} else {
 						Move(playerComponent.currentPlatform.GetComponent<Platform> ().nodes[0].transform.position, false);
@@ -242,7 +241,6 @@ public class AIController : MonoBehaviour {
 			} else { //target represents a node on the platform
 				//print("Not Neighbour");
 				if (!hasPath) {
-					//print ("Doesn't Have Path");
 					path = pathFinder.FindShortestPath (playerComponent);
 					if (path != null) {
 						target = path [0];
@@ -252,21 +250,18 @@ public class AIController : MonoBehaviour {
 				}
 
 				if (target != null && target.transform.parent == AI.currentPlatform) {
-					//print ("Target is on AI Platform");
 					AI.setbuttonPressedJump (false);
 					AI.setbuttonReleasedJump (false);
 					WalkOnPlatform ();
 				} else if (target != null && target.transform.parent != AI.currentPlatform) {
-					//print ("Target isn't on AI Platform");
 					WalkOnPlatform();
 				} else {
-					//print ("Else");
 					AI.setMovementAxis (new Vector2 (0, 0));
 				}
 			}
 
 		} else if (state == States.Disregard) {
-			print ("Disregard");
+			//print ("Disregard");
 			if (health.getHealth () > 70f) {
 				state = States.Follow;
 			}
@@ -435,7 +430,7 @@ public class AIController : MonoBehaviour {
 			AI.setMovementAxis (new Vector2 (1, 1));
 		}
 		//Nodes are 3 units above the ground but I added 4 because the player isn't always touching the ground
-		if ((canJump && Mathf.Abs (target.x - transform.position.x) < 25f && target.y > transform.position.y - AIHeight + 4)) {
+		if ((canJump && Mathf.Abs (target.x - transform.position.x) < 27f && target.y > transform.position.y - AIHeight + 4)) {
 			JumpingHelper ();
 		} else {
 			amountOfTimePassed = 0f;
