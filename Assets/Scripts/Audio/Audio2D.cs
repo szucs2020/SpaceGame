@@ -37,6 +37,10 @@ public class Audio2D : MonoBehaviour {
 	[SerializeField]
 	Sound[] sounds;
 
+	void Awake(){
+		DontDestroyOnLoad(this);
+	}
+
 	void Start(){
 		for (int i = 0; i < sounds.Length; i++){
 			GameObject g = new GameObject("Sound_" + i + "_" + sounds[i].name);
