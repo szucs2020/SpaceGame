@@ -15,16 +15,13 @@ public class AIController : MonoBehaviour {
 	private GameObject player;
 	private Player playerComponent;
 	private Health playerHealth;
-	private Controller2D controller;
 	private PlayerFinder playerFinder;
 	private Health health;
 
-	private float playerHeight = 0f;
 	private float AIHeight = 0f;
 	private bool hasPath = false;
 
 	private Platform savedPlatform = null;
-	private bool jumpingToNextPlatform = false;
 
 	// Movement State
 	private States state;
@@ -37,7 +34,6 @@ public class AIController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		pathFinder = this.GetComponent<AStar> ();
-		controller = this.GetComponent<Controller2D> ();
 
 		health = transform.GetComponent<Health> ();
 		AI = transform.GetComponent<Player> ();
@@ -49,7 +45,6 @@ public class AIController : MonoBehaviour {
 		playerHealth = player.GetComponent<Health> ();
 		//Movement
 		playerComponent = player.GetComponent<Player> ();
-		playerHeight = player.GetComponent<BoxCollider2D> ().bounds.size.y;
 		AIHeight = transform.GetComponent<BoxCollider2D> ().bounds.size.y;
 
 		path = pathFinder.FindShortestPath (playerComponent);
@@ -75,7 +70,6 @@ public class AIController : MonoBehaviour {
 
 			if (player != null) {
 				playerComponent = player.GetComponent<Player> ();
-				playerHeight = player.GetComponent<BoxCollider2D> ().bounds.size.y;
 				playerHealth = player.GetComponent<Health> ();
 			}
 			return;
@@ -91,7 +85,6 @@ public class AIController : MonoBehaviour {
 			}
 		} else if (AI.currentPlatform != null && savedPlatform.transform != AI.currentPlatform) {
 			savedPlatform = AI.currentPlatform.GetComponent<Platform> ();
-			jumpingToNextPlatform = false;
 			hasPath = false;
 		}
 
@@ -420,10 +413,6 @@ public class AIController : MonoBehaviour {
 	}
 
 	void Move(Vector3 target, bool canJump) {
-		if (target == null) {
-			return;
-		}
-
 		if (target.x < transform.position.x) {
             AI.setMovementAxis (new Vector2 (-1, 1));
 		} else {
@@ -437,7 +426,6 @@ public class AIController : MonoBehaviour {
 			firstStep = true;
 			secondStep = false;
 			thirdStep = false;
-			finalStep = false;
 			once = false;
 		}
 	}
@@ -446,7 +434,6 @@ public class AIController : MonoBehaviour {
 	private bool firstStep = true;
 	private bool secondStep = false;
 	private bool thirdStep = false;
-	private bool finalStep = false;
 	private bool once = false;
 	public void JumpingHelper() {
 		amountOfTimePassed += Time.deltaTime;
@@ -495,12 +482,10 @@ public class AIController : MonoBehaviour {
 			if (amountOfTimePassed > 0.7f) {
 				thirdStep = false;
 				once = false;
-				finalStep = true;
 			}
 		} else {
 			AI.setbuttonPressedJump (false);
 			AI.setbuttonReleasedJump (true);
-			finalStep = false;
 			firstStep = true;
 			amountOfTimePassed = 0f;
 		}
