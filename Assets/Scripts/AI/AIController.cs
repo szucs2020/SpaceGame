@@ -14,6 +14,7 @@ public class AIController : MonoBehaviour {
 	private Player AI;
 	private GameObject player;
 	private Player playerComponent;
+	private PathGen pathGen;
 	private Health playerHealth;
 	private PlayerFinder playerFinder;
 	private Health health;
@@ -46,6 +47,8 @@ public class AIController : MonoBehaviour {
 		//Movement
 		playerComponent = player.GetComponent<Player> ();
 		AIHeight = transform.GetComponent<BoxCollider2D> ().bounds.size.y;
+
+		pathGen = GameObject.Find ("Platforms").GetComponent<PathGen> ();
 
 		path = pathFinder.FindShortestPath (playerComponent);
 		if (path != null) {
@@ -92,9 +95,10 @@ public class AIController : MonoBehaviour {
 			//print ("SamePlatform");
 			if (AI.currentPlatform != playerComponent.currentPlatform) {
 				state = States.Follow;
-			} /*else if(health.getHealth() < 30f && playerHealth.getHealth() > 50f) {
+			} else if(health.getHealth() < 40f && playerHealth.getHealth() > 50f) {
 				state = States.Disregard;
-			}*/
+				hasPath = false;
+			}
 
 			path.Clear ();
 			hasPath = false;
@@ -254,10 +258,34 @@ public class AIController : MonoBehaviour {
 			}
 		} else if (state == States.Disregard) {
 			//print ("Disregard");
-			if (health.getHealth () > 70f) {
+			if (health.getHealth () > 80f) {
 				state = States.Follow;
 			}
 			AI.setMovementAxis (new Vector2 (0, 0));
+
+			if (!hasPath) {
+				int index;
+				do {
+					index = (int)Random.Range (0f, pathGen.NodesList.Count);
+				} while (pathGen.NodesList [index].parent.name == AI.currentPlatform.name);
+
+				path = pathFinder.FindShortestPath (pathGen.NodesList [index].GetComponent<Node> ());
+				if (path != null) {
+					target = path [0];
+					path.RemoveAt (0);
+					hasPath = true;
+				}
+			}
+
+			if (target != null && target.transform.parent == AI.currentPlatform) {
+				AI.setbuttonPressedJump (false);
+				AI.setbuttonReleasedJump (false);
+				WalkOnPlatform ();
+			} else if (target != null && target.transform.parent != AI.currentPlatform) {
+				WalkOnPlatform();
+			} else {
+				AI.setMovementAxis (new Vector2 (0, 0));
+			}
 		}
 
 		/*if (AI.currentPlatform == playerComponent.currentPlatform) {

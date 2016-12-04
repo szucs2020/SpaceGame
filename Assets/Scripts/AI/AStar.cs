@@ -21,13 +21,15 @@ public class AStar : MonoBehaviour {
 
 	private Player AI;
 
+	private List<GameObject> nodeList;
+
 	void Start() {
 		AI = transform.GetComponent<Player> ();
+
+		nodeList = GameObject.Find ("Platforms").GetComponent<PathGen> ().ObjectList;
 	}
 
 	private void StartHelper () {
-		List<GameObject> nodeList = GameObject.Find ("Platforms").GetComponent<PathGen> ().ObjectList;
-
 		nodes = new List<Node> ();
 		for (int i = 0; i < nodeList.Count; i++) {
 			nodes.Add (nodeList[i].GetComponent<Node> ());
@@ -66,6 +68,13 @@ public class AStar : MonoBehaviour {
 		}
 	}
 
+	public List<Node> FindShortestPath(Node targetNode) {
+		StartHelper ();
+		target = targetNode;
+
+		return RunAlgorithm ();
+	}
+
 	public List<Node> FindShortestPath(Player targetPlayer) {
 		StartHelper ();
 
@@ -82,6 +91,10 @@ public class AStar : MonoBehaviour {
 			}
 		}
 
+		return RunAlgorithm ();
+	}
+
+	private List<Node> RunAlgorithm() {
 		if (target == null || startNode == null) {
 			return null;
 		}
@@ -121,7 +134,7 @@ public class AStar : MonoBehaviour {
 			}
 
 			for (int i = 0; i < currentNode.neighbour.Count; i++) {
-				
+
 				if (currentNode.neighbour [i] != null) {
 
 					if (currentNode.neighbour [i].isTarget == true && currentNode.neighbour[i].getClosed() == false) {
@@ -172,7 +185,7 @@ public class AStar : MonoBehaviour {
 				}
 			}
 		}
-			
+
 		List<Node> backupPath = new List<Node> ();
 		backupPath.Insert (0, startNode);
 		return backupPath;

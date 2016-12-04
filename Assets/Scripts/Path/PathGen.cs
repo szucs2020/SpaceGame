@@ -12,6 +12,7 @@ public class PathGen : MonoBehaviour {
 
 	public GameObject Node;
 	public List<GameObject> ObjectList;
+	public List<Transform> NodesList;
 
 	// Use this for initialization
 	void Start () {
@@ -35,11 +36,13 @@ public class PathGen : MonoBehaviour {
 			instance.transform.SetParent (child, true);
 			platform.nodes.Add (instance.transform);
 			ObjectList.Add(instance);
+			NodesList.Add (instance.transform);
 
 			instance = (GameObject)Instantiate (Node, new Vector3 ((int)child.position.x - 10 + length / 2, (int)child.position.y + 3, 0), Quaternion.identity);
 			instance.transform.SetParent (child, true);
 			platform.nodes.Add (instance.transform);
 			ObjectList.Add(instance);
+			NodesList.Add (instance.transform);
 				//}
 
 				
