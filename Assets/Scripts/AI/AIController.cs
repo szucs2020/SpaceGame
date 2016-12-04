@@ -1,7 +1,7 @@
 ﻿/*
  * AIController.cs
  * Authors: Lajos Polya
- * Description: This script cotrolls how the AI moves around the map including jumping
+ * Description: This script controls how the AI moves around the map including jumping
  */
 using UnityEngine;
 using System.Collections;
@@ -95,7 +95,7 @@ public class AIController : MonoBehaviour {
 			//print ("SamePlatform");
 			if (AI.currentPlatform != playerComponent.currentPlatform) {
 				state = States.Follow;
-			} else if(health.getHealth() < 40f && playerHealth.getHealth() > 50f) {
+			} else if (health.getHealth () < 40f && playerHealth.getHealth () > 50f) {
 				state = States.Disregard;
 				hasPath = false;
 			}
@@ -108,7 +108,7 @@ public class AIController : MonoBehaviour {
 			AI.setbuttonReleasedJump (false);
 
 			if (inMotion == false) {
-				int index = (int)Random.Range (0, 4.99f);
+				int index = (int)Random.Range (0, 6f);
 
 				if (index < 2) {
 					moveTo = AI.currentPlatform.GetChild (index).position;
@@ -116,9 +116,13 @@ public class AIController : MonoBehaviour {
 					float x = player.transform.position.x + Random.Range (-30f, 30f);
 					moveTo = new Vector3 (x, player.transform.position.y, 0f);
 
-					if (x > savedPlatform.getRight () || x < savedPlatform.getLeft ()) {
-						if (x > savedPlatform.getRight ()) {
+					/* x > savedPlatform.getRight () || x < savedPlatform.getLeft () could not be used because
+					 * portals exist between the edge of the platform and the node corresponding to that edge of the platform
+					 */
+					if (x > savedPlatform.nodes[1].position.x || x < savedPlatform.nodes[0].position.x) {
+						if (x > savedPlatform.nodes[1].position.x) {
 							foreach (Transform neighbour in savedPlatform.neighbours) {
+								//Saved Platform to the right of neighbour Platform
 								if (savedPlatform.transform.position.x < neighbour.transform.position.x) {
 									moveTo = neighbour.GetComponent<Platform> ().nodes [0].position;
 									mightJump = true;
@@ -126,10 +130,11 @@ public class AIController : MonoBehaviour {
 								}
 							}
 							if (moveTo.x == x) {
-								moveTo = AI.currentPlatform.GetComponent<Platform> ().nodes [1].transform.position;
+								moveTo = new Vector3 (savedPlatform.transform.position.x, savedPlatform.transform.position.y, 0f);
 							}
-						} else if (x < savedPlatform.getLeft ()) {
+						} else if (x < savedPlatform.nodes[0].position.x) {
 							foreach (Transform neighbour in savedPlatform.neighbours) {
+								//Saved Platform to the right of neighbour Platform
 								if (savedPlatform.transform.position.x > neighbour.transform.position.x) {
 									moveTo = neighbour.GetComponent<Platform> ().nodes [1].position;
 									mightJump = true;
@@ -137,7 +142,7 @@ public class AIController : MonoBehaviour {
 								}
 							}
 							if (moveTo.x == x) {
-								moveTo = AI.currentPlatform.GetComponent<Platform> ().nodes [0].transform.position;
+								moveTo = new Vector3 (savedPlatform.transform.position.x, savedPlatform.transform.position.y, 0f);
 							}
 						}
 					}
@@ -195,7 +200,7 @@ public class AIController : MonoBehaviour {
 				state = States.SamePlatform;
 				inMotion = false;
 			}
-			if (AI.currentPlatform != null) {
+			/*if (AI.currentPlatform != null) {
 				Platform neighboursPlatform = AI.currentPlatform.GetComponent<Platform> ();
 				if (neighboursPlatform != null) {
 					foreach (Transform neighbourPlatform in neighboursPlatform.neighbours) {
@@ -203,6 +208,14 @@ public class AIController : MonoBehaviour {
 							onNeighbourPlatform = true;
 							break;
 						}
+					}
+				}
+			}*/
+			if (savedPlatform != null) {
+				foreach (Transform neighbourPlatform in savedPlatform.neighbours) {
+					if (neighbourPlatform == playerComponent.currentPlatform) {
+						onNeighbourPlatform = true;
+						break;
 					}
 				}
 			}
@@ -233,9 +246,9 @@ public class AIController : MonoBehaviour {
 					inMotion = true;
 					//nodes[0] represents the first node on platform
 					if (savedPlatform.getRight () - transform.position.x < 17f) {
-						Move(playerComponent.currentPlatform.GetComponent<Platform> ().nodes[0].transform.position, true);
+						Move (playerComponent.currentPlatform.GetComponent<Platform> ().nodes [0].transform.position, true);
 					} else {
-						Move(playerComponent.currentPlatform.GetComponent<Platform> ().nodes[0].transform.position, false);
+						Move (playerComponent.currentPlatform.GetComponent<Platform> ().nodes [0].transform.position, false);
 					}
 				}
 			} else { //target represents a node on the platform
@@ -254,14 +267,14 @@ public class AIController : MonoBehaviour {
 					AI.setbuttonReleasedJump (false);
 					WalkOnPlatform ();
 				} else if (target != null && target.transform.parent != AI.currentPlatform) {
-					WalkOnPlatform();
+					WalkOnPlatform ();
 				} else {
 					AI.setMovementAxis (new Vector2 (0, 0));
 				}
 			}
 		} else if (state == States.Disregard) {
 			//print ("Disregard");
-			if (health.getHealth () > 80f) {
+			if (health.getHealth () > 90f) {
 				state = States.Follow;
 			}
 			AI.setMovementAxis (new Vector2 (0, 0));
@@ -285,7 +298,7 @@ public class AIController : MonoBehaviour {
 				AI.setbuttonReleasedJump (false);
 				WalkOnPlatform ();
 			} else if (target != null && target.transform.parent != AI.currentPlatform) {
-				WalkOnPlatform();
+				WalkOnPlatform ();
 			} else {
 				AI.setMovementAxis (new Vector2 (0, 0));
 			}
@@ -429,7 +442,6 @@ public class AIController : MonoBehaviour {
 	private void WalkOnPlatform () {
 		if(Mathf.Abs(target.transform.position.x - transform.position.x) < 0.5f && target.transform.parent == AI.currentPlatform) {
 			if (path.Count == 0) {
-				//print ("0 Path Count");
 				target = null;
 				hasPath = false;
 				return;

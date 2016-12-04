@@ -35,8 +35,11 @@ public class AStar : MonoBehaviour {
 			nodes.Add (nodeList[i].GetComponent<Node> ());
 		}
 
+		Platform platform = null;
 		if (AI.currentPlatform != null) {
-			Platform platform = AI.currentPlatform.GetComponent<Platform> ();
+			platform = AI.currentPlatform.GetComponent<Platform> ();
+		}
+		if (AI.currentPlatform != null && platform != null) {
 			if (Mathf.Abs ((transform.position - platform.nodes [0].transform.position).magnitude) < Mathf.Abs ((transform.position - platform.nodes [1].transform.position).magnitude)) {
 				startNode = platform.nodes [0].GetComponent<Node> ();
 			} else {
