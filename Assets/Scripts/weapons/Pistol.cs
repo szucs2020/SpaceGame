@@ -8,12 +8,12 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
 
-public class Pistol : Gun
-{
+public class Pistol : Gun{
+	
     private GameObject laserDot;
+	private Audio2D audio = Audio2D.singleton;
 
-    void Start()
-    {
+    void Start(){
         rpm = 450;
         bulletSpeed = 45;
         init();
@@ -22,8 +22,7 @@ public class Pistol : Gun
 
 
     [Command]
-    public void CmdShoot(Vector2 direction, Vector2 position)
-    {
+    public void CmdShoot(Vector2 direction, Vector2 position){
         GameObject laser;
         laser = (GameObject)Instantiate(laserDot, position, Quaternion.identity);
         laser.GetComponent<LaserDot>().bulletOwner = GetComponent<Player>();
@@ -56,6 +55,8 @@ public class Pistol : Gun
             //set next shot time
             nextShot = Time.time + timeBetweenShots;
 			shot = true;
+
+			audio.PlaySound("Pistol");
 		}
 		return shot;
     }

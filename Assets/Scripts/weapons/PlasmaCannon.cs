@@ -8,12 +8,11 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
 
-public class PlasmaCannon : Gun
-{
+public class PlasmaCannon : Gun{
     private GameObject plasmaBallPrefab;
+	private Audio2D audio = Audio2D.singleton;
 
-    void Start()
-    {
+    void Start(){
         rpm = 450;
         bulletSpeed = 45;
 
@@ -40,10 +39,8 @@ public class PlasmaCannon : Gun
 
 		bool shot = false;
 
-        if (reloading)
-        {
-            if (Time.time >= endReloadTime)
-            {
+        if (reloading){
+            if (Time.time >= endReloadTime){
                 reloading = false;
             }
         }
@@ -73,8 +70,7 @@ public class PlasmaCannon : Gun
 			shot = true;
 		}
 
-        if (shots == clipSize)
-        {
+        if (shots == clipSize){
             reload();
         }
 		return shot;

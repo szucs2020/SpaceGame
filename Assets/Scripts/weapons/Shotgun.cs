@@ -8,7 +8,9 @@ using System.Collections;
 using UnityEngine.Networking;
 
 public class Shotgun : Gun {
+	
     private GameObject laserDot;
+	private Audio2D audio = Audio2D.singleton;
 
     void Start(){
         rpm = 450;
@@ -85,6 +87,8 @@ public class Shotgun : Gun {
             nextShot = Time.time + timeBetweenShots;
             shots++;
 			shot = true;
+
+			audio.PlaySound("Shotgun");
         }
 
         if (shots == clipSize)

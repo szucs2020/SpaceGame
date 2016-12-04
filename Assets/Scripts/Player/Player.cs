@@ -28,6 +28,7 @@ public class Player : NetworkBehaviour
     private PlasmaCannon plasmaCannon;
     private SyncFlip syncFlip;
 
+	private bool charging = false;
     private bool charged = false;
     private bool shootReleased = true;
     [SyncVar(hook="ChangeWeapon")]
@@ -94,8 +95,7 @@ public class Player : NetworkBehaviour
 
     private Audio2D audio;
 
-    void Start()
-    {
+    void Start(){
 
         syncFlip = GetComponent<SyncFlip>();
         syncFlip.player = this;
@@ -137,7 +137,7 @@ public class Player : NetworkBehaviour
         currentPlatform = null;
         currentPosition = 2;
 
-        audio = GameObject.Find("Audio").GetComponent<Audio2D>();
+		audio = Audio2D.singleton;
     }
 
     void Update()
@@ -291,53 +291,47 @@ public class Player : NetworkBehaviour
         if (buttonReleasedShoot) {
             shootReleased = true;
             charged = false;
+			audio.StopSound("Plasma");
+			charging = false;
             StopCoroutine("chargeCannon");
         }
-        else if (buttonHeldShoot && gunNum == 3)
-        {
-            StartCoroutine("chargeCannon");
-            if (charged && shootReleased) {
+        else if (buttonHeldShoot && gunNum == 3){
+            
+			StartCoroutine("chargeCannon");
+			if (!charging){
+				charging = true;
+				audio.PlaySound("Plasma");
+			}
+            
+			if (charged && shootReleased) {
 
                 if (gunNum == 1) {
-					if (pistol.shoot()){
-						audio.PlaySound("Pistol");
-					}
+					pistol.shoot();
                 } else if (gunNum == 2) {
-					if (shotgun.shoot()){
-						audio.PlaySound("Shotgun");
-					}
+					shotgun.shoot();
                 } else if (gunNum == 3) {
-					if (plasmaCannon.shoot()){
-						audio.PlaySound("Plasma");
-					}
+					plasmaCannon.shoot();
+					charging = false;
                 }
                 shootReleased = false;
-            }
+			}
         }
-        else if (buttonPressedShoot && gunNum != 3)
-        {
+        else if (buttonPressedShoot && gunNum != 3){
             if (gunNum == 1) {
-				if (pistol.shoot()){
-					audio.PlaySound("Pistol");
-				}
+				pistol.shoot();
             } else if (gunNum == 2) {
-				if (shotgun.shoot()){
-					audio.PlaySound("Shotgun");
-				}
+				shotgun.shoot();
             } else if (gunNum == 3) {
-				if (plasmaCannon.shoot()){
-					audio.PlaySound("Plasma");
-				}
+				plasmaCannon.shoot();
+				charging = false;
             }
         }
 
         if (buttonPressedReload) {
-            if (gunNum == 2)
-            {
+            if (gunNum == 2){
                 shotgun.reload();
             }
-            else if (gunNum == 3)
-            {
+            else if (gunNum == 3){
                 plasmaCannon.reload();
             }
         }
@@ -377,7 +371,7 @@ public class Player : NetworkBehaviour
     }
 
     IEnumerator chargeCannon(){
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(1.4f);
         charged = true;
     }
 

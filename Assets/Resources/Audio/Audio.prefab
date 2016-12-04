@@ -73,6 +73,6 @@ MonoBehaviour:
     volume: 0.7
     pitch: 1
   - name: Plasma
-    clip: {fileID: 8300000, guid: 2315a82784f177f4ca77501f043b40b9, type: 3}
+    clip: {fileID: 8300000, guid: 37e4772a705a0b642adb9a99266771e5, type: 3}
     volume: 0.7
     pitch: 1

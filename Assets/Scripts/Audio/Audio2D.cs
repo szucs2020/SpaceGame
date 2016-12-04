@@ -30,6 +30,10 @@ public class Sound {
 		source.Play();
 	}
 
+	public void Stop(){
+		source.Stop();
+	}
+
 }
 
 public class Audio2D : MonoBehaviour {
@@ -37,7 +41,15 @@ public class Audio2D : MonoBehaviour {
 	[SerializeField]
 	Sound[] sounds;
 
+	public static Audio2D singleton = null;
+
 	void Awake(){
+		if (singleton != null && singleton != this) {
+			Destroy(this.gameObject);
+			return;
+		} else {
+			singleton = this;
+		}
 		DontDestroyOnLoad(this);
 	}
 
@@ -56,6 +68,16 @@ public class Audio2D : MonoBehaviour {
 				return;
 			}
 		}
-		print("ERROR: No sound with name: " + n);
+		print("ERROR PlaySound(): No sound with name: " + n);
+	}
+
+	public void StopSound(string n){
+		for (int i = 0; i < sounds.Length; i++){
+			if (sounds[i].name == n){
+				sounds[i].Stop();
+				return;
+			}
+		}
+		print("ERROR PauseSound(): No sound with name: " + n);
 	}
 }
