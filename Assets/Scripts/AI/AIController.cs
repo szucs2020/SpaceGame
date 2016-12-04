@@ -196,10 +196,13 @@ public class AIController : MonoBehaviour {
 				inMotion = false;
 			}
 			if (AI.currentPlatform != null) {
-				foreach (Transform neighbourPlatform in AI.currentPlatform.GetComponent<Platform>().neighbours) {
-					if (neighbourPlatform == playerComponent.currentPlatform) {
-						onNeighbourPlatform = true;
-						break;
+				Platform neighboursPlatform = AI.currentPlatform.GetComponent<Platform> ();
+				if (neighboursPlatform != null) {
+					foreach (Transform neighbourPlatform in neighboursPlatform.neighbours) {
+						if (neighbourPlatform == playerComponent.currentPlatform) {
+							onNeighbourPlatform = true;
+							break;
+						}
 					}
 				}
 			}
