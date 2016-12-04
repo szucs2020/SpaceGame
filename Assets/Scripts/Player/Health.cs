@@ -52,18 +52,22 @@ public class Health : NetworkBehaviour {
         regen = true;
     }
 
-    public void Kill()
-    {
+    public void Kill(){
         Die();
     }
 
     //updates character health bar
     private void UpdateHealthBar(float curHealth) {
-        HealthBar.fillAmount = (curHealth / this.maxHealth);
+        if (HealthBar != null) {
+            HealthBar.fillAmount = (curHealth / this.maxHealth);
+        }
     }
 
     //kill player and attempt respawn
     private void Die() {
+
+        print("Health Die");
+        print("Is AI: " + GetComponent<Player>().getIsAI());
 
         bool isAI = GetComponent<Player>().getIsAI();
         GetComponent<Player>().Die();

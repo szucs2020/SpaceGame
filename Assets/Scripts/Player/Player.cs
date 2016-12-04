@@ -94,12 +94,14 @@ public class Player : NetworkBehaviour
     public Transform currentPlatform;
     private bool isAI = false;
 
-    private Audio2D audio;
+    private Audio2D audio2D;
 
     void Start(){
 
         syncFlip = GetComponent<SyncFlip>();
         syncFlip.player = this;
+
+        StartCoroutine("nameFix");
 
         if (!isLocalPlayer && !isAI)
         {
@@ -138,7 +140,7 @@ public class Player : NetworkBehaviour
         currentPlatform = null;
         currentPosition = 2;
 
-		audio = Audio2D.singleton;
+        audio2D = Audio2D.singleton;
     }
 
     void Update()
@@ -220,13 +222,13 @@ public class Player : NetworkBehaviour
                 velocity.y = maxJumpVelocity;
                 decelerating = false;
                 if (jump == 1){
-					audio.PlaySound("Boost");
+                    audio2D.PlaySound("Boost");
                 }
             }
 
             if (jump == 0){
                 jump = 1;
-				audio.PlaySound("Jump");
+                audio2D.PlaySound("Jump");
             }
             else if (jump == 1){
                 jump = 2;
@@ -294,7 +296,7 @@ public class Player : NetworkBehaviour
             charged = false;
 			charging = false;
             if (cannonFinished) {
-                audio.StopSound("Plasma");
+                audio2D.StopSound("Plasma");
             }
 
             StopCoroutine("chargeCannon");
@@ -304,7 +306,7 @@ public class Player : NetworkBehaviour
 			StartCoroutine("chargeCannon");
 			if (!charging){
 				charging = true;
-				audio.PlaySound("Plasma");
+                audio2D.PlaySound("Plasma");
 			}
             
 			if (charged && shootReleased) {
@@ -383,13 +385,17 @@ public class Player : NetworkBehaviour
         cannonFinished = true;
     }
 
+    IEnumerator nameFix() {
+        yield return new WaitForSeconds(1.0f);
+        playerNameChanged(playerName);
+    }
+
     private void playerNameChanged(string pn) {
         Text Name = transform.FindChild("NameCanvas").FindChild("Name").GetComponent<Text>();
         Name.text = pn;
     }
 
     public void Die(){
-		audio.PlaySound("Die");
         Destroy(gameObject);
     }
 

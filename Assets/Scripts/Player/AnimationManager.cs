@@ -35,7 +35,7 @@ public class AnimationManager : NetworkBehaviour {
     Animator legsAnimator;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
         head = transform.Find("Head");
         torso = transform.Find("Torso");
         legs = transform.Find("Legs");
@@ -43,6 +43,10 @@ public class AnimationManager : NetworkBehaviour {
         headAnimator = head.GetComponent<Animator>();
         torsoAnimator = torso.GetComponent<Animator>();
         legsAnimator = legs.GetComponent<Animator>();
+
+        if (headAnimator == null) {
+            print("null animators");
+        }
 
         player = GetComponent<Player>();
 
@@ -84,6 +88,8 @@ public class AnimationManager : NetworkBehaviour {
                         legsAnimator.runtimeAnimatorController = greenLegs as RuntimeAnimatorController;
                         break;
                 }
+            } else {
+                print("ERROR: Lobby player for this player is null.");
             }
         }
 

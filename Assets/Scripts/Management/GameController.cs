@@ -49,6 +49,9 @@ public class GameController : NetworkBehaviour {
         bool respawn = false;
 		bool end = false;
 
+        print("slot: " + playerSlot);
+        print("lives length: " + playerLives.Length);
+
         if (settings.gameType == GameSettings.GameType.Survival) {
 
             playerLives[playerSlot]--;

@@ -76,7 +76,7 @@ public class CustomNetworkLobby : NetworkLobbyManager {
         return true;
     }
 
-    //cleverly getting around the fact that this is called twice every time someone joins
+    //getting around the fact that this is called twice every time someone joins
     public override void OnServerConnect(NetworkConnection conn) {
         if (sneakyFlag) {
             this.minPlayers++;
