@@ -23,6 +23,9 @@ public class AIAimController : MonoBehaviour {
 	private Transform spawn3;
 	private Transform spawn4;
 
+	private Vector3 v0_4_0;
+	private float prevXPos;
+
 	// Use this for initialization
 	void Start () {
 		AI = transform.GetComponent<Player> ();
@@ -38,6 +41,10 @@ public class AIAimController : MonoBehaviour {
 		spawn2 = Spawns.GetChild (2);
 		spawn3 = Spawns.GetChild (3);
 		spawn4 = Spawns.GetChild (4);
+
+		v0_4_0 = new Vector3 (0, 4, 0);
+
+		prevXPos = transform.position.x;
 	}
 	
 	// Update is called once per frame
@@ -107,8 +114,8 @@ public class AIAimController : MonoBehaviour {
 				vector1 = direction * 50;
 				vector2 = (playerPos - spawn4.position);
 				angle1 = Vector3.Angle (vector1, vector2);
-				Debug.DrawRay (new Vector2 (spawn4.position.x, spawn4.position.y), vector1, Color.yellow);
-				Debug.DrawRay (new Vector2 (spawn4.position.x, spawn4.position.y), (playerPos - spawn4.position), Color.white);
+				Debug.DrawRay (spawn4.position, vector1, Color.yellow);
+				Debug.DrawRay (spawn4.position, vector2, Color.white);
 				angleEnum1 = AimDirection.Up;
 				Up = vector1;
 
@@ -119,8 +126,8 @@ public class AIAimController : MonoBehaviour {
 				vector1 = direction * 50;
 				vector2 = (playerPos - spawn3.position);
 				angle2 = Vector3.Angle (vector1, vector2);
-				Debug.DrawRay (new Vector2 (spawn3.position.x, spawn3.position.y), vector1, Color.yellow);
-				Debug.DrawRay (new Vector2 (spawn3.position.x, spawn3.position.y), (playerPos - spawn3.position), Color.white);
+				Debug.DrawRay (spawn3.position, vector1, Color.yellow);
+				Debug.DrawRay (spawn3.position, vector2, Color.white);
 				angleEnum2 = AimDirection.UpRight;
 				UpRight = vector1;
 			} else {
@@ -132,12 +139,12 @@ public class AIAimController : MonoBehaviour {
 				rotation = spawn0.rotation;
 				rotation = Quaternion.Euler(rotation.eulerAngles.x, rotation.eulerAngles.y, rotation.eulerAngles.z * -1);
 				direction = rotation * Vector2.right;
-				Vector3 spawn0Pos = spawn0.position - new Vector3 (0, 4, 0);
+				Vector3 spawn0Pos = spawn0.position - v0_4_0;
 				vector1 = direction * 50;
 				vector2 = (playerPos - spawn0Pos);
 				angle1 = Vector3.Angle (vector1, vector2);
-				Debug.DrawRay (new Vector2 (spawn0.position.x, spawn0.position.y - 4), vector1, Color.yellow);
-				Debug.DrawRay (new Vector2 (spawn0.position.x, spawn0.position.y - 4), (playerPos - spawn0Pos), Color.white);
+				Debug.DrawRay (spawn0Pos, vector1, Color.yellow);
+				Debug.DrawRay (spawn0Pos, vector2, Color.white);
 				angleEnum1 = AimDirection.Down;
 				Down = vector1;
 
@@ -148,8 +155,8 @@ public class AIAimController : MonoBehaviour {
 				vector1 = direction * 50;
 				vector2 = (playerPos - spawn1.position);
 				angle2 = Vector3.Angle (vector1, vector2);
-				Debug.DrawRay (new Vector2 (spawn1.position.x, spawn1.position.y), vector1, Color.yellow);
-				Debug.DrawRay (new Vector2 (spawn1.position.x, spawn1.position.y), (playerPos - spawn1.position), Color.white);
+				Debug.DrawRay (spawn1.position, vector1, Color.yellow);
+				Debug.DrawRay (spawn1.position, vector2, Color.white);
 				angleEnum2 = AimDirection.DownRight;
 				DownRight = vector1;
 			}
@@ -164,13 +171,12 @@ public class AIAimController : MonoBehaviour {
 				vectorDirection = angleEnum1;
 			}
 
-
 			//Right
-			Debug.DrawRay (new Vector2 (spawn2.position.x, spawn2.position.y), new Vector3 (50, 0, 0), Color.yellow);
-			Debug.DrawRay (new Vector2 (spawn2.position.x, spawn2.position.y), (playerPos - spawn2.position), Color.white);
-			vector1 = new Vector3 (spawn2.position.x + 50, spawn2.position.y + 0, 0) - new Vector3 (spawn2.position.x, spawn2.position.y, 0);
+			vector1 = new Vector3 (spawn2.position.x + 50, spawn2.position.y, 0) - spawn2.position;
 			vector2 = (playerPos - spawn2.position);
 			angle3 = Vector3.Angle (vector1, vector2);
+			Debug.DrawRay (spawn2.position, new Vector3 (50, 0, 0), Color.yellow);
+			Debug.DrawRay (spawn2.position, vector2, Color.white);
 			Right = vector1;
 
 			if (angle1 > angle3) {
@@ -200,54 +206,54 @@ public class AIAimController : MonoBehaviour {
 
 				//Up
 				rotation = spawn4.rotation;
-				rotation = Quaternion.Euler(rotation.eulerAngles.x, rotation.eulerAngles.y, rotation.eulerAngles.z * -1);
+				rotation = Quaternion.Euler (rotation.eulerAngles.x, rotation.eulerAngles.y, rotation.eulerAngles.z * -1);
 				direction = rotation * Vector2.left;
 				vector1 = direction * 50;
 				vector2 = (playerPos - spawn4.position);
 				angle1 = Vector3.Angle (vector1, vector2);
-				Debug.DrawRay (new Vector2(spawn4.position.x, spawn4.position.y), vector1, Color.yellow);
-				Debug.DrawRay (new Vector2 (spawn4.position.x, spawn4.position.y), (playerPos - spawn4.position), Color.white);
+				Debug.DrawRay (spawn4.position, vector1, Color.yellow);
+				Debug.DrawRay (spawn4.position, vector2, Color.white);
 				angleEnum1 = AimDirection.Up;
 				Up = vector1;
 
 				//Up Left
 				rotation = spawn3.rotation;
-				rotation = Quaternion.Euler(rotation.eulerAngles.x, rotation.eulerAngles.y, rotation.eulerAngles.z * -1);
+				rotation = Quaternion.Euler (rotation.eulerAngles.x, rotation.eulerAngles.y, rotation.eulerAngles.z * -1);
 				direction = rotation * Vector2.left;
 				vector1 = direction * 50;
 				vector2 = (playerPos - spawn3.position);
 				angle2 = Vector3.Angle (vector1, vector2);
-				Debug.DrawRay (new Vector2(spawn3.position.x, spawn3.position.y), vector1, Color.yellow);
-				Debug.DrawRay (new Vector2 (spawn3.position.x, spawn3.position.y), (playerPos - spawn3.position), Color.white);
+				Debug.DrawRay (spawn3.position, vector1, Color.yellow);
+				Debug.DrawRay (spawn3.position, vector2, Color.white);
 				angleEnum2 = AimDirection.UpLeft;
 				UpLeft = vector1;
 			} else {
-				//Up
+				//Down
 				aimUp = false;
 				aimDown = true;
 
 				//Down
-				Vector3 spawn0Pos = spawn0.position - new Vector3 (0, 4, 0);
+				Vector3 spawn0Pos = spawn0.position - v0_4_0;
 				rotation = spawn0.rotation;
-				rotation = Quaternion.Euler(rotation.eulerAngles.x, rotation.eulerAngles.y, rotation.eulerAngles.z * -1);
+				rotation = Quaternion.Euler (rotation.eulerAngles.x, rotation.eulerAngles.y, rotation.eulerAngles.z * -1);
 				direction = rotation * Vector2.left;
 				vector1 = direction * 50;
 				vector2 = (playerPos - spawn0Pos);
 				angle1 = Vector3.Angle (vector1, vector2);
-				Debug.DrawRay (new Vector2(spawn0.position.x, spawn0.position.y - 4), vector1, Color.yellow);
-				Debug.DrawRay (new Vector2 (spawn0.position.x, spawn0.position.y - 4), (playerPos - spawn0Pos), Color.white);
+				Debug.DrawRay (spawn0Pos, vector1, Color.yellow);
+				Debug.DrawRay (spawn0Pos, vector2, Color.white);
 				angleEnum1 = AimDirection.Down;
 				Down = vector1;
 
 				//Down Left
 				rotation = spawn1.rotation;
-				rotation = Quaternion.Euler(rotation.eulerAngles.x, rotation.eulerAngles.y, rotation.eulerAngles.z * -1);
+				rotation = Quaternion.Euler (rotation.eulerAngles.x, rotation.eulerAngles.y, rotation.eulerAngles.z * -1);
 				direction = rotation * Vector2.left;
 				vector1 = direction * 50;
 				vector2 = (playerPos - spawn1.position);
 				angle2 = Vector3.Angle (vector1, vector2);
-				Debug.DrawRay (new Vector2(spawn1.position.x, spawn1.position.y), vector1, Color.yellow);
-				Debug.DrawRay (new Vector2 (spawn1.position.x, spawn1.position.y), (playerPos - spawn1.position), Color.white);
+				Debug.DrawRay (spawn1.position, vector1, Color.yellow);
+				Debug.DrawRay (spawn1.position, vector2, Color.white);
 				angleEnum2 = AimDirection.DownLeft;
 				DownLeft = vector1;
 			}
@@ -269,8 +275,8 @@ public class AIAimController : MonoBehaviour {
 			vector1 = direction * 50;
 			vector2 = (playerPos - spawn2.position);
 			angle3 = Vector3.Angle (vector1, vector2);
-			Debug.DrawRay (new Vector2 (spawn2.position.x, spawn2.position.y), vector1, Color.yellow);
-			Debug.DrawRay (new Vector2 (spawn2.position.x, spawn2.position.y), (playerPos - spawn2.position), Color.white);
+			Debug.DrawRay (spawn2.position, vector1, Color.yellow);
+			Debug.DrawRay (spawn2.position, vector2, Color.white);
 			Left = vector1;
 
 			if (angle1 > angle3) {
@@ -297,7 +303,7 @@ public class AIAimController : MonoBehaviour {
 			origin = spawn4.position;
 			hitDirection = Up;
 		} else if (vectorDirection == AimDirection.Down) {
-			origin = spawn0.position;
+			origin = spawn0.position - v0_4_0;
 			hitDirection = Down;
 		} else if (vectorDirection == AimDirection.UpRight) {
 			origin = spawn3.position;
