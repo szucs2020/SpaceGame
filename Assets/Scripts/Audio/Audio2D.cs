@@ -1,7 +1,7 @@
 ﻿/*
  * Audio2D.cs
  * Authors: Christian
- * Description: This script allows us to play non-spatial sounds 
+ * Description: This script allows us to manage and play non spatial sounds
  */
 using UnityEngine;
 using System.Collections;

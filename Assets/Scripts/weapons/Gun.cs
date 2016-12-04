@@ -50,7 +50,7 @@ public class Gun : NetworkBehaviour {
         return spawnPositions[player.getCurrentPosition()];
     }
 
-    protected bool canShoot() {
+    public bool canShoot() {
 
         bool canShoot = true;
 

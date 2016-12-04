@@ -35,15 +35,17 @@ public class PlasmaCannon : Gun{
         NetworkServer.Spawn(plasmaBall);
     }
 
-    public bool shoot(){
-
-		bool shot = false;
-
-        if (reloading){
-            if (Time.time >= endReloadTime){
+    void Update() {
+        if (reloading) {
+            if (Time.time >= endReloadTime) {
                 reloading = false;
             }
         }
+    }
+
+    public bool shoot(){
+
+		bool shot = false;
 
         if (canShoot()){
 

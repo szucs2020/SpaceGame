@@ -30,6 +30,7 @@ public class Player : NetworkBehaviour
 
 	private bool charging = false;
     private bool charged = false;
+    private bool cannonFinished = true;
     private bool shootReleased = true;
     [SyncVar(hook="ChangeWeapon")]
     private int gunNum = 1;
@@ -291,11 +292,14 @@ public class Player : NetworkBehaviour
         if (buttonReleasedShoot) {
             shootReleased = true;
             charged = false;
-			audio.StopSound("Plasma");
 			charging = false;
+            if (cannonFinished) {
+                audio.StopSound("Plasma");
+            }
+
             StopCoroutine("chargeCannon");
         }
-        else if (buttonHeldShoot && gunNum == 3){
+        else if (buttonHeldShoot && gunNum == 3 && cannonFinished && shootReleased && plasmaCannon.canShoot()){
             
 			StartCoroutine("chargeCannon");
 			if (!charging){
@@ -312,6 +316,8 @@ public class Player : NetworkBehaviour
                 } else if (gunNum == 3) {
 					plasmaCannon.shoot();
 					charging = false;
+                    cannonFinished = false;
+                    StartCoroutine("WaitForCannonDecay");
                 }
                 shootReleased = false;
 			}
@@ -321,9 +327,6 @@ public class Player : NetworkBehaviour
 				pistol.shoot();
             } else if (gunNum == 2) {
 				shotgun.shoot();
-            } else if (gunNum == 3) {
-				plasmaCannon.shoot();
-				charging = false;
             }
         }
 
@@ -373,6 +376,11 @@ public class Player : NetworkBehaviour
     IEnumerator chargeCannon(){
         yield return new WaitForSeconds(1.4f);
         charged = true;
+    }
+
+    IEnumerator WaitForCannonDecay() {
+        yield return new WaitForSeconds(1f);
+        cannonFinished = true;
     }
 
     private void playerNameChanged(string pn) {
