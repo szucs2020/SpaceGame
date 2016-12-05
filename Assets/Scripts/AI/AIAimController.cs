@@ -348,4 +348,8 @@ public class AIAimController : MonoBehaviour {
 		Right,
 		Left
 	};
+
+	public void resetPlayer() {
+		player = null;
+	}
 }

@@ -10,7 +10,7 @@ public class AIWeaponsController : MonoBehaviour {
 	private Player AI;
 	private Transform player;
 	private AIAimController AimController;
-	private PlayerFinder playerFinder;
+	//private PlayerFinder playerFinder;
 
 	private RaycastHit2D Hit;
 
@@ -18,8 +18,8 @@ public class AIWeaponsController : MonoBehaviour {
 	void Start () {
 		AI = transform.GetComponent<Player> ();
 
-		playerFinder = transform.GetComponent<PlayerFinder> ();
-		player = playerFinder.getPlayerTransform ();
+		/*playerFinder = transform.GetComponent<PlayerFinder> ();
+		player = playerFinder.getPlayerTransform ();*/
 
 		AimController = transform.GetComponent<AIAimController> ();
 	}
@@ -32,17 +32,17 @@ public class AIWeaponsController : MonoBehaviour {
 	private int shotsFired = 0;
 	private float burstTime = 0;
 	void Update () {
-		if (player == null) {
+		/*if (player == null) {
 			player = playerFinder.getPlayerTransform ();
 			return;
-		}
+		}*/
 		Hit = AimController.getHit ();
 
 		timePassed += Time.deltaTime;
-		if (Hit.transform != null && Hit.transform.tag == "player" || Hit.transform.name == "LaserDot(Clone)"/*Hit.transform == player*/) {
+		if (Hit.transform != null && (Hit.transform.tag == "player" || Hit.transform.name == "LaserDot(Clone)")/*Hit.transform == player*/) {
 			if (timePassed > randomTime) {
 				burst = true;
-				numberOfShots = (int)Random.Range (5.5f, 8.5f);
+				numberOfShots = (int)Random.Range (4.5f, 8.5f);
 				randomTime = Random.Range (0.5f, 0.8f);
 				timePassed = 0f;
 			} else {
@@ -53,7 +53,7 @@ public class AIWeaponsController : MonoBehaviour {
 		if (burst == true) {
 			burstTime += Time.deltaTime;
 
-			if (burstTime > 0.1f && shotsFired < numberOfShots) {
+			if (burstTime > 0.25f && shotsFired < numberOfShots) {
 				shotsFired++;
 				burstTime = 0;
 			
@@ -64,15 +64,14 @@ public class AIWeaponsController : MonoBehaviour {
 					AI.setbuttonPressedShoot (false);
 					AI.setbuttonReleasedShoot (true);
 				}
-			} else {
+			} else if (burstTime <= 0.25f) {
 				AI.setbuttonPressedShoot (false);
-
-				if (shotsFired == numberOfShots) {
-					shotsFired = 0;
-					burst = false;
-					burstTime = 0f;
-					timePassed = 0f;
-				}
+			} else if(shotsFired == numberOfShots) {
+				AI.setbuttonPressedShoot (false);
+				shotsFired = 0;
+				burst = false;
+				burstTime = 0f;
+				timePassed = 0f;
 			}
 		}
 	}

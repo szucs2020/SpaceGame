@@ -32,6 +32,9 @@ public class AIController : MonoBehaviour {
 	private Vector3 moveTo;
 	private bool mightJump;
 
+	//If in same branch for a lot of time than recalculate path
+	private float stuckOnWrongPlatform;
+
 	// Use this for initialization
 	void Start () {
 		pathFinder = this.GetComponent<AStar> ();
@@ -62,6 +65,8 @@ public class AIController : MonoBehaviour {
 		//Same Platform Movement
 		inMotion = false;
 		mightJump = true;
+
+		stuckOnWrongPlatform = 0f;
 	}
 
 	private double timedelta = 0;
@@ -95,6 +100,7 @@ public class AIController : MonoBehaviour {
 			if (AI.currentPlatform != playerComponent.currentPlatform) {
 				state = States.Follow;
 			} else if (health.getHealth () < 40f && playerHealth.getHealth () > 50f) {
+				stuckOnWrongPlatform = 0f;
 				state = States.Disregard;
 				hasPath = false;
 			}
@@ -112,7 +118,7 @@ public class AIController : MonoBehaviour {
 				if (index < 2) {
 					moveTo = AI.currentPlatform.GetChild (index).position;
 				} else {
-					float x = player.transform.position.x + Random.Range (-30f, 30f);
+					float x = player.transform.position.x + Random.Range (-40f, 40f);
 					moveTo = new Vector3 (x, player.transform.position.y, 0f);
 
 					/* x > savedPlatform.getRight () || x < savedPlatform.getLeft () could not be used because
@@ -251,7 +257,6 @@ public class AIController : MonoBehaviour {
 					}
 				}
 			} else { //target represents a node on the platform
-				//print("Not Neighbour");
 				if (!hasPath) {
 					path = pathFinder.FindShortestPath (playerComponent);
 					if (path != null) {
@@ -266,14 +271,27 @@ public class AIController : MonoBehaviour {
 					AI.setbuttonReleasedJump (false);
 					WalkOnPlatform ();
 				} else if (target != null && target.transform.parent != AI.currentPlatform) {
+					stuckOnWrongPlatform += Time.deltaTime;
 					WalkOnPlatform ();
+
+					if (stuckOnWrongPlatform > 1.5f) {
+						stuckOnWrongPlatform = 0f;
+						hasPath = false;
+						target = null;
+						if (path != null) {
+							path.Clear();
+						}
+					}
 				} else {
 					AI.setMovementAxis (new Vector2 (0, 0));
 				}
 			}
 		} else if (state == States.Disregard) {
-			print ("Disregard");
+			//print ("Disregard");
 			if (health.getHealth () > 90f) {
+				//Attack Closest Player when Health Regenerates
+				stuckOnWrongPlatform = 0f;
+				playerFinder.resetPlayer ();
 				state = States.Follow;
 			}
 			AI.setMovementAxis (new Vector2 (0, 0));
@@ -297,7 +315,17 @@ public class AIController : MonoBehaviour {
 				AI.setbuttonReleasedJump (false);
 				WalkOnPlatform ();
 			} else if (target != null && target.transform.parent != AI.currentPlatform) {
+				stuckOnWrongPlatform += Time.deltaTime;
 				WalkOnPlatform ();
+
+				if (stuckOnWrongPlatform > 1.5f) {
+					stuckOnWrongPlatform = 0f;
+					hasPath = false;
+					target = null;
+					if (path != null) {
+						path.Clear();
+					}
+				}
 			} else {
 				AI.setMovementAxis (new Vector2 (0, 0));
 			}
@@ -448,7 +476,7 @@ public class AIController : MonoBehaviour {
 			target = path [0];
 			path.RemoveAt (0);
 		}
-			
+
 		Move (target.transform.position, true);
 	}
 
@@ -531,5 +559,13 @@ public class AIController : MonoBehaviour {
 		}
 	}
 
-	enum States {Follow, Disregard, SamePlatform};
+	enum States {
+		Follow,
+		Disregard,
+		SamePlatform
+	};
+
+	public void resetPlayer() {
+		player = null;
+	}
 }
