@@ -92,7 +92,6 @@ public class AIController : MonoBehaviour {
 		}
 
 		if (state == States.SamePlatform) {
-			//print ("SamePlatform");
 			if (AI.currentPlatform != playerComponent.currentPlatform) {
 				state = States.Follow;
 			} else if (health.getHealth () < 40f && playerHealth.getHealth () > 50f) {
@@ -273,7 +272,7 @@ public class AIController : MonoBehaviour {
 				}
 			}
 		} else if (state == States.Disregard) {
-			//print ("Disregard");
+			print ("Disregard");
 			if (health.getHealth () > 90f) {
 				state = States.Follow;
 			}
@@ -440,7 +439,7 @@ public class AIController : MonoBehaviour {
 	}
 
 	private void WalkOnPlatform () {
-		if(Mathf.Abs(target.transform.position.x - transform.position.x) < 0.5f && target.transform.parent == AI.currentPlatform) {
+		if(Mathf.Abs(target.transform.position.x - transform.position.x) < 1f && target.transform.parent == AI.currentPlatform) {
 			if (path.Count == 0) {
 				target = null;
 				hasPath = false;
@@ -449,8 +448,7 @@ public class AIController : MonoBehaviour {
 			target = path [0];
 			path.RemoveAt (0);
 		}
-
-		//print (target.name);
+			
 		Move (target.transform.position, true);
 	}
 

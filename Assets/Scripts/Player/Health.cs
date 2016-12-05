@@ -66,8 +66,8 @@ public class Health : NetworkBehaviour {
     //kill player and attempt respawn
     private void Die() {
 
-        print("Health Die");
-        print("Is AI: " + GetComponent<Player>().getIsAI());
+        //print("Health Die");
+        //print("Is AI: " + GetComponent<Player>().getIsAI());
 
         bool isAI = GetComponent<Player>().getIsAI();
         GetComponent<Player>().Die();
