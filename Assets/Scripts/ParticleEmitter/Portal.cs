@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 public class Portal : MonoBehaviour {
     public GameObject target;
-    public float waitTime = 1f;
+    public float waitTime = 0.5f;
     public PortalFragments warpPrefab;
     private List<PortalFragments> warp;
     private float startTime;
