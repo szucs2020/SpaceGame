@@ -39,11 +39,11 @@ public class AIWeaponsController : MonoBehaviour {
 		Hit = AimController.getHit ();
 
 		timePassed += Time.deltaTime;
-		if (Hit.transform != null && Hit.transform == player) {
-			if (timePassed > 1f + randomTime) {
+		if (Hit.transform != null && Hit.transform.tag == "player" || Hit.transform.name == "LaserDot(Clone)"/*Hit.transform == player*/) {
+			if (timePassed > randomTime) {
 				burst = true;
-				numberOfShots = (int)Random.Range (2.5f, 4.5f);
-				randomTime = Random.Range (0f, 1f);
+				numberOfShots = (int)Random.Range (5.5f, 8.5f);
+				randomTime = Random.Range (0.5f, 0.8f);
 				timePassed = 0f;
 			} else {
 				AI.setbuttonPressedShoot (false);
@@ -53,7 +53,7 @@ public class AIWeaponsController : MonoBehaviour {
 		if (burst == true) {
 			burstTime += Time.deltaTime;
 
-			if (burstTime > 0.3f && shotsFired < numberOfShots) {
+			if (burstTime > 0.1f && shotsFired < numberOfShots) {
 				shotsFired++;
 				burstTime = 0;
 			
