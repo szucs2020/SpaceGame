@@ -33,15 +33,16 @@ public class PickupSpawner : NetworkBehaviour {
             }
             
             if (spawnTimes[i] < Time.time && canSpawn[i]) {
-                int rand = Random.Range(1, 100);
-                CmdSpawnPickup(rand, i);
+                
+                CmdSpawnPickup(i);
                 canSpawn[i] = false;
             }
         }
 	}
 
     [Command]
-    void CmdSpawnPickup(int rand, int i) {
+    void CmdSpawnPickup(int i) {
+        int rand = Random.Range(1, 100);
         //if (rand < 35)
         //{
         //    pickup = (GameObject)Instantiate(pistol, this.transform.GetChild(i).transform.position, Quaternion.identity);

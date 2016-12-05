@@ -8,6 +8,8 @@ public class Chat : NetworkBehaviour {
     private Text chatText;
     private InputField chatInput;
     private Player player;
+    [SyncVar]
+    string message;
 
 	// Use this for initialization
 	void Start () {
@@ -21,22 +23,23 @@ public class Chat : NetworkBehaviour {
         string tempMessage = chatInput.text;
         if (!string.IsNullOrEmpty(tempMessage.Trim()) && Input.GetKeyDown("return")){
             print("update");
-            PrintMessage(player.playerName + ": " + tempMessage + "\n");
-            //message = player.playerName + ": " + tempMessage + "\n";
+            //PrintMessage(player.playerName + ": " + tempMessage + "\n");
+            message = player.playerName + ": " + tempMessage + "\n";
+            RpcPrintMessage(message);
             chatInput.text = "";
         }
 	}
 
-    void PrintMessage(string message) {
-        print("Printmessage");
-        CmdPrintMessage(message);
-    }
+    //void PrintMessage(string message) {
+    //    print("Printmessage");
+    //    CmdPrintMessage(message);
+    //}
 
-    [Command]
-    void CmdPrintMessage(string message) {
-        print("CmdPrintmessage");
-        RpcPrintMessage(message);
-    }
+    //[Command]
+    //void CmdPrintMessage(string message) {
+    //    print("CmdPrintmessage");
+    //    RpcPrintMessage(message);
+    //}
 
     [ClientRpc]
     void RpcPrintMessage(string message)
